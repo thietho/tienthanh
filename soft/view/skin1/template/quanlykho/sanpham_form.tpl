@@ -1,0 +1,138 @@
+<div class="section" id="sitemaplist">
+
+	<div class="section-title">Sản phẩm</div>
+    
+    <div class="section-content padding1">
+    
+    	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
+        
+        	<div class="button right">
+            	<input type="button" value="Save" class="button" onClick="save()"/>
+     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/sanpham')"/>   
+     	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
+            </div>
+            <div class="clearer">^&nbsp;</div>
+        	<div id="error" class="error" style="display:none"></div>
+        	<div>
+            	<p>
+            		<label>Mã vạch</label><br />
+					<input type="text" id="mavach" name="mavach" value="<?php echo $item['mavach']?>" class="text" size=60 <?php echo $readonly?>/>
+                    
+            	</p>
+              	
+                <p>
+            		<label>Mã sản phẩm</label><br />
+					<input type="text" id="masanpham" name="masanpham" value="<?php echo $item['masanpham']?>" class="text" size=60 <?php echo $readonly?>/>
+                    
+            	</p>
+                
+                <p>
+            		<label>Tên sản phẩm</label><br />
+					<input type="text" id="tensanpham" name="tensanpham" value="<?php echo $item['tensanpham']?>" class="text" size=60 />
+                    
+            	</p>
+               
+               <p>
+            		<label>Đơn vị tính</label><br />
+					<select id="madonvi" name="madonvi">
+                    	<option value=""></option>
+                    	<?php foreach($donvitinh as $val){ ?>
+                        <option value="<?php echo $val['madonvi']?>"><?php echo $val['tendonvitinh']?></option>
+                        <?php } ?>
+                    </select>
+            	</p>
+               
+                <p>
+            		<label>Nhóm</label><br />
+					<select id="manhom" name="manhom">
+                    	<option value=""></option>
+                    	<?php foreach($nhomsanpham as $val){ ?>
+                        <option value="<?php echo $val['manhom']?>"><?php echo $val['tennhom']?></option>
+                        <?php } ?>
+                    </select>
+            	</p>
+                <p>
+            		<label>Loại</label><br />
+					<select id="loai" name="loai">
+                    	<option value=""></option>
+                   		<?php foreach($loaisanpham as $val){ ?>
+                        <option value="<?php echo $val['manhom']?>"><?php echo $val['tennhom']?></option>
+                        <?php } ?>
+                    </select>
+            	</p>
+                <p>
+            		<label>Kho</label><br />
+					<select id="makho" name="makho">
+                    	<option value=""></option>
+                    	<?php foreach($kho as $val){ ?>
+                        <option value="<?php echo $val['makho']?>"><?php echo $val['tenkho']?></option>
+                        <?php } ?>
+                    </select>
+            	</p>
+                <p>
+            		<label>Số sản phẩm/Lot</label><br />
+					<input type="text" id="sosanphamtrenlot" name="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Đơn giá bán</label><br />
+					<input type="text" id="dongiaban" name="dongiaban" value="<?php echo $item['dongiaban']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Đóng gói</label><br />
+					<input type="text" id="donggoi" name="donggoi" value="<?php echo $item['donggoi']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Khu vực</label><br />
+					<input type="text" id="khuvuc" name="khuvuc" value="<?php echo $item['khuvuc']?>" class="text number" size=60 />
+            	</p>
+                
+                <p>
+            		<label>Phân cấp</label><br />
+					<input type="text" id="phancap" name="phancap" value="<?php echo $item['phancap']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Hiện hành</label><br />
+					<input type="checkbox" id="hienhanh" name="hienhanh" value="1">
+            	</p>
+                <p>
+            		<label>Ghi chú</label><br />
+					<textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
+            	</p>
+               
+               
+               
+            </div>
+            
+        </form>
+    
+    </div>
+    
+</div>
+<script language="javascript">
+function save()
+{
+	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+	$.post("?route=quanlykho/sanpham/save", $("#frm").serialize(),
+		function(data){
+			if(data == "true")
+			{
+				window.location = "?route=quanlykho/sanpham";
+			}
+			else
+			{
+			
+				$('#error').html(data).show('slow');
+				$.unblockUI();
+				
+			}
+			
+		}
+	);
+}
+
+$("#manhom").val("<?php echo $item['manhom']?>");
+$("#loai").val("<?php echo $item['loai']?>");
+$("#makho").val("<?php echo $item['makho']?>");
+$("#madonvi").val("<?php echo $item['madonvi']?>");
+</script>
