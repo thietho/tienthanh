@@ -6,14 +6,13 @@ final class User {
 	private $usertypeid;
   	private $permission = array();
 	private $Control = array();
-	public $nhanvien;
+
   	public function __construct() {
 		$this->db = Registry::get('db');
 		$this->request = Registry::get('request');
 		$this->session  = Registry::get('session');
 		$this->json  = Registry::get('json');
 		$this->string  = Registry::get('string');
-		$this->date  = Registry::get('date');
 		
 		if($this->request->get['lang'])
 		{
@@ -28,7 +27,7 @@ final class User {
 		
 		$this->siteid = $this->session->data['siteid'];
 		
-		
+	
     	if (isset($this->session->data['userid'])) {
 			$query = $this->db->query("SELECT * FROM user WHERE userid = '" . $this->db->escape($this->session->data['userid']) . "'");
 			
@@ -37,24 +36,15 @@ final class User {
 				$this->username = $query->row['username'];
 				
       			$this->db->query("UPDATE user SET userip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE userid = '" . (int)$this->session->data['userid'] . "'");
-				
-				$sql = "SELECT permission FROM qlknhanvien where username = '" . $this->db->escape($this->session->data['userid']) . "'";
+				$sql = "SELECT permission FROM usertype where usertypeid = (Select usertypeid from user where userid = '" . $this->db->escape($this->session->data['userid']) . "')";
       			$query = $this->db->query($sql);
-				if($query->row['permission'] != "")
-					$this->setPermission($query->row['permission']);
-				else
-				{
-					$sql = "SELECT permission FROM usertype where usertypeid = (Select usertypeid from user where userid = '" . $this->db->escape($this->session->data['userid']) . "')";
-					$query = $this->db->query($sql);
-					$this->setPermission($query->row['permission']);
-				}
+				$this->setPermission($query->row['permission']);
 			}elseif(isset($this->session->data['safemode'])){
 				$this->userid = $this->session->data['userid'];
 				$this->username = $this->session->data['username'];
 			} else {
 				$this->logout();
 			}
-			$this->nhanvien = $this->getNhanVien();
     	}
   	}
 		
@@ -269,45 +259,8 @@ final class User {
 		return $this->permission;
 	}
 	
-	public function writeLog($detail)
-	{
-		$logdate = $this->date->getToday();
-		$field=array(
-						
-						'logdate',
-						'detail',
-						'userid'
-						
-					);
-		$value=array(
-						
-						$logdate,
-						$detail,
-						$this->userid
-					);
-		$this->db->insertData("log",$field,$value);
-		
-	}
 	
-	private function getNhanVien()
-	{
-		$sql = "Select * 
-									from `qlknhanvien` 
-									where username = '".$this->username."' ";
-		
-		$query = $this->db->query($sql);
-		return $query->rows[0];
-	}
 	
-	public function getLogs($where)
-	{
-		$sql = "Select `log`.* 
-									from `log` 
-									where 1=1 " . $where;
-		
-		$query = $this->db->query($sql);
-		return $query->rows;
-	}
 //BENGIN PERMISSION JSON
 	
 	

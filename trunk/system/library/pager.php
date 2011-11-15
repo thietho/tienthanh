@@ -133,8 +133,9 @@ class Pager
 		
 		return $playout;
 	}
-	function pageLayoutWeb($numHits, $limit, $page)
+	function pageLayoutWeb($numHits, $limit, $page,$uri)
 	{
+		
 		$pager=$this->getPagerData($numHits, $limit, $page);
 		$offset = $pager->offset;
 		$limit  = $pager->limit; 
@@ -158,8 +159,8 @@ class Pager
 		$data_paginations=array();
 		if($pager->numPages > 1 && $page >1)
 		{
-			array_push($data_paginations,"<a href='".$this->getURLQueryString('page', '1')."'>|<</a>");
-			array_push($data_paginations,"<a href='".$this->getURLQueryString('page', $page - 1)."' ><</a>");	
+			array_push($data_paginations,"<a href='".HTTP_SERVER.$uri."page/1"."'>|<</a>");
+			array_push($data_paginations,"<a href='".HTTP_SERVER.$uri."page/".($page - 1)."' ><</a>");	
 		}
 		
 		for ($j = $start; $j <= $end; $j++) 
@@ -171,16 +172,16 @@ class Pager
 			}
 			else
 			{
-				array_push($data_paginations,"<a href='".$this->getURLQueryString('page',$j )."'>$j</a>");
+				array_push($data_paginations,"<a href='".HTTP_SERVER.$uri."page/".$j."'>".$j."</a>");
 			}
 		}
 		if($pager->numPages > 1 && $page<$pager->numPages )
 		{
-			array_push($data_paginations,"<a href='".$this->getURLQueryString('page', ($page+1))."'>></a>");
-			array_push($data_paginations,"<a href='".$this->getURLQueryString('page', $pager->numPages)."'>>|</a>");
+			array_push($data_paginations,"<a href='".HTTP_SERVER.$uri."page/".($page + 1)."'>></a>");
+			array_push($data_paginations,"<a href='".HTTP_SERVER.$uri."page/".$pager->numPages."'>>|</a>");
 		}
 		$data_pagenumber=$page."/".$pager->numPages;
-		$playout=" <div class='links'>";
+		$playout=" <div class='ben-page'>";
 		foreach($data_paginations as $val)
 			$playout.=$val;
 		$playout.=" </div>";

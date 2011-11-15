@@ -92,7 +92,7 @@ final class JSON
                         $value = $this->getNextToken($f,$g,$xType);
                         
                         if ( $xType == IN_OBJECT) {
-                            $ret->$varName = $this->_unserialize( "{".$value."}" );
+                            $ret->$varName = $this->unserialize( "{".$value."}" );
                             $g--;
                         } else if ($xType == IN_ARRAY) {
                             $ret->$varName = $this->_unserializeArray( $value);
@@ -130,7 +130,7 @@ final class JSON
                     $r[] = $f;
                     break;
                 case IN_OBJECT:
-                    $r[] = $this->_unserialize("{".$f."}");
+                    $r[] = $this->unserialize("{".$f."}");
                     $i--;
                     break;
                 case IN_ARRAY: 

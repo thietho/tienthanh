@@ -208,9 +208,15 @@ final class Image {
 		
 		$xpos = 0;
 		$ypos = 0;
-
-		$scale = min($width / $this->info['width'], $height / $this->info['height']);
-	
+		if($width >0 && $height>0)
+			$scale = min($width / $this->info['width'], $height / $this->info['height']);
+		else
+		{
+			if($width>0)
+				$scale = $width / $this->info['width'];
+			if($height>0)
+				$scale = $height / $this->info['height'];
+		}
 		if ($scale == 1) {
 			return;
 		}
@@ -236,7 +242,7 @@ final class Image {
 		
 		  // Lay mau transaprent
 		  if ($trnprt_indx >= 0) {
-			$trnprt_color    = imagecolorsforindex($image_old, $trnprt_indx);
+			@$trnprt_color    = imagecolorsforindex($image_old, $trnprt_indx);
 			$trnprt_indx    = imagecolorallocate($this->image , $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
 			imagefill($this->image , 0, 0, $trnprt_indx);
 			//imagefilledrectangle($this->image, 0, 0, $width, $height, $trnprt_indx);
