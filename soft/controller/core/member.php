@@ -1,5 +1,5 @@
 <?php
-class ControllerCoreUser extends Controller
+class ControllerCoreMember extends Controller
 {
 	private $error = array();
 	
@@ -127,7 +127,7 @@ class ControllerCoreUser extends Controller
 		$this->data['delete'] = $this->url->http('core/user/delete');		
 		
 		$this->data['users'] = array();
-		$where = "AND usertypeid <> 'member'";
+		$where = "AND usertypeid = 'member'";
 		$rows = $this->model_core_user->getList($where);
 		//Page
 		$page = $this->request->get['page'];		
@@ -145,9 +145,9 @@ class ControllerCoreUser extends Controller
 		//for($i=0; $i <= count($this->data['users'])-1 ; $i++)
 		{
 			$this->data['users'][$i] = $rows[$i];
-			$this->data['users'][$i]['link_edit'] = $this->url->http('core/user/update&userid='.$this->data['users'][$i]['userid']);
-			$this->data['users'][$i]['text_edit'] = "Edit";
-			$this->data['users'][$i]['link_active'] = $this->url->http('core/user/active&userid='.$this->data['users'][$i]['userid']);
+			$this->data['users'][$i]['link_edit'] = $this->url->http('core/member/update&userid='.$this->data['users'][$i]['userid']);
+			$this->data['users'][$i]['text_edit'] = "View";
+			$this->data['users'][$i]['link_active'] = $this->url->http('core/member/active&userid='.$this->data['users'][$i]['userid']);
 			if($this->data['users'][$i]['status']=='lock')
 				$this->data['users'][$i]['text_active'] = "Active";
 			else
@@ -155,7 +155,7 @@ class ControllerCoreUser extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="core/user_list.tpl";
+		$this->template="core/member_list.tpl";
 		$this->layout="layout/center";
 		
 		$this->render();
@@ -179,7 +179,7 @@ class ControllerCoreUser extends Controller
 			$this->data['action'] = $this->url->http('core/user/update&userid=' . $this->request->get['userid']);
 		}
 		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
-		$this->data['cancel'] = $this->url->https('core/user');
+		$this->data['cancel'] = $this->url->https('core/member');
 		
 		if ((isset($this->request->get['userid'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$this->data['user'] = $this->model_core_user->getItem($this->request->get['userid']);
@@ -193,7 +193,7 @@ class ControllerCoreUser extends Controller
 		}
 		
 		$this->id='content';
-		$this->template='core/user_form.tpl';
+		$this->template='core/member_form.tpl';
 		$this->layout="layout/center";
 		
 		$this->render();

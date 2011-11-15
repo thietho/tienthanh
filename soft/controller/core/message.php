@@ -109,15 +109,16 @@ class ControllerCoreMessage extends Controller
 		if($this->data['attachment'] !="")
 		{
 			$listfileid = split(",",$this->data['attachment']);
-			$this->data['attachment']=array();
+			$this->data['attachmentfile']=array();
 			foreach($listfileid as $key => $item)
 			{
-				$this->data['attachment'][$key] = $this->model_core_file->getFile($item);
-				$this->data['attachment'][$key]['imagethumbnail'] = HelperImage::resizePNG($this->data['attachment'][$key]['filepath'], 50, 50);
-				if(!$this->string->isImage($this->data['attachment'][$key]['extension']))
-					$this->data['attachment'][$key]['imagethumbnail'] = DIR_IMAGE."icon/dinhkem.png";
+				$this->data['attachmentfile'][$key] = $this->model_core_file->getFile($item);
+				$this->data['attachmentfile'][$key]['imagethumbnail'] = HelperImage::resizePNG($this->data['attachmentfile'][$key]['filepath'], 50, 50);
+				if(!$this->string->isImage($this->data['attachmentfile'][$key]['extension']))
+					$this->data['attachmentfile'][$key]['imagethumbnail'] = DIR_IMAGE."icon/dinhkem.png";
 			}
 		}
+		
 		$this->id='content';
 		$this->template='core/message_view.tpl';
 		$this->layout="layout/center";

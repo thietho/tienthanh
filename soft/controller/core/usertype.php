@@ -184,7 +184,6 @@
 			$this->data['listPermission'] = $this->model_core_usertype->listPermission;
 			$this->model_core_sitemap->getTreeSitemap("",$this->data['sitemaps'],$this->user->getSiteId());
 			$this->data['modules'] = $this->model_core_sitemap->getModuleAddons();
-			$this->data['modulesquanlykho'] = $this->model_core_sitemap->getModuleQuanLyKho();
 			
 			$this->template = 'core/usertype_form.tpl';
 			$this->layout="layout/center";
