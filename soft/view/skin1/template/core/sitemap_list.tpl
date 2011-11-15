@@ -31,7 +31,7 @@
                     <tr class="tr-head">
                      <th align="left" width="50%">
         <?php
-            if($this->session->data['userid']=='ID2')
+            if($this->session->data['userid']=='admin')
             {
         ?>
                      <input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
@@ -42,7 +42,7 @@
                       <th width="25%">Edit Module</th>
                       <th width="10%">Status</th>
         <?php
-            if($this->session->data['userid']=='ID2')
+            if($this->session->data['userid']=='admin')
             {
         ?>
                       <th width="15%">Control</th>
@@ -61,7 +61,7 @@
                       
                       <td><?php echo $sitemap['tab']?>
                  <?php
-                if($this->session->data['userid']=='ID2')
+                if($this->session->data['userid']=='admin')
                 {
         ?>
                         <input class="inputchk" type="checkbox" name="delete[<?php echo $sitemap['sitemapid']?>]" value="<?php echo $sitemap['sitemapid']?>" >
@@ -73,7 +73,7 @@
                       <td><?php echo $sitemap['modulename']?></td>
                       <td><?php echo $sitemap['status']?></td>
         <?php
-                if($this->session->data['userid']=='ID2')
+                if($this->session->data['userid']=='admin')
                 {
         ?>
                       <td>
