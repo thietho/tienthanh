@@ -11,6 +11,11 @@ abstract class Controller {
 	protected $iscache = false;
 	protected $module;
 	
+	function __construct() 
+	{
+		$this->data = array_merge($this->data, $this->language->getData());
+	}
+	
 	public function __get($key) {
 		return Registry::get($key);
 	}
@@ -33,15 +38,18 @@ abstract class Controller {
 		$outputhtml = "";
 		if($this->iscache == true)
 		{
-			//$outputhtml = $this->cachehtml->get($this->name);
+			$this->output = $this->cachehtml->get($this->name);
 			if($this->output != "")
 			{
+				
 				$cached = true;
 				//$this->output = $outputhtml;
 				$this->response->setOutput($this->output);
 				return;
 			}
+			
 		}
+		
 		
 		foreach ($this->children as $child) {
 			$file  = DIR_APPLICATION . 'controller/' . $child . '.php';
@@ -107,10 +115,6 @@ abstract class Controller {
 				
 				$controller->data[$this->id] = $this->output;
 				
-				if($this->document->title == "CONG ANH")
-				{
-					$this->document->title = $this->cachehtml->get("title");
-				}
 				
 				$controller->index();
 				
@@ -126,11 +130,6 @@ abstract class Controller {
 		{
 			$this->cachehtml->set($this->name, $this->output);
 		}		
-		
-		if($this->document->title != "CONG ANH" && $this->document->title != "CONG ANH - ")
-		{
-			$this->cachehtml->set("title", $this->document->title);
-		}
 		
 		$this->response->setOutput($this->output);
 
@@ -170,25 +169,9 @@ abstract class Controller {
 			
 			$controller->module = $module;
 			
-			if($controller->iscache == true)
-			{
-				$outputhtml = $this->cachehtml->get($class);
-				if($outputhtml != "")
-				{
-					$controller->output = $outputhtml;
-					$controller->render();
-				}
-				else
-				{
-					//$controller->index();
-					call_user_func_array(array($controller, $method), $args);
-				}
-			}
-			else
-			{
-				//$controller->index();
-				call_user_func_array(array($controller, $method), $args);
-			}
+			
+			
+			call_user_func_array(array($controller, $method), $args);
 			
 			return $controller->output;
 		} else {

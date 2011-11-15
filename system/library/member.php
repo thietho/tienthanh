@@ -49,7 +49,10 @@ final class Member {
 		{
 			$this->go_country = $this->session->data['country'];
 		}
-		
+		if($_COOKIE['username'] != "")
+		{
+			$this->login($_COOKIE['username'],$_COOKIE['password']);	
+		}
     	if (isset($this->session->data['memberid'])) {
 			$query = $this->db->query("SELECT * FROM user WHERE userid = '" . $this->db->escape($this->session->data['memberid']) . "'");
 			
