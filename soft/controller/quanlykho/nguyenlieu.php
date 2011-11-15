@@ -2,8 +2,7 @@
 class ControllerQuanlykhoNguyenlieu extends Controller
 {
 	private $error = array();
-	
-	public function index()
+	function __construct() 
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
@@ -30,6 +29,11 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/nguyenlieu");
+		$this->load->helper('image');
+   	}
+	public function index()
+	{
+		
 		$this->getList();
 	}
 	
@@ -55,7 +59,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			//$this->data = array_merge($this->data, $this->language->getData());
 			
 			
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			$this->data['haspass'] = false;
 			$this->data['readonly'] = 'readonly="readonly"';
 			
@@ -80,7 +84,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$this->load->model("quanlykho/donvitinh");
 			$this->data['nhomnguyenlieu'] = $this->model_quanlykho_nhom->getChild("nhomnguyenlieu");
 			$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			$this->data['haspass'] = false;
 			$this->data['readonly'] = 'readonly="readonly"';
 			$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
@@ -106,7 +110,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		{
 			$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insertbangbaogia');
 			$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/deletebangbaogia');
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			
 			$rows = $this->model_quanlykho_nguyenlieu->getBangBaoGias($where);
 			//Page
@@ -175,7 +179,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	private function getFormBangBaoGia()
 	{
 		
-		$this->load->model("quanlykho/nguyenlieu");
+		
 		
 		if ((isset($this->request->get['id'])) ) 
 		{
@@ -205,7 +209,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$this->load->model("quanlykho/donvitinh");
 			
 			$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
 			$donvi = $this->model_quanlykho_donvitinh->getItem($this->data['item']['madonvi']);
 			$this->data['item']['tendonvitinh'] = $donvi['tendonvitinh'];
@@ -221,7 +225,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	{
 		$data = $this->request->post;
 		
-		$this->load->model("quanlykho/nguyenlieu");
+		
 		
 		if(count($data))
 		{
@@ -245,7 +249,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		{
 			
 			
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
 			
 			$where = " AND manguyenlieu ='".$this->request->get['id']."' ORDER BY `ngay` DESC";
@@ -262,7 +266,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	{
 		$listid=$this->request->post['delete'];
 		//$listmadonvi=$_POST['delete'];
-		$this->load->model("quanlykho/nguyenlieu");
+		
 		if(count($listid))
 		{
 			$this->model_quanlykho_nguyenlieu->deletedatas($listid);
@@ -363,7 +367,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	
 	private function getForm()
 	{
-		
+		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
@@ -375,6 +379,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		if ((isset($this->request->get['id'])) ) 
 		{
       		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
+			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
 			
     	}
 		
@@ -390,7 +395,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$data = $this->request->post;
 		if($this->validateForm($data))
 		{
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			$item = $this->model_quanlykho_nguyenlieu->getItem($data['id']);
 			if(count($item)==0)
 			{
@@ -420,7 +425,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
 		if($this->validateDinhLuong($data))
 		{
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			//$this->model_quanlykho_nguyenlieu->saveNguyenLieuTrungGian($data);
 			$this->model_quanlykho_nguyenlieu->updateNguyenLieuGoc($data);
 			$this->data['output'] = "true";
@@ -444,7 +449,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		if($this->validateBangBaoGia($data))
 		{
 			$data['ngay'] = $this->date->formatViewDate($data['ngay']);
-			$this->load->model("quanlykho/nguyenlieu");
+			
 			//Luu thong tin bang bao gia
 			$mabangbaogia = $this->model_quanlykho_nguyenlieu->saveBangBaoGia($data);
 			
@@ -500,7 +505,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		{
 			if($data['id'] == "")
 			{
-				$this->load->model("quanlykho/nguyenlieu");
+				
 				$where = " AND manguyenlieu ='".$data['manguyenlieu']."'" ;
 				$item = $this->model_quanlykho_nguyenlieu->getList($where);
 				if(count($item)>0)
@@ -598,7 +603,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		{
 			$where = " AND id = '".$id."'";
 		}
-		$this->load->model("quanlykho/nguyenlieu");
+		
 		$this->load->model("quanlykho/phieunhapxuat");
 		$this->data['datas'] = $this->model_quanlykho_nguyenlieu->getList($where);
 		foreach($this->data['datas'] as $key => $val)
@@ -623,7 +628,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$operator = $this->request->get['operator'];
 		if($operator == "")
 			$operator = "equal";
-		$this->load->model("quanlykho/nguyenlieu");
+		
 		$where = "";
 		switch($operator)
 		{
