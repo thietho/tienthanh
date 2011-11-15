@@ -21,7 +21,7 @@ class ModelCoreCountry extends Model
 		return $query->row;
 	}
 	
-	public function getZones($code)
+	public function getZonesByCode($code)
 	{
 		$query = $this->db->query("Select * from `zone` 
 							Where countryid = (Select countryid from `country` Where iso_code_2='".$code."')");
