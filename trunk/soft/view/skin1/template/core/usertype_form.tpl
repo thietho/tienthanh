@@ -40,19 +40,6 @@
                     <?php } ?>
                 </p>
                 <?php } ?>
-                
-                <h2>Modules quản lý kho</h2>
-                <?php foreach($modulesquanlykho as $k => $item)
-                   { 
-                		$cls = str_replace("/","",$k);
-                ?>
-                <p>
-                	<label><?php echo $item?></label> <br />
-                    <?php foreach($listPermission as $key => $val){ ?>
-                    <input type="checkbox" class="module<?php echo $cls?> checkbox" name="<?php echo $k?>[<?php echo $key?>]" value="<?php echo $k?>-<?php echo $key?>"/> <?php echo $val?>
-                    <?php } ?>
-                </p>
-                <?php } ?>
             </div>
             
         </form>

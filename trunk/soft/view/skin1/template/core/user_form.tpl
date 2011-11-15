@@ -132,9 +132,8 @@
 
 <script type="text/javascript" charset="utf-8">
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
-$(document).ready(function() 
-{ 
-	$("#provincecity").load('?route=common/country/getzonescb&countrycode='+$("#country").val()+'&selectzone=<?php echo $user['provincecity']?>');
+$(document).ready(function() { 
+	$("#provincecity").load('?route=common/country/getzonescb&countrycode='+$("#country").val()+'&selectzone=<?php echo $user["provincecity"]?>');
 });
 </script>
 

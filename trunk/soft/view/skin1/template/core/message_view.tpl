@@ -21,13 +21,7 @@
         <div class="clearer">&nbsp;</div>
         
         
-        <div id="container">
-        	
-            
-        	<ul>
-                <li><a href="#fragment-1"><span>Message</span></a></li>
-            </ul>
-           
+        <div id="container">           
             
             <div id="fragment-1">
             	
@@ -46,48 +40,31 @@
                             <label>Subject:</label><br>
                             <?php echo $title?>
                         </p>
-                    </div>
-                    
-                    <div>
-                        
-                        <div id="errorupload" class="error" style="display:none"></div>
-                        
-                        <div class="loadingimage" style="display:none"></div>
-                        <p>
-                        	<a id="btnAddAttachment"></a><br />
-                        </p>
-                        <p id="attachment">
-                        </p>
-                    	
-                        <span id="delfile"></span>
-                    </div>
-
-                    <div class="clearer">&nbsp;</div>
-                
+                    </div>                
                 </div>
-
-<script language="javascript">
-	
-	$(document).ready(function() {
-   	// put all your jQuery goodness in here.
+                <div>
 <?php
-		if(count($listfileid)>0)
+                
+		if(count($attachmentfile)>0)
 		{
 			
-			foreach($listfileid as $item)
+			foreach($attachmentfile as $item)
 			{
 				if(count($item))
 				{
 ?>
-			$('#attachment').append(creatAttachmentRowView('<?php echo $item['fileid']?>','<?php echo $item['filename']?>','<?php echo DIR_FILE.$item['filepath']?>','<?php echo $item['imagethumbnail']?>'));
+					<p>
+						<img src="<?php echo $item['imagethumbnail']?>" />
+                        <?php echo $item['filename']?>
+                        <a href="<?php echo DIR_FILE?><?php echo $item['filepath']?>" target="_blank">Download</a>
+                    </p>
 <?php
 				}
 			}
 		}
 ?>
- 	});
-
-</script>
+					
+				</div>
                 <div>
                     <p>
                         <?php echo html_entity_decode($description)?>

@@ -13,6 +13,9 @@
                                         	<input type="text" class="text number pos" id="pos-<?php echo $item['mediaid']?>" name="pos[<?php echo $item['mediaid']?>]" value="<?php echo $item['position']?>" size="3" style="text-align:right"/>
                                         </td>
                                         <td>
+                                        	<?php echo $item['imagepreview']?>
+                                        </td>
+                                        <td>
                                         	
                                         	<a class="button" onclick="editeSubInfor('<?php echo $item['mediaid']?>')">Edit</a>&nbsp;<a class="button" onclick="removeSubInfor('<?php echo $item['mediaid']?>')">Remove</a>
                                         </td>
