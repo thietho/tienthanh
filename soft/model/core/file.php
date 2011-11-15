@@ -27,7 +27,7 @@ class ModelCoreFile extends Model
 		return $query->rows;
 	}
 	
-	public function nextID()
+	private function nextID()
 	{
 		return $this->db->getNextId("file","fileid");
 	}
@@ -258,11 +258,10 @@ class ModelCoreFile extends Model
 	
 	function saveFile($file,$filepath="",$filetypeid="image",$tagkeyword="")
 	{
-		
 		$arfile = split('\.', $file['name'] );
 		$datafile = array();
 		//Filename
-		$filename = $arfile[0];
+		$filename = $this->string->chuyenvekodau($arfile[0]);
 		
 		$extension = strtolower($arfile[count($arfile)-1]);
 		//convert byte sang KB

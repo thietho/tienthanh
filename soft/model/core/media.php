@@ -10,7 +10,7 @@ class ModelCoreMedia extends ModelCoreFile
 		return $query->row;
 	}
 	
-	public function getList($where="", $from=0, $to=5)
+	public function getList($where="", $from=0, $to=0)
 	{
 		
 		$sql = "Select `media`.* 
@@ -97,8 +97,10 @@ class ModelCoreMedia extends ModelCoreFile
 		{
 			foreach($refersitemap as $item)
 			{
-				$where .= " AND refersitemap like '%[".$item."]%'";
+				$arr[] = " refersitemap like '%[".$item."]%'";
 			}
+			
+			$where .= "AND (". implode($arr," OR ").")";
 		}
 		elseif($refersitemap != "%")
 		{
@@ -159,6 +161,23 @@ class ModelCoreMedia extends ModelCoreFile
 		$this->db->updateData('media',$field,$value,$where);
 	}
 	
+	public function updateStatus($mediaid, $status)
+	{
+		$mediaid = $this->db->escape(@$mediaid);
+		$status=$this->db->escape(@$status);
+		
+		
+		$field=array(
+						'status'
+					);
+		$value=array(
+						$status
+					);
+		
+		$where="mediaid = '".$mediaid."'";
+		$this->db->updateData('media',$field,$value,$where);
+	}
+	
 	public function initialization($mediaid,$mediatype)
 	{
 		
@@ -195,9 +214,14 @@ class ModelCoreMedia extends ModelCoreFile
 		return $arr;
 	}
 	
+	private function nextID($prefix)
+	{
+		return $this->db->getNextIdVarChar("media","mediaid",$prefix);	
+	}
+	
 	public function insert($data)
 	{
-		$mediaid= $this->user->getSiteId().time();
+		$mediaid = $this->nextID($this->user->getSiteId().time());
 		$mediaparent=$this->db->escape(@$data['mediaparent']);
 		$mediatype=$this->db->escape(@$data['mediatype']);
 		$refersitemap=$this->db->escape(@$data['refersitemap']);
@@ -218,7 +242,7 @@ class ModelCoreMedia extends ModelCoreFile
 		$groupkeys=$this->db->escape(@$data['groupkeys']);
 		$viewcount=0;
 		$position=(int)@$data['position'];
-		$status="active";
+		$status="delete";
 		$statusdate = $this->date->getToday();
 		$statusby=$this->db->escape(@$data['userid']);
 		$updateddate = $this->date->getToday();
@@ -273,6 +297,7 @@ class ModelCoreMedia extends ModelCoreFile
 					);
 		$this->db->insertData("media",$field,$value);
 		$this->updateFileTemp($imageid);
+		$this->updateFileTemp($fileid);
 		return $mediaid;
 	}
 	
@@ -294,7 +319,7 @@ class ModelCoreMedia extends ModelCoreFile
 		$imagepath=$this->db->escape(@$data['imagepath']);
 		$fileid=(int)@$data['fileid'];
 		$filepath=$this->db->escape(@$data['filepath']);
-		
+		$status="active";
 		$groupkeys=$this->db->escape(@$data['groupkeys']);
 		$tagkeyword=$this->db->escape(@$data['tagkeyword']);
 		
@@ -321,6 +346,7 @@ class ModelCoreMedia extends ModelCoreFile
 						'fileid',
 						'filepath',
 						'groupkeys',
+						'status',
 						'updateddate'
 					);
 		$value=array(
@@ -339,6 +365,7 @@ class ModelCoreMedia extends ModelCoreFile
 						$fileid,
 						$filepath,
 						$groupkeys,
+						$status,
 						$updateddate
 					);
 		
@@ -346,7 +373,7 @@ class ModelCoreMedia extends ModelCoreFile
 		$this->db->updateData('media',$field,$value,$where);
 		
 		$this->updateFileTemp($imageid);
-		
+		$this->updateFileTemp($fileid);
 		return true;
 	}
 	
@@ -478,5 +505,7 @@ class ModelCoreMedia extends ModelCoreFile
 		}
 		return $result;
 	}
+	
+	
 }
 ?>
