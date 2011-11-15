@@ -201,12 +201,14 @@ class ModelCoreUser extends ModelCoreFile
 						'`status`',
 						'`updateddate`',
 						'`updatedby`',
+						'`userip`'
 					);
 		$value=array(
 						$userid,
 						$status,
 						$updateddate,
 						$updatedby,
+						$userip
 					);
 		$where="userid = '".$userid."'";
 		$this->db->updateData("user",$field,$value,$where);
@@ -285,6 +287,43 @@ class ModelCoreUser extends ModelCoreFile
 		$where="userid = '".$userid."'";
 		$this->db->updateData("user",$field,$value,$where);	
 			
+	}
+	
+	public function getInformation($userid,$fieldname)
+	{
+		$sql = "Select * from user_information where userid = '".$userid."' and fieldname = '".$fieldname."'";
+		$query = $this->db->query($sql);
+		$info = $query->row;
+		return $info['fieldvalue'];
+	}
+	
+	public function saveInformation($userid, $fieldname, $fieldvalue)
+	{
+		$sql = "Select * from user_information where userid = '".$userid."' and fieldname = '".$fieldname."'";
+		$query = $this->db->query($sql);
+		$info = $query->rows;
+		
+		$field=array(
+					"userid",
+					"fieldname",
+					"fieldvalue"
+				);
+				
+		$value=array(
+					$userid,
+					$fieldname,
+					$fieldvalue,
+					);
+	
+		if(count($info) > 0)
+		{
+			$where="userid = '".$userid."' AND fieldname = '".$fieldname."'";
+			$this->db->updateData('user_information',$field,$value,$where);
+		}
+		else
+		{
+			$this->db->insertData("user_information",$field,$value);	
+		}
 	}
 }
 ?>
