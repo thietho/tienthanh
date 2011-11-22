@@ -58,6 +58,7 @@
                         <th>Tiền công</th>
                         <th>Kho</th>
                         <th>Định mức</th>
+                        <th>Hình</th>
                         <?php if($dialog!=true){ ?>
                         <th>Control</th>     
                         <?php } ?>
@@ -81,6 +82,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['tiencong'])?></td>
                 		<td><?php echo $item['tenkho']?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dinhmuc'])?></td>
+                        <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             

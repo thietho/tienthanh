@@ -349,6 +349,11 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$this->data['datas'][$i]['tenloai'] = $loai['tennhom'];
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
+			$imagepreview = "";
+			
+			
+			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
+			
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';

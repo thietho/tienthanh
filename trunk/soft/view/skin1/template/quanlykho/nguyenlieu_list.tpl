@@ -72,6 +72,7 @@
                         
                         <th>Mục đích sử dụng</th>
                         <th>Ghi chú</th>
+                        <th>Hình</th>
                         <?php if($dialog!=true){ ?>
                         <th>Control</th>     
                         <?php } ?>
@@ -107,6 +108,7 @@
                         
                         <td><?php echo $item['mucdichsudung']?></td>
                         <td><?php echo $item['ghichu']?></td>
+                        <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             

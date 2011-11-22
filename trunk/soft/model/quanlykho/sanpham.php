@@ -1,6 +1,6 @@
 <?php
-
-class ModelQuanlykhoSanpham extends Model
+$this->load->model("core/file");
+class ModelQuanlykhoSanpham extends ModelCoreFile
 { 
 	public function getItem($id, $where="")
 	{
@@ -53,7 +53,8 @@ class ModelQuanlykhoSanpham extends Model
 		$loai=$this->db->escape(@$data['loai']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
 		$makho=$this->db->escape(@$data['makho']);
-		
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		$field=array(
 						
 						'masanpham',
@@ -71,7 +72,9 @@ class ModelQuanlykhoSanpham extends Model
 						'manhom',
 						'madonvi',
 						'makho',
-						'trangthai'
+						'trangthai',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -90,12 +93,15 @@ class ModelQuanlykhoSanpham extends Model
 						$manhom,
 						$madonvi,
 						$makho,
-						'active'
+						'active',
+						$imageid,
+						$imagepath
 					);
 		$this->db->insertData("qlksanpham",$field,$value);
 		$log['tablename'] = "qlksanpham";
 		$log['data'] = $data;
 		$this->user->writeLog(json_encode($log));
+		$this->updateFileTemp($imageid);
 		return $id;
 	}
 	
@@ -118,7 +124,8 @@ class ModelQuanlykhoSanpham extends Model
 		$loai=$this->db->escape(@$data['loai']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
 		$makho=$this->db->escape(@$data['makho']);
-		
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		$field=array(
 						
 						'masanpham',
@@ -136,7 +143,9 @@ class ModelQuanlykhoSanpham extends Model
 						'manhom',
 						'madonvi',
 						'makho',
-						'trangthai'
+						'trangthai',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -155,7 +164,9 @@ class ModelQuanlykhoSanpham extends Model
 						$manhom,
 						$madonvi,
 						$makho,
-						'active'
+						'active',
+						$imageid,
+						$imagepath
 					);
 		
 		$where="id = '".$id."'";
@@ -163,6 +174,7 @@ class ModelQuanlykhoSanpham extends Model
 		$log['tablename'] = "qlksanpham";
 		$log['data'] = $data;
 		$this->user->writeLog(json_encode($log));
+		$this->updateFileTemp($imageid);
 		return true;
 	}
 	

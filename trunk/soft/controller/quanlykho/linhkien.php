@@ -2,8 +2,7 @@
 class ControllerQuanlykhoLinhkien extends Controller
 {
 	private $error = array();
-	
-	public function index()
+	function __construct() 
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
@@ -24,12 +23,18 @@ class ControllerQuanlykhoLinhkien extends Controller
 		{
 			$this->data['permissionDelete'] = false;
 		}
-		//$this->load->language('quanlykho/linhkien');
+		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
 		
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/linhkien");
+		$this->load->helper('image');
+	}
+	
+	public function index()
+	{
+		
 		$this->getList();
 	}
 	
@@ -179,6 +184,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$this->data['datas'][$i]['tenloai'] = $loai['tennhom'];
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
+			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
@@ -196,7 +202,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	
 	private function getForm()
 	{
-		
+		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
@@ -212,7 +218,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$this->data['item']['arrmanhom'] = $this->string->referSiteMapToArray($this->data['item']['manhom']);
 			
 			$this->data['dinhluong'] = $this->model_quanlykho_sanpham->getDinhLuongLinhKien($this->request->get['id']);
-			
+			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
     	}
 		
 		$this->id='content';

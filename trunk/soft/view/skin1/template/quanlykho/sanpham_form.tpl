@@ -98,7 +98,19 @@
             		<label>Ghi chú</label><br />
 					<textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
             	</p>
-               
+               	<p id="pnImage">
+                    <label for="image">Hình</label><br />
+                    <a id="btnAddImage" class="button">Chọn hình</a><br />
+                    <img id="preview" src="<?php echo $item['imagethumbnail']?>" />
+                    <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
+                    <input type="hidden" id="imageid" name="imageid" value="<?php echo $item['imageid']?>" />
+                    <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $item['imagethumbnail']?>" />
+                </p>
+                
+                
+                <div id="errorupload" class="error" style="display:none"></div>
+                
+                <div class="loadingimage" style="display:none"></div>
                
                
             </div>
@@ -135,4 +147,7 @@ $("#manhom").val("<?php echo $item['manhom']?>");
 $("#loai").val("<?php echo $item['loai']?>");
 $("#makho").val("<?php echo $item['makho']?>");
 $("#madonvi").val("<?php echo $item['madonvi']?>");
+var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 </script>
+<script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
+<script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>

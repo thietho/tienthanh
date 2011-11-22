@@ -1,6 +1,6 @@
 <?php
-
-class ModelQuanlykhoLinhkien extends Model
+$this->load->model("core/file");
+class ModelQuanlykhoLinhkien extends ModelCoreFile
 { 
 	public function getItem($id, $where="")
 	{
@@ -43,7 +43,8 @@ class ModelQuanlykhoLinhkien extends Model
 		$manhom=$this->db->escape(@$data['manhom']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
 		$makho=$this->db->escape(@$data['makho']);
-		
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		$field=array(
 						
 						'malinhkien',
@@ -60,7 +61,9 @@ class ModelQuanlykhoLinhkien extends Model
 						'madonvi',
 						'manhom',
 						'makho',
-						'trangthai'
+						'trangthai',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -78,10 +81,12 @@ class ModelQuanlykhoLinhkien extends Model
 						$madonvi,
 						$manhom,
 						$makho,
-						'active'
+						'active',
+						$imageid,
+						$imagepath
 					);
 		$this->db->insertData("qlklinhkien",$field,$value);
-		
+		$this->updateFileTemp($imageid);
 		return $id;
 	}
 	
@@ -103,6 +108,8 @@ class ModelQuanlykhoLinhkien extends Model
 		$manhom=$this->db->escape(@$data['manhom']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
 		$makho=$this->db->escape(@$data['makho']);
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		
 		$field=array(
 						
@@ -119,7 +126,9 @@ class ModelQuanlykhoLinhkien extends Model
 						'madonvinguyenlieu',
 						'manhom',
 						'madonvi',
-						'makho'
+						'makho',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -136,10 +145,13 @@ class ModelQuanlykhoLinhkien extends Model
 						$madonvinguyenlieu,
 						$manhom,
 						$madonvi,
-						$makho
+						$makho,
+						$imageid,
+						$imagepath
 					);
 		$where="id = '".$id."'";
 		$this->db->updateData("qlklinhkien",$field,$value,$where);
+		$this->updateFileTemp($imageid);
 		return true;
 	}
 	

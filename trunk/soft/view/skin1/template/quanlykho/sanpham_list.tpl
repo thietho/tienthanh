@@ -69,6 +69,7 @@
                         <th>Phân cấp</th>
                         <th>Hiện hành</th>
                         <th>Ghi chú</th>
+                        <th>hình</th>
                         <?php if($dialog!=true){ ?>
                         <th>Control</th>     
                         <?php } ?>
@@ -97,6 +98,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['phancap'])?></td>
                         <td><?php echo $this->document->hienhanh[$item['hienhanh']]?></td>
                         <td><?php echo $item['ghichu']?></td>
+                        <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             

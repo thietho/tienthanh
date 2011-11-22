@@ -154,6 +154,7 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		
 		$where="id = '".$id."'";
 		$this->db->updateData("qlknguyenlieu",$field,$value,$where);
+		$this->updateFileTemp($imageid);
 		return true;
 	}
 	
