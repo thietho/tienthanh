@@ -2,7 +2,35 @@
 class ControllerQuanlykhoSanpham extends Controller
 {
 	private $error = array();
-	
+	function __construct() 
+	{
+		if(!$this->user->hasPermission($this->getRoute(), "access"))
+		{
+			$this->response->redirect("?route=common/permission");
+		}
+		$this->data['permissionAdd'] = true;
+		$this->data['permissionEdit'] = true;
+		$this->data['permissionDelete'] = true;
+		if(!$this->user->hasPermission($this->getRoute(), "add"))
+		{
+			$this->data['permissionAdd'] = false;
+		}
+		if(!$this->user->hasPermission($this->getRoute(), "edit"))
+		{
+			$this->data['permissionEdit'] = false;
+		}
+		if(!$this->user->hasPermission($this->getRoute(), "delete"))
+		{
+			$this->data['permissionDelete'] = false;
+		}
+		//$this->load->language('quanlykho/nguyenlieu');
+		//$this->data = array_merge($this->data, $this->language->getData());
+		
+		$this->document->title = $this->language->get('heading_title');
+		
+		$this->load->model("quanlykho/sanpham");
+		$this->load->helper('image');
+   	}
 	public function index()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
@@ -29,7 +57,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		
 		$this->document->title = $this->language->get('heading_title');
 		
-		$this->load->model("quanlykho/sanpham");
+		
 		$this->getList();
 	}
 	
@@ -155,6 +183,7 @@ class ControllerQuanlykhoSanpham extends Controller
 			$this->data['datas'][$i]['tenloai'] = $loai['tennhom'];
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
+			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
@@ -172,7 +201,7 @@ class ControllerQuanlykhoSanpham extends Controller
 	
 	private function getForm()
 	{
-		
+		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
@@ -184,7 +213,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		if ((isset($this->request->get['id'])) ) 
 		{
       		$this->data['item'] = $this->model_quanlykho_sanpham->getItem($this->request->get['id']);
-			
+			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
     	}
 		
 		$this->id='content';

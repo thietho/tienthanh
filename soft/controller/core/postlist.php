@@ -108,7 +108,7 @@ class ControllerCorePostlist extends Controller
 			$imagepreview = "";
 			if($media['imagepath'] != "")
 			{
-				$imagepreview = "<img width=100 src='".HelperImage::resizePNG($media['imagepath'], 180, 180)."' >";
+				$imagepreview = "<img width=100 src='".HelperImage::resizePNG($media['imagepath'], 100, 0)."' >";
 			}
 			
 			$link = "<a class='button' href='".HTTP_SERVER."?route=".$route."&sitemapid=".$sitemapid."&mediaid=".$media['mediaid']."'>".$this->data['button_edit']."</a>";

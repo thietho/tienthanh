@@ -100,7 +100,19 @@
                             <?php } ?>
                         </select>
                     </p>
-
+					<p id="pnImage">
+                        <label for="image">Hình</label><br />
+                        <a id="btnAddImage" class="button">Chọn hình</a><br />
+                        <img id="preview" src="<?php echo $item['imagethumbnail']?>" />
+                        <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
+                        <input type="hidden" id="imageid" name="imageid" value="<?php echo $item['imageid']?>" />
+                        <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $item['imagethumbnail']?>" />
+                    </p>
+                    
+                    
+                    <div id="errorupload" class="error" style="display:none"></div>
+                    
+                    <div class="loadingimage" style="display:none"></div>
                 </div>
                 <div id="fragment-sanphamsudung" class="tabs-container">
                 	
@@ -261,4 +273,8 @@ function removeRow(pos,dlid)
 	$("#deldinhluong").val($("#deldinhluong").val()+","+dlid);
 	$("#row"+pos).remove();
 }
+
+var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 </script>
+<script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
+<script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>
