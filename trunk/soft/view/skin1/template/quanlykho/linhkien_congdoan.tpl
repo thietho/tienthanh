@@ -22,7 +22,7 @@
                 <p>
             		<label>Tên linh kiện: <?php echo $item['tenlinhkien']?></label>
             	</p>
-               	<p>
+               	<!--<p>
                 
             		<label>Mã công đoạn</label><br />
 					<input type="text" id="macongdoan" name="macongdoan" class="text" size=60 />
@@ -87,7 +87,7 @@
                 <p>
             		<label>Ghi chú</label><br />
 					<textarea id="ghichu" name="ghichu"></textarea>
-            	</p>
+            	</p>-->
             </div>
             <div>
             	<table>
@@ -209,109 +209,115 @@ function unSelcetTaiSan()
 	$("#tennguyenlieu").html("");
 }
 //Cong doan
-function getCongDoan(col,val,operator)
+function CongDoan()
 {
-	$.getJSON("?route=quanlykho/congdoan/getCongDoan&col="+col+"&val="+val+"&operator="+operator, 
-			function(data) 
-			{
-				//var str = '<option value=""></option>';
-				for( i in data.congdoans)
+	this.index = 0;
+	
+	this.getCongDoan = function(col,val,operator)
+	{
+		$.getJSON("?route=quanlykho/congdoan/getCongDoan&col="+col+"&val="+val+"&operator="+operator, 
+				function(data) 
 				{
-					
-					$("#listcongdoan").append(createRowCongDoan(data.congdoans[i]));
-					
-				}
-				
-			});
-}
-
-function createRowCongDoan(obj)
-{
-	var btnSua = '<input type="button" value="Sửa" class="button" onClick="editCongDoan('+obj.id+')"/>';
-	var btnXoa = '<input type="button" value="Xóa" class="button" onClick="deleteCongDoan('+obj.id+')"/>';
-	var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="viewCongDoan(\''+obj.macongdoan+'\')"/>';
-	var row = '';
-	row+='					<tr>';
-    row+='                    	<td>'+obj.macongdoan+'</td>';
-    row+='                      <td>'+obj.tencongdoan+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.thututhuchien)+'</td>';
-    row+='                      <td>'+obj.tennguyenlieusanxuat+'</td>';
-    row+='                      <td>'+obj.tenthietbisanxuatchinh+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmucchitieu)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.giagiacong)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmucphelieu)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmucphepham)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmuchaohut)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmucnangxuat)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.dinhmucphulieu)+'</td>';
-    row+='                      <td class="number">'+formateNumber(obj.soluongtrenkg)+'</td>';
-    row+='                      <td>'+obj.ghichu+'</td>';
-    row+='                      <td>'+btnSua+btnXoa+btnXemQuaTrinh+'</td>';
-    row+='                  </tr>';
-	return row
-}
-
-function editCongDoan(id)
-{
-	$.getJSON("?route=quanlykho/congdoan/getCongDoan&col=id&val="+id+"&operator=", 
-			function(data) 
-			{
-				
-				for( i in data.congdoans)
-				{
-					fillCongDoanForm(data.congdoans[i]);	
+					//var str = '<option value=""></option>';
+					for( i in data.congdoans)
+					{
+						
+						$("#listcongdoan").append(cd.createRowCongDoan(data.congdoans[i]));
+						
+					}
 					numberReady();
-				}
-				
-			});
+				});
+	}
 	
-}
-
-function fillCongDoanForm(obj)
-{
-	$("#id").val(obj.id);
-	$("#macongdoan").val(obj.macongdoan);
-	$("#macongdoan").attr("readonly","readonly")
-	$("#tencongdoan").val(obj.tencongdoan);
-	$("#thututhuchien").val(obj.thututhuchien);
-	$("#dinhmucchitieu").val(obj.dinhmucchitieu);
-	$("#giagiacong").val(obj.giagiacong);
-	$("#dinhmucphelieu").val(obj.dinhmucphelieu);
-	$("#dinhmucphepham").val(obj.dinhmucphepham);
-	$("#dinhmuchaohut").val(obj.dinhmuchaohut);
-	$("#dinhmucnangxuat").val(obj.dinhmucnangxuat);
-	$("#dinhmucphulieu").val(obj.dinhmucphulieu);
-	$("#soluongtrenkg").val(obj.soluongtrenkg);
-	$("#nguyenlieusanxuat").val(obj.nguyenlieusanxuat);
-	$("#tennguyenlieu").html(obj.tennguyenlieusanxuat);
-	$("#thietbisanxuatchinh").val(obj.thietbisanxuatchinh);
-	$("#tentaisan").html(obj.tenthietbisanxuatchinh);
-	$("#ghichu").val(obj.ghichu);
-}
-
-function deleteCongDoan(id)
-{
-	$.ajax({
-		url: "?route=quanlykho/congdoan/delete&id="+id,
-		cache: false,
-		success: function(data)
-		{
-			if(data=="true")
+	this.createRowCongDoan = function(obj)
+	{
+		var btnSua = '<input type="button" value="Sửa" class="button" onClick="editCongDoan('+obj.id+')"/>';
+		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="deleteCongDoan('+obj.id+')"/>';
+		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="viewCongDoan(\''+obj.macongdoan+'\')"/>';
+		var row = '';
+		row+='					<tr>';
+		row+='                    	<td><input type="text" id="macongdoan['+ this.index +']" name="macongdoan['+ this.index +']" class="text" value="'+obj.macongdoan+'" /></td>';
+		row+='                      <td><input type="text" id="tencongdoan['+ this.index +']" name="tencongdoan['+ this.index +']" class="text" value="'+obj.tencongdoan+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="thututhuchien['+ this.index +']" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
+		row+='                      <td>'+obj.tennguyenlieusanxuat+'</td>';
+		row+='                      <td>'+obj.tenthietbisanxuatchinh+'</td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucchitieu['+ this.index +']" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="giagiacong['+ this.index +']" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphelieu['+ this.index +']" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphepham['+ this.index +']" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmuchaohut['+ this.index +']" name="dinhmuchaohut['+ this.index +']" class="text number" value="'+obj.dinhmuchaohut+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat['+ this.index +']" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphulieu['+ this.index +']" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="soluongtrenkg['+ this.index +']" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
+		row+='                      <td><textarea id="ghichu['+ this.index +']" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
+		row+='                      <td>'+btnSua+btnXoa+btnXemQuaTrinh+'</td>';
+		row+='                  </tr>';
+		return row
+	}
+	
+	this.editCongDoan = function(id)
+	{
+		$.getJSON("?route=quanlykho/congdoan/getCongDoan&col=id&val="+id+"&operator=", 
+				function(data) 
+				{
+					
+					for( i in data.congdoans)
+					{
+						fillCongDoanForm(data.congdoans[i]);	
+						numberReady();
+					}
+					
+				});
+		
+	}
+	
+	this.fillCongDoanForm = function(obj)
+	{
+		$("#id").val(obj.id);
+		$("#macongdoan").val(obj.macongdoan);
+		$("#macongdoan").attr("readonly","readonly")
+		$("#tencongdoan").val(obj.tencongdoan);
+		$("#thututhuchien").val(obj.thututhuchien);
+		$("#dinhmucchitieu").val(obj.dinhmucchitieu);
+		$("#giagiacong").val(obj.giagiacong);
+		$("#dinhmucphelieu").val(obj.dinhmucphelieu);
+		$("#dinhmucphepham").val(obj.dinhmucphepham);
+		$("#dinhmuchaohut").val(obj.dinhmuchaohut);
+		$("#dinhmucnangxuat").val(obj.dinhmucnangxuat);
+		$("#dinhmucphulieu").val(obj.dinhmucphulieu);
+		$("#soluongtrenkg").val(obj.soluongtrenkg);
+		$("#nguyenlieusanxuat").val(obj.nguyenlieusanxuat);
+		$("#tennguyenlieu").html(obj.tennguyenlieusanxuat);
+		$("#thietbisanxuatchinh").val(obj.thietbisanxuatchinh);
+		$("#tentaisan").html(obj.tenthietbisanxuatchinh);
+		$("#ghichu").val(obj.ghichu);
+	}
+	
+	this.deleteCongDoan = function(id)
+	{
+		$.ajax({
+			url: "?route=quanlykho/congdoan/delete&id="+id,
+			cache: false,
+			success: function(data)
 			{
-				$("#listcongdoan").html("");
-				getCongDoan("malinhkien","<?php echo $item['id']?>","");
+				if(data=="true")
+				{
+					$("#listcongdoan").html("");
+					getCongDoan("malinhkien","<?php echo $item['id']?>","");
+				}
 			}
-		}
-	});
-}
-
-function viewCongDoan(macongdoan)
-{
+		});
+	}
 	
-	openDialog("?route=quanlykho/congdoan/viewCongDoan&macongdoan="+macongdoan,1000,800);
-}
+	this.viewCongDoan = function(macongdoan)
+	{
+		
+		openDialog("?route=quanlykho/congdoan/viewCongDoan&macongdoan="+macongdoan,1000,800);
+	}
 
+}
+var cd = new CongDoan()
 $(document).ready(function() {
-	getCongDoan("malinhkien","<?php echo $item['id']?>","");
+	cd.getCongDoan("malinhkien","<?php echo $item['id']?>","");
 });
 </script>
