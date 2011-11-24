@@ -539,7 +539,7 @@ class ControllerQuanlykhoTaisan extends Controller
 				$where = " AND ".$col." = '".$val."'";
 				break;
 			case "like":
-				$where = " AND ".$col." = '%".$val."%'";
+				$where = " AND ".$col." like '%".$val."%'";
 				break;
 			case "other":
 				$where = " AND ".$col." <> '".$val."'";
@@ -549,7 +549,7 @@ class ControllerQuanlykhoTaisan extends Controller
 				break;
 			
 		}
-			
+		
 			
 		$datas = $this->model_quanlykho_taisan->getList($where);
 		$this->data['output'] = json_encode(array('taisans' => $datas));

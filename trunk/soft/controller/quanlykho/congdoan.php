@@ -111,8 +111,14 @@ class ControllerQuanlykhoCongdoan extends Controller
 		{
 			$nguyenlieu = $this->model_quanlykho_nguyenlieu->getItem($item['nguyenlieusanxuat']);
 			$taisan = $this->model_quanlykho_taisan->getItem($item['thietbisanxuatchinh']);
-			$datas[$key]['tennguyenlieusanxuat'] = $nguyenlieu['tennguyenlieu'];
-			$datas[$key]['tenthietbisanxuatchinh'] = $taisan['tentaisan'];
+			if(count($nguyenlieu))
+				$datas[$key]['tennguyenlieusanxuat'] = $nguyenlieu['tennguyenlieu'];
+			else
+				$datas[$key]['tennguyenlieusanxuat']= '';
+			if(count($taisan))
+				$datas[$key]['tenthietbisanxuatchinh'] = $taisan['tentaisan'];
+			else
+				$datas[$key]['tenthietbisanxuatchinh'] = '';
 		}
 		$this->data['output'] = json_encode(array('congdoans' => $datas));
 		$this->id="congdoan";
