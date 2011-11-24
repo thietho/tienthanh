@@ -113,7 +113,10 @@
                     <tbody id="listcongdoan">
                     	
                     </tbody>
+                    
                 </table>
+                <input type="hidden" id="delchitiet" name="delchitiet" />
+                <input class="button" type="button" name="btnAddrow" value="Thêm dòng" onClick="cd.newRow()">
             </div>
             
         </form>
@@ -122,6 +125,7 @@
     
 </div>
 <script language="javascript">
+var auto = new AutoComplete();
 function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
@@ -143,71 +147,7 @@ function save()
 		}
 	);
 }
-//Nguyen Lieu
-function getNguyenLieu(col,val,operator)
-{
-	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col="+col+"&val="+val+"&operator="+operator, 
-			function(data) 
-			{
-				//var str = '<option value=""></option>';
-				for( i in data.nguyenlieus)
-				{
-					
-					$("#nguyenlieusanxuat").val(data.nguyenlieus[i].id);
-					$("#tennguyenlieu").html(data.nguyenlieus[i].tennguyenlieu);
-				}
-				
-			});
-}
 
-function selcetNguyenLieu()
-{
-	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",1000,800);
-	
-	list = trim($("#manguyenlieu").val(), ',');
-	arr = list.split(",");
-	manguyenlieu = arr[0];
-	getNguyenLieu("id",manguyenlieu,'');
-}
-
-function unSelcetNguyenLieu()
-{
-	$("#manguyenlieu").val("");
-	$("#nguyenlieusanxuat").val("");
-	$("#tennguyenlieu").html("");
-}
-//Tai san
-function getTaiSan(col,val,operator)
-{
-	$.getJSON("?route=quanlykho/taisan/getTaiSan&col="+col+"&val="+val+"&operator="+operator, 
-			function(data) 
-			{
-				//var str = '<option value=""></option>';
-				for( i in data.taisans)
-				{
-					
-					$("#thietbisanxuatchinh").val(data.taisans[i].id);
-					$("#tentaisan").html(data.taisans[i].tentaisan);
-				}
-				
-			});
-}
-
-function selcetTaiSan()
-{
-	openDialog("?route=quanlykho/taisan&opendialog=true",1000,800);
-	list = trim($("#selecttaisan").val(), ',');
-	arr = list.split(",");
-	mataisan = arr[0];
-	getTaiSan("id",mataisan,'');
-}
-
-function unSelcetTaiSan()
-{
-	$("#manguyenlieu").val("");
-	$("#nguyenlieusanxuat").val("");
-	$("#tennguyenlieu").html("");
-}
 //Cong doan
 function CongDoan()
 {
@@ -226,7 +166,34 @@ function CongDoan()
 						
 					}
 					numberReady();
+					auto.autocomplete();
 				});
+	}
+	
+	this.newRow =function()
+	{
+		var obj = new Object()
+		obj.id='';
+		obj.macongdoan='';
+		obj.tencongdoan='';
+		obj.thututhuchien='';
+		obj.nguyenlieusanxuat='';
+		obj.tennguyenlieusanxuat='';
+		obj.thietbisanxuatchinh='';
+		obj.tenthietbisanxuatchinh='';
+		obj.dinhmucchitieu='';
+		obj.giagiacong='';
+		obj.dinhmucphelieu='';
+		obj.dinhmucphepham='';
+		obj.dinhmuchaohut='';
+		obj.dinhmucnangxuat='';
+		obj.dinhmucphulieu='';
+		obj.soluongtrenkg='';
+		obj.ghichu='';
+		
+		$("#listcongdoan").append(cd.createRowCongDoan(obj));
+		numberReady();
+		auto.autocomplete();
 	}
 	
 	this.createRowCongDoan = function(obj)
@@ -236,22 +203,24 @@ function CongDoan()
 		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="viewCongDoan(\''+obj.macongdoan+'\')"/>';
 		var row = '';
 		row+='					<tr>';
-		row+='                    	<td><input type="text" id="macongdoan['+ this.index +']" name="macongdoan['+ this.index +']" class="text" value="'+obj.macongdoan+'" /></td>';
-		row+='                      <td><input type="text" id="tencongdoan['+ this.index +']" name="tencongdoan['+ this.index +']" class="text" value="'+obj.tencongdoan+'" /></td>';
+		row+='                    	<td><input type="text" id="macongdoan-'+ this.index +'" name="macongdoan['+ this.index +']" class="text" value="'+obj.macongdoan+'" /></td>';
+		row+='                      <td><input type="text" id="tencongdoan-'+ this.index +'" name="tencongdoan['+ this.index +']" class="text" value="'+obj.tencongdoan+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="thututhuchien['+ this.index +']" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
-		row+='                      <td>'+obj.tennguyenlieusanxuat+'</td>';
-		row+='                      <td>'+obj.tenthietbisanxuatchinh+'</td>';
+		row+='                      <td><input type="hidden" id="nguyenlieusanxuat-'+ this.index +'" name="nguyenlieusanxuat['+ this.index +']" value="'+obj.nguyenlieusanxuat+'"><input type="text" id="tennguyenlieusanxuat-'+ this.index +'" name="tennguyenlieusanxuat['+ this.index +']" class="text gridautocomplete" value="'+obj.tennguyenlieusanxuat+'" /></td>';
+		row+='                      <td><input type="hidden" id="thietbisanxuatchinh-'+ this.index +'" name="thietbisanxuatchinh['+ this.index +']" value="'+obj.thietbisanxuatchinh+'"><input type="text" id="tenthietbisanxuatchinh-'+ this.index +'" name="tenthietbisanxuatchinh['+ this.index +']" class="text gridautocomplete" value="'+obj.tenthietbisanxuatchinh+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucchitieu['+ this.index +']" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="giagiacong['+ this.index +']" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphelieu['+ this.index +']" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphepham['+ this.index +']" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmuchaohut['+ this.index +']" name="dinhmuchaohut['+ this.index +']" class="text number" value="'+obj.dinhmuchaohut+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat['+ this.index +']" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphulieu['+ this.index +']" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="soluongtrenkg['+ this.index +']" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
-		row+='                      <td><textarea id="ghichu['+ this.index +']" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
-		row+='                      <td>'+btnSua+btnXoa+btnXemQuaTrinh+'</td>';
+		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphepham-'+ this.index +'" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmuchaohut-'+ this.index +'" name="dinhmuchaohut['+ this.index +']" class="text number" value="'+obj.dinhmuchaohut+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphulieu-'+ this.index +'" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="soluongtrenkg-'+ this.index +'" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
+		row+='                      <td><textarea id="ghichu-'+ this.index +'" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
+		row+='                      <td>'+btnXoa+btnXemQuaTrinh+'</td>';
 		row+='                  </tr>';
+		
+		this.index++;
 		return row
 	}
 	
@@ -320,4 +289,115 @@ var cd = new CongDoan()
 $(document).ready(function() {
 	cd.getCongDoan("malinhkien","<?php echo $item['id']?>","");
 });
+
+function callBackAutoComplete(val)
+{
+	//alert(val.id);
+	ar = val.id.split("-");
+	//alert(ar[0]);
+	if(ar[0]=='tennguyenlieusanxuat')
+	{
+		getNguyenLieu("manguyenlieu",val.value,"like");
+	}
+	if(ar[0]=='tenthietbisanxuatchinh')
+	{
+		getTaiSan('mataisan',val.value,'like')
+	}
+}
+
+function selectValue(eid)
+{
+	//alert(eid)
+	ar = eid.split("-");
+	if(ar[0]=='tennguyenlieusanxuat')
+	{
+		selectValueNguyenLieu(eid);
+	}
+	if(ar[0]=='tenthietbisanxuatchinh')
+	{
+		selectValueTaiSan(eid);
+	}
+}
+
+function getNguyenLieu(col,val,operator)
+{
+	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col="+col+"&val="+val+"&operator="+operator, 
+			function(data) 
+			{
+				str = "";
+				for( i in data.nguyenlieus)
+				{
+					str+= '<li id=rowauto-'+i+' class=autocompleterow>'+ data.nguyenlieus[i].manguyenlieu + ':' +data.nguyenlieus[i].tennguyenlieu+'</li><input type="hidden" id="idnguyenlieu-'+i+'" value="'+ data.nguyenlieus[i].id +'" />';
+				}
+				$("#autocomplete").html("<ul class='autocomplete'>"+str+"</ul>");
+				auto.selectRow();
+			});
+}
+
+function selectValueNguyenLieu(eid)
+{
+	str = auto.getValue();
+	arr = str.split(":");
+	
+	$("#"+eid).val(arr[0]);
+	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=manguyenlieu&val="+arr[0]+"&operator=", 
+			function(data) 
+			{
+				//alert(eid);
+				ar = eid.split("-");
+				pos = ar[1];
+				for( i in data.nguyenlieus)
+				{
+					
+					$("#nguyenlieusanxuat-"+pos).val(data.nguyenlieus[i].id);
+					$("#tennguyenlieusanxuat-"+pos).val(data.nguyenlieus[i].tennguyenlieu);
+					
+				}
+				
+			});
+	auto.closeAutocomplete()
+}
+
+
+
+function getTaiSan(col,val,operator)
+{
+	$.getJSON("?route=quanlykho/taisan/getTaiSan&col="+col+"&val="+val+"&operator="+operator, 
+			function(data) 
+			{
+				//var str = '<option value=""></option>';
+				
+				str = "";
+				for( i in data.taisans)
+				{
+					str+= '<li id=rowauto-'+i+' class=autocompleterow>'+ data.taisans[i].mataisan + ':' +data.taisans[i].tentaisan+'</li><input type="hidden" id="idtaisan-'+i+'" value="'+ data.taisans[i].id +'" />';
+				}
+				$("#autocomplete").html("<ul class='autocomplete'>"+str+"</ul>");
+				auto.selectRow();
+			});
+}
+
+function selectValueTaiSan(eid)
+{
+	str = auto.getValue();
+	arr = str.split(":");
+	
+	$("#"+eid).val(arr[0]);
+	$.getJSON("?route=quanlykho/taisan/getTaiSan&col=mataisan&val="+arr[0]+"&operator=", 
+			function(data) 
+			{
+				//alert(eid);
+				ar = eid.split("-");
+				pos = ar[1];
+				for( i in data.taisans)
+				{
+					
+					$("#thietbisanxuatchinh-"+pos).val(data.taisans[i].id);
+					$("#tenthietbisanxuatchinh-"+pos).val(data.taisans[i].tentaisan);
+					
+				}
+				
+			});
+	auto.closeAutocomplete()
+}
 </script>
