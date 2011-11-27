@@ -350,6 +350,7 @@ class ControllerQuanlykhoSanpham extends Controller
 	public function savedinhluong()
 	{
 		$data = $this->request->post;
+		
 		$masanpham = $data['masanpham'];
 		
 		$arrsoluong = $data['soluong'];

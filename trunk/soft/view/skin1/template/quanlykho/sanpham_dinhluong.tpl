@@ -29,7 +29,7 @@
                         <table style="width:auto">
                         	<thead>
                                 <tr>
-                                    <th>Nguyên liệu</th>
+                                    <th>Linh kiện</th>
                                     <th>Số lượng</th>
                                     <th></th>
                                 </tr>
@@ -42,9 +42,6 @@
                         <input class="button" type="button" name="btnAddrow" value="Thêm dòng" onClick="selcetLinhKien()">
                     </p>
                 </p>
-                
-               
-               
                
             </div>
             
@@ -75,9 +72,10 @@ function save()
 		}
 	);
 }
+var dl = new DinhLuong();
 
 <?php foreach($dinhluong as $val){ ?>
-createRow("<?php echo $val['id']?>","<?php echo $val['malinhkien']?>","<?php echo $val['soluong']?>")
+	dl.createRow("<?php echo $val['id']?>","<?php echo $val['malinhkien']?>","<?php echo $val['soluong']?>");
 <?php } ?>
 function selcetLinhKien()
 {
@@ -89,40 +87,44 @@ function selcetLinhKien()
 	getLinhKien("id",malinhkien,'');*/
 	for(i in arr)
 	{
-		
-		createRow(0,arr[i],0);
+		if(arr[i] != "<?php echo $item['id']?>")
+			dl.createRow(0,arr[i],0);
 	}
 	
 }
-var index = 0;
-function createRow(id,malinhkien,soluong)
+function DinhLuong()
 {
-	$.getJSON("?route=quanlykho/linhkien/getLinhKien&col=id&val="+malinhkien, 
-	function(data) 
+	this.index = 0;
+	this.createRow = function(id,malinhkien,soluong)
 	{
-		//var str = '<option value=""></option>';
-		var row = "";
-		for( i in data.linhkiens)
+		$.getJSON("?route=quanlykho/linhkien/getLinhKien&col=id&val="+malinhkien, 
+		function(data) 
 		{
-			
-			var cellid = '<input type="hidden" name="dinhluong['+index+']" value="' +id+ '">';
-			var cellmalinhkien = '<input type="hidden" name="malinhkien['+index+']" value="' +data.linhkiens[i].id+ '">';
-			var cellsoluong = '<input type="text" name="soluong['+index+']" value="'+soluong+'" class="text number" size=5 />';
-			row+='						<tr id="row'+index+'">';
-			row+='                      	<td>'+cellid + data.linhkiens[i].tenlinhkien+' ('+data.linhkiens[i].madonvi+')</td>';
-			row+='                          <td>'+cellmalinhkien+cellsoluong+'</td>';
-			row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
-			row+='                      </tr>';
-		}
-		$("#dinhluonglinhkien").append(row);
-		index++;
-		numberReady();
-	});	
+			//var str = '<option value=""></option>';
+			var row = "";
+			for( i in data.linhkiens)
+			{
+				
+				var cellid = '<input type="hidden" name="dinhluong['+ dl.index +']" value="' +id+ '">';
+				var cellmalinhkien = '<input type="hidden" name="malinhkien['+dl.index+']" value="' +data.linhkiens[i].id+ '">';
+				var cellsoluong = '<input type="text" name="soluong['+dl.index+']" value="'+soluong+'" class="text number" size=5 />';
+				row+='						<tr id="row'+dl.index+'">';
+				row+='                      	<td>'+cellid + data.linhkiens[i].tenlinhkien+' ('+data.linhkiens[i].madonvi+')</td>';
+				row+='                          <td>'+cellmalinhkien+cellsoluong+'</td>';
+				row+='                          <td><input type="button" class="button" value="Xóa" onclick="dl.removeRow('+dl.index+','+id+')"></td>';
+				row+='                      </tr>';
+			}
+			$("#dinhluonglinhkien").append(row);
+			dl.index++;
+			numberReady();
+		});	
+	}
+	
+	this.removeRow = function(pos,dlid)
+	{
+		$("#deldinhluong").val($("#deldinhluong").val()+","+dlid);
+		$("#row"+pos).remove();
+	}
 }
 
-function removeRow(pos,dlid)
-{
-	$("#deldinhluong").val($("#deldinhluong").val()+","+dlid);
-	$("#row"+pos).remove();
-}
 </script>
