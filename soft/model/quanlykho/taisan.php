@@ -49,7 +49,8 @@ class ModelQuanlykhoTaisan extends Model
 		$loai=$this->db->escape(@$data['loai']);
 		$mucdichsudung=$this->db->escape(@$data['mucdichsudung']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		
 		$field=array(
 						
@@ -73,7 +74,9 @@ class ModelQuanlykhoTaisan extends Model
 						'loai',
 						'mucdichsudung',
 						'ghichu',
-						'trangthai'
+						'trangthai',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -97,7 +100,9 @@ class ModelQuanlykhoTaisan extends Model
 						$loai,
 						$mucdichsudung,
 						$ghichu,
-						'active'
+						'active',
+						$imageid,
+						$imagepath
 					);
 		$this->db->insertData("qlktaisan",$field,$value);
 		
@@ -123,7 +128,8 @@ class ModelQuanlykhoTaisan extends Model
 		$loai=$this->db->escape(@$data['loai']);
 		$mucdichsudung=$this->db->escape(@$data['mucdichsudung']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
+		$imageid=(int)@$data['imageid'];
+		$imagepath=$this->db->escape(@$data['imagepath']);
 		
 		$field=array(
 						
@@ -143,7 +149,9 @@ class ModelQuanlykhoTaisan extends Model
 						'loai',
 						'mucdichsudung',
 						'ghichu',
-						'trangthai'
+						'trangthai',
+						'imageid',
+						'imagepath'
 					);
 		$value=array(
 						
@@ -163,7 +171,9 @@ class ModelQuanlykhoTaisan extends Model
 						$loai,
 						$mucdichsudung,
 						$ghichu,
-						'active'
+						'active',
+						$imageid,
+						$imagepath
 					);
 		
 		$where="id = '".$id."'";

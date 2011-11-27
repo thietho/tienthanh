@@ -33,31 +33,6 @@ class ControllerQuanlykhoSanpham extends Controller
    	}
 	public function index()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
-		}
-		//$this->load->language('quanlykho/sanpham');
-		//$this->data = array_merge($this->data, $this->language->getData());
-		
-		$this->document->title = $this->language->get('heading_title');
-		
-		
 		$this->getList();
 	}
 	

@@ -69,7 +69,7 @@
                         <th>Phân cấp</th>
                         <th>Hiện hành</th>
                         <th>Ghi chú</th>
-                        <th>hình</th>
+                        <th>Hình</th>
                         <?php if($dialog!=true){ ?>
                         <th>Control</th>     
                         <?php } ?>
