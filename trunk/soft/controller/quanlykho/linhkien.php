@@ -426,7 +426,12 @@ class ControllerQuanlykhoLinhkien extends Controller
 	{
 		$data = $this->request->post;
 		$this->load->model("quanlykho/congdoan");
-		
+		$listdel = split(',',$data['delcongdoans']);
+		if(count($listdel))
+			foreach($listdel as $id)
+			{
+				$this->model_quanlykho_congdoan->delete($id);
+			}
 		foreach($data['macongdoan'] as $key => $val)
 		{
 			$congdoan['id'] = (int)$data['id'][$key];
@@ -450,8 +455,9 @@ class ControllerQuanlykhoLinhkien extends Controller
 				else
 					$this->model_quanlykho_congdoan->update($congdoan);
 			}
-			$this->data['output'] = "true";
+			
 		}
+		$this->data['output'] = "true";
 		/*if($this->validateFormCongDoan($data))
 		{
 			$this->load->model("quanlykho/congdoan");
