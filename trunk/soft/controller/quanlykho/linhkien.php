@@ -425,7 +425,34 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function savecongdoan()
 	{
 		$data = $this->request->post;
-		if($this->validateFormCongDoan($data))
+		$this->load->model("quanlykho/congdoan");
+		
+		foreach($data['macongdoan'] as $key => $val)
+		{
+			$congdoan['id'] = (int)$data['id'][$key];
+			$congdoan['malinhkien'] = $data['malinhkien'];
+			$congdoan['macongdoan'] = $data['macongdoan'][$key];
+			$congdoan['tencongdoan'] = $data['tencongdoan'][$key];
+			$congdoan['thututhuchien'] = $data['thututhuchien'][$key];
+			$congdoan['nguyenlieusanxuat'] = $data['nguyenlieusanxuat'][$key];
+			$congdoan['thietbisanxuatchinh'] = $data['thietbisanxuatchinh'][$key];
+			$congdoan['dinhmucchitieu'] = $data['dinhmucchitieu'][$key];
+			$congdoan['giagiacong'] = $data['giagiacong'][$key];
+			$congdoan['dinhmucnangxuat'] = $data['dinhmucnangxuat'][$key];
+			$congdoan['dinhmucphulieu'] = $data['dinhmucphulieu'][$key];
+			$congdoan['soluongtrenkg'] = $data['soluongtrenkg'][$key];
+			$congdoan['ghichu'] = $data['ghichu'][$key];
+			$congdoan['status'] = $data['status'][$key];
+			if($congdoan['status']=='update')
+			{
+				if($congdoan['id'] == 0)
+					$this->model_quanlykho_congdoan->insert($congdoan);
+				else
+					$this->model_quanlykho_congdoan->update($congdoan);
+			}
+			$this->data['output'] = "true";
+		}
+		/*if($this->validateFormCongDoan($data))
 		{
 			$this->load->model("quanlykho/congdoan");
 			$item = $this->model_quanlykho_congdoan->getItem($data['id']);
@@ -445,7 +472,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 			{
 				$this->data['output'] .= $item."<br>";
 			}
-		}
+		}*/
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();

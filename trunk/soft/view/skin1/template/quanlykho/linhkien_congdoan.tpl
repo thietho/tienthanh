@@ -134,7 +134,7 @@ function save()
 		function(data){
 			if(data == "true")
 			{
-				window.location = "?route=quanlykho/linhkien/caidatcongdoan&id=<?php echo $item['id']?>";
+				window.location = "?route=quanlykho/linhkien";
 			}
 			else
 			{
@@ -152,7 +152,17 @@ function save()
 function CongDoan()
 {
 	this.index = 0;
-	
+	this.refresh = function()
+	{
+		$('input').change(function(e) {
+			ar = this.id.split('-');
+			var row= ar[1];
+			$("#status-"+row).val('update');
+			$('#row-'+row).css('background-color',"#F0F");
+		});
+		numberReady();
+		auto.autocomplete();
+	}
 	this.getCongDoan = function(col,val,operator)
 	{
 		$.getJSON("?route=quanlykho/congdoan/getCongDoan&col="+col+"&val="+val+"&operator="+operator, 
@@ -165,8 +175,7 @@ function CongDoan()
 						$("#listcongdoan").append(cd.createRowCongDoan(data.congdoans[i]));
 						
 					}
-					numberReady();
-					auto.autocomplete();
+					cd.refresh()
 				});
 	}
 	
@@ -192,23 +201,23 @@ function CongDoan()
 		obj.ghichu='';
 		
 		$("#listcongdoan").append(cd.createRowCongDoan(obj));
-		numberReady();
-		auto.autocomplete();
+		cd.refresh()
 	}
 	
 	this.createRowCongDoan = function(obj)
 	{
-		var btnSua = '<input type="button" value="Sửa" class="button" onClick="editCongDoan('+obj.id+')"/>';
+		var id = '<input type="hidden" id="id-'+ this.index +'" name="id['+ this.index +']" value="'+obj.id+'" />';
+		id += '<input type="hidden" id="status-'+ this.index +'" name="status['+ this.index +']" />';
 		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="deleteCongDoan('+obj.id+')"/>';
 		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="viewCongDoan(\''+obj.macongdoan+'\')"/>';
 		var row = '';
-		row+='					<tr>';
+		row+='					<tr id="row-'+ this.index +'">';
 		row+='                    	<td><input type="text" id="macongdoan-'+ this.index +'" name="macongdoan['+ this.index +']" class="text" value="'+obj.macongdoan+'" /></td>';
 		row+='                      <td><input type="text" id="tencongdoan-'+ this.index +'" name="tencongdoan['+ this.index +']" class="text" value="'+obj.tencongdoan+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="thututhuchien['+ this.index +']" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="thututhuchien-'+ this.index +'" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
 		row+='                      <td><input type="hidden" id="nguyenlieusanxuat-'+ this.index +'" name="nguyenlieusanxuat['+ this.index +']" value="'+obj.nguyenlieusanxuat+'"><input type="text" id="tennguyenlieusanxuat-'+ this.index +'" name="tennguyenlieusanxuat['+ this.index +']" class="text gridautocomplete" value="'+obj.tennguyenlieusanxuat+'" /></td>';
 		row+='                      <td><input type="hidden" id="thietbisanxuatchinh-'+ this.index +'" name="thietbisanxuatchinh['+ this.index +']" value="'+obj.thietbisanxuatchinh+'"><input type="text" id="tenthietbisanxuatchinh-'+ this.index +'" name="tenthietbisanxuatchinh['+ this.index +']" class="text gridautocomplete" value="'+obj.tenthietbisanxuatchinh+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucchitieu['+ this.index +']" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucchitieu-'+ this.index +'" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphepham-'+ this.index +'" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
@@ -216,8 +225,8 @@ function CongDoan()
 		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphulieu-'+ this.index +'" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="soluongtrenkg-'+ this.index +'" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
-		row+='                      <td><textarea id="ghichu-'+ this.index +'" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
-		row+='                      <td>'+btnXoa+btnXemQuaTrinh+'</td>';
+		row+='                      <td><textarea class="text" id="ghichu-'+ this.index +'" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
+		row+='                      <td>'+id+btnXoa+btnXemQuaTrinh+'</td>';
 		row+='                  </tr>';
 		
 		this.index++;
@@ -289,6 +298,8 @@ var cd = new CongDoan()
 $(document).ready(function() {
 	cd.getCongDoan("malinhkien","<?php echo $item['id']?>","");
 });
+
+
 
 function callBackAutoComplete(val)
 {
