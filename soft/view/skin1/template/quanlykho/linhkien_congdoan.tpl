@@ -115,7 +115,7 @@
                     </tbody>
                     
                 </table>
-                <input type="hidden" id="delchitiet" name="delchitiet" />
+                <input type="hidden" id="delcongdoans" name="delcongdoans" />
                 <input class="button" type="button" name="btnAddrow" value="Thêm dòng" onClick="cd.newRow()">
             </div>
             
@@ -208,7 +208,7 @@ function CongDoan()
 	{
 		var id = '<input type="hidden" id="id-'+ this.index +'" name="id['+ this.index +']" value="'+obj.id+'" />';
 		id += '<input type="hidden" id="status-'+ this.index +'" name="status['+ this.index +']" />';
-		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="deleteCongDoan('+obj.id+')"/>';
+		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="cd.delRow('+this.index+')"/>';
 		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="cd.viewCongDoan(\''+obj.macongdoan+'\')"/>';
 		var row = '';
 		row+='					<tr id="row-'+ this.index +'">';
@@ -233,7 +233,7 @@ function CongDoan()
 		return row
 	}
 	
-	this.editCongDoan = function(id)
+	/*this.editCongDoan = function(id)
 	{
 		$.getJSON("?route=quanlykho/congdoan/getCongDoan&col=id&val="+id+"&operator=", 
 				function(data) 
@@ -285,6 +285,11 @@ function CongDoan()
 				}
 			}
 		});
+	}*/
+	this.delRow = function(pos)
+	{
+		$('#delcongdoans').val($('#delcongdoans').val()+ $('#id-'+pos).val()+",");
+		$('#row-'+pos).remove();
 	}
 	
 	this.viewCongDoan = function(macongdoan)
