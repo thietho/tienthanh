@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2011 at 02:34 PM
+-- Generation Time: Nov 28, 2011 at 05:38 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -1133,6 +1133,8 @@ CREATE TABLE IF NOT EXISTS `qlkkehoach_sanpham` (
   `id` bigint(20) NOT NULL,
   `makehoach` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `masanpham` bigint(20) DEFAULT NULL,
+  `soluongtonhientai` double NOT NULL,
+  `sosanphamtrenlot` double NOT NULL,
   `soluong` double DEFAULT NULL,
   `solot` double NOT NULL,
   `thanhtien` double NOT NULL,
@@ -2158,14 +2160,14 @@ CREATE TABLE IF NOT EXISTS `user_stats` (
   `username` varchar(50) NOT NULL,
   `ip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=403 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=404 ;
 
 --
 -- Dumping data for table `user_stats`
 --
 
 INSERT INTO `user_stats` (`id`, `starttime`, `sessionid`, `username`, `ip`) VALUES
-(402, '2011-11-28 14:31:57', 'b6t9g3v7pagfeqn6nejkf065q7', '', '::1');
+(403, '2011-11-28 17:18:09', 'b6t9g3v7pagfeqn6nejkf065q7', '', '::1');
 
 -- --------------------------------------------------------
 
