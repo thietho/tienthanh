@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2011 at 02:13 AM
+-- Generation Time: Nov 28, 2011 at 02:34 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -1108,8 +1108,10 @@ CREATE TABLE IF NOT EXISTS `qlkkehoach` (
   `ngaybatdau` datetime DEFAULT NULL,
   `ngayketthuc` datetime DEFAULT NULL,
   `loai` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `quy` int(11) NOT NULL,
   `nam` int(11) DEFAULT NULL,
+  `quy` int(11) NOT NULL,
+  `thang` int(11) NOT NULL,
+  `tuan` int(11) NOT NULL,
   `kehoachcha` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `trangthai` text COLLATE utf8_unicode_ci,
   `ghichu` text COLLATE utf8_unicode_ci,
@@ -1132,7 +1134,10 @@ CREATE TABLE IF NOT EXISTS `qlkkehoach_sanpham` (
   `makehoach` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `masanpham` bigint(20) DEFAULT NULL,
   `soluong` double DEFAULT NULL,
-  `ghichu` text COLLATE utf8_unicode_ci,
+  `solot` double NOT NULL,
+  `thanhtien` double NOT NULL,
+  `pheduyet` text COLLATE utf8_unicode_ci,
+  `phuchu` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_kehoach_sanpham_kehoach1` (`makehoach`),
   KEY `fk_kehoach_sanpham_sanpham1` (`masanpham`)
@@ -2153,14 +2158,14 @@ CREATE TABLE IF NOT EXISTS `user_stats` (
   `username` varchar(50) NOT NULL,
   `ip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=400 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=403 ;
 
 --
 -- Dumping data for table `user_stats`
 --
 
 INSERT INTO `user_stats` (`id`, `starttime`, `sessionid`, `username`, `ip`) VALUES
-(399, '2011-11-28 02:06:48', 'k1bhgepd0ce5mrape1k097hc23', '', '::1');
+(402, '2011-11-28 14:31:57', 'b6t9g3v7pagfeqn6nejkf065q7', '', '::1');
 
 -- --------------------------------------------------------
 
