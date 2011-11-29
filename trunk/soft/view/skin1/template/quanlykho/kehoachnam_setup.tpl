@@ -37,6 +37,7 @@
     
 </div>
 <script language="javascript">
+$('#listkehoachsanpham').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&id=<?php echo $item['id']?>");
 function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 

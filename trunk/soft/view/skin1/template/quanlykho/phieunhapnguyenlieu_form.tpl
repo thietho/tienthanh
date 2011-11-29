@@ -439,7 +439,7 @@ function getChiTietPhieuNhapXuat(maphieu)
 
 function callBackAutoComplete(val)
 {
-	getNguyenLieu("manguyenlieu",val.val(),"like");
+	getNguyenLieu("manguyenlieu",val.value,"like");
 }
 
 

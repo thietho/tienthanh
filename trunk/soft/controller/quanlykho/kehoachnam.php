@@ -140,10 +140,39 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	private function setup()
 	{
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
+		
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_setup.tpl';
 		$this->layout="layout/center";
-		
+		$this->render();
+	}
+	
+	public function loadKehoachSanPham()
+	{
+		$makehoach = $this->request->get['id'];
+		$where = "AND makehoach = '".$makehoach."'";
+		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
+		if(count($this->data['khsp'])==0)
+		{
+			$data = array();
+			$this->load->model('quanlykho/sanpham');
+			$rows = $this->model_quanlykho_sanpham->getList();
+			foreach($rows as $item)
+			{
+				$data['makehoach'] = $makehoach;
+				$data['masanpham'] = $item['masanpham'];
+				$data['tensanpham'] = $item['tensanpham'];
+				$data['soluongtonhientai'] = $item['soluongton'];
+				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
+				$data['dongia'] = $item['dongiaban'];
+				
+				
+				
+				$this->data['khsp'][] = $data;
+			}
+		}
+		$this->id='content';
+		$this->template='quanlykho/kehoach_sanpham.tpl';
 		$this->render();
 	}
 	
