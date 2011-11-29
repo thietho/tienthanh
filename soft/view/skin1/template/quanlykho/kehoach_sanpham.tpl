@@ -19,15 +19,16 @@
         </tr>
     </thead>
     <tbody>
+    	<?php foreach($khsp as $item){ ?>
     	<tr>
-        	<td></td>
+        	<td><?php echo $item['masanpham']?></td>
+            <td><?php echo $item['tensanpham']?></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="number"><?php echo $item['soluongtonhientai']?></td>
+            <td class="number"><?php echo $item['sosanphamtrenlot']?></td>
             <td></td>
             <td></td>
             <td></td>
@@ -36,5 +37,6 @@
             <td></td>
             <td></td>
         </tr>
+        <?php } ?>
     </tbody>
 </table>

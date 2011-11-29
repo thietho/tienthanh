@@ -223,7 +223,7 @@ class ControllerQuanlykhoKho extends Controller
 		
 		foreach($this->data['datas'] as $key => $val)
 		{
-			$where = " AND maphieu = (SELECT id
+			$where = " AND maphieu in (SELECT id
 										FROM `qlkphieunhapxuat`
 										WHERE makho = '".$val['makho']."'
 									)";
