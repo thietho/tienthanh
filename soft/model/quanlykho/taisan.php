@@ -1,6 +1,6 @@
 <?php
-
-class ModelQuanlykhoTaisan extends Model
+$this->load->model("core/file");
+class ModelQuanlykhoTaisan extends ModelCoreFile
 { 
 	public function getItem($id, $where="")
 	{
@@ -105,7 +105,7 @@ class ModelQuanlykhoTaisan extends Model
 						$imagepath
 					);
 		$this->db->insertData("qlktaisan",$field,$value);
-		
+		$this->updateFileTemp($imageid);
 		return $id;
 	}
 	
@@ -178,6 +178,7 @@ class ModelQuanlykhoTaisan extends Model
 		
 		$where="id = '".$id."'";
 		$this->db->updateData("qlktaisan",$field,$value,$where);
+		$this->updateFileTemp($imageid);
 		return true;
 	}
 	
