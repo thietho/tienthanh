@@ -42,7 +42,11 @@ class ModelCoreSitemap extends Model
 								 "quanlykho/nguyenlieu" => "Danh mục nguyên liệu",
 								 "quanlykho/taisan" => "Quản lý tài sản",
 								 "quanlykho/linhkien" => "Quản lý linh kiện",
-								 "quanlykho/sanpham" => "Quản lý sản phẩm"
+								 "quanlykho/sanpham" => "Quản lý sản phẩm",
+								 "4-title" => "Quản lý kế khoạch",
+								 "quanlykho/kehoachnam" => "Kế hoạch năm",
+								 "quanlykho/kehoach" => "Kế hoạch"
+								 
 								 );
 	public function getModules()
 	{
