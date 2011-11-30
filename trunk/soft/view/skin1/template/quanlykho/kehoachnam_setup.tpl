@@ -10,7 +10,7 @@
         	<div class="button right">
             	<input type="button" value="Save" class="button" onClick="save()"/>
      	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/kehoachnam')"/>   
-     	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
+     	        <input type="hidden" name="makehoach" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
         	<div id="error" class="error" style="display:none"></div>
@@ -44,12 +44,12 @@ function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/kehoachnam/save", $("#frm").serialize(),
+	$.post("?route=quanlykho/kehoachnam/savechitietkehoach", $("#frm").serialize(),
 		function(data){
 			var arr = data.split('-');
 			if(arr[0] == "true")
 			{
-				window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
+				window.location = "?route=quanlykho/kehoachnam";
 			}
 			else
 			{
