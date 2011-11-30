@@ -201,6 +201,12 @@ class ModelQuanlykhoKehoach extends Model
 		/*$where="id = '".$id."'";
 		$this->db->deleteData("qlkkehoach",$where);*/
 		$this->updateStatus($id,'deleted');
+		$child = $this->getChild($id);
+		if(count($child))
+			foreach($child as $item)
+			{
+				$this->delete($item['id']);
+			}
 	}
 	
 	public function deletedatas($listid)

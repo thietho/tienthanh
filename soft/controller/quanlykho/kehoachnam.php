@@ -117,6 +117,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$class=$eclass.$item['parentpath'];
 				
 			$this->data["datas"][]=array(
+										'id'=>$item['id'],
 										'nam'=>$item['nam'],
 										'quy'=>$item['quy'],
 										'thang'=>$item['thang'],
