@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-    	<?php foreach($khsp as $item){ ?>
+    	<?php foreach($khsp as $key => $item){ ?>
     	<tr>
         	<td><?php echo $item['masanpham']?></td>
             <td><?php echo $item['tensanpham']?></td>
@@ -27,16 +27,36 @@
             <td></td>
             <td></td>
             <td></td>
-            <td class="number"><?php echo $item['soluongtonhientai']?></td>
-            <td class="number"><?php echo $item['sosanphamtrenlot']?></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['soluongtonhientai'])?></td>
+            <td class="number">
+            	<?php echo $this->string->numberFormate($item['sosanphamtrenlot'])?>
+                <input type="hidden" id="sosanphamtrenlot-<?php echo $key?>" name="sosanphamtrenlot[<?php echo $key?>]" value="<?php echo $item['sosanphamtrenlot']?>"/>
+            </td>
+            <td>
+            	<input type="text" class="text number soluong" id="soluong-<?php echo $key?>" name="soluong[<?php echo $key?>]" value="<?php echo $item['soluong']?>" />
+                <input type="hidden" id="dongia-<?php echo $key?>" name="dongia[<?php echo $key?>]" value="<?php echo $item['dongia']?>"/>
+            </td>
+            <td id="solotview-<?php echo $key?>" class="number"></td>
+            <td id="thanhtienview-<?php echo $key?>" class="number"></td>
+            <td><?php echo $item['pheduyet']?></td>
+            <td><?php echo $item['phuchu']?></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            
         </tr>
         <?php } ?>
     </tbody>
 </table>
+<script language="javascript">
+$('.soluong').keyup(function(e) {
+    var arr = this.id.split('-');
+	var currow = arr[1];
+	var thanhtien = stringtoNumber(this.value) * $('#dongia-'+currow).val();
+	var solot = stringtoNumber(this.value) / $('#sosanphamtrenlot-'+currow).val();
+	$('#thanhtienview-'+currow).html(numberView(thanhtien));
+	$('#solotview-'+currow).html(numberView(solot))
+});
+
+
+
+</script>

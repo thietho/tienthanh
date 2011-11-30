@@ -171,6 +171,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$this->data['khsp'][] = $data;
 			}
 		}
+		
 		$this->id='content';
 		$this->template='quanlykho/kehoach_sanpham.tpl';
 		$this->render();

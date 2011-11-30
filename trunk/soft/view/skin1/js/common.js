@@ -179,7 +179,12 @@ function toMonth(month)
 	else
 		return month;
 }
-
+function stringtoNumber(str)
+{
+	str = (""+str).replace(/,/g,"");
+	var num = str*1;
+	return num;
+}
 function formateNumber(num)
 {
 	ar = (""+num).split("\.");
@@ -211,7 +216,41 @@ function formateNumber(num)
 	else
 		return divnum+"\."+mod;
 }
-
+function numberView(str)
+{
+	str = (""+str).replace(/,/g,"");
+	str = parseFloat(str);
+	var obj = new Number(str);
+	num=obj.toFixed(2);
+	ar = (""+num).split("\.");
+	div = ar[0];
+	mod = ar[1];
+	
+	arr = new Array();
+	block = "";
+	
+	for(i=div.length-1; i>=0 ; i--)
+	{
+		
+		block = div[i] + block;
+		
+		if(block.length == 3)
+		{
+			arr.unshift(block);
+			block ="";
+		}
+		
+	}
+	arr.unshift(block);
+	
+	divnum = arr.join(",");
+	divnum = trim(divnum,",")
+	divnum = divnum.replace("-,","-")
+	if(mod == undefined || mod == 0)
+		return divnum;
+	else
+		return divnum+"\."+mod;
+}
 function trim(str, chars) {
 	return ltrim(rtrim(str, chars), chars);
 }

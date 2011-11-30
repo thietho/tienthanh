@@ -37,7 +37,9 @@
     
 </div>
 <script language="javascript">
-$('#listkehoachsanpham').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&id=<?php echo $item['id']?>");
+$('#listkehoachsanpham').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&id=<?php echo $item['id']?>",function(){
+		numberReady();
+	});
 function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 

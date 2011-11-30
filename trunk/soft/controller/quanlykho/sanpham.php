@@ -276,15 +276,17 @@ class ControllerQuanlykhoSanpham extends Controller
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
     	}
 		
-		if ($this->string->toNumber($data['sosanphamtrenlot']) < 0) 
+		if ($this->string->toNumber($data['sosanphamtrenlot']) <= 0) 
 		{
-      		$this->error['sosanphamtrenlot'] = "Số sản phẩm/Lot không được nhập số âm";
+      		$this->error['sosanphamtrenlot'] = "Số sản phẩm/Lot phải > 0";
     	}
 		
-		if ($this->string->toNumber($data['dongiaban']) < 0) 
+		if ($this->string->toNumber($data['dongiaban']) <= 0) 
 		{
-      		$this->error['dongiaban'] = "Đơn giá bán không được nhập số âm";
+      		$this->error['dongiaban'] = "Đơn giá bán phải > 0";
     	}
+		
+		
 
 		if (count($this->error)==0) {
 	  		return TRUE;
