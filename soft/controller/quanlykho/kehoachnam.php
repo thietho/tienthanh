@@ -94,27 +94,48 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/kehoachnam/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/kehoachnam/delete');		
 		$this->data['list'] = $this->url->http('quanlykho/kehoachnam');
-		$this->data['datas'] = array();
-		$where = " AND loai = '".$this->loaikehoach."' AND quy = 0 AND thang = 0";
-		$rows = $this->model_quanlykho_kehoach->getList($where);
-		//Page
-		$page = $this->request->get['page'];		
-		$x=$page;		
-		$limit = 20;
-		$total = count($rows); 
-		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+			
 		
-		$pager  = $this->pager->getPagerData($total, $limit, $page); 
-		$offset = $pager->offset; 
-		$limit  = $pager->limit; 
-		$page   = $pager->page;
-		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
-		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
+		$this->data['datas'] = array();
+		$rows = array();
+		$this->model_quanlykho_kehoach->getTree(0,$rows);
+		$eid="ex0-node";
+		$eclass="child-of-ex0-node";
+		foreach($rows as $item)
 		{
-			$this->data['datas'][$i] = $rows[$i];
-			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/kehoachnam/update&id='.$this->data['datas'][$i]['id']);
-			$this->data['datas'][$i]['text_edit'] = "Sửa";
+			
+			$deep = $item['level'];
+			$link_edit = $this->url->http('quanlykho/kehoachnam/update&id='.$item['id']);
+			$text_edit = "Edit";
+			
+			$tab="";
+			if(count($item['countchild'])==0)
+				$tab="<span class='tab'></span>";
+		
+			$class="";
+			if($item['parentpath']!="")
+				$class=$eclass.$item['parentpath'];
+				
+			$this->data["datas"][]=array(
+										'nam'=>$item['nam'],
+										'quy'=>$item['quy'],
+										'thang'=>$item['thang'],
+										
+										'prefix'=>$this->string->getPrefix("--",$deep),
+										'deep'=>$deep + 1,
+										'eid' =>$eid . $item['path'] ,
+										'class' =>$class,
+										'tennhom'=>$item['tennhom'],
+										'nhomcha'=>$item['nhomcha'],
+										'thutu'=>$item['thutu'],
+										'tab'=>$tab,
+										'link_edit'=>$link_edit,
+										'text_edit' =>$text_edit,
+										'link_addchild' => $link_addchild,
+										'text_addchild' => $text_addchild
+								    );
+			
+			
 		}
 		
 		$this->id='content';
@@ -160,7 +181,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			foreach($rows as $item)
 			{
 				$data['makehoach'] = $makehoach;
-				$data['masanpham'] = $item['masanpham'];
+				$data['masanpham'] = $item['id'];
 				$data['tensanpham'] = $item['tensanpham'];
 				$data['soluongtonhientai'] = $item['soluongton'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
@@ -207,20 +228,48 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	}
 	
 	private function saveKeHoachNam($data)
-	{
+	{	
 		
 		for($i=1;$i<=$this->setup['quy'];$i++)
 		{
 			$data['quy'] = $i;
 			$data['thang'] = 0;
-			$this->model_quanlykho_kehoach->insert($data);
+			$data['kehoachcha'] = $data['id'];
+			$id = $this->model_quanlykho_kehoach->insert($data);
 			for($j=1;$j<=$this->setup['thang'];$j++)
 			{
 				$data['thang'] = $j;
+				$data['kehoachcha'] = $id;
 				$this->model_quanlykho_kehoach->insert($data);
 			}
 		}
 		
+	}
+	
+	public function savechitietkehoach()
+	{
+		$data = $this->request->post;
+		$makehoach = $data['makehoach'];
+		foreach($data['soluong'] as $key => $val)
+		{
+			$khsp['id'] = $data['id'][$key];
+			$khsp['makehoach'] = $makehoach;
+			$khsp['masanpham'] = $data['masanpham'][$key];
+			$khsp['tensanpham'] = $data['tensanpham'][$key];
+			$khsp['soluongtonhientai'] = $data['soluongtonhientai'][$key];
+			$khsp['sosanphamtrenlot'] = $data['sosanphamtrenlot'][$key];
+			$khsp['soluong'] = $data['soluong'][$key];
+			$khsp['solot'] = $data['solot'][$key];
+			$khsp['dongia'] = $data['dongia'][$key];
+			
+			$khsp['pheduyet'] = $data['pheduyet'][$key];
+			$khsp['phuchu'] = $data['phuchu'][$key];
+			$this->model_quanlykho_kehoach->saveKeHoachSanPham($khsp);
+		}
+		$this->data['output'] = "true";
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
 	}
 	
 	private function validateForm($data)

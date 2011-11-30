@@ -119,7 +119,7 @@ final class Document {
 		return $query->row[$name];	
 	}
 	
-	public function getSanPham($id,$name = 'tenlinhkien')
+	public function getSanPham($id,$name = 'tensanpham')
 	{
 		$sql = "Select `qlksanpham`.* 
 									from `qlksanpham` 

@@ -25,6 +25,43 @@ class ModelQuanlykhoKehoach extends Model
 		return $query->rows;
 	}
 	
+	public function getChild($kehoachcha,$order = " Order by nam,quy,thang ")
+	{
+		$where = " AND kehoachcha = '".$kehoachcha."'";
+		return $this->getList($where);
+	}
+	
+	function getTree($id, &$data, $level=-1, $path="", $parentpath="")
+	{
+		$arr=$this->getItem($id);
+		
+		$rows = $this->getChild($id);
+		
+		$arr['countchild'] = count(rows);
+		
+		if($arr['kehoachcha'] != 0) 
+			$parentpath .= "-".$arr['kehoachcha'];
+		
+		if($id!="" )
+		{
+			$level += 1;
+			$path .= "-".$id;
+			
+			$arr['level'] = $level;
+			$arr['path'] = $path;
+			$arr['parentpath'] = $parentpath;
+			
+			array_push($data,$arr);
+		}
+		
+		
+		if(count($rows))
+			foreach($rows as $row)
+			{
+				$this->getTree($row['id'], $data, $level, $path, $parentpath);
+			}
+	}
+	
 	public function nextID()
 	{
 		return $this->db->getNextId('qlkkehoach','id');
@@ -214,9 +251,9 @@ class ModelQuanlykhoKehoach extends Model
 		$soluongtonhientai = $this->string->toNumber($this->db->escape(@$data['soluongtonhientai']));
 		$sosanphamtrenlot = $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
 		$soluong = $this->string->toNumber($this->db->escape(@$data['soluong']));
-		$solot=$this->string->toNumber($this->db->escape(@$data['solot']));
+		$solot=$soluong / $sosanphamtrenlot;
 		$dongia=$this->string->toNumber($this->db->escape(@$data['dongia']));
-		$thanhtien= $soluong * $dongia;
+		$thanhtien = $soluong * $dongia;
 		$pheduyet= @(int)$data['pheduyet'];
 		$phuchu = $this->db->escape(@$data['phuchu']);
 		$field=array(
