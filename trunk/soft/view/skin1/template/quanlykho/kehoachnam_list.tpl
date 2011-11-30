@@ -45,7 +45,10 @@
                         
                         
                         <td>
-                        	<?php echo $item['tab']?><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['manhom']?>" >
+                        	<?php echo $item['tab']?>
+                        	<?php if($item['deep'] == 1){?>
+                        	<input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" >
+                        	<?php } ?>
                         	Kế hoạch <?php echo $item['nam']?>
                             <?php if($item['quy'] > 0) { ?>
                             	quý <?php echo $item['quy']?>
@@ -70,7 +73,7 @@
                 </tbody>
                 </table>
             </div>
-        	<?php echo $pager?>
+        	
         
         </form>
         
@@ -84,7 +87,7 @@ function deleteitem()
 	var answer = confirm("Bạn có muốn xóa không?")
 	if (answer)
 	{
-		$.post("?route=quanlykho/taisan/delete", 
+		$.post("?route=quanlykho/kehoachnam/delete", 
 				$("#listitem").serialize(), 
 				function(data)
 				{
