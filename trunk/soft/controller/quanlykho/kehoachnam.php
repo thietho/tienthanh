@@ -194,15 +194,23 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			}
 		}
 		//
-		$kehoachtruoc = $this->model_quanlykho_kehoach->kehoacnamtruoc($makehoach);
+		$kehoachtruoc = $this->model_quanlykho_kehoach->kehoachkytruoc($makehoach);
 		$where = "AND makehoach = '".$kehoachtruoc['id']."'";
 		$khsptruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
+		
+		$kehoachnamtruoc = $this->model_quanlykho_kehoach->kehoacnamtruoc($makehoach);
+		$where = "AND makehoach = '".$kehoachnamtruoc['id']."'";
+		$khspnamtruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
 		
 		foreach($this->data['khsp'] as $key => $item)
 		{
 			$arr = $this->string->array_Filter($khsptruoc,'masanpham',$item['masanpham']);
 			$this->data['khsp'][$key]['slkehoachtruoc'] = $arr[0]['soluong'];
 			$this->data['khsp'][$key]['thanhtienkehoachtruoc'] = $arr[0]['thanhtien'];
+			
+			$arr = $this->string->array_Filter($khspnamtruoc,'masanpham',$item['masanpham']);
+			$this->data['khsp'][$key]['slkehoachnamtruoc'] = $arr[0]['soluong'];
+			$this->data['khsp'][$key]['thanhtienkehoachnamtruoc'] = $arr[0]['thanhtien'];
 		}
 		
 		$this->id='content';

@@ -17,6 +17,12 @@
 <div id="error" class="error" style="display: none"></div>
 <div>
 <p><label>Năm:</label><?php echo $item['nam']?></p>
+<?php if($item['quy']>0){ ?>
+<p><label>Quý:</label><?php echo $item['quy']?></p>
+<?php } ?>
+<?php if($item['thang']>0){ ?>
+<p><label>Tháng:</label><?php echo $item['thang']?></p>
+<?php } ?>
 <p><label>Ghi chú</label><br />
 <?php echo $item['ghichu']?></p>
 <div id="listkehoachsanpham"></div>
