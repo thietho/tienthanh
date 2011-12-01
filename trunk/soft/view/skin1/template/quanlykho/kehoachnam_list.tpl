@@ -57,11 +57,15 @@
 				<?php } ?></td>
 
 
-			<td class="link-control"><a class="button"
+			<td class="link-control">
+				<a class="button"
 				href="<?php echo $item['link_edit']?>"
 				title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
-
-
+				<?php if($item['link_danhgia']!=''){ ?>
+				<a class="button"
+				href="<?php echo $item['link_danhgia']?>"
+				title="<?php echo $item['text_danhgia']?>"><?php echo $item['text_danhgia']?></a>
+				<?php } ?>
 			</td>
 		</tr>
 		<?php

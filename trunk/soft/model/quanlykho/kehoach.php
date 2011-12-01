@@ -278,7 +278,7 @@ class ModelQuanlykhoKehoach extends Model
 						'phuchu'
 						
 						);
-						$value=array(
+		$value=array(
 
 						$makehoach,
 						$masanpham,
@@ -306,6 +306,22 @@ class ModelQuanlykhoKehoach extends Model
 
 						return $id;
 	}
+	
+	function updateKeHoachSanPham($id,$col,$val)
+	{
+		$id= (int)@$id;
+		$col= $this->db->escape(@$col);
+		$val= $this->db->escape(@$val);
+		$field=array(
+						$col	
+						);
+		$value=array(
+						$val
+						);
+		$where="id = '".$id."'";
+		$this->db->updateData("qlkkehoach_sanpham",$field,$value,$where);
+	}
+	
 	function kehoacnamtruoc($id)
 	{
 		$kehoach = $this->getItem($id);
