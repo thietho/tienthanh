@@ -30,8 +30,8 @@
             	<?php echo $item['tensanpham']?>
                 <input type="hidden" id="tensanpham-<?php echo $key?>" name="tensanpham[<?php echo $key?>]" value="<?php echo $item['tensanpham']?>"/>
             </td>
-            <td></td>
-            <td></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachtruoc'])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['thanhtienkehoachtruoc'])?></td>
             <td></td>
             <td></td>
             <td class="number">
@@ -48,8 +48,8 @@
             </td>
             <td class="number"><input type="text" class="text number solot" id="solot-<?php echo $key?>" name="solot[<?php echo $key?>]" value="<?php echo $item['solot']?>" /></td>
             <td id="thanhtienview-<?php echo $key?>" class="number"><?php echo $this->string->numberFormate($item['thanhtien'])?></td>
-            <td><?php echo $item['pheduyet']?></td>
-            <td><?php echo $item['phuchu']?></td>
+            <td><input type="checkbox" id="pheduyet-<?php echo $key?>" name="pheduyet[<?php echo $key?>]" value="1" <?php if($item['pheduyet']==1) echo 'checked="checked"';?> /></td>
+            <td><textarea id="phuchu-<?php echo $key?>" name="phuchu[<?php echo $key?>]"><?php echo $item['phuchu']?></textarea> </td>
             <td></td>
             <td></td>
             

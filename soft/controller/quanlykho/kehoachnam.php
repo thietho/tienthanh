@@ -193,7 +193,18 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$this->data['khsp'][] = $data;
 			}
 		}
-
+		//
+		$kehoachtruoc = $this->model_quanlykho_kehoach->kehoacnamtruoc($makehoach);
+		$where = "AND makehoach = '".$kehoachtruoc['id']."'";
+		$khsptruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
+		
+		foreach($this->data['khsp'] as $key => $item)
+		{
+			$arr = $this->string->array_Filter($khsptruoc,'masanpham',$item['masanpham']);
+			$this->data['khsp'][$key]['slkehoachtruoc'] = $arr[0]['soluong'];
+			$this->data['khsp'][$key]['thanhtienkehoachtruoc'] = $arr[0]['thanhtien'];
+		}
+		
 		$this->id='content';
 		$this->template='quanlykho/kehoach_sanpham.tpl';
 		$this->render();

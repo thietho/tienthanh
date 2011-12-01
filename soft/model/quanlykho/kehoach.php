@@ -262,6 +262,7 @@ class ModelQuanlykhoKehoach extends Model
 		$thanhtien = $soluong * $dongia;
 		$pheduyet= @(int)$data['pheduyet'];
 		$phuchu = $this->db->escape(@$data['phuchu']);
+		
 		$field=array(
 
 						'makehoach',
@@ -304,6 +305,19 @@ class ModelQuanlykhoKehoach extends Model
 						}
 
 						return $id;
+	}
+	function kehoacnamtruoc($id)
+	{
+		$kehoach = $this->getItem($id);
+		$nam = $kehoach['nam'];
+		$namtruoc = $nam -1;
+		$quy = $kehoach['quy'];
+		$thang = $kehoach['thang'];
+		$where .= " AND nam = '". $namtruoc ."'";
+		$where .= " AND quy = '". $quy ."'";
+		$where .= " AND thang = '". $thang ."'";
+		$kehoachtruoc = $this->getList($where);
+		return $kehoachtruoc[0];
 	}
 
 }
