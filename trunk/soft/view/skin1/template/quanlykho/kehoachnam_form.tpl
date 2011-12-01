@@ -1,38 +1,36 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript'
+	language='javascript'> </script>
 <div class="section" id="sitemaplist">
 
-	<div class="section-title">Kê hoạch năm</div>
-    
-    <div class="section-content padding1">
-    
-    	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
-        
-        	<div class="button right">
-            	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/kehoachnam')"/>   
-     	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
-            </div>
-            <div class="clearer">^&nbsp;</div>
-        	<div id="error" class="error" style="display:none"></div>
-        	<div>
-            	<p>
-            		<label>Năm</label><br />
-					<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>" class="text"/>
-                    
-            	</p>
-                <p>
-            		<label>Ghi chú</label><br />
-					<textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
-            	</p>
-               	
-               
-               
-            </div>
-            
-        </form>
-    
-    </div>
-    
+<div class="section-title">Kê hoạch năm</div>
+
+<div class="section-content padding1">
+
+<form name="frm" id="frm" action="<?php echo $action?>" method="post"
+	enctype="multipart/form-data">
+
+<div class="button right"><input type="button" value="Save"
+	class="button" onClick="save()" /> <input type="button" value="Cancel"
+	class="button" onclick="linkto('?route=quanlykho/kehoachnam')" /> <input
+	type="hidden" name="id" value="<?php echo $item['id']?>"></div>
+<div class="clearer">^&nbsp;</div>
+<div id="error" class="error" style="display: none"></div>
+<div>
+<p><label>Năm</label><br />
+<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>"
+	class="text" /></p>
+<p><label>Ghi chú</label><br />
+<textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
+</p>
+
+
+
+</div>
+
+</form>
+
+</div>
+
 </div>
 <script language="javascript">
 function save()

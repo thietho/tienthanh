@@ -1,11 +1,11 @@
 <?php
-	class ControllerLayoutPrint extends Controller
+class ControllerLayoutPrint extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->template="layout/print.tpl";
+		$this->template="layout/print.tpl";
 			
-			$this->render();
-		}
+		$this->render();
 	}
+}
 ?>

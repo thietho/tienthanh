@@ -1,32 +1,32 @@
 <?php
 
-	$this->load->model("core/file");
+$this->load->model("core/file");
 class ModelCoreMessage extends ModelCoreFile
-{ 
+{
 	public function getItem($messageid, $where="")
 	{
-		$sql="Select `message`.* 
+		$sql="Select `message`.*
 									from `message` 
 									where messageid ='".$messageid."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=5)
 	{
-		
-		$sql = "Select `message`.* 
+
+		$sql = "Select `message`.*
 									from `message` 
 									where status <> 'delete' " . $where ;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function insert($data)
 	{
 		$messageid=time();
@@ -43,7 +43,7 @@ class ModelCoreMessage extends ModelCoreFile
 		$folder=$this->db->escape(@$data['folder']);
 		$senddate = $this->date->getToday();
 		$replyfrom=$this->db->escape(@$data['replyfrom']);
-		
+
 		$field=array(
 						'`messageid`',
 						'`userid`',
@@ -57,8 +57,8 @@ class ModelCoreMessage extends ModelCoreFile
 						'`senddate`',
 						'`replyfrom`'
 						
-					);
-		$value=array(
+						);
+						$value=array(
 						$messageid,
 						$userid,
 						$from,
@@ -70,43 +70,43 @@ class ModelCoreMessage extends ModelCoreFile
 						$folder,
 						$senddate,
 						$replyfrom,
-					);
-		$this->db->insertData("message",$field,$value);
-		$data['messageid']=$messageid;
-		if($attachment!="")
-		{	
-			$listfile = split(",",$attachment);
-			$this->updateListFileTemp($listfile);
-			$this->model_core_message->clearTemp();
-		}
-		//Lay danh sach gui message
-		$datasend = $this->getTarget($to);
-		//Gui message den tung user trong list
-		foreach($datasend['listuser'] as $item)
-		{
-			$data['username'] = $item;
-			$this->sendMessage($data);
-		}
-		//Gui message de tung e mail trong list
-		foreach($datasend['listemail'] as $item)
-		{
-			$data['email'] = $item;
-			$this->sendEmail($data);
-		}
-		return $messageid;
+						);
+						$this->db->insertData("message",$field,$value);
+						$data['messageid']=$messageid;
+						if($attachment!="")
+						{
+							$listfile = split(",",$attachment);
+							$this->updateListFileTemp($listfile);
+							$this->model_core_message->clearTemp();
+						}
+						//Lay danh sach gui message
+						$datasend = $this->getTarget($to);
+						//Gui message den tung user trong list
+						foreach($datasend['listuser'] as $item)
+						{
+							$data['username'] = $item;
+							$this->sendMessage($data);
+						}
+						//Gui message de tung e mail trong list
+						foreach($datasend['listemail'] as $item)
+						{
+							$data['email'] = $item;
+							$this->sendEmail($data);
+						}
+						return $messageid;
 	}
-	
+
 	public function delete($messageid)
 	{
 		$messageid=$this->db->escape(@$messageid);
 		//Xoa nhung file dinh kem
 		/*$message = $this->getItem($messageid);
-		if($message['attachment']!="")
-		{
+		 if($message['attachment']!="")
+		 {
 			$list = split(",",$message['attachment']);
 			foreach($list as $item)
-				$this->deleteFile($item);
-		}*/
+			$this->deleteFile($item);
+			}*/
 		//Xoa tin nhan
 		if($messageid != "")
 		{
@@ -114,7 +114,7 @@ class ModelCoreMessage extends ModelCoreFile
 			$this->db->query($sql);
 		}
 	}
-	
+
 	private function sendMessage($data)
 	{
 		$messageid=$this->db->escape(@$data['messageid']);
@@ -126,17 +126,17 @@ class ModelCoreMessage extends ModelCoreFile
 						'status',
 						'folder',
 						'senddate'
-					);
-		$value=array(
+						);
+						$value=array(
 						$messageid,
 						$username,
 						"",
 						"inbox",
 						$senddate
-					);
-		$this->db->insertData("messagesend",$field,$value);
+						);
+						$this->db->insertData("messagesend",$field,$value);
 	}
-	
+
 	public function sendEmail($data)
 	{
 		$to=$data['email'];
@@ -144,18 +144,18 @@ class ModelCoreMessage extends ModelCoreFile
 		$subject = $data['title'];
 		// message
 		$message = $data['description'];
-		
+
 		// To send HTML mail, the Content-type header must be set
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-		
+
 		// Additional headers
 		$headers .= 'From: '.$data['from'];
-							
+			
 		// Mail it
 		@mail($to, $subject, $message, $headers);
 	}
-	
+
 	private function getTarget($to)
 	{
 		$listarrdress = split(",",$to);
@@ -167,12 +167,12 @@ class ModelCoreMessage extends ModelCoreFile
 			$mystring = trim($item);
 			$findme   = '@';
 			$pos = strpos($mystring, $findme);
-			if ($pos === false) 
+			if ($pos === false)
 			{
 				//Not found
 				$listuser[]=$this->processString($item);
-			} 
-			else 
+			}
+			else
 			{
 				//found
 				$listemail[]=$this->processString($item);
@@ -182,11 +182,11 @@ class ModelCoreMessage extends ModelCoreFile
 		$data['listemail'] = $listemail;
 		return $data;
 	}
-	
+
 	private function processString($str)
 	{
 		$pos = strpos($str,'&lt;');
-		if ($pos === false) 
+		if ($pos === false)
 		{
 			return trim($str);
 		}
@@ -197,10 +197,10 @@ class ModelCoreMessage extends ModelCoreFile
 			return trim($s);
 		}
 	}
-	
+
 	public function getMessages($where, $from=0, $to=5)
 	{
-		
+
 		$sql = "Select `messagesend`.*
 									from `messagesend` 
 									where 1=1 " . $where ;
@@ -208,11 +208,11 @@ class ModelCoreMessage extends ModelCoreFile
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function updateStatus($messageid,$status)
 	{
 		$messageid=$this->db->escape(@$messageid);
@@ -220,15 +220,15 @@ class ModelCoreMessage extends ModelCoreFile
 		$field=array(
 						'messageid',
 						'status',
-					);
+		);
 		$value=array(
-						$messageid,
-						$status
-					);
+		$messageid,
+		$status
+		);
 		$where="messageid = '".$messageid."'";
 		$this->db->updateData('messagesend',$field,$value,$where);
 	}
-	
+
 	public function updateFolder($messageid,$folder)
 	{
 		$messageid=$this->db->escape(@$messageid);
@@ -236,15 +236,15 @@ class ModelCoreMessage extends ModelCoreFile
 		$field=array(
 						'messageid',
 						'folder',
-					);
+		);
 		$value=array(
-						$messageid,
-						$folder
-					);
+		$messageid,
+		$folder
+		);
 		$where="messageid = '".$messageid."'";
 		$this->db->updateData('messagesend',$field,$value,$where);
 	}
-	
+
 	public function delectMessage($messageid)
 	{
 		$where="messageid = '".$messageid."'";

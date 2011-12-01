@@ -27,7 +27,7 @@ $filename = DIR_FILE."db/setting.json";;
 $setting = json_decode($contents);
 
 if($setting->skin=="")
-	$setting->skin="skin1";
+$setting->skin="skin1";
 
 define('DIR_VIEW','view/'.$setting->skin.'/');
 define('DIR_TEMPLATE','view/'.$setting->skin.'/template/');

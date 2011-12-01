@@ -1,31 +1,31 @@
 <?php
 $this->load->model("core/file");
 class ModelQuanlykhoTaisan extends ModelCoreFile
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlktaisan`.* 
+		$sql = "Select `qlktaisan`.*
 									from `qlktaisan` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlktaisan`.* 
+
+		$sql = "Select `qlktaisan`.*
 									from `qlktaisan` 
 									where trangthai <> 'deleted' " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->db->escape(@$data['id']);
@@ -51,9 +51,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 		$ghichu=$this->db->escape(@$data['ghichu']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
-		
+
 		$field=array(
-						
+
 						'mataisan',
 						'tentaisan',
 						'ngaymua',
@@ -77,9 +77,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'trangthai',
 						'imageid',
 						'imagepath'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$mataisan,
 						$tentaisan,
 						$ngaymua,
@@ -103,15 +103,15 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'active',
 						$imageid,
 						$imagepath
-					);
-		$this->db->insertData("qlktaisan",$field,$value);
-		$this->updateFileTemp($imageid);
-		return $id;
+						);
+						$this->db->insertData("qlktaisan",$field,$value);
+						$this->updateFileTemp($imageid);
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
-	
+
 		$id= $this->db->escape(@$data['id']);
 		$mataisan=$this->db->escape(@$data['mataisan']);
 		$tentaisan= $this->db->escape(@$data['tentaisan']);
@@ -130,9 +130,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 		$ghichu=$this->db->escape(@$data['ghichu']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
-		
+
 		$field=array(
-						
+
 						'mataisan',
 						'tentaisan',
 						'ngaymua',
@@ -140,7 +140,7 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'thoihanbaohanh',
 						'nuocsanxuat',
 						'namsanxuat',
-						//'nguoinhan',
+		//'nguoinhan',
 						'madonvi',
 						'dongia',
 						'khauhao',
@@ -152,9 +152,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'trangthai',
 						'imageid',
 						'imagepath'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$mataisan,
 						$tentaisan,
 						$ngaymua,
@@ -174,34 +174,34 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'active',
 						$imageid,
 						$imagepath
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlktaisan",$field,$value,$where);
-		$this->updateFileTemp($imageid);
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlktaisan",$field,$value,$where);
+						$this->updateFileTemp($imageid);
+						return true;
 	}
-	
-	
-	
+
+
+
 	public function delete($id)
 	{
 		/*$where="id = '".$id."'";
-		$this->db->deleteData("qlktaisan",$where);*/
+		 $this->db->deleteData("qlktaisan",$where);*/
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						'deleted'
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlktaisan",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlktaisan",$field,$value,$where);
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -209,37 +209,37 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 			$this->delete($item);
 		}
 	}
-	
-	
-	
+
+
+
 	//Sổ tai san
 	public function getSoTaiSan($id)
 	{
-		$sql = "Select `qlktaisan_phongban`.* 
+		$sql = "Select `qlktaisan_phongban`.*
 									from `qlktaisan_phongban` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getSoTaiSanList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlktaisan_phongban`.* 
+
+		$sql = "Select `qlktaisan_phongban`.*
 									from `qlktaisan_phongban` 
 									where 1=1 " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function saveSoTaiSan($data)
 	{
-		
+
 		$id=(int)@$data['id'];
 		$mataisan=$this->db->escape(@$data['mataisan']);
 		$phongbannhan=$this->db->escape(@$data['phongbannhan']);
@@ -250,9 +250,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 		$ngaytra=$this->db->escape(@$data['ngaytra']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
 		$ghichutra=$this->db->escape(@$data['ghichutra']);
-		
+
 		$field=array(
-						
+
 						'mataisan',
 						'phongbannhan',
 						'nguoidexuat',
@@ -262,9 +262,9 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'ngaytra',
 						'ghichu',
 						'ghichutra'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$mataisan,
 						$phongbannhan,
 						$nguoidexuat,
@@ -274,67 +274,67 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						$ngaytra,
 						$ghichu,
 						$ghichutra
-						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("qlktaisan_phongban",$field,$value);
-			
-			
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlktaisan_phongban",$field,$value,$where);
-		}
-		
-		//Cap nhat vao tai san
-		$field=array(
-						
-						
+
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("qlktaisan_phongban",$field,$value);
+								
+								
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlktaisan_phongban",$field,$value,$where);
+						}
+
+						//Cap nhat vao tai san
+						$field=array(
+
+
 						'phongbannhan',
 						'nguoinhan',
 						'ngaynhan',
 						'nguoitra',
 						'ngaytra'
 						
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						$phongbannhan,
 						$nguoinhan,
 						$ngaynhan,
 						$nguoitra,
 						$ngaytra
-						
-						
-					);
-		
-		$where=" id = '".$mataisan."'";
-		$this->db->updateData("qlktaisan",$field,$value,$where);
+
+
+						);
+
+						$where=" id = '".$mataisan."'";
+						$this->db->updateData("qlktaisan",$field,$value,$where);
 	}
-	
+
 	function saveTraTaiSan($data)
 	{
-		
+
 		$sotaisan = $this->getSoTaiSan($data['id']);
-		
+
 		$sotaisan['ngaytra'] = $data['ngaytra'];
 		$sotaisan['nguoitra'] = $data['nguoitra'];
 		$sotaisan['ghichutra'] = $data['ghichutra'];
 		$this->saveSoTaiSan($sotaisan);
-		
-		
+
+
 	}
-	
+
 	public function deleteSoTaiSan($id)
 	{
 		$where="id = '".$id."'";
 		$this->db->deleteData("qlktaisan_phongban",$where);
 	}
-	
+
 	public function kientraTaiSan($mataisan)
 	{
 		$hienhanh = true;
@@ -350,7 +350,7 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 				}
 			}
 		}
-		
+
 		return $hienhanh;
 	}
 }

@@ -2,7 +2,7 @@
 class ControllerCoreUser extends Controller
 {
 	private $error = array();
-	
+
 	public function index()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
@@ -26,13 +26,13 @@ class ControllerCoreUser extends Controller
 		}
 		//$this->load->language('core/user');
 		//$this->data = array_merge($this->data, $this->language->getData());
-		
+
 		$this->document->title = $this->language->get('heading_title');
-		
+
 		$this->load->model("core/user");
 		$this->getList();
 	}
-	
+
 	public function insert()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "add"))
@@ -41,21 +41,21 @@ class ControllerCoreUser extends Controller
 		}
 		//$this->load->language('core/user');
 		//$this->data = array_merge($this->data, $this->language->getData());
-		
+
 		$this->document->title = $this->language->get('heading_title');
 		$this->load->model("core/user");
 		$this->data['haspass'] = true;
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm()))
 		{
 			$this->request->post['birthday'] = $this->date->formatViewDate($this->request->post['birthday']);
 			$this->model_core_user->insertuser($this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->redirect($this->url->http('core/user'));
 		}
-    
-    	$this->getForm();
+
+		$this->getForm();
 	}
-	
+
 	public function update()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "edit"))
@@ -66,12 +66,12 @@ class ControllerCoreUser extends Controller
 		{
 			//$this->load->language('core/user');
 			//$this->data = array_merge($this->data, $this->language->getData());
-			
+				
 			$this->document->title = $this->language->get('heading_title');
 			$this->load->model("core/user");
 			$this->data['haspass'] = false;
 			$this->data['usernamereadonly'] = 'readonly="readonly"';
-			if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm())) 
+			if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm()))
 			{
 				$this->request->post['userid'] = $this->request->get['userid'];
 				$this->request->post['birthday'] = $this->date->formatViewDate($this->request->post['birthday']);
@@ -79,34 +79,34 @@ class ControllerCoreUser extends Controller
 				$this->session->data['success'] = $this->language->get('text_success');
 				$this->redirect($this->url->http('core/user'));
 			}
-		
+
 			$this->getForm();
 		}
-		
-  	}
-	
+
+	}
+
 	public function active()
 	{
 		$userid = $this->request->get['userid'];
 		$this->load->model("core/user");
-		
+
 		$data['userid'] = $userid;
 		$user=$this->model_core_user->getItem($userid);
 		if($user['status'] == "lock")
-			$data['status'] = "active";
+		$data['status'] = "active";
 		else
-			$data['status'] = "lock";
+		$data['status'] = "lock";
 		$this->model_core_user->updatestatus($data);
 		if($data['status'] == "active")
-			$this->data['output']="Kích hoạt thành công";
+		$this->data['output']="Kích hoạt thành công";
 		if($data['status'] == "lock")
-			$this->data['output']="User đã bị khóa";
+		$this->data['output']="User đã bị khóa";
 		$this->id="content";
 		$this->template="common/output.tpl";
 		$this->render();
 	}
-	
-	public function delete() 
+
+	public function delete()
 	{
 		$listuserid=$this->request->post['delete'];
 		//$listuserid=$_POST['delete'];
@@ -119,27 +119,27 @@ class ControllerCoreUser extends Controller
 		$this->id="content";
 		$this->template="common/output.tpl";
 		$this->render();
-  	}
-	
-	private function getList() 
+	}
+
+	private function getList()
 	{
 		$this->data['insert'] = $this->url->http('core/user/insert');
-		$this->data['delete'] = $this->url->http('core/user/delete');		
-		
+		$this->data['delete'] = $this->url->http('core/user/delete');
+
 		$this->data['users'] = array();
 		$where = "AND usertypeid <> 'member'";
 		$rows = $this->model_core_user->getList($where);
 		//Page
-		$page = $this->request->get['page'];		
-		$x=$page;		
+		$page = $this->request->get['page'];
+		$x=$page;
 		$limit = 20;
-		$total = count($rows); 
-		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
-		
-		$pager  = $this->pager->getPagerData($total, $limit, $page); 
-		$offset = $pager->offset; 
-		$limit  = $pager->limit; 
+		$total = count($rows);
+		// work out the pager values
+		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
+
+		$pager  = $this->pager->getPagerData($total, $limit, $page);
+		$offset = $pager->offset;
+		$limit  = $pager->limit;
 		$page   = $pager->page;
 		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
 		//for($i=0; $i <= count($this->data['users'])-1 ; $i++)
@@ -149,19 +149,19 @@ class ControllerCoreUser extends Controller
 			$this->data['users'][$i]['text_edit'] = "Edit";
 			$this->data['users'][$i]['link_active'] = $this->url->http('core/user/active&userid='.$this->data['users'][$i]['userid']);
 			if($this->data['users'][$i]['status']=='lock')
-				$this->data['users'][$i]['text_active'] = "Active";
+			$this->data['users'][$i]['text_active'] = "Active";
 			else
-				$this->data['users'][$i]['text_active'] = "Lock";
+			$this->data['users'][$i]['text_active'] = "Lock";
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
 		$this->template="core/user_list.tpl";
 		$this->layout="layout/center";
-		
+
 		$this->render();
 	}
-	
-	
+
+
 	private function getForm()
 	{
 		$this->data['error'] = @$this->error;
@@ -180,65 +180,65 @@ class ControllerCoreUser extends Controller
 		}
 		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
 		$this->data['cancel'] = $this->url->https('core/user');
-		
+
 		if ((isset($this->request->get['userid'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-      		$this->data['user'] = $this->model_core_user->getItem($this->request->get['userid']);
+			$this->data['user'] = $this->model_core_user->getItem($this->request->get['userid']);
 			$this->data['user']['imagethumbnail']=HelperImage::resizePNG($this->data['user']['imagepath'], 200, 200);
-    	}
+		}
 		else
 		{
 			$this->data['user'] = $this->request->post;
 			$this->data['selectcountry'] = $this->data['user']['country'];
-			
+				
 		}
-		
+
 		$this->id='content';
 		$this->template='core/user_form.tpl';
 		$this->layout="layout/center";
-		
+
 		$this->render();
 	}
-	
+
 	private function validateForm()
 	{
-    	if ((strlen($this->request->post['username']) == 0) || (strlen($this->request->post['username']) > 30)) 
+		if ((strlen($this->request->post['username']) == 0) || (strlen($this->request->post['username']) > 30))
 		{
-      		$this->error['username'] = "username not null";
-    	}
+			$this->error['username'] = "username not null";
+		}
 		else
 		{
-			
+				
 			if($this->validation->_isId(trim($this->request->post['username'])) == false)
-				$this->error['username'] ="username không hợp lệ";
+			$this->error['username'] ="username không hợp lệ";
 			else
 			{
 				$user = $this->model_core_user->getItemByUserName($this->request->post['username']);
 				if(count($user)>0 && $this->request->post['userid'] == '')
-					$this->error['username'] = "username đã được sử dụng";			
+				$this->error['username'] = "username đã được sử dụng";
 			}
 		}
 		if($this->request->get['userid']=="")
 		{
-			if (strlen($this->request->post['password']) == 0) 
+			if (strlen($this->request->post['password']) == 0)
 			{
 				$this->error['password'] = "Password not null";
 			}
-			
-			if ($this->request->post['confrimpassword'] != $this->request->post['password']) 
+				
+			if ($this->request->post['confrimpassword'] != $this->request->post['password'])
 			{
 				$this->error['confrimpassword'] = "Confrimpassword invalidate";
-			}		
+			}
 		}
-		
-		if ($this->validation->_checkEmail($this->request->post['email']) == false ) 
+
+		if ($this->validation->_checkEmail($this->request->post['email']) == false )
 		{
-      		$this->error['email'] = "Email invalidate";
-    	}
+			$this->error['email'] = "Email invalidate";
+		}
 
 		if (!$this->error) {
-	  		return TRUE;
+			return TRUE;
 		} else {
-	  		return FALSE;
+			return FALSE;
 		}
 	}
 }

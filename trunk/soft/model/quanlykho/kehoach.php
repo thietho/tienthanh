@@ -1,72 +1,72 @@
 <?php
 class ModelQuanlykhoKehoach extends Model
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlkkehoach`.* 
+		$sql = "Select `qlkkehoach`.*
 									from `qlkkehoach` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkkehoach`.* 
+
+		$sql = "Select `qlkkehoach`.*
 									from `qlkkehoach` 
 									where trangthai <> 'deleted' " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function getChild($kehoachcha,$order = " Order by nam,quy,thang ")
 	{
 		$where = " AND kehoachcha = '".$kehoachcha."'";
 		return $this->getList($where);
 	}
-	
+
 	function getTree($id, &$data, $level=-1, $path="", $parentpath="")
 	{
 		$arr=$this->getItem($id);
-		
+
 		$rows = $this->getChild($id);
-		
+
 		$arr['countchild'] = count(rows);
-		
-		if($arr['kehoachcha'] != 0) 
-			$parentpath .= "-".$arr['kehoachcha'];
-		
+
+		if($arr['kehoachcha'] != 0)
+		$parentpath .= "-".$arr['kehoachcha'];
+
 		if($id!="" )
 		{
 			$level += 1;
 			$path .= "-".$id;
-			
+				
 			$arr['level'] = $level;
 			$arr['path'] = $path;
 			$arr['parentpath'] = $parentpath;
-			
+				
 			array_push($data,$arr);
 		}
-		
-		
+
+
 		if(count($rows))
-			foreach($rows as $row)
-			{
-				$this->getTree($row['id'], $data, $level, $path, $parentpath);
-			}
+		foreach($rows as $row)
+		{
+			$this->getTree($row['id'], $data, $level, $path, $parentpath);
+		}
 	}
-	
+
 	public function nextID()
 	{
 		return $this->db->getNextId('qlkkehoach','id');
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->nextID();
@@ -78,13 +78,13 @@ class ModelQuanlykhoKehoach extends Model
 		$nam= $this->db->escape(@$data['nam']);
 		$quy=$this->db->escape(@$data['quy']);
 		$thang=$this->db->escape(@$data['thang']);
-		
+
 		$kehoachcha=$this->db->escape(@$data['kehoachcha']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
-		
+
+
 		$field=array(
-						
+
 						'makehoach',
 						'tenkehoach',
 						'ngaybatdau',
@@ -93,15 +93,15 @@ class ModelQuanlykhoKehoach extends Model
 						'nam',
 						'quy',
 						'thang',
-						
-						
+
+
 						'kehoachcha',
 						'ghichu',
 						'trangthai'
 						
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$makehoach,
 						$tenkehoach,
 						$ngaybatdau,
@@ -110,20 +110,20 @@ class ModelQuanlykhoKehoach extends Model
 						$nam,
 						$quy,
 						$thang,
-						
-						
+
+
 						$kehoachcha,
 						$ghichu,
 						'active'
-					);
-		$this->db->insertData("qlkkehoach",$field,$value);
-		
-		return $id;
+						);
+						$this->db->insertData("qlkkehoach",$field,$value);
+
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
-	
+
 		$id= $this->db->escape(@$data['id']);
 		$makehoach=$this->db->escape(@$data['makehoach']);
 		$tenkehoach= $this->db->escape(@$data['tenkehoach']);
@@ -133,13 +133,13 @@ class ModelQuanlykhoKehoach extends Model
 		$nam= $this->db->escape(@$data['nam']);
 		$quy=$this->db->escape(@$data['quy']);
 		$thang=$this->db->escape(@$data['thang']);
-		
+
 		$kehoachcha=$this->db->escape(@$data['kehoachcha']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
 		$trangthai=$this->db->escape(@$data['trangthai']);
-		
+
 		$field=array(
-						
+
 						'makehoach',
 						'tenkehoach',
 						'ngaybatdau',
@@ -148,15 +148,15 @@ class ModelQuanlykhoKehoach extends Model
 						'nam',
 						'quy',
 						'thang',
-						
-						
+
+
 						'kehoachcha',
 						'ghichu',
 						'trangthai'
 						
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$makehoach,
 						$tenkehoach,
 						$ngaybatdau,
@@ -165,50 +165,50 @@ class ModelQuanlykhoKehoach extends Model
 						$nam,
 						$quy,
 						$thang,
-						
-						
+
+
 						$kehoachcha,
 						$ghichu,
 						$trangthai
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlkkehoach",$field,$value,$where);
-		
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlkkehoach",$field,$value,$where);
+
+						return true;
 	}
-	
+
 	public function updateStatus($id,$status)
 	{
 		$id= $this->db->escape(@$id);
 		$status= $this->db->escape(@$status);
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						$status
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlkkehoach",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlkkehoach",$field,$value,$where);
 	}
-	
+
 	public function delete($id)
 	{
 		/*$where="id = '".$id."'";
-		$this->db->deleteData("qlkkehoach",$where);*/
+		 $this->db->deleteData("qlkkehoach",$where);*/
 		$this->updateStatus($id,'deleted');
 		$child = $this->getChild($id);
 		if(count($child))
-			foreach($child as $item)
-			{
-				$this->delete($item['id']);
-			}
+		foreach($child as $item)
+		{
+			$this->delete($item['id']);
+		}
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -219,35 +219,35 @@ class ModelQuanlykhoKehoach extends Model
 	//Ke hoach san pham
 	public function getKeKhoachSanPham($id)
 	{
-		$sql = "Select `qlkkehoach_sanpham`.* 
+		$sql = "Select `qlkkehoach_sanpham`.*
 									from `qlkkehoach_sanpham` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getKeKhoachSanPhams($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkkehoach_sanpham`.* 
+
+		$sql = "Select `qlkkehoach_sanpham`.*
 									from `qlkkehoach_sanpham` 
 									where 1=1 " . $where;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function deleteKeKhoachSanPham($id)
 	{
 		$where="id = '".$id."'";
 		$this->db->deleteData("qlkkehoach_sanpham",$where);
-		
+
 	}
-	
+
 	public function saveKeHoachSanPham($data)
 	{
 		$id= (int)@$data['id'];
@@ -263,7 +263,7 @@ class ModelQuanlykhoKehoach extends Model
 		$pheduyet= @(int)$data['pheduyet'];
 		$phuchu = $this->db->escape(@$data['phuchu']);
 		$field=array(
-						
+
 						'makehoach',
 						'masanpham',
 						'tensanpham',
@@ -276,9 +276,9 @@ class ModelQuanlykhoKehoach extends Model
 						'pheduyet',
 						'phuchu'
 						
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$makehoach,
 						$masanpham,
 						$tensanpham,
@@ -290,21 +290,21 @@ class ModelQuanlykhoKehoach extends Model
 						$thanhtien,
 						$pheduyet,
 						$phuchu
-					);
-		
-		if($id == "" )
-		{
-			//$value[0] = $id;
-			$this->db->insertData("qlkkehoach_sanpham",$field,$value);
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlkkehoach_sanpham",$field,$value,$where);
-		}
-		
-		return $id;
+						);
+
+						if($id == "" )
+						{
+							//$value[0] = $id;
+							$this->db->insertData("qlkkehoach_sanpham",$field,$value);
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlkkehoach_sanpham",$field,$value,$where);
+						}
+
+						return $id;
 	}
-	
+
 }
 ?>

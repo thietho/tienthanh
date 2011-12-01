@@ -1,11 +1,11 @@
 <?php
-	class ControllerSampleDefaultlist extends Controller
+class ControllerSampleDefaultlist extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->id="sample_defaultlist";
-			$this->template="sample/defaultlist.tpl";
-			$this->render();
-		}
+		$this->id="sample_defaultlist";
+		$this->template="sample/defaultlist.tpl";
+		$this->render();
 	}
+}
 ?>

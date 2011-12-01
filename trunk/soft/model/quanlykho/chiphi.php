@@ -1,11 +1,11 @@
 <?php
 $this->load->model("quanlykho/nhom");
 class ModelQuanlykhoChiphi extends ModelQuanlykhoNhom
-{ 
+{
 	private $root = "qlkchiphi";
-	function __construct() 
+	function __construct()
 	{
-		
+
 		$data = $this->getItem($this->root);
 		if(count($data)==0)
 		{
@@ -15,8 +15,8 @@ class ModelQuanlykhoChiphi extends ModelQuanlykhoNhom
 			$data['ghichu'] = "";
 			$this->insert($data);
 		}
-   	}
-	
+	}
+
 	public function getChiphi($machiphi)
 	{
 		$item = $this->getItem($machiphi);
@@ -28,24 +28,24 @@ class ModelQuanlykhoChiphi extends ModelQuanlykhoNhom
 		}
 		return $data;
 	}
-	
+
 	public function getChiphis()
 	{
 		$datas = $this->getChild($this->root," Order by tennhom");
-		
+
 		$objs = array();
 		if(count($datas))
-			foreach($datas as $item)
-			{
-				$data['machiphi'] = $item['manhom'];
-				$data['tenchiphi'] = $item['tennhom'];
-				
-				$objs[] = $data;
-			}
-		
+		foreach($datas as $item)
+		{
+			$data['machiphi'] = $item['manhom'];
+			$data['tenchiphi'] = $item['tennhom'];
+
+			$objs[] = $data;
+		}
+
 		return $objs;
 	}
-	
+
 	public function saveChiphi($chiphi)
 	{
 		$data['manhom'] = $chiphi['machiphi'];
@@ -53,12 +53,12 @@ class ModelQuanlykhoChiphi extends ModelQuanlykhoNhom
 		$data['nhomcha'] = $this->root;
 		$data['thutu'] = 0;
 		$data['ghichu'] = $chiphi['ghichu'];
-		
+
 		$item = $this->getItem($data['manhom']);
 		if(count($item) == 0)
 		{
 			if($data['manhom'] == "")
-				$data['manhom'] = $this->getnextid($this->root);
+			$data['manhom'] = $this->getnextid($this->root);
 			$this->insert($data);
 		}
 		else
@@ -66,12 +66,12 @@ class ModelQuanlykhoChiphi extends ModelQuanlykhoNhom
 			$this->update($data);
 		}
 	}
-	
+
 	public function delectChiphi($machiphi)
 	{
-		$this->delete($machiphi);	
+		$this->delete($machiphi);
 	}
-	
+
 	public function deleteListChiphi($listkho)
 	{
 		$this->deletedatas($listkho);

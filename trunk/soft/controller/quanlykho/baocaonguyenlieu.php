@@ -2,7 +2,7 @@
 class ControllerQuanlykhoBaocaonguyenlieu extends Controller
 {
 	private $error = array();
-	
+
 	public function index()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
@@ -26,13 +26,13 @@ class ControllerQuanlykhoBaocaonguyenlieu extends Controller
 		}
 		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
-		
-		
-		
+
+
+
 		$this->id='content';
 		$this->template='quanlykho/baocaonguyenlieunhapxuat.tpl';
 		$this->layout="layout/center";
-		
+
 		$this->render();
 	}
 }

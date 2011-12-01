@@ -4,9 +4,9 @@ final class HelperMail {
 	//Ham send mac dinh cho linux
 	static public function send($to, $subject, $message, $headers, $servertype = "mail") {
 		$mail = new Mail();
-		
+
 		$mail->IsHTML(true);
-		
+
 		if($servertype == "mail")
 		{
 			$mail->IsMail();
@@ -15,26 +15,26 @@ final class HelperMail {
 		{
 			$mail->IsSMTP();
 		}
-		
-		
+
+
 		$mail->AddAddress($to, "");
-		
+
 		$mail->Subject = $subject;
-		
+
 		$mail->Body = $message;
-		
+
 		$mail->Headers = $headers;
-		
+
 		$mail->Send();
 	}
 
-	
+
 	//Ham send ho tro tao header
 	static public function sendmail($to, $subject, $message, $from_email, $servertype = "mail", $sender_name = "", $reply_email = ""  ) {
 		$mail = new Mail();
-		
+
 		$mail->IsHTML(true);
-		
+
 		if($servertype == "mail")
 		{
 			$mail->IsMail();
@@ -43,7 +43,7 @@ final class HelperMail {
 		{
 			$mail->IsSMTP();
 		}
-		
+
 		if(is_array($to))
 		{
 			foreach($to as $item)
@@ -55,8 +55,8 @@ final class HelperMail {
 		{
 			$mail->AddAddress($to, "");
 		}
-		
-		if($from_email != "") 
+
+		if($from_email != "")
 		{
 			$mail->From = $from_email;
 		}
@@ -64,10 +64,10 @@ final class HelperMail {
 		{
 			$mail->From = "support@ben-solution.com";
 		}
-		
-		
-		
-		if($sender_name != "") 
+
+
+
+		if($sender_name != "")
 		{
 			$mail->FromName = $sender_name;
 		}
@@ -76,16 +76,16 @@ final class HelperMail {
 			$mail->FromName = "Cong thong tin anh";
 		}
 			
-		if($reply_email != "") 
-			$mail->Sender = $reply_email;
-		
-		
+		if($reply_email != "")
+		$mail->Sender = $reply_email;
+
+
 		$mail->Subject = $subject;
-		
+
 		$mail->Body = $message;
-		
+
 		$mail->Headers = $headers;
-		
+
 		return $mail->Send();
 	}
 

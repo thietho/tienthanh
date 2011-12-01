@@ -2,7 +2,7 @@
 class ControllerQuanlykhoChiphi extends Controller
 {
 	private $error = array();
-   
+	 
 	public function index()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
@@ -26,23 +26,23 @@ class ControllerQuanlykhoChiphi extends Controller
 		}
 		//$this->load->language('quanlykho/chiphi');
 		//$this->data = array_merge($this->data, $this->language->getData());
-		
+
 		$this->document->title = $this->language->get('heading_title');
-		
+
 		$this->load->model("quanlykho/chiphi");
 		$this->getList();
 	}
-	
+
 	public function insert()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "add"))
 		{
 			$this->response->redirect("?route=common/permission");
 		}
-		
-    	$this->getForm();
+
+		$this->getForm();
 	}
-	
+
 	public function update()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "edit"))
@@ -53,20 +53,20 @@ class ControllerQuanlykhoChiphi extends Controller
 		{
 			//$this->load->language('quanlykho/chiphi');
 			//$this->data = array_merge($this->data, $this->language->getData());
-			
-			
+				
+				
 			$this->load->model("quanlykho/chiphi");
 			$this->data['haspass'] = false;
 			$this->data['readonly'] = 'readonly="readonly"';
-		
-		
+
+
 			$this->getForm();
 		}
-		
-  	}
-	
-	
-	public function delete() 
+
+	}
+
+
+	public function delete()
 	{
 		$listmachiphi=$this->request->post['delete'];
 		//$listmachiphi=$_POST['delete'];
@@ -79,27 +79,27 @@ class ControllerQuanlykhoChiphi extends Controller
 		$this->id="content";
 		$this->template="common/output.tpl";
 		$this->render();
-  	}
-	
-	private function getList() 
+	}
+
+	private function getList()
 	{
 		$this->data['insert'] = $this->url->http('quanlykho/chiphi/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/chiphi/delete');		
-		
+		$this->data['delete'] = $this->url->http('quanlykho/chiphi/delete');
+
 		$this->data['datas'] = array();
 		$rows = $this->model_quanlykho_chiphi->getChiphis();
-		
+
 		//Page
-		$page = $this->request->get['page'];		
-		$x=$page;		
+		$page = $this->request->get['page'];
+		$x=$page;
 		$limit = 20;
-		$total = count($rows); 
-		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
-		
-		$pager  = $this->pager->getPagerData($total, $limit, $page); 
-		$offset = $pager->offset; 
-		$limit  = $pager->limit; 
+		$total = count($rows);
+		// work out the pager values
+		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
+
+		$pager  = $this->pager->getPagerData($total, $limit, $page);
+		$offset = $pager->offset;
+		$limit  = $pager->limit;
 		$page   = $pager->page;
 		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
 		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
@@ -108,7 +108,7 @@ class ControllerQuanlykhoChiphi extends Controller
 			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/chiphi/update&machiphi='.$this->data['datas'][$i]['machiphi']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
 			$this->data['datas'][$i]['link_active'] = $this->url->http('quanlykho/chiphi/active&machiphi='.$this->data['datas'][$i]['machiphi']);
-			
+				
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
@@ -118,32 +118,32 @@ class ControllerQuanlykhoChiphi extends Controller
 		{
 			$this->layout="layout/dialog";
 			$this->data['dialog'] = true;
-			
+				
 		}
 		$this->render();
 	}
-	
-	
+
+
 	private function getForm()
 	{
 		$this->data['error'] = @$this->error;
 		$this->load->model("quanlykho/chiphi");
-		
-		
-		
-		if ((isset($this->request->get['machiphi'])) ) 
+
+
+
+		if ((isset($this->request->get['machiphi'])) )
 		{
-      		$this->data['item'] = $this->model_quanlykho_chiphi->getChiphi($this->request->get['machiphi']);
-			
-    	}
-		
+			$this->data['item'] = $this->model_quanlykho_chiphi->getChiphi($this->request->get['machiphi']);
+				
+		}
+
 		$this->id='content';
 		$this->template='quanlykho/chiphi_form.tpl';
 		$this->layout="layout/center";
-		
+
 		$this->render();
 	}
-	
+
 	public function save()
 	{
 		$data = $this->request->post;
@@ -164,36 +164,36 @@ class ControllerQuanlykhoChiphi extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
-	
+
 	private function validateForm($data)
 	{
-		if ($data['machiphi'] == "") 
+		if ($data['machiphi'] == "")
 		{
-      		$this->error['machiphi'] = "Bạn chưa nhập mã chi phí";
-    	}
+			$this->error['machiphi'] = "Bạn chưa nhập mã chi phí";
+		}
 		else
 		{
 			if($data['id']=="")
 			{
 				$this->load->model("quanlykho/chiphi");
 				$item = $this->model_quanlykho_chiphi->getChiphi($data['machiphi']);
-				
+
 				if(count($item))
 				{
 					$this->error['machiphi'] = "Mã chi phí đã được sử dụng";
 				}
 			}
 		}
-		
-		if ((strlen($data['tenchiphi']) == 0)) 
+
+		if ((strlen($data['tenchiphi']) == 0))
 		{
-      		$this->error['tenchiphi'] = "Bạn chưa nhập tên chi phí";
-    	}
+			$this->error['tenchiphi'] = "Bạn chưa nhập tên chi phí";
+		}
 
 		if (count($this->error)==0) {
-	  		return TRUE;
+			return TRUE;
 		} else {
-	  		return FALSE;
+			return FALSE;
 		}
 	}
 	//Cac ham xu ly tren form
@@ -207,8 +207,8 @@ class ControllerQuanlykhoChiphi extends Controller
 		$this->data['output'] = json_encode(array('chiphi' => $datas));
 		$this->id="linhkien";
 		$this->template="common/output.tpl";
-		$this->render();	
+		$this->render();
 	}
-	
+
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 $this->load->model("core/file");
-class ModelCoreUser extends ModelCoreFile 
+class ModelCoreUser extends ModelCoreFile
 {
 	public function getList($where="")
 	{
@@ -8,28 +8,28 @@ class ModelCoreUser extends ModelCoreFile
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function getItem($userid)
 	{
 		$userid=$this->db->escape(@$userid);
 		$query = $this->db->query("Select * from `user` where userid = '".$userid."'");
 		return $query->row;
 	}
-	
+
 	public function getItemByUserName($username)
 	{
 		$username=$this->db->escape(@$username);
 		$query = $this->db->query("Select * from `user` where username = '".$username."' AND deletedby =''");
 		return $query->row;
 	}
-	
+
 	public function getItemByEmail($email)
 	{
 		$email=$this->db->escape(@$email);
 		$query = $this->db->query("Select * from `user` where email = '".$email."' AND deletedby =''");
 		return $query->row;
 	}
-	
+
 	public function insertUser($data)
 	{
 		$userid=$this->db->escape(@$data['username']);
@@ -53,7 +53,7 @@ class ModelCoreUser extends ModelCoreFile
 		$updatedby=$this->user->getId();
 		$deletedby="";
 		$userip=$this->db->escape(@$this->request->server['REMOTE_ADDR']);
-		
+
 		$field=array(
 						'`userid`',
 						'`username`',
@@ -76,8 +76,8 @@ class ModelCoreUser extends ModelCoreFile
 						'`updatedby`',
 						'`deletedby`',
 						'`userip`'
-					);
-		$value=array(
+						);
+						$value=array(
 						$userid,
 						$username,
 						$usertypeid,
@@ -99,17 +99,17 @@ class ModelCoreUser extends ModelCoreFile
 						$updatedby,
 						$deletedby,
 						$userip
-					);
-		$arr = $this->getItemByUserName($username);
-		if(count($arr)==0)
-		{
-			$this->db->insertData("user",$field,$value);
-			return $userid;
-		}
-		else
-			return $arr['userid'];
+						);
+						$arr = $this->getItemByUserName($username);
+						if(count($arr)==0)
+						{
+							$this->db->insertData("user",$field,$value);
+							return $userid;
+						}
+						else
+						return $arr['userid'];
 	}
-	
+
 	public function updateuser($data)
 	{
 		$userid=$this->db->escape(@$data['userid']);
@@ -133,15 +133,15 @@ class ModelCoreUser extends ModelCoreFile
 		$updatedby=$this->user->getId();
 		$deletedby="";
 		$userip=$this->db->escape(@$this->request->server['REMOTE_ADDR']);
-		
+
 		$field=array(
 						'`userid`',
 						'`username`',
 						'`usertypeid`',
-						//'`password`',
+		//'`password`',
 						'`fullname`',
 						'`email`',
-						//'`status`',
+		//'`status`',
 						'`imageid`',
 						'`imagepath`',
 						'`address`',
@@ -156,8 +156,8 @@ class ModelCoreUser extends ModelCoreFile
 						'`updatedby`',
 						'`deletedby`',
 						'`userip`'
-					);
-		$value=array(
+						);
+						$value=array(
 						$userid,
 						$username,
 						$usertypeid,
@@ -179,11 +179,11 @@ class ModelCoreUser extends ModelCoreFile
 						$updatedby,
 						$deletedby,
 						$userip
-					);
-		$where="userid = '".$userid."'";
-		$this->db->updateData("user",$field,$value,$where);
+						);
+						$where="userid = '".$userid."'";
+						$this->db->updateData("user",$field,$value,$where);
 	}
-	
+
 	public function updatestatus($data)
 	{
 		$userid=$this->db->escape(@$data['userid']);
@@ -195,100 +195,100 @@ class ModelCoreUser extends ModelCoreFile
 		$updatedby=$this->user->getId();
 		$deletedby="";
 		$userip=$this->db->escape(@$this->request->server['REMOTE_ADDR']);
-		
+
 		$field=array(
 						'`userid`',
 						'`status`',
 						'`updateddate`',
 						'`updatedby`',
 						'`userip`'
-					);
-		$value=array(
+						);
+						$value=array(
 						$userid,
 						$status,
 						$updateddate,
 						$updatedby,
 						$userip
-					);
-		$where="userid = '".$userid."'";
-		$this->db->updateData("user",$field,$value,$where);
-	}	
-			
+						);
+						$where="userid = '".$userid."'";
+						$this->db->updateData("user",$field,$value,$where);
+	}
+		
 	public function deleteuser($userid)
 	{
 		/*$userid=$this->db->escape(@$userid);
-		$where="userid = '".$userid."'";
-		$this->db->deleteData('user',$where);*/
+		 $where="userid = '".$userid."'";
+		 $this->db->deleteData('user',$where);*/
 		$userid=$this->db->escape(@$userid);
 		$deleteddate=$this->date->getToday();
 		$deletedby=$this->user->getId();
 		$userip=$this->db->escape(@$this->request->server['REMOTE_ADDR']);
-		
+
 		$field=array(
 						'`userid`',
 						'`deleteddate`',
 						'`deletedby`',
 						'`userip`'
-					);
-		$value=array(
+						);
+						$value=array(
 						$userid,
 						$deleteddate,
 						$deletedby,
 						$userip
-					);
-		$where="userid = '".$userid."'";
-		$this->db->updateData("user",$field,$value,$where);
+						);
+						$where="userid = '".$userid."'";
+						$this->db->updateData("user",$field,$value,$where);
 	}
-	
+
 	public function deleteusers($data)
 	{
 		foreach($data as $userid)
 		{
 			$this->deleteuser($userid);
-		}		
+		}
 	}
-	
+
 	public function validatePassword($UserID,$Pass)
 	{
 		$contain=$this->getItem($UserID);
 		//echo $Pass;
 		if(count($contain)==0)
-			return false;
+		return false;
 		else
 		{
-			
+				
 			if( $contain['password']== $Pass)
 			{
 				return true;
 			}
 			else
-				return false;
+			return false;
 		}
 	}
-	
+
 	public function changePassword($data)
 	{
 		$userid=$this->db->escape(@$data['userid']);
 		$password=$this->db->escape(@$data['password']);
 		$updateddate=$this->db->escape(@$data['updateddate']);
 		$updatedby=$this->db->escape(@$data['updatedby']);
-		
+
 		$field=array(
 						'password',
 						'updateddate',
 						'UpdatedBy'	
 						);
-		$value=array(
+						$value=array(
 						$password,
 						$updateddate,
 						$updatedby
-						
-					);
-		$where="userid = '".$userid."'";
-		$this->db->updateData("user",$field,$value,$where);	
-			
+
+						);
+						$where="userid = '".$userid."'";
+						$this->db->updateData("user",$field,$value,$where);
+							
 	}
-	
+
 	public function getInformation($userid,$fieldname)
 	{
 		$sql = "Select * from user_information where userid = '".$userid."' and fieldname = '".$fieldname."'";
@@ -296,34 +296,34 @@ class ModelCoreUser extends ModelCoreFile
 		$info = $query->row;
 		return $info['fieldvalue'];
 	}
-	
+
 	public function saveInformation($userid, $fieldname, $fieldvalue)
 	{
 		$sql = "Select * from user_information where userid = '".$userid."' and fieldname = '".$fieldname."'";
 		$query = $this->db->query($sql);
 		$info = $query->rows;
-		
+
 		$field=array(
 					"userid",
 					"fieldname",
 					"fieldvalue"
-				);
-				
-		$value=array(
+					);
+
+					$value=array(
 					$userid,
 					$fieldname,
 					$fieldvalue,
 					);
-	
-		if(count($info) > 0)
-		{
-			$where="userid = '".$userid."' AND fieldname = '".$fieldname."'";
-			$this->db->updateData('user_information',$field,$value,$where);
-		}
-		else
-		{
-			$this->db->insertData("user_information",$field,$value);	
-		}
+
+					if(count($info) > 0)
+					{
+						$where="userid = '".$userid."' AND fieldname = '".$fieldname."'";
+						$this->db->updateData('user_information',$field,$value,$where);
+					}
+					else
+					{
+						$this->db->insertData("user_information",$field,$value);
+					}
 	}
 }
 ?>

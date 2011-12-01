@@ -1,18 +1,18 @@
 <?php
-class ModelCoreSite extends Model 
+class ModelCoreSite extends Model
 {
 	public function getList()
 	{
 		$query = $this->db->query("Select * from `site`");
 		return $query->rows;
 	}
-	
+
 	public function getItem($siteid)
 	{
 		$query = $this->db->query("Select * from `site` where siteid = '".$siteid."'");
 		return $query->row;
 	}
-	
+
 	public function getStatusList()
 	{
 		return array(
@@ -20,7 +20,7 @@ class ModelCoreSite extends Model
 				"Pause"=>"Pause"
 				);
 	}
-	
+
 	public function insertSite($data)
 	{
 		$siteid=$this->db->escape(@$data['siteid']);
@@ -31,7 +31,7 @@ class ModelCoreSite extends Model
 		$description=$this->db->escape(@$data['description']);
 		$keywords=$this->db->escape(@$data['keywords']);
 		$status=$this->db->escape(@$data['status']);
-		
+
 		$field=array(
 						'siteid',
 						'sitename',
@@ -41,8 +41,8 @@ class ModelCoreSite extends Model
 						'description',
 						'keywords',
 						'status'
-					);
-		$value=array(
+						);
+						$value=array(
 						$siteid,
 						$sitename,
 						$siteurl,
@@ -51,10 +51,10 @@ class ModelCoreSite extends Model
 						$description,
 						$keywords,
 						$status
-					);
-		$this->db->insertData("site",$field,$value);
+						);
+						$this->db->insertData("site",$field,$value);
 	}
-	
+
 	public function updateSite($data)
 	{
 		$siteid=$this->db->escape(@$data['siteid']);
@@ -65,7 +65,7 @@ class ModelCoreSite extends Model
 		$description=$this->db->escape(@$data['description']);
 		$keywords=$this->db->escape(@$data['keywords']);
 		$status=$this->db->escape(@$data['status']);
-		
+
 		$field=array(
 						'sitename',
 						'siteurl',
@@ -74,8 +74,8 @@ class ModelCoreSite extends Model
 						'description',
 						'keywords',
 						'status'
-					);
-		$value=array(
+						);
+						$value=array(
 						$sitename,
 						$siteurl,
 						$language,
@@ -83,27 +83,27 @@ class ModelCoreSite extends Model
 						$description,
 						$keywords,
 						$status
-					);
-					
-		$where="siteid = '".$siteid."'";
-		$this->db->updateData("site",$field,$value,$where);
-	}	
-			
+						);
+							
+						$where="siteid = '".$siteid."'";
+						$this->db->updateData("site",$field,$value,$where);
+	}
+		
 	public function deleteSite($siteid)
 	{
 		$siteid=$this->db->escape(@$siteid);
 		$where="siteid = '".$siteid."'";
 		$this->db->deleteData('site',$where);
 	}
-	
+
 	public function deleteSites($data)
 	{
 		foreach($data as $siteid)
 		{
 			$this->deleteSite($siteid);
-		}		
+		}
 	}
-	
+
 }
 
 ?>

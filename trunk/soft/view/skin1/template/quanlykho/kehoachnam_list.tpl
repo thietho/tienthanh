@@ -1,21 +1,23 @@
 <div class="section">
 
-	<div class="section-title">Quản lý tài sản</div>
-    
-    <div class="section-content">
-    	
-        <form action="" method="post" id="listitem" name="listitem">
-        	
-        	<div class="button right">
-                <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>  
-            </div>
-            <div class="clearer">^&nbsp;</div>
-            
-            <div class="sitemap treeindex">
-            	<link href="<?php echo DIR_VIEW?>css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
-                  <script type="text/javascript" src="<?php echo DIR_VIEW?>js/jquery.treeTable.js"></script>
-                  <script type="text/javascript">
+<div class="section-title">Quản lý tài sản</div>
+
+<div class="section-content">
+
+<form action="" method="post" id="listitem" name="listitem">
+
+<div class="button right"><input class="button" value="Add new"
+	type="button" onclick="linkto('<?php echo $insert?>')"> <input
+	class="button" type="button" name="delete_all" value="Delete"
+	onclick="deleteitem()" /></div>
+<div class="clearer">^&nbsp;</div>
+
+<div class="sitemap treeindex">
+<link href="<?php echo DIR_VIEW?>css/jquery.treeTable.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="<?php echo DIR_VIEW?>js/jquery.treeTable.js"></script> <script
+	type="text/javascript">
                   $(document).ready(function() {
                     // TODO Fix issue with multiple treeTables on one page, each with different options
                     // Moving the #example3 treeeTable call down will break other treeTables that are expandable...
@@ -23,62 +25,59 @@
                   });
                   
                   </script>
-                <table class="example data-table" width="100%">
-                <thead>
-                    <tr class="tr-head">
-                        
-                        
-                        <th><input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);"> Kế hoạch</th>
-                        
-                       	
-                        <th>Control</th>                                  
-                    </tr>
-        		</thead>
-                <tbody>
-        
-        <?php
-        	
-            foreach($datas as $item)
-            {
-        ?>
-                    <tr  id="<?php echo $item['eid']?>" class="<?php echo $item['class']?>">
-                        
-                        
-                        <td>
-                        	<?php echo $item['tab']?>
-                        	<?php if($item['deep'] == 1){?>
-                        	<input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" >
-                        	<?php } ?>
-                        	Kế hoạch <?php echo $item['nam']?>
-                            <?php if($item['quy'] > 0) { ?>
-                            	quý <?php echo $item['quy']?>
-                            <?php } ?>
-                            <?php if($item['thang'] > 0) { ?>
-                            	tháng <?php echo $item['thang']?>
-                            <?php } ?>
-                        </td>
-                       
-						         
-                        <td class="link-control">
-                            <a class="button" href="<?php echo $item['link_edit']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
-                            
-                           
-                        </td>
-                    </tr>
-        <?php
-            }
-        ?>
-                        
-                                                    
-                </tbody>
-                </table>
-            </div>
-        	
-        
-        </form>
-        
-    </div>
-    
+<table class="example data-table" width="100%">
+	<thead>
+		<tr class="tr-head">
+
+
+			<th><input class="inputchk" type="checkbox"
+				onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
+			Kế hoạch</th>
+
+
+			<th>Control</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<?php
+	 
+	foreach($datas as $item)
+	{
+		?>
+		<tr id="<?php echo $item['eid']?>" class="<?php echo $item['class']?>">
+
+
+			<td><?php echo $item['tab']?> <?php if($item['deep'] == 1){?> <input
+				class="inputchk" type="checkbox"
+				name="delete[<?php echo $item['id']?>]"
+				value="<?php echo $item['id']?>"> <?php } ?> Kế hoạch <?php echo $item['nam']?>
+				<?php if($item['quy'] > 0) { ?> quý <?php echo $item['quy']?> <?php } ?>
+				<?php if($item['thang'] > 0) { ?> tháng <?php echo $item['thang']?>
+				<?php } ?></td>
+
+
+			<td class="link-control"><a class="button"
+				href="<?php echo $item['link_edit']?>"
+				title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+
+
+			</td>
+		</tr>
+		<?php
+	}
+	?>
+
+
+	</tbody>
+</table>
+</div>
+
+
+</form>
+
+</div>
+
 </div>
 <script language="javascript">
 

@@ -7,44 +7,44 @@ class ControllerModulePagelist extends Controller
 		$this->load->model("core/sitemap");
 		$this->load->helper('image');
 		if($sitemapid == "")
-			$sitemapid = $this->document->sitemapid;
+		$sitemapid = $this->document->sitemapid;
 		$siteid = $this->user->getSiteId();
 		$this->data['sitemap'] = $this->model_core_sitemap->getItem($sitemapid, $siteid);
 		$step = (int)$this->request->get['step'];
 		$to = $count;
-		
+
 		//Get list
 		$queryoptions = array();
 		$queryoptions['mediaparent'] = '%';
 		$queryoptions['mediatype'] = '%';
 		$queryoptions['refersitemap'] = $sitemapid;
-		
+
 		if($mediaid == "")
 		{
 			$medias = $this->model_core_media->getPaginationList($queryoptions, $step, $to);
-			
+				
 			if(count($medias) == 1)
 			{
-				
+
 			}
-			
+				
 			$this->data['medias'] = array();
-			
-		
+				
+
 			$index = -1;
 			foreach($medias as $media)
 			{
 				$index += 1;
-				
+
 				$link = HTTP_SERVER."#route=page/detail&sitemapid=".$sitemapid."&mediaid=".$media['mediaid'];
-				
+
 				$imagethumbnail = "";
 				if($media['imagepath'] != "" && $template['width'] >0 )
 				{
 					$imagethumbnail = HelperImage::resizePNG($media['imagepath'], $template['width'], $template['height']);
 				}
-	
-				
+
+
 				$this->data['medias'][] = array(
 					'mediaid' => $media['mediaid'],
 					'title' => $media['title'],
@@ -53,16 +53,16 @@ class ControllerModulePagelist extends Controller
 					'statusdate' => $this->date->formatMySQLDate($media['statusdate'], 'longdate', "/"),
 					'link' => $link
 				);
-				
+
 			}
-			
+				
 			$querystring = "#route=page/detail&sitemapid=".$sitemapid;
-			
+				
 			$pagelinks = $this->model_core_media->getPaginationLinks($index, $queryoptions, $querystring, $step, $to);
-			
+				
 			$this->data['nextlink'] = $pagelinks['nextlink'];
 			$this->data['prevlink'] = $pagelinks['prevlink'];
-			
+				
 			//Other news
 			$this->data['othernews'] = $this->model_core_media->getPaginationList($queryoptions, $step+1, $to);
 			for($i=0;$i<count($this->data['othernews']);$i++)
@@ -70,15 +70,15 @@ class ControllerModulePagelist extends Controller
 				$this->data['othernews'][$i]['statusdate'] = $this->date->formatMySQLDate($this->data['othernews'][$i]['statusdate'], 'longdate', "/");
 				$this->data['othernews'][$i]['link'] = HTTP_SERVER."#route=page/detail&sitemapid=".$sitemapid."&mediaid=".$this->data['othernews'][$i]['mediaid'];
 			}
-			
+				
 		}
-		
+
 		$this->id="news";
 		$this->template=$template['template'];
 		$this->render();
-	
+
 	}
-	
-	
+
+
 }
 ?>

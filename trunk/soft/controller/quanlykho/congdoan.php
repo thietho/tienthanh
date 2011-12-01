@@ -5,14 +5,14 @@ class ControllerQuanlykhoCongdoan extends Controller
 	{
 		$this->getList();
 	}
-	
-	private function getList() 
+
+	private function getList()
 	{
-		
-		
+
+
 		$this->data['insert'] = $this->url->http('quanlykho/linhkien/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/linhkien/delete');		
-		
+		$this->data['delete'] = $this->url->http('quanlykho/linhkien/delete');
+
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
@@ -20,49 +20,49 @@ class ControllerQuanlykhoCongdoan extends Controller
 		$this->data['loailinhkien'] = $this->model_quanlykho_nhom->getChild("loailinhkien");
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
-		
+
 		$this->data['datas'] = array();
 		$where = "";
-		
+
 		$datasearchlike['malinhkien'] = $this->request->get['malinhkien'];
 		$datasearchlike['tenlinhkien'] = $this->request->get['tenlinhkien'];
 		$datasearch['manhom'] = $this->request->get['manhom'];
 		$datasearch['loai'] = $this->request->get['loai'];
 		$datasearch['makho'] = $this->request->get['makho'];
-		
+
 		$arr = array();
 		foreach($datasearchlike as $key => $item)
 		{
 			if($item !="")
-				$arr[] = " AND " . $key ." like '%".$item."%'";
+			$arr[] = " AND " . $key ." like '%".$item."%'";
 		}
-		
+
 		foreach($datasearch as $key => $item)
 		{
 			if($item !="")
-				$arr[] = " AND " . $key ." = '".$item."'";
+			$arr[] = " AND " . $key ." = '".$item."'";
 		}
-		
+
 		$where = implode("",$arr);
-		
+
 		$rows = $this->model_quanlykho_congdoan->getList($where);
 		//Page
-		$page = $this->request->get['page'];		
-		$x=$page;		
+		$page = $this->request->get['page'];
+		$x=$page;
 		$limit = 20;
-		$total = count($rows); 
-		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
-		
-		$pager  = $this->pager->getPagerData($total, $limit, $page); 
-		$offset = $pager->offset; 
-		$limit  = $pager->limit; 
+		$total = count($rows);
+		// work out the pager values
+		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
+
+		$pager  = $this->pager->getPagerData($total, $limit, $page);
+		$offset = $pager->offset;
+		$limit  = $pager->limit;
 		$page   = $pager->page;
 		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
 		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
 			$this->data['datas'][$i] = $rows[$i];
-			
+				
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
@@ -72,7 +72,7 @@ class ControllerQuanlykhoCongdoan extends Controller
 		{
 			$this->layout="layout/dialog";
 			$this->data['dialog'] = true;
-			
+				
 		}
 		$this->render();
 	}
@@ -83,7 +83,7 @@ class ControllerQuanlykhoCongdoan extends Controller
 		$val = $this->request->get['val'];
 		$operator = $this->request->get['operator'];
 		if($operator == "")
-			$operator = "equal";
+		$operator = "equal";
 		$this->load->model("quanlykho/congdoan");
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->model("quanlykho/taisan");
@@ -102,7 +102,7 @@ class ControllerQuanlykhoCongdoan extends Controller
 			case "in":
 				$where = " AND ".$col." in  (".$val.")";
 				break;
-			
+					
 		}
 			
 			
@@ -112,20 +112,20 @@ class ControllerQuanlykhoCongdoan extends Controller
 			$nguyenlieu = $this->model_quanlykho_nguyenlieu->getItem($item['nguyenlieusanxuat']);
 			$taisan = $this->model_quanlykho_taisan->getItem($item['thietbisanxuatchinh']);
 			if(count($nguyenlieu))
-				$datas[$key]['tennguyenlieusanxuat'] = $nguyenlieu['tennguyenlieu'];
+			$datas[$key]['tennguyenlieusanxuat'] = $nguyenlieu['tennguyenlieu'];
 			else
-				$datas[$key]['tennguyenlieusanxuat']= '';
+			$datas[$key]['tennguyenlieusanxuat']= '';
 			if(count($taisan))
-				$datas[$key]['tenthietbisanxuatchinh'] = $taisan['tentaisan'];
+			$datas[$key]['tenthietbisanxuatchinh'] = $taisan['tentaisan'];
 			else
-				$datas[$key]['tenthietbisanxuatchinh'] = '';
+			$datas[$key]['tenthietbisanxuatchinh'] = '';
 		}
 		$this->data['output'] = json_encode(array('congdoans' => $datas));
 		$this->id="congdoan";
 		$this->template="common/output.tpl";
 		$this->render();
 	}
-	
+
 	public function delete()
 	{
 		$id = $this->request->get['id'];
@@ -136,7 +136,7 @@ class ControllerQuanlykhoCongdoan extends Controller
 		$this->template="common/output.tpl";
 		$this->render();
 	}
-	
+
 	public function viewCongDoan()
 	{
 		$macongdoan = $this->request->get['macongdoan'];
@@ -147,13 +147,13 @@ class ControllerQuanlykhoCongdoan extends Controller
 		$log = array();
 		foreach($data as $key => $item)
 		{
-			$log[$key] = $this->json->decode($item['detail']);	
+			$log[$key] = $this->json->decode($item['detail']);
 			$log[$key]->logdate = $item['logdate'];
 		}
-		
+
 		foreach($log as $key => $item)
 		{
-			
+				
 			$this->data['logcongdoan'][$key] = $item->data;
 			$nguyenlieu = $this->model_quanlykho_nguyenlieu->getItem($item->data->nguyenlieusanxuat);
 			$taisan = $this->model_quanlykho_taisan->getItem($item->data->thietbisanxuatchinh);
@@ -161,9 +161,9 @@ class ControllerQuanlykhoCongdoan extends Controller
 			$this->data['logcongdoan'][$key]->tenthietbisanxuatchinh = $taisan['tentaisan'];
 			$this->data['logcongdoan'][$key]->logdate = $item->logdate;
 		}
-		
-		
-		
+
+
+
 		$this->id="content";
 		$this->template="quanlykho/linhkien_congdoanview.tpl";
 		$this->layout="layout/dialog";

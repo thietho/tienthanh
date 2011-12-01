@@ -5,8 +5,8 @@ final class Request {
 	public $cookie = array();
 	public $files = array();
 	public $server = array();
-	
-  	public function __construct() {
+
+	public function __construct() {
 		$this->get    = &$this->clean($_GET);
 		$this->post   = &$this->clean($_POST);
 		$this->cookie = &$this->clean($_COOKIE);
@@ -14,16 +14,16 @@ final class Request {
 		$this->server = &$this->clean($_SERVER);
 	}
 
-  	public function clean($data) {
-    	if (is_array($data)) {
-	  		foreach ($data as $key => $value) {
-	    		$data[$key] = &$this->clean($value);
-	  		}
+	public function clean($data) {
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key] = &$this->clean($value);
+			}
 		} else {
-	  		$data = stripslashes(htmlspecialchars($data, ENT_QUOTES, 'UTF-8'));
+			$data = stripslashes(htmlspecialchars($data, ENT_QUOTES, 'UTF-8'));
 			$data = trim($data);
 		}
-	
+
 		return $data;
 	}
 }

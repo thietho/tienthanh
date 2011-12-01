@@ -1,16 +1,16 @@
 <?php
-	class ControllerLayoutCenter extends Controller
+class ControllerLayoutCenter extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->template="layout/center.tpl";
-			$this->children=array(
+		$this->template="layout/center.tpl";
+		$this->children=array(
 				'common/header',
 				'common/footer',
 				'common/leftsidebar',
 				'common/permission'
-			);
-			$this->render();
-		}
+				);
+				$this->render();
 	}
+}
 ?>

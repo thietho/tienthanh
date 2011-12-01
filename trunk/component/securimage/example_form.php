@@ -21,8 +21,8 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA<br /><br />
- * 
- * Any modifications to the library should be indicated clearly in the source code 
+ *
+ * Any modifications to the library should be indicated clearly in the source code
  * to inform users that the changes are not a part of the original software.<br /><br />
  *
  * If you found this script useful, please take a quick moment to rate it.<br />
@@ -38,20 +38,19 @@
  *
  */
 
-  session_start();
+session_start();
 
 ?>
 <html>
 <head>
-  <title>Securimage Test Form</title>
+<title>Securimage Test Form</title>
 </head>
 
 <body>
 
 <?php
 if (empty($_POST)) { ?>
-<form method="POST">
-Username:<br />
+<form method="POST">Username:<br />
 <input type="text" name="username" /><br />
 Password:<br />
 <input type="text" name="password" /><br />
@@ -60,20 +59,19 @@ Password:<br />
 <img src="securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>"><br />
 <input type="text" name="code" /><br />
 
-<input type="submit" value="Submit Form" />
-</form>
+<input type="submit" value="Submit Form" /></form>
 
 <?php
 } else { //form is posted
-  include("securimage.php");
-  $img = new Securimage();
-  $valid = $img->check($_POST['code']);
+	include("securimage.php");
+	$img = new Securimage();
+	$valid = $img->check($_POST['code']);
 
-  if($valid == true) {
-    echo "<center>Thanks, you entered the correct code.</center>";
-  } else {
-    echo "<center>Sorry, the code you entered was invalid.  <a href=\"javascript:history.go(-1)\">Go back</a> to try again.</center>";
-  }
+	if($valid == true) {
+		echo "<center>Thanks, you entered the correct code.</center>";
+	} else {
+		echo "<center>Sorry, the code you entered was invalid.  <a href=\"javascript:history.go(-1)\">Go back</a> to try again.</center>";
+	}
 }
 
 ?>

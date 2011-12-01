@@ -36,17 +36,17 @@ $_['menu_admin']       = 'Administration';
 
 
 /*
-$d = dir('./catalog/language/'.$filename);
-while (false !== ($entry = $d->read())) {
-	if($entry != '.' && $entry != '..' && substr($entry, -3, 3) != 'php')
-	{
-   		foreach(glob('catalog/language/'.$filename.'/'.$entry.'/*.php') as $class_filename) {
-   		//echo($class_filename);
-		require($class_filename);
-		}
-	}
-}
-$d->close();
-*/
+ $d = dir('./catalog/language/'.$filename);
+ while (false !== ($entry = $d->read())) {
+ if($entry != '.' && $entry != '..' && substr($entry, -3, 3) != 'php')
+ {
+ foreach(glob('catalog/language/'.$filename.'/'.$entry.'/*.php') as $class_filename) {
+ //echo($class_filename);
+ require($class_filename);
+ }
+ }
+ }
+ $d->close();
+ */
 
 ?>
