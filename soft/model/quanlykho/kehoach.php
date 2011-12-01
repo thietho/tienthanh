@@ -319,6 +319,38 @@ class ModelQuanlykhoKehoach extends Model
 		$kehoachtruoc = $this->getList($where);
 		return $kehoachtruoc[0];
 	}
+	function kehoachkytruoc($id)
+	{
+		$kehoach = $this->getItem($id);
+		$nam = $kehoach['nam'];
+		$quy = $kehoach['quy'];
+		$thang = $kehoach['thang'];
+		if($thang > 0)
+		{
+			$thang--;
+			if($thang == 0)
+			{
+				$thang = 3;
+				$quy--;
+			}
+			
+		}
+		if($quy>0)
+		{
+			$quy--;
+			if($quy==0)
+			{
+				$quy= 4;
+				$nam--;
+			}	
+		}
+		$where .= " AND nam = '". $nam ."'";
+		$where .= " AND quy = '". $quy ."'";
+		$where .= " AND thang = '". $thang ."'";
+		
+		$kehoachtruoc = $this->getList($where);
+		return $kehoachtruoc[0];
+	}
 
 }
 ?>
