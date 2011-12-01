@@ -1,31 +1,31 @@
 <?php
 
 class ModelQuanlykhoCongdoan extends Model
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlkcongdoan`.* 
+		$sql = "Select `qlkcongdoan`.*
 									from `qlkcongdoan` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkcongdoan`.* 
+
+		$sql = "Select `qlkcongdoan`.*
 									from `qlkcongdoan` 
 									where 1=1 " . $where . " Order by thututhuchien";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->db->escape(@$data['id']);
@@ -44,9 +44,9 @@ class ModelQuanlykhoCongdoan extends Model
 		$nguyenlieusanxuat=$this->db->escape(@$data['nguyenlieusanxuat']);
 		$thietbisanxuatchinh=$this->db->escape(@$data['thietbisanxuatchinh']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
+
 		$field=array(
-						
+
 						'macongdoan',
 						'tencongdoan',
 						'thututhuchien',
@@ -62,9 +62,9 @@ class ModelQuanlykhoCongdoan extends Model
 						'nguyenlieusanxuat',
 						'thietbisanxuatchinh',
 						'ghichu'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$macongdoan,
 						$tencongdoan,
 						$thututhuchien,
@@ -80,15 +80,15 @@ class ModelQuanlykhoCongdoan extends Model
 						$nguyenlieusanxuat,
 						$thietbisanxuatchinh,
 						$ghichu
-					);
-		$this->db->insertData("qlkcongdoan",$field,$value);
-		
-		$log['tablename'] = "qlkcongdoan";
-		$log['data'] = $data;
-		$this->user->writeLog(json_encode($log));
-		return $id;
+						);
+						$this->db->insertData("qlkcongdoan",$field,$value);
+
+						$log['tablename'] = "qlkcongdoan";
+						$log['data'] = $data;
+						$this->user->writeLog(json_encode($log));
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
 		$id= $this->db->escape(@$data['id']);
@@ -107,9 +107,9 @@ class ModelQuanlykhoCongdoan extends Model
 		$nguyenlieusanxuat=$this->db->escape(@$data['nguyenlieusanxuat']);
 		$thietbisanxuatchinh=$this->db->escape(@$data['thietbisanxuatchinh']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
+
 		$field=array(
-						
+
 						'macongdoan',
 						'tencongdoan',
 						'thututhuchien',
@@ -125,9 +125,9 @@ class ModelQuanlykhoCongdoan extends Model
 						'nguyenlieusanxuat',
 						'thietbisanxuatchinh',
 						'ghichu'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$macongdoan,
 						$tencongdoan,
 						$thututhuchien,
@@ -143,23 +143,23 @@ class ModelQuanlykhoCongdoan extends Model
 						$nguyenlieusanxuat,
 						$thietbisanxuatchinh,
 						$ghichu
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlkcongdoan",$field,$value,$where);
-		$log['tablename'] = "qlkcongdoan";
-		$log['data'] = $data;
-		$this->user->writeLog(json_encode($log));
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlkcongdoan",$field,$value,$where);
+						$log['tablename'] = "qlkcongdoan";
+						$log['data'] = $data;
+						$this->user->writeLog(json_encode($log));
+						return true;
 	}
-	
+
 	public function delete($id)
 	{
 		$where="id = '".$id."'";
 		$this->db->deleteData("qlkcongdoan",$where);
-		
+
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)

@@ -1,45 +1,45 @@
 <?php
 
 class ModelQuanlykhoNhanvien extends Model
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlknhanvien`.* 
+		$sql = "Select `qlknhanvien`.*
 									from `qlknhanvien` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getItemByUsername($username)
 	{
-		$sql = "Select `qlknhanvien`.* 
+		$sql = "Select `qlknhanvien`.*
 									from `qlknhanvien` 
 									where username ='".$username."' ";
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=5)
 	{
-		
-		$sql = "Select `qlknhanvien`.* 
+
+		$sql = "Select `qlknhanvien`.*
 									from `qlknhanvien` 
 									where trangthai <> 'deleted' " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	private function nextID()
 	{
 		return $this->db->getNextId('qlknhanvien','id');
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->nextID();
@@ -67,7 +67,7 @@ class ModelQuanlykhoNhanvien extends Model
 		$bhxh=$this->db->escape(@$data['bhxh']);
 		$bhyt=$this->db->escape(@$data['bhyt']);
 		//$trangthai=$this->db->escape(@$data['trangthai']);
-		
+
 		$field=array(
 						'manhanvien',
 						'hoten',
@@ -94,10 +94,10 @@ class ModelQuanlykhoNhanvien extends Model
 						'bhyt',
 						'trangthai',
 						'username'
-					);
-		
-		$value=array(
-						
+						);
+
+						$value=array(
+
 						$manhanvien,
 						$hoten,
 						$maphongban,
@@ -123,15 +123,15 @@ class ModelQuanlykhoNhanvien extends Model
 						$bhyt,
 						"active",
 						""
-					);
-		$this->db->insertData("qlknhanvien",$field,$value);
-		
-		return $id;
+						);
+						$this->db->insertData("qlknhanvien",$field,$value);
+
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
-	
+
 		$id= (int)@$data['id'];
 		$manhanvien=$this->db->escape(@$data['manhanvien']);
 		$hoten=$this->db->escape(@$data['hoten']);
@@ -156,7 +156,7 @@ class ModelQuanlykhoNhanvien extends Model
 		$ngaykyhopdong=$this->db->escape(@$data['ngaykyhopdong']);
 		$bhxh=$this->db->escape(@$data['bhxh']);
 		$bhyt=$this->db->escape(@$data['bhyt']);
-		
+
 		$field=array(
 						'manhanvien',
 						'hoten',
@@ -183,10 +183,10 @@ class ModelQuanlykhoNhanvien extends Model
 						'bhyt',
 						'trangthai'
 						
-					);
-		
-		$value=array(
-						
+						);
+
+						$value=array(
+
 						$manhanvien,
 						$hoten,
 						$maphongban,
@@ -211,57 +211,57 @@ class ModelQuanlykhoNhanvien extends Model
 						$bhxh,
 						$bhyt,
 						"active"
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhanvien",$field,$value,$where);
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhanvien",$field,$value,$where);
+						return true;
 	}
-	
+
 	public function delete($id)
 	{
-		
+
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						'deleted'
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhanvien",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
-	
+
 	public function updateusername($id, $username)
 	{
-		
-		$field=array(	
+
+		$field=array(
 						'username'
-					);
-		$value=array(
+						);
+						$value=array(
 						$username
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhanvien",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
-	
+
 	public function	updatePermission($data)
 	{
-		$field=array(	
+		$field=array(
 						'permission'
-					);
-		$value=array(
+						);
+						$value=array(
 						$data['permission']
-					);
-		
-		$where="id = '".$data['nhanvienid']."'";
-		$this->db->updateData("qlknhanvien",$field,$value,$where);
+						);
+
+						$where="id = '".$data['nhanvienid']."'";
+						$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -269,7 +269,7 @@ class ModelQuanlykhoNhanvien extends Model
 			$this->delete($item);
 		}
 	}
-	
+
 	public function saveuser($data)
 	{
 		$userid=$this->db->escape(@$data['username']);
@@ -284,7 +284,7 @@ class ModelQuanlykhoNhanvien extends Model
 		$updatedby=$this->user->getId();
 		$deletedby="";
 		$userip=$this->db->escape(@$this->request->server['REMOTE_ADDR']);
-		
+
 		$field=array(
 						'`userid`',
 						'`username`',
@@ -298,8 +298,8 @@ class ModelQuanlykhoNhanvien extends Model
 						'`updatedby`',
 						'`deletedby`',
 						'`userip`'
-					);
-		$value=array(
+						);
+						$value=array(
 						$userid,
 						$username,
 						$usertypeid,
@@ -312,17 +312,17 @@ class ModelQuanlykhoNhanvien extends Model
 						$updatedby,
 						$deletedby,
 						$userip
-					);
-		$this->load->model("core/user");
-		$arr = $this->model_core_user->getItemByUserName($username);
-		if(count($arr)==0)
-		{
-			$this->db->insertData("user",$field,$value);
-			return $userid;
-		}
-		else
-			return $arr['userid'];
+						);
+						$this->load->model("core/user");
+						$arr = $this->model_core_user->getItemByUserName($username);
+						if(count($arr)==0)
+						{
+							$this->db->insertData("user",$field,$value);
+							return $userid;
+						}
+						else
+						return $arr['userid'];
 	}
-	
+
 }
 ?>

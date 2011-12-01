@@ -1,13 +1,31 @@
 
 
 <style>
-.tb-tree{}
-.tb-tree input{margin-right:3px;}
-.tb-tree label{font-size:0.9em}
-#result div img{vertical-align:middle;margin-bottom:2px;}
-.tb-tree .td-selected{}
-.td-selected #selected img{vertical-align:top;margin-bottom:2px;}
+.tb-tree {
+	
+}
 
+.tb-tree input {
+	margin-right: 3px;
+}
+
+.tb-tree label {
+	font-size: 0.9em
+}
+
+#result div img {
+	vertical-align: middle;
+	margin-bottom: 2px;
+}
+
+.tb-tree .td-selected {
+	
+}
+
+.td-selected #selected img {
+	vertical-align: top;
+	margin-bottom: 2px;
+}
 </style>
 
 
@@ -15,44 +33,36 @@
 
 <table width="100%" class="data-table">
 	<tr>
-        <td colspan="3">
-     		<input type="hidden" name="sitemap" id="sitemap" value="" />
-      		<strong>Keyword</strong> <input type="text" name="keyword" id="keyword" class="text" />&nbsp;&nbsp;
-            
-            
-            			
-            
-            &nbsp;&nbsp;<input type="button" id="btnfilter" name="btnfilter" value="Filter" class="button"/>
-            
-        </td>
-    </tr>
-    <tr>
-    	<td colspan="3">
-        	<p id="pnImage">
-                <label for="image">Upload file</label><br />
-                <a id="btnAddImagePopup" class="button">Select file</a><br />
-                <!--<img id="preview" src="<?php echo $imagethumbnail?>" />
+		<td colspan="3"><input type="hidden" name="sitemap" id="sitemap"
+			value="" /> <strong>Keyword</strong> <input type="text"
+			name="keyword" id="keyword" class="text" />&nbsp;&nbsp; &nbsp;&nbsp;<input
+			type="button" id="btnfilter" name="btnfilter" value="Filter"
+			class="button" /></td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		<p id="pnImage"><label for="image">Upload file</label><br />
+		<a id="btnAddImagePopup" class="button">Select file</a><br />
+		<!--<img id="preview" src="<?php echo $imagethumbnail?>" />
                 <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $imagepath?>" />
                 <input type="hidden" id="imageid" name="imageid" value="<?php echo $imageid?>" />
                 <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $imagethumbnail?>" />-->
-                <div id="errorupload" class="error" style="display:none"></div>
-            </p>
-        </td>
-    </tr>
-    <tr valign="top">
-    	<td width="34%" class="tb-tree">
-        	<?php echo $sitemap?>
-        </td>
-        <td width="40%" id="result" style="vertical-align:top !important">
-        	Loading...
-        </td>
-        <td width="26%" style="vertical-align:top !important" class="td-selected">
-        	<div id="selected">
-            </div><br />
+		<div id="errorupload" class="error" style="display: none"></div>
+		</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="34%" class="tb-tree"><?php echo $sitemap?></td>
+		<td width="40%" id="result" style="vertical-align: top !important">
+		Loading...</td>
+		<td width="26%" style="vertical-align: top !important"
+			class="td-selected">
+		<div id="selected"></div>
+		<br />
 
-            <input type="button" class="button" name="btnSelect" value="OK" onclick="saveSelect()"/>
-        </td>
-    </tr>
+		<input type="button" class="button" name="btnSelect" value="OK"
+			onclick="saveSelect()" /></td>
+	</tr>
 </table>
 </form>
 <script>

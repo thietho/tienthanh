@@ -1,40 +1,40 @@
 <?php
 $this->load->model("core/file");
 class ModelQuanlykhoSanpham extends ModelCoreFile
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlksanpham`.* 
+		$sql = "Select `qlksanpham`.*
 									from `qlksanpham` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getSanPham($masanpham, $where="")
 	{
-		$sql = "Select `qlksanpham`.* 
+		$sql = "Select `qlksanpham`.*
 									from `qlksanpham` 
 									where masanpham ='".$masanpham."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlksanpham`.* 
+
+		$sql = "Select `qlksanpham`.*
 									from `qlksanpham` 
 									where trangthai <> 'deleted' " . $where ;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->db->escape(@$data['id']);
@@ -56,7 +56,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
 		$field=array(
-						
+
 						'masanpham',
 						'tensanpham',
 						'mavach',
@@ -75,9 +75,9 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'trangthai',
 						'imageid',
 						'imagepath'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$masanpham,
 						$tensanpham,
 						$mavach,
@@ -96,18 +96,18 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'active',
 						$imageid,
 						$imagepath
-					);
-		$this->db->insertData("qlksanpham",$field,$value);
-		$log['tablename'] = "qlksanpham";
-		$log['data'] = $data;
-		$this->user->writeLog(json_encode($log));
-		$this->updateFileTemp($imageid);
-		return $id;
+						);
+						$this->db->insertData("qlksanpham",$field,$value);
+						$log['tablename'] = "qlksanpham";
+						$log['data'] = $data;
+						$this->user->writeLog(json_encode($log));
+						$this->updateFileTemp($imageid);
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
-	
+
 		$id= $this->db->escape(@$data['id']);
 		$masanpham=$this->db->escape(@$data['masanpham']);
 		$tensanpham=$this->db->escape(@$data['tensanpham']);
@@ -127,7 +127,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
 		$field=array(
-						
+
 						'masanpham',
 						'tensanpham',
 						'mavach',
@@ -146,9 +146,9 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'trangthai',
 						'imageid',
 						'imagepath'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$masanpham,
 						$tensanpham,
 						$mavach,
@@ -167,35 +167,35 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'active',
 						$imageid,
 						$imagepath
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlksanpham",$field,$value,$where);
-		$log['tablename'] = "qlksanpham";
-		$log['data'] = $data;
-		$this->user->writeLog(json_encode($log));
-		$this->updateFileTemp($imageid);
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlksanpham",$field,$value,$where);
+						$log['tablename'] = "qlksanpham";
+						$log['data'] = $data;
+						$this->user->writeLog(json_encode($log));
+						$this->updateFileTemp($imageid);
+						return true;
 	}
-	
+
 	public function delete($id)
 	{
 		/*$where="id = '".$id."'";
-		$this->db->deleteData("qlksanpham",$where);*/
+		 $this->db->deleteData("qlksanpham",$where);*/
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						'deleted'
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlksanpham",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlksanpham",$field,$value,$where);
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -209,70 +209,70 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$where = "AND malinhkien = '".$malinhkien."'";
 		return $this->getDinhLuongs($where);
 	}
-	
+
 	//Dinh luong san pham
 	public function getDinhLuong($masanpham)
 	{
 		$where = "AND masanpham = '".$masanpham."'";
 		return $this->getDinhLuongs($where);
 	}
-	
-	
-	
+
+
+
 	public function getDinhLuongs($where)
 	{
-		$sql = "Select `qlksanpham_dinhluong`.* 
+		$sql = "Select `qlksanpham_dinhluong`.*
 									from `qlksanpham_dinhluong` 
 									where 1=1 ".$where." Order by id";
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function getSanPhamDinhLuong($id)
 	{
-		$sql = "Select `qlksanpham_dinhluong`.* 
+		$sql = "Select `qlksanpham_dinhluong`.*
 									from `qlksanpham_dinhluong` 
 									where id ='".$id."' ";
 		$query = $this->db->query($sql);
-		return $query->row;	
+		return $query->row;
 	}
-	
+
 	public function saveSanPhamDinhLuong($data)
 	{
 		$id=(int)@$data['id'];
 		$masanpham=$this->db->escape(@$data['masanpham']);
 		$malinhkien=$this->db->escape(@$data['malinhkien']);
 		$soluong=$this->string->toNumber($this->db->escape(@$data['soluong']));
-		
+
 		$field=array(
-						
+
 						'masanpham',
 						'malinhkien',
 						'soluong'
 						
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$masanpham,
 						$malinhkien,
 						$soluong
-						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("qlksanpham_dinhluong",$field,$value);
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlksanpham_dinhluong",$field,$value,$where);
-		}
-		
-		
+
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("qlksanpham_dinhluong",$field,$value);
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlksanpham_dinhluong",$field,$value,$where);
+						}
+
+
 	}
-	
+
 	public function deletedSanPhamDinhLuong($id)
 	{
 		$where="id = '".$id."'";
@@ -281,58 +281,58 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 	//Chi phi san pham
 	public function getChiPhi($masanpham)
 	{
-		$sql = "Select `sanpham_chiphi`.* 
+		$sql = "Select `sanpham_chiphi`.*
 									from `sanpham_chiphi` 
 									where masanpham = '".$masanpham."' Order by id";
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function getSanPhamChiPhi($id)
 	{
-		$sql = "Select `sanpham_chiphi`.* 
+		$sql = "Select `sanpham_chiphi`.*
 									from `sanpham_chiphi` 
 									where id ='".$id."' ";
 		$query = $this->db->query($sql);
-		return $query->row;	
+		return $query->row;
 	}
-	
+
 	public function saveSanPhamChiPhi($data)
 	{
 		$id=(int)@$data['id'];
 		$masanpham=$this->db->escape(@$data['masanpham']);
 		$machiphi=$this->db->escape(@$data['machiphi']);
 		$chiphi=$this->string->toNumber($this->db->escape(@$data['chiphi']));
-		
+
 		$field=array(
-						
+
 						'masanpham',
 						'machiphi',
 						'chiphi'
 						
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$masanpham,
 						$machiphi,
 						$chiphi
-						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("sanpham_chiphi",$field,$value);
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("sanpham_chiphi",$field,$value,$where);
-		}
-		
-		
+
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("sanpham_chiphi",$field,$value);
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("sanpham_chiphi",$field,$value,$where);
+						}
+
+
 	}
-	
+
 	public function deletedSanPhamChiPhi($id)
 	{
 		$where="id = '".$id."'";

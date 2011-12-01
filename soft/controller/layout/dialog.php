@@ -1,15 +1,15 @@
 <?php
-	class ControllerLayoutDialog extends Controller
+class ControllerLayoutDialog extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->template="layout/dialog.tpl";
-			$this->children=array(
+		$this->template="layout/dialog.tpl";
+		$this->children=array(
 				'common/header',
 				'common/footer'
 				
-			);
-			$this->render();
-		}
+				);
+				$this->render();
 	}
+}
 ?>

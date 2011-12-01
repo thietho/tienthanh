@@ -1,11 +1,11 @@
 <?php
-	class ControllerSampleNicelist extends Controller
+class ControllerSampleNicelist extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->id="sample_nicelist";
-			$this->template="sample/nicelist.tpl";
-			$this->render();
-		}
+		$this->id="sample_nicelist";
+		$this->template="sample/nicelist.tpl";
+		$this->render();
 	}
+}
 ?>

@@ -1,8 +1,8 @@
 <?php
 class ControllerModuleProduct extends Controller
 {
-		function index()
-	{	
+	function index()
+	{
 		$this->id='content';
 		if($this->request->get['mediaid'] != "" || $this->request->get['formtype']=='add')
 		{
@@ -12,12 +12,12 @@ class ControllerModuleProduct extends Controller
 		{
 			$this->data['output'] = $this->loadModule('core/postlist');
 		}
-		
+
 		$this->template='common/output.tpl';
 		$this->layout='layout/center';
 		$this->render();
 	}
-	
+
 	public function insert()
 	{
 		$this->data['output'] = $this->loadModule('core/postcontent');
@@ -26,7 +26,7 @@ class ControllerModuleProduct extends Controller
 		$this->layout='layout/center';
 		$this->render();
 	}
-	
+
 	public function update()
 	{
 		$this->data['output'] = $this->loadModule('core/postcontent');
@@ -35,6 +35,6 @@ class ControllerModuleProduct extends Controller
 		$this->layout='layout/center';
 		$this->render();
 	}
-		
+
 }
 ?>

@@ -1,14 +1,14 @@
 <?php
-	class ControllerLayoutLogin extends Controller
+class ControllerLayoutLogin extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->template="layout/login.tpl";
-			$this->children=array(
+		$this->template="layout/login.tpl";
+		$this->children=array(
 				'common/header',
 				'common/footer'
-			);
-			$this->render();
-		}
+				);
+				$this->render();
 	}
+}
 ?>

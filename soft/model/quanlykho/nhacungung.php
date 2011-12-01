@@ -1,36 +1,36 @@
 <?php
 
 class ModelQuanlykhoNhacungung extends Model
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$sql = "Select `qlknhacungung`.* 
+		$sql = "Select `qlknhacungung`.*
 									from `qlknhacungung` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlknhacungung`.* 
+
+		$sql = "Select `qlknhacungung`.*
 									from `qlknhacungung` 
 									where trangthai <> 'deleted' " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	private function nextID()
 	{
 		return $this->db->getNextId('qlknhacungung','id');
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->nextID();
@@ -51,10 +51,10 @@ class ModelQuanlykhoNhacungung extends Model
 		$danhgiathoigian=$this->db->escape(@$data['danhgiathoigian']);
 		$danhgiathanhtoan=$this->db->escape(@$data['danhgiathanhtoan']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
-		
+
+
 		$field=array(
-						
+
 						'manhacungung',
 						'tennhacungung',
 						'diachi',
@@ -73,9 +73,9 @@ class ModelQuanlykhoNhacungung extends Model
 						'danhgiathanhtoan',
 						'ghichu',
 						'trangthai'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$manhacungung,
 						$tennhacungung,
 						$diachi,
@@ -94,15 +94,15 @@ class ModelQuanlykhoNhacungung extends Model
 						$danhgiathanhtoan,
 						$ghichu,
 						"active"
-					);
-		$this->db->insertData("qlknhacungung",$field,$value);
-		
-		return $id;
+						);
+						$this->db->insertData("qlknhacungung",$field,$value);
+
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
-	
+
 		$id= $this->db->escape(@$data['id']);
 		$manhacungung=$this->db->escape(@$data['manhacungung']);
 		$tennhacungung=$this->db->escape(@$data['tennhacungung']);
@@ -121,10 +121,10 @@ class ModelQuanlykhoNhacungung extends Model
 		$danhgiathoigian=$this->db->escape(@$data['danhgiathoigian']);
 		$danhgiathanhtoan=$this->db->escape(@$data['danhgiathanhtoan']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
-		
+
+
 		$field=array(
-						
+
 						'manhacungung',
 						'tennhacungung',
 						'diachi',
@@ -143,9 +143,9 @@ class ModelQuanlykhoNhacungung extends Model
 						'danhgiathanhtoan',
 						'ghichu',
 						'trangthai'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$manhacungung,
 						$tennhacungung,
 						$diachi,
@@ -164,30 +164,30 @@ class ModelQuanlykhoNhacungung extends Model
 						$danhgiathanhtoan,
 						$ghichu,
 						"active"
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhacungung",$field,$value,$where);
-		return true;
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhacungung",$field,$value,$where);
+						return true;
 	}
-	
+
 	public function delete($id)
 	{
-		
+
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						'deleted'
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhacungung",$field,$value,$where);
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhacungung",$field,$value,$where);
 	}
-	
+
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -198,31 +198,31 @@ class ModelQuanlykhoNhacungung extends Model
 	//Danh gia nha cung ung
 	public function getDanhGiaNhaCungUng($id)
 	{
-		$sql = "Select `qlkdanhgianhacungung`.* 
+		$sql = "Select `qlkdanhgianhacungung`.*
 									from `qlkdanhgianhacungung` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getDanhGiaNhaCungUngList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkdanhgianhacungung`.* 
+
+		$sql = "Select `qlkdanhgianhacungung`.*
 									from `qlkdanhgianhacungung` 
 									where 1=1 " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function saveDanhGiaNhaCungUng($data)
 	{
-		
+
 		$id=(int)@$data['id'];
 		$manhacungung=$this->db->escape(@$data['manhacungung']);
 		$ngaydanhgia=$this->db->escape(@$data['ngaydanhgia']);
@@ -230,65 +230,65 @@ class ModelQuanlykhoNhacungung extends Model
 		$danhgiachatluong=$this->db->escape(@$data['danhgiachatluong']);
 		$danhgiathoigian=$this->db->escape(@$data['danhgiathoigian']);
 		$danhgiathanhtoan=$this->db->escape(@$data['danhgiathanhtoan']);
-		
+
 		$field=array(
-						
+
 						'manhacungung',
 						'ngaydanhgia',
 						'danhgiasoluong',
 						'danhgiachatluong',
 						'danhgiathoigian',
 						'danhgiathanhtoan'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$manhacungung,
 						$ngaydanhgia,
 						$danhgiasoluong,
 						$danhgiachatluong,
 						$danhgiathoigian,
 						$danhgiathanhtoan
-						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("qlkdanhgianhacungung",$field,$value);
-			//Cap nhat danh gia cho nha cung ung
-			$ngaydanhgialai = $ngaydanhgia;
-			
-			$field=array(
-							
-							
+
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("qlkdanhgianhacungung",$field,$value);
+							//Cap nhat danh gia cho nha cung ung
+							$ngaydanhgialai = $ngaydanhgia;
+								
+							$field=array(
+								
+								
 							'ngaydanhgialai',
 							'danhgiasoluong',
 							'danhgiachatluong',
 							'danhgiathoigian',
 							'danhgiathanhtoan'
 							
-						);
-			$value=array(
-							
-							
+							);
+							$value=array(
+								
+								
 							$ngaydanhgialai,
 							$danhgiasoluong,
 							$danhgiachatluong,
 							$danhgiathoigian,
 							$danhgiathanhtoan
-							
-						);
-			
-			$where=" id = '".$manhacungung."'";
-			$this->db->updateData("qlknhacungung",$field,$value,$where);
-			
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlkdanhgianhacungung",$field,$value,$where);
-		}
+								
+							);
+								
+							$where=" id = '".$manhacungung."'";
+							$this->db->updateData("qlknhacungung",$field,$value,$where);
+								
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlkdanhgianhacungung",$field,$value,$where);
+						}
 	}
-	
+
 	public function deleteDanhGiaNhaCungUng($id)
 	{
 		$where="id = '".$id."'";
@@ -297,28 +297,28 @@ class ModelQuanlykhoNhacungung extends Model
 	//Phieu nhan hang
 	public function getPhieuNhanHang($id)
 	{
-		$sql = "Select `qlkphieunhanhang`.* 
+		$sql = "Select `qlkphieunhanhang`.*
 									from `qlkphieunhanhang` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getPhieuNhanHangList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkphieunhanhang`.* 
+
+		$sql = "Select `qlkphieunhanhang`.*
 									from `qlkphieunhanhang` 
 									where trangthai <> 'deleted' " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function savePhieuNhanHang($data)
 	{
 		$id=(int)@$data['id'];
@@ -334,9 +334,9 @@ class ModelQuanlykhoNhacungung extends Model
 		$danhgiathanhtoan=$this->db->escape(@$data['danhgiathanhtoan']);
 		$tinhtrangthanhtoan=$this->db->escape(@$data['tinhtrangthanhtoan']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
-		
+
 		$field=array(
-						
+
 						'maphieunhanhang',
 						'manhacungung',
 						'mahopdong',
@@ -350,9 +350,9 @@ class ModelQuanlykhoNhacungung extends Model
 						'tinhtrangthanhtoan',
 						'ghichu',
 						'trangthai'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$maphieunhanhang,
 						$manhacungung,
 						$mahopdong,
@@ -366,60 +366,60 @@ class ModelQuanlykhoNhacungung extends Model
 						$ghichu,
 						'active'
 						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("qlkphieunhanhang",$field,$value);
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlkphieunhanhang",$field,$value,$where);
-		}
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("qlkphieunhanhang",$field,$value);
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlkphieunhanhang",$field,$value,$where);
+						}
 	}
-	
+
 	public function deletePhieuNhanHang($id)
 	{
 		$field=array(
-						
+
 						'trangthai'
-					);
-		$value=array(
-						
-						
+						);
+						$value=array(
+
+
 						'deleted'
-					);
-		
-		$where="id = '".$id."'";
-		$this->db->updateData("qlknhacungung",$field,$value,$where);
-		
+						);
+
+						$where="id = '".$id."'";
+						$this->db->updateData("qlknhacungung",$field,$value,$where);
+
 	}
 	//Chi tiet phieu nhan hang
 	public function getChiTietPhieuNhanHang($id)
 	{
-		$sql = "Select `qlkchitietphieunhanhang`.* 
+		$sql = "Select `qlkchitietphieunhanhang`.*
 									from `qlkchitietphieunhanhang` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-	
+
 	public function getChiTietPhieuNhanHangList($where="", $from=0, $to=0)
 	{
-		
-		$sql = "Select `qlkchitietphieunhanhang`.* 
+
+		$sql = "Select `qlkchitietphieunhanhang`.*
 									from `qlkchitietphieunhanhang` 
 									where 1=1 " . $where . " Order by id";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function saveChiTietPhieuNhanHang($data)
 	{
 		$id=(int)@$data['id'];
@@ -431,9 +431,9 @@ class ModelQuanlykhoNhacungung extends Model
 		$danhgiachatluong=$this->db->escape(@$data['danhgiachatluong']);
 		$soluongnhan=$this->db->escape(@$data['soluongnhan']);
 		$soluongtralai=$this->db->escape(@$data['soluongtralai']);
-		
+
 		$field=array(
-						
+
 						'maphieunhanhang',
 						'manhacungung',
 						'mahopdong',
@@ -447,9 +447,9 @@ class ModelQuanlykhoNhacungung extends Model
 						'tinhtrangthanhtoan',
 						'ghichu',
 						'trangthai'
-					);
-		$value=array(
-						
+						);
+						$value=array(
+
 						$maphieunhanhang,
 						$manhacungung,
 						$mahopdong,
@@ -463,25 +463,25 @@ class ModelQuanlykhoNhacungung extends Model
 						$ghichu,
 						'active'
 						
-					);
-		
-		if($id == 0 )
-		{
-			$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
-		}
-		else
-		{
-			$where="id = '".$id."'";
-			$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
-		}
+						);
+
+						if($id == 0 )
+						{
+							$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
+						}
+						else
+						{
+							$where="id = '".$id."'";
+							$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
+						}
 	}
-	
+
 	public function deleteChiTietPhieuNhanHang($id)
 	{
 		$where="id = '".$id."'";
 		$this->db->deleteData("qlkchitietphieunhanhang",$where);
-		
+
 	}
-	
+
 }
 ?>

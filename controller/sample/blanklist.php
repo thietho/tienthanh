@@ -1,11 +1,11 @@
 <?php
-	class ControllerSampleBlanklist extends Controller
+class ControllerSampleBlanklist extends Controller
+{
+	public function index()
 	{
-		public function index()
-		{
-			$this->id="sample_blanklist";
-			$this->template="sample/blanklist.tpl";
-			$this->render();
-		}
+		$this->id="sample_blanklist";
+		$this->template="sample/blanklist.tpl";
+		$this->render();
 	}
+}
 ?>

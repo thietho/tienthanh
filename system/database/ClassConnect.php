@@ -17,7 +17,7 @@ class ClassConnect
 		$show=mysql_query($sql);
 		$table=array();
 		while($result=mysql_fetch_array($show))
-			array_push($table,$result);
+		array_push($table,$result);
 		return $table;
 	}
 	function singleData($sql)
@@ -47,13 +47,13 @@ class ClassConnect
 	}
 	function getNextIdVarChar($tablename,$tableid,$temp)
 	{
-	 	$temp = $this->safe($temp);
+		$temp = $this->safe($temp);
 		$sql="SELECT $tableid FROM `$tablename` WHERE $tableid LIKE '$temp%'";
 		$mid= ClassConnect::mutiData($sql);
 		//print_r($mid);
 		//echo count($mid);
 		if(count($mid)==0)
-			return $temp."1";
+		return $temp."1";
 		$mnum=array();
 		for($i=0; $i<count($mid); $i++)
 		{
@@ -64,8 +64,8 @@ class ClassConnect
 		$max=0;
 		//print_r($mnum);
 		for($i=0; $i<count($mnum); $i++)
-			if($max<intval($mnum[$i]))
-				$max=intval($mnum[$i]);
+		if($max<intval($mnum[$i]))
+		$max=intval($mnum[$i]);
 		$nextid=$max+1;
 		return $temp.$nextid;
 	}
@@ -79,9 +79,9 @@ class ClassConnect
 		{
 			$table.="<tr>";
 			for($i=0;$i<$col;$i++)
-				$table.="<td>".$result[$i]."</td>";	
+			$table.="<td>".$result[$i]."</td>";
 			$table.="</tr>";
-		}	
+		}
 		$table.="</table>";
 		return $table;
 	}
@@ -94,7 +94,7 @@ class ClassConnect
 		while($result=mysql_fetch_array($show))
 		{
 			$cb.="<option value='".$result[$value]."'>".$result[$display]."</option>";
-		}	
+		}
 		$cb.="</select>";
 		return $cb;
 	}
@@ -107,18 +107,18 @@ class ClassConnect
 		while($result=mysql_fetch_array($show))
 		{
 			$cb.="<option value='".$result[$value]."'>".$result[$display]."</option>";
-		}	
+		}
 		$cb.="</select>";
 		return $cb;
 	}
-	function insertData( $conn, 
-					  $table = NULL, 
-					  $fields = NULL,
-					  $values = NULL 
-					)
+	function insertData( $conn,
+	$table = NULL,
+	$fields = NULL,
+	$values = NULL
+	)
 	{
-				  
-		$values = $this->safe($values); 
+
+		$values = $this->safe($values);
 		$sql = "INSERT INTO `".$table."`(" ;
 		if(count($fields)!=count($values)){ die("<br><b>ERROR (Syntax Error):</b> Number of fields don't match with values.") ; }
 		else
@@ -127,42 +127,42 @@ class ClassConnect
 			$sql .= ") VALUES('";
 			is_array($values) ? $sql .= implode("','",$values) : $sql .= "'".$values."'";
 			$sql .= "')";
-			//echo $sql;		
+			//echo $sql;
 			$thucthi=mysql_query($sql, $conn) or die("<br><b>ERROR (SQL Error):</b> ".mysql_error()) ;
-			
+				
 			//mysql_close($conn) ;
 			return $thucthi;
 		}
-		
+
 	}
-	function updateData( $conn, 
-					  $table = NULL, 
-					  $fields = NULL,
-					  $values = NULL,
-					  $where = NULL,
-					  $whereValue = NULL 
-					)
+	function updateData( $conn,
+	$table = NULL,
+	$fields = NULL,
+	$values = NULL,
+	$where = NULL,
+	$whereValue = NULL
+	)
 	{
-		 
-		$values = $this->safe($values); 
+			
+		$values = $this->safe($values);
 		$whereValue = $this->safe($whereValue);
-		
+
 		$sql = "UPDATE `".$table."` SET " ;
-		
+
 		if(count($fields)!=count($values)){ die("ERROR (Syntax Error): Number of fields don't match with values.") ; }
 		else
 		{
 			if(is_array($fields) && is_array($values))
 			{
-				for($i=0;$i<count($fields);$i++)	
+				for($i=0;$i<count($fields);$i++)
 				{
 					$sql .= $fields[$i]." = '".$values[$i]."' " ;
 					if($i==(count($fields)-1)) $sql .= " " ;
 					else $sql .= ", ";
-					
+						
 				}
 			}
-			else{ $sql .= $fields." = ".$values ; }	
+			else{ $sql .= $fields." = ".$values ; }
 			$sql .= " WHERE ".$where." = '".$whereValue."'";
 			//echo $sql;
 			$thucthi=mysql_query($sql, $conn) or die("<br><b>ERROR (SQL Error):</b> ".mysql_error()) ;
@@ -170,28 +170,28 @@ class ClassConnect
 			return $thucthi;
 		}
 	}
-	function deleteData( $conn, 
-					  $table = NULL, 
-					  $where = NULL,
-					  $whereValue = NULL 
-					)
+	function deleteData( $conn,
+	$table = NULL,
+	$where = NULL,
+	$whereValue = NULL
+	)
 	{
-		$whereValue = $this->safe($whereValue); 
+		$whereValue = $this->safe($whereValue);
 		$sql="DELETE FROM `$table` WHERE `$where` = '$whereValue'";
 		$thucthi=mysql_query($sql, $conn) or die("<br><b>ERROR (SQL Error):</b> ".mysql_error()) ;
 		//echo $sql;
-			//mysql_close($conn) ;
-			return $thucthi;
+		//mysql_close($conn) ;
+		return $thucthi;
 	}
 	function query($conn,$sql)
 	{
 		$thucthi=mysql_query($sql, $conn) or die("<br><b>ERROR (SQL Error):</b> ".mysql_error()) ;
-			//mysql_close($conn) ;
+		//mysql_close($conn) ;
 		return $thucthi;
 	}
 	function searchData($sql)
 	{
-		
+
 	}
 	function fixPos($tablename,$tableid)
 	{
@@ -213,7 +213,7 @@ class ClassConnect
 			mysql_query($sql);
 		}
 	}
-	
+
 	function safe($values){
 		if(is_array($values))
 		{
@@ -227,6 +227,6 @@ class ClassConnect
 		{
 			return mysql_real_escape_string($values);
 		}
-	} 
+	}
 }
 ?>

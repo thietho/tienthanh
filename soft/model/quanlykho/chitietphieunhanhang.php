@@ -1,33 +1,33 @@
 <?php
 class ModelQuanlykhoPhieunhanhang extends Model
-{ 
+{
 	public function getItem($id, $where="")
 	{
-		$query = $this->db->query("Select `qlkchitietphieunhanhang`.* 
+		$query = $this->db->query("Select `qlkchitietphieunhanhang`.*
 									from `qlkchitietphieunhanhang` 
 									where id ='".$id."' ".$where);
 		return $query->row;
 	}
-	
+
 	public function getList($where="", $from=0, $to=0, $order="")
 	{
-		$sql = "Select `qlkchitietphieunhanhang`.* 
+		$sql = "Select `qlkchitietphieunhanhang`.*
 									from `qlkchitietphieunhanhang` 
 									where 1=1" . $where . $order;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-		
+
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-	
+
 	public function nextID()
 	{
 		return $this->db->getNextId('qlkchitietphieunhanhang','id');
 	}
-	
+
 	public function insert($data)
 	{
 		$id= $this->nextID();
@@ -39,7 +39,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 		$danhgiachatluong= $this->db->escape(@$data['danhgiachatluong']);
 		$soluongnhan= $this->string->toNumber($this->db->escape(@$data['soluongnhan']));
 		$soluongtralai= $this->string->toNumber($this->db->escape(@$data['soluongtralai']));
-		
+
 		$field=array(
 						'id',
 						'maphieunhanhang',
@@ -50,8 +50,8 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						'danhgiachatluong',
 						'soluongnhan',
 						'soluongtralai'
-					);
-		$value=array(
+						);
+						$value=array(
 						$id,
 						$maphieunhanhang,
 						$manguyenlieu,
@@ -61,12 +61,12 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						$danhgiachatluong,
 						$soluongnhan,
 						$soluongtralai
-					);
-		$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
-		
-		return $id;
+						);
+						$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
+
+						return $id;
 	}
-	
+
 	public function update($data)
 	{
 		$id= $this->nextID();
@@ -78,7 +78,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 		$danhgiachatluong= $this->db->escape(@$data['danhgiachatluong']);
 		$soluongnhan= $this->string->toNumber($this->db->escape(@$data['soluongnhan']));
 		$soluongtralai= $this->string->toNumber($this->db->escape(@$data['soluongtralai']));
-		
+
 		$field=array(
 						'id',
 						'maphieunhanhang',
@@ -89,8 +89,8 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						'danhgiachatluong',
 						'soluongnhan',
 						'soluongtralai'
-					);
-		$value=array(
+						);
+						$value=array(
 						$id,
 						$maphieunhanhang,
 						$manguyenlieu,
@@ -100,14 +100,14 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						$danhgiachatluong,
 						$soluongnhan,
 						$soluongtralai
-					);
-		
-		$where="id = " .$id;
-		$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
-		
-		return true;
+						);
+
+						$where="id = " .$id;
+						$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
+
+						return true;
 	}
-	
+
 	public function save($data)
 	{
 		$item = $this->getItem($data['id']);
@@ -121,10 +121,10 @@ class ModelQuanlykhoPhieunhanhang extends Model
 
 		}
 	}
-	
+
 	public function delete($id)
-	{	
-	
+	{
+
 		$data = $this->getItem($id);
 		if(count($data)==0)
 		{
@@ -132,16 +132,16 @@ class ModelQuanlykhoPhieunhanhang extends Model
 			$this->db->deleteData("qlkchitietphieunhanhang",$where);
 		}
 	}
-	
+
 	public function deletedatas($data)
 	{
 		if(count($data)>0)
 		{
-			foreach($data as $item)	
-				$this->delete($item);
+			foreach($data as $item)
+			$this->delete($item);
 		}
 	}
-	
-	
+
+
 }
 ?>

@@ -6,8 +6,8 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	private $setup = array(
 						'quy' => 4,
 						'thang' => 3
-						);
-	function __construct() 
+	);
+	function __construct()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
@@ -30,26 +30,26 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		}
 		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
-		
+
 		$this->document->title = $this->language->get('heading_title');
 		$this->load->model("quanlykho/kehoach");
 		$this->load->helper('image');
-   	}
+	}
 	public function index()
 	{
 		$this->getList();
 	}
-	
+
 	public function insert()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "add"))
 		{
 			$this->response->redirect("?route=common/permission");
 		}
-		
-    	$this->getForm();
+
+		$this->getForm();
 	}
-	
+
 	public function update()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "edit"))
@@ -60,20 +60,20 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		{
 			//$this->load->language('quanlykho/taisan');
 			//$this->data = array_merge($this->data, $this->language->getData());
-			
-			
+				
+				
 			$this->load->model("quanlykho/taisan");
 			$this->data['haspass'] = false;
 			$this->data['readonly'] = 'readonly="readonly"';
-			
-		
+				
+
 			$this->setup();
 		}
-		
-  	}
-	
 
-	public function delete() 
+	}
+
+
+	public function delete()
 	{
 		$listid=$this->request->post['delete'];
 		//$listmadonvi=$_POST['delete'];
@@ -86,16 +86,16 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->id="content";
 		$this->template="common/output.tpl";
 		$this->render();
-  	}
-	
-	private function getList() 
+	}
+
+	private function getList()
 	{
-		
+
 		$this->data['insert'] = $this->url->http('quanlykho/kehoachnam/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/kehoachnam/delete');		
+		$this->data['delete'] = $this->url->http('quanlykho/kehoachnam/delete');
 		$this->data['list'] = $this->url->http('quanlykho/kehoachnam');
 			
-		
+
 		$this->data['datas'] = array();
 		$rows = array();
 		$this->model_quanlykho_kehoach->getTree(0,$rows);
@@ -103,25 +103,25 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$eclass="child-of-ex0-node";
 		foreach($rows as $item)
 		{
-			
+				
 			$deep = $item['level'];
 			$link_edit = $this->url->http('quanlykho/kehoachnam/update&id='.$item['id']);
 			$text_edit = "Edit";
-			
+				
 			$tab="";
 			if(count($item['countchild'])==0)
-				$tab="<span class='tab'></span>";
-		
+			$tab="<span class='tab'></span>";
+
 			$class="";
 			if($item['parentpath']!="")
-				$class=$eclass.$item['parentpath'];
-				
+			$class=$eclass.$item['parentpath'];
+
 			$this->data["datas"][]=array(
 										'id'=>$item['id'],
 										'nam'=>$item['nam'],
 										'quy'=>$item['quy'],
 										'thang'=>$item['thang'],
-										
+
 										'prefix'=>$this->string->getPrefix("--",$deep),
 										'deep'=>$deep + 1,
 										'eid' =>$eid . $item['path'] ,
@@ -134,41 +134,41 @@ class ControllerQuanlykhoKehoachnam extends Controller
 										'text_edit' =>$text_edit,
 										'link_addchild' => $link_addchild,
 										'text_addchild' => $text_addchild
-								    );
-			
-			
+			);
+				
+				
 		}
-		
+
 		$this->id='content';
 		$this->template="quanlykho/kehoachnam_list.tpl";
 		$this->layout="layout/center";
 		$this->render();
 	}
-	
+
 	private function getForm()
-	{	
-		if ((isset($this->request->get['id'])) ) 
+	{
+		if ((isset($this->request->get['id'])) )
 		{
-      		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
-			
-    	}	
+			$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
+				
+		}
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_form.tpl';
 		$this->layout="layout/center";
-		
+
 		$this->render();
 	}
-	
+
 	private function setup()
 	{
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
-		
+
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_setup.tpl';
 		$this->layout="layout/center";
 		$this->render();
 	}
-	
+
 	public function loadKehoachSanPham()
 	{
 		$makehoach = $this->request->get['id'];
@@ -187,18 +187,18 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$data['soluongtonhientai'] = $item['soluongton'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
 				$data['dongia'] = $item['dongiaban'];
-				
-				
-				
+
+
+
 				$this->data['khsp'][] = $data;
 			}
 		}
-		
+
 		$this->id='content';
 		$this->template='quanlykho/kehoach_sanpham.tpl';
 		$this->render();
 	}
-	
+
 	public function save()
 	{
 		$data = $this->request->post;
@@ -227,10 +227,10 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
-	
+
 	private function saveKeHoachNam($data)
-	{	
-		
+	{
+
 		for($i=1;$i<=$this->setup['quy'];$i++)
 		{
 			$data['quy'] = $i;
@@ -244,9 +244,9 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$this->model_quanlykho_kehoach->insert($data);
 			}
 		}
-		
+
 	}
-	
+
 	public function savechitietkehoach()
 	{
 		$data = $this->request->post;
@@ -262,7 +262,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$khsp['soluong'] = $data['soluong'][$key];
 			$khsp['solot'] = $data['solot'][$key];
 			$khsp['dongia'] = $data['dongia'][$key];
-			
+				
 			$khsp['pheduyet'] = $data['pheduyet'][$key];
 			$khsp['phuchu'] = $data['phuchu'][$key];
 			$this->model_quanlykho_kehoach->saveKeHoachSanPham($khsp);
@@ -272,13 +272,13 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
-	
+
 	private function validateForm($data)
 	{
-    	if($data['nam'] == "")
+		if($data['nam'] == "")
 		{
-      		$this->error['nam'] = "Bạn chưa nhập năm";
-    	}
+			$this->error['nam'] = "Bạn chưa nhập năm";
+		}
 		else
 		{
 			if($data['id'] == "")
@@ -286,18 +286,18 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				$where = " AND nam ='".$data['nam']."'" ;
 				$item = $this->model_quanlykho_kehoach->getList($where);
 				if(count($item)>0)
-					$this->error['nam'] = "Kế hoạch năm " . $data ." đã có rồi";
+				$this->error['nam'] = "Kế hoạch năm " . $data ." đã có rồi";
 			}
 		}
-		
+
 
 		if (count($this->error)==0) {
-	  		return TRUE;
+			return TRUE;
 		} else {
-	  		return FALSE;
+			return FALSE;
 		}
 	}
-	
+
 	//Cac ham xu ly tren form
 	public function getKeHoach()
 	{
@@ -305,7 +305,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$val = $this->request->get['val'];
 		$operator = $this->request->get['operator'];
 		if($operator == "")
-			$operator = "equal";
+		$operator = "equal";
 		$this->load->model("quanlykho/taisan");
 		$where = "";
 		switch($operator)
@@ -322,9 +322,9 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			case "in":
 				$where = " AND ".$col." in  (".$val.")";
 				break;
-			
+					
 		}
-		
+
 			
 		$datas = $this->model_quanlykho_kehoach->getList($where);
 		$this->data['output'] = json_encode(array('taisans' => $datas));
@@ -332,6 +332,6 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->template="common/output.tpl";
 		$this->render();
 	}
-	
+
 }
 ?>

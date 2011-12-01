@@ -11,7 +11,7 @@ final class Registry {
 	}
 
 	static public function has($key) {
-    	return isset(self::$data[$key]);
-  	}
+		return isset(self::$data[$key]);
+	}
 }
 ?>
