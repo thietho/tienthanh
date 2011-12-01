@@ -3,19 +3,13 @@
     	<tr>
             <th>Mã SP</th>
             <th>Tên SP</th>
-            <th>SL theo kê hoạch kỳ trước</th>
-            <th>Thành tiền kỳ trước</th>
-            <th>Kết quả thực hiện kỳ trước</th>
-            <th>Kết quả kinh doanh kỳ trước</th>
-            <th>Tồn thực tại</th>
             <th>SL qui định SX 1 lot</th>
             <th>Tổng số cái SX</th>
             <th>Qui đổi số LOT SX</th>
             <th>Thành tiền</th>
-            <th>Phê duyệt</th>
-            <th>Phụ chú</th>
-            <th>Tổng SL cùng kỳ năm qua</th>
-            <th>Tổng SL cùng kỳ năm trước</th>
+            <th>Kết quả thực hiện</th>
+            <th>Kết quả kinh doanh</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -30,28 +24,20 @@
             	<?php echo $item['tensanpham']?>
                 <input type="hidden" id="tensanpham-<?php echo $key?>" name="tensanpham[<?php echo $key?>]" value="<?php echo $item['tensanpham']?>"/>
             </td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachtruoc'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($item['thanhtienkehoachtruoc'])?></td>
-            <td><?php echo $item['ketquathuchientruoc']?></td>
-            <td><?php echo $item['ketquakinhdoanhtruoc']?></td>
-            <td class="number">
-            	<?php echo $this->string->numberFormate($item['soluongtonhientai'])?>
-                <input type="hidden" id="soluongtonhientai-<?php echo $key?>" name="soluongtonhientai[<?php echo $key?>]" value="<?php echo $item['soluongtonhientai']?>"/>
-            </td>
+            
             <td class="number">
             	<?php echo $this->string->numberFormate($item['sosanphamtrenlot'])?>
                 <input type="hidden" id="sosanphamtrenlot-<?php echo $key?>" name="sosanphamtrenlot[<?php echo $key?>]" value="<?php echo $item['sosanphamtrenlot']?>"/>
             </td>
             <td>
-            	<input type="text" class="text number soluong" id="soluong-<?php echo $key?>" name="soluong[<?php echo $key?>]" value="<?php echo $item['soluong']?>" />
-                <input type="hidden" id="dongia-<?php echo $key?>" name="dongia[<?php echo $key?>]" value="<?php echo $item['dongia']?>"/>
+            	<?php echo $this->string->numberFormate($item['soluong'])?>
+                
             </td>
-            <td class="number"><input type="text" class="text number solot" id="solot-<?php echo $key?>" name="solot[<?php echo $key?>]" value="<?php echo $item['solot']?>" /></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['solot'])?></td>
             <td id="thanhtienview-<?php echo $key?>" class="number"><?php echo $this->string->numberFormate($item['thanhtien'])?></td>
-            <td><input type="checkbox" id="pheduyet-<?php echo $key?>" name="pheduyet[<?php echo $key?>]" value="1" <?php if($item['pheduyet']==1) echo 'checked="checked"';?> /></td>
-            <td><textarea id="phuchu-<?php echo $key?>" name="phuchu[<?php echo $key?>]"><?php echo $item['phuchu']?></textarea> </td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachnamtqua'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachnamttruoc'])?></td>
+            <td><textarea id="ketquathuchien-<?php echo $key?>" name="ketquathuchien[<?php echo $key?>]"><?php echo $item['ketquathuchien']?></textarea> </td>
+            <td><textarea id="ketquakinhdoanh-<?php echo $key?>" name="ketquakinhdoanh[<?php echo $key?>]"><?php echo $item['ketquakinhdoanh']?></textarea> </td>
+            
         </tr>
         <?php } ?>
     </tbody>
