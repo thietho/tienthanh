@@ -3,10 +3,7 @@
     	<tr>
             <th>Mã SP</th>
             <th>Tên SP</th>
-            <th>SL theo kê hoạch kỳ trước</th>
-            <th>Thành tiền kỳ trước</th>
-            <th>Kết quả thực hiện kỳ trước</th>
-            <th>Kết quả kinh doanh kỳ trước</th>
+            
             <th>Tồn thực tại</th>
             <th>SL qui định SX 1 lot</th>
             <th>Tổng số cái SX</th>
@@ -14,8 +11,7 @@
             <th>Thành tiền</th>
             <th>Phê duyệt</th>
             <th>Phụ chú</th>
-            <th>Tổng SL cùng kỳ năm qua</th>
-            <th>Tổng SL cùng kỳ năm trước</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -30,10 +26,7 @@
             	<?php echo $item['tensanpham']?>
                 <input type="hidden" id="tensanpham-<?php echo $key?>" name="tensanpham[<?php echo $key?>]" value="<?php echo $item['tensanpham']?>"/>
             </td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachtruoc'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($item['thanhtienkehoachtruoc'])?></td>
-            <td><?php echo $item['ketquathuchientruoc']?></td>
-            <td><?php echo $item['ketquakinhdoanhtruoc']?></td>
+            
             <td class="number">
             	<?php echo $this->string->numberFormate($item['soluongtonhientai'])?>
                 <input type="hidden" id="soluongtonhientai-<?php echo $key?>" name="soluongtonhientai[<?php echo $key?>]" value="<?php echo $item['soluongtonhientai']?>"/>
@@ -50,8 +43,7 @@
             <td id="thanhtienview-<?php echo $key?>" class="number"><?php echo $this->string->numberFormate($item['thanhtien'])?></td>
             <td><input type="checkbox" id="pheduyet-<?php echo $key?>" name="pheduyet[<?php echo $key?>]" value="1" <?php if($item['pheduyet']==1) echo 'checked="checked"';?> /></td>
             <td><textarea id="phuchu-<?php echo $key?>" name="phuchu[<?php echo $key?>]"><?php echo $item['phuchu']?></textarea> </td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachnamtqua'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($item['slkehoachnamttruoc'])?></td>
+            
         </tr>
         <?php } ?>
     </tbody>

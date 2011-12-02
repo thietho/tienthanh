@@ -30,7 +30,7 @@
 						});
 				});
 		 </script>
-		<input type="text" id="ngaybatdau" name="ngaybatdau" value="<?php echo $item['ngaybatdau']?>"
+		<input type="text" id="ngaybatdau" name="ngaybatdau" value="<?php echo $this->date->formatMySQLDate($item['ngaybatdau'])?>"
 	class="text" />
 	</p>
 	<p>
@@ -44,7 +44,7 @@
 						});
 				});
 		</script>
-		<input type="text" id="ngayketthuc" name="ngayketthuc" value="<?php echo $item['ngaybatdau']?>"
+		<input type="text" id="ngayketthuc" name="ngayketthuc" value="<?php echo $this->date->formatMySQLDate($item['ngayketthuc'])?>"
 	class="text" />
 	</p>
 <p><label>Ghi chú</label><br />
@@ -65,12 +65,12 @@ function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/kehoachnam/save", $("#frm").serialize(),
+	$.post("?route=quanlykho/kehoach/save", $("#frm").serialize(),
 		function(data){
 			var arr = data.split('-');
 			if(arr[0] == "true")
 			{
-				window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
+				window.location = "?route=quanlykho/kehoach/setting&id="+ arr[1];
 			}
 			else
 			{

@@ -64,6 +64,28 @@ class ControllerQuanlykhoKehoach extends Controller
 			$this->data['readonly'] = 'readonly="readonly"';
 				
 
+			$this->getForm();
+		}
+
+	}
+	
+	public function setting()
+	{
+		if(!$this->user->hasPermission($this->getRoute(), "edit"))
+		{
+			$this->response->redirect("?route=common/permission");
+		}
+		else
+		{
+			//$this->load->language('quanlykho/taisan');
+			//$this->data = array_merge($this->data, $this->language->getData());
+				
+				
+			$this->load->model("quanlykho/taisan");
+			$this->data['haspass'] = false;
+			$this->data['readonly'] = 'readonly="readonly"';
+				
+
 			$this->setup();
 		}
 
@@ -206,38 +228,8 @@ class ControllerQuanlykhoKehoach extends Controller
 				$data['soluongtonhientai'] = $item['soluongton'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
 				$data['dongia'] = $item['dongiaban'];
-
-
-
 				$this->data['khsp'][] = $data;
 			}
-		}
-		//
-		$kehoachtruoc = $this->model_quanlykho_kehoach->kehoachkytruoc($makehoach);
-		$where = "AND makehoach = '".$kehoachtruoc['id']."'";
-		$khsptruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		$kehoachnamqua = $this->model_quanlykho_kehoach->kehoacnamtruoc($makehoach);
-		$where = "AND makehoach = '".$kehoachnamqua['id']."'";
-		$khspnamqua = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		$kehoachnamtruoc = $this->model_quanlykho_kehoach->kehoacnamtruoc($kehoachnamqua['id']);
-		$where = "AND makehoach = '".$kehoachnamtruoc['id']."'";
-		$khspnamtruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		foreach($this->data['khsp'] as $key => $item)
-		{
-			$arr = $this->string->array_Filter($khsptruoc,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['ketquathuchientruoc'] = $arr[0]['ketquathuchien'];
-			$this->data['khsp'][$key]['ketquakinhdoanhtruoc'] = $arr[0]['ketquakinhdoanh'];
-			$this->data['khsp'][$key]['slkehoachtruoc'] = $arr[0]['soluong'];
-			$this->data['khsp'][$key]['thanhtienkehoachtruoc'] = $arr[0]['thanhtien'];
-			
-			$arr = $this->string->array_Filter($khspnamqua,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['slkehoachnamtqua'] = $arr[0]['soluong'];
-			
-			$arr = $this->string->array_Filter($khspnamtruoc,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['slkehoachnamttruoc'] = $arr[0]['soluong'];
 		}
 		
 		$this->id='content';
@@ -260,10 +252,12 @@ class ControllerQuanlykhoKehoach extends Controller
 		if($this->validateForm($data))
 		{
 			$data['loai'] = $this->loaikehoach;
+			$data['ngaybatdau'] = $this->date->formatViewDate($data['ngaybatdau']);
+			$data['ngayketthuc'] = $this->date->formatViewDate($data['ngayketthuc']);
 			if($data['id']=="")
 			{
 				$data['id'] = $this->model_quanlykho_kehoach->insert($data);
-				$this->saveKeHoachNam($data);
+				
 			}
 			else
 			{
@@ -281,25 +275,6 @@ class ControllerQuanlykhoKehoach extends Controller
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();
-	}
-
-	private function saveKeHoachNam($data)
-	{
-
-		for($i=1;$i<=$this->setup['quy'];$i++)
-		{
-			$data['quy'] = $i;
-			$data['thang'] = 0;
-			$data['kehoachcha'] = $data['id'];
-			$id = $this->model_quanlykho_kehoach->insert($data);
-			for($j=1;$j<=$this->setup['thang'];$j++)
-			{
-				$data['thang'] = $j;
-				$data['kehoachcha'] = $id;
-				$this->model_quanlykho_kehoach->insert($data);
-			}
-		}
-
 	}
 
 	public function savechitietkehoach()
@@ -347,21 +322,19 @@ class ControllerQuanlykhoKehoach extends Controller
 	}
 	private function validateForm($data)
 	{
-		if($data['nam'] == "")
+		if($data['tenkehoach'] == "")
 		{
-			$this->error['nam'] = "Bạn chưa nhập năm";
+			$this->error['tenkehoach'] = "Bạn chưa nhập tên kê hoạch";
 		}
-		else
+		
+		if($data['ngaybatdau'] == "")
 		{
-			if($data['id'] == "")
-			{
-				$where = " AND nam ='".$data['nam']."'" ;
-				$item = $this->model_quanlykho_kehoach->getList($where);
-				if(count($item)>0)
-				$this->error['nam'] = "Kế hoạch năm " . $data ." đã có rồi";
-			}
+			$this->error['ngaybatdau'] = "Bạn chưa nhập ngày bắt đầu";
 		}
-
+		if($data['ngayketthuc'] == "")
+		{
+			$this->error['ngayketthuc'] = "Bạn chưa nhập ngày kết thúc";
+		}
 
 		if (count($this->error)==0) {
 			return TRUE;
