@@ -16,9 +16,37 @@
 <div class="clearer">^&nbsp;</div>
 <div id="error" class="error" style="display: none"></div>
 <div>
-<p><label>Năm</label><br />
-<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>"
+<p><label>Tên kế hoạch</label><br />
+<input type="text" id="tenkehoach" name="tenkehoach" value="<?php echo $item['tenkehoach']?>"
 	class="text" /></p>
+	<p>
+		<label>Ngày bắt đầu</label><br />
+		<script language="javascript">
+		 	$(function() {
+				$("#ngaybatdau").datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'dd-mm-yy'
+						});
+				});
+		 </script>
+		<input type="text" id="ngaybatdau" name="ngaybatdau" value="<?php echo $item['ngaybatdau']?>"
+	class="text" />
+	</p>
+	<p>
+		<label>Ngày kết thúc</label><br />
+		<script language="javascript">
+		 	$(function() {
+				$("#ngayketthuc").datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'dd-mm-yy'
+						});
+				});
+		</script>
+		<input type="text" id="ngayketthuc" name="ngayketthuc" value="<?php echo $item['ngaybatdau']?>"
+	class="text" />
+	</p>
 <p><label>Ghi chú</label><br />
 <textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
 </p>
