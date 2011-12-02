@@ -1,12 +1,9 @@
 <?php
-class ControllerQuanlykhoKehoachnam extends Controller
+class ControllerQuanlykhoKehoach extends Controller
 {
 	private $error = array();
-	private $loaikehoach = 'kehoachnam';
-	private $setup = array(
-						'quy' => 4,
-						'thang' => 3
-	);
+	private $loaikehoach = '';
+	
 	function __construct()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
@@ -77,7 +74,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
 
 		$this->id='content';
-		$this->template='quanlykho/kehoachnam_danhgia.tpl';
+		$this->template='quanlykho/kehoach_danhgia.tpl';
 		$this->layout="layout/center";
 		$this->render();
 	}
@@ -100,22 +97,21 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	private function getList()
 	{
 
-		$this->data['insert'] = $this->url->http('quanlykho/kehoachnam/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/kehoachnam/delete');
-		$this->data['list'] = $this->url->http('quanlykho/kehoachnam');
+		$this->data['insert'] = $this->url->http('quanlykho/kehoach/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/kehoach/delete');
+		$this->data['list'] = $this->url->http('quanlykho/kehoach');
 			
 
 		$this->data['datas'] = array();
 		$rows = array();
-		$this->model_quanlykho_kehoach->getTree(0,$rows,$this->loaikehoach);
+		$this->model_quanlykho_kehoach->getTree(0,$rows);
 		$eid="ex0-node";
 		$eclass="child-of-ex0-node";
-		
 		foreach($rows as $item)
 		{
 				
 			$deep = $item['level'];
-			$link_edit = $this->url->http('quanlykho/kehoachnam/update&id='.$item['id']);
+			$link_edit = $this->url->http('quanlykho/kehoach/update&id='.$item['id']);
 			$text_edit = "Edit";
 			
 			$makehoach = $item['id'];
@@ -125,7 +121,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			
 			if(count($khsp)>0)
 			{
-				$link_danhgia = $this->url->http('quanlykho/kehoachnam/danhgia&id='.$item['id']);
+				$link_danhgia = $this->url->http('quanlykho/kehoach/danhgia&id='.$item['id']);
 				$text_danhgia = "Đánh giá kế quả";
 			}
 			else
@@ -143,17 +139,13 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 			$this->data["datas"][]=array(
 										'id'=>$item['id'],
-										'nam'=>$item['nam'],
-										'quy'=>$item['quy'],
-										'thang'=>$item['thang'],
-
+										'tenkehoach'=>$item['tenkehoach'],
+										
 										'prefix'=>$this->string->getPrefix("--",$deep),
 										'deep'=>$deep + 1,
 										'eid' =>$eid . $item['path'] ,
 										'class' =>$class,
-										'tennhom'=>$item['tennhom'],
-										'nhomcha'=>$item['nhomcha'],
-										'thutu'=>$item['thutu'],
+										
 										'tab'=>$tab,
 										'link_edit'=>$link_edit,
 										'text_edit' =>$text_edit,
@@ -167,7 +159,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		}
 
 		$this->id='content';
-		$this->template="quanlykho/kehoachnam_list.tpl";
+		$this->template="quanlykho/kehoach_list.tpl";
 		$this->layout="layout/center";
 		$this->render();
 	}
@@ -180,7 +172,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 				
 		}
 		$this->id='content';
-		$this->template='quanlykho/kehoachnam_form.tpl';
+		$this->template='quanlykho/kehoach_form.tpl';
 		$this->layout="layout/center";
 
 		$this->render();
@@ -191,7 +183,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
 
 		$this->id='content';
-		$this->template='quanlykho/kehoachnam_setup.tpl';
+		$this->template='quanlykho/kehoach_setup.tpl';
 		$this->layout="layout/center";
 		$this->render();
 	}
@@ -249,7 +241,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		}
 		
 		$this->id='content';
-		$this->template='quanlykho/kehoachnam_sanpham.tpl';
+		$this->template='quanlykho/kehoach_sanpham.tpl';
 		$this->render();
 	}
 	public function loadKehoachSanPhamDanhGia()

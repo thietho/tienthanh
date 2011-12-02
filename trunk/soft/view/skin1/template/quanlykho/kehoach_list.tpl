@@ -1,6 +1,6 @@
 <div class="section">
 
-<div class="section-title">Quản lý tài sản</div>
+<div class="section-title">Quản lý kế hoạch</div>
 
 <div class="section-content">
 
@@ -30,10 +30,9 @@
 		<tr class="tr-head">
 
 
-			<th>
-				<input class="inputchk" type="checkbox"
+			<th><input class="inputchk" type="checkbox"
 				onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
-			Kế hoạch</th>
+			Tên kế hoạch</th>
 
 
 			<th>Control</th>
@@ -49,13 +48,13 @@
 		<tr id="<?php echo $item['eid']?>" class="<?php echo $item['class']?>">
 
 
-			<td><?php echo $item['tab']?> <?php if($item['deep'] == 1){?> <input
+			<td><?php echo $item['tab']?> 
+				<input
 				class="inputchk" type="checkbox"
 				name="delete[<?php echo $item['id']?>]"
-				value="<?php echo $item['id']?>"> <?php } ?> Kế hoạch <?php echo $item['nam']?>
-				<?php if($item['quy'] > 0) { ?> quý <?php echo $item['quy']?> <?php } ?>
-				<?php if($item['thang'] > 0) { ?> tháng <?php echo $item['thang']?>
-				<?php } ?></td>
+				value="<?php echo $item['id']?>"> 
+				<?php echo $item['tenkehoach']?>
+				</td>
 
 
 			<td class="link-control">

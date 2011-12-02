@@ -31,16 +31,18 @@ class ModelQuanlykhoKehoach extends Model
 		return $this->getList($where);
 	}
 
-	function getTree($id, &$data, $level=-1, $path="", $parentpath="")
+	function getTree($id, &$data,$loai ='', $level=-1, $path="", $parentpath="")
 	{
-		$arr=$this->getItem($id);
-
+		$where = " AND loai = '".$loai."'";
+		$arr=$this->getItem($id,$where);
+		if(count($arr)==0 && (int)@$id!=0)
+			return;
 		$rows = $this->getChild($id);
 
 		$arr['countchild'] = count(rows);
 
 		if($arr['kehoachcha'] != 0)
-		$parentpath .= "-".$arr['kehoachcha'];
+			$parentpath .= "-".$arr['kehoachcha'];
 
 		if($id!="" )
 		{
@@ -56,10 +58,10 @@ class ModelQuanlykhoKehoach extends Model
 
 
 		if(count($rows))
-		foreach($rows as $row)
-		{
-			$this->getTree($row['id'], $data, $level, $path, $parentpath);
-		}
+			foreach($rows as $row)
+			{
+				$this->getTree($row['id'], $data,$loai, $level, $path, $parentpath);
+			}
 	}
 
 	public function nextID()
