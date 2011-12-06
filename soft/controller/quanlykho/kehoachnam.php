@@ -126,7 +126,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			if(count($khsp)>0)
 			{
 				$link_danhgia = $this->url->http('quanlykho/kehoachnam/danhgia&id='.$item['id']);
-				$text_danhgia = "Đánh giá kế quả";
+				$text_danhgia = "Đánh giá kết quả";
 			}
 			else
 			{
