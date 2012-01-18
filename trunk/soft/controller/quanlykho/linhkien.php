@@ -125,8 +125,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomlinhkien'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
-		$this->data['loailinhkien'] = $this->model_quanlykho_nhom->getChild("loailinhkien");
+		
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		
@@ -234,7 +233,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/linhkien");
-			$data['manhom'] = $this->string->arrayToString($data['manhom']);
+			
 			$item = $this->model_quanlykho_linhkien->getItem($data['id']);
 			if(count($item)==0)
 			{
@@ -368,14 +367,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		{
       		$this->error['tenlinhkien'] = "Bạn chưa nhập tên linh kiện";
     	}
-		
-		if (count($data['manhom']) == 0) 
-		{
-      		$this->error['manhom'] = "Bạn chưa chọn nhóm";
-    	}
-		
-		
-		
+
 		if ($data['makho'] == "") 
 		{
       		$this->error['makho'] = "Bạn chưa chọn kho";

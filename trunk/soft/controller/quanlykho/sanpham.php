@@ -180,8 +180,11 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomsanpham'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
-		$this->data['loaisanpham'] = $this->model_quanlykho_nhom->getChild("loaisanpham");
+		
+		$this->data['loaisanpham'] = array();
+		$this->model_quanlykho_nhom->getTree("sanpham",$this->data['loaisanpham']);
+		unset($this->data['loaisanpham'][0]);
+		
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		
@@ -254,11 +257,6 @@ class ControllerQuanlykhoSanpham extends Controller
 		if ($data['tensanpham'] == "") 
 		{
       		$this->error['tensanpham'] = "Bạn chưa nhập tên sản phẩm";
-    	}
-		
-		if ($data['manhom'] == "") 
-		{
-      		$this->error['manhom'] = "Bạn chưa chọn nhóm";
     	}
 		
 		if ($data['loai'] == "") 

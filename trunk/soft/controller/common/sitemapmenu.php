@@ -92,7 +92,7 @@ class ControllerCommonSitemapmenu extends Controller
 				
 			if($item['moduleid'] != "group" && $item['moduleid'] != "homepage")
 			{
-				$link='<a class="left" href="?route='.$item['moduleid']."&sitemapid=".$item['sitemapid'].'" title="[Detail]">'.$item['sitemapname'].'</a>';
+				$link='<a href="?route='.$item['moduleid']."&sitemapid=".$item['sitemapid'].'" title="[Detail]">'.$item['sitemapname'].'</a>';
 			}
 				
 			$str .= "<li>";
@@ -101,7 +101,7 @@ class ControllerCommonSitemapmenu extends Controller
 				
 			if(count($childs) > 0)
 			{
-				$str .= "<span class='collape right'>[+]</span>";
+				
 				$str .= '<div class="clearer">&nbsp;</div>';
 				$str .= "</div>";
 
