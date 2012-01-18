@@ -59,8 +59,7 @@
 <div id="footer"><?php echo $footer?></div>
 
 </div>
-<div id="autocomplete"
-	style="display: none; position: absolute; background: #FFF;"></div>
+<div id="autocomplete" style="display: none; position: absolute; background: #FFF;"></div>
 </body>
 
 </html>

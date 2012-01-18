@@ -376,8 +376,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomnguyenlieu'] = $this->model_quanlykho_nhom->getChild("nhomnguyenlieu");
-		$this->data['loainguyenlieu'] = $this->model_quanlykho_nhom->getChild("loainguyenlieu");
+		
+		$this->data['loainguyenlieu'] = array();
+		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
+		unset($this->data['loainguyenlieu'][0]);
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		
@@ -527,10 +529,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
       		$this->error['tennguyenlieu'] = "Bạn chưa nhập tên nguyên liệu";
     	}
 		
-		if ($data['manhom'] == "") 
-		{
-      		$this->error['manhom'] = "Bạn chưa chọn nhóm";
-    	}
+		
 		
 		if ($data['loai'] == "") 
 		{

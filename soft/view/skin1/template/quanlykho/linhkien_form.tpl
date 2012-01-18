@@ -34,14 +34,6 @@
                     </p>
                    
                     <p>
-                        <label>Nhóm</label><br />
-                        <?php foreach($nhomlinhkien as $val){ ?>
-                        <input type="checkbox" name="manhom[<?php echo $val['manhom']?>]" value="<?php echo $val['manhom']?>" <?php echo (in_array($val['manhom'],$item['arrmanhom'])?"checked":"")?>/> <?php echo $val['tennhom']?><br />
-                        <?php } ?>
-                        
-                    </p>
-                   
-                    <p>
                         <label>Kho</label><br />
                         <select id="makho" name="makho">
                             <option value=""></option>
