@@ -42,6 +42,7 @@ class ModelCoreSitemap extends Model
 								 "quanlykho/nguyenlieu" => "Danh mục nguyên liệu",
 								 "quanlykho/taisan" => "Quản lý tài sản",
 								 "quanlykho/linhkien" => "Quản lý linh kiện",
+								 "quanlykho/quyetdinhgia" => "Quản lý quyết định giá",
 								 "quanlykho/sanpham" => "Quản lý sản phẩm",
 								 "4-title" => "Quản lý kế khoạch",
 								 "quanlykho/kehoachnam" => "Kế hoạch năm",
