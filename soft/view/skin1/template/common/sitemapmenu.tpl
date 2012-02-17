@@ -52,7 +52,7 @@ foreach($quanlykhoonmodule as $key => $item)
 	else
 	{
 		?>
-	<li><a class="left" href="?route=<?php echo $key?>" title="[Detail]"><?php echo $item?></a></li>
+	<li><a href="?route=<?php echo $key?>" title="[Detail]"><?php echo $item?></a></li>
 	<?php } ?>
 	<?php
 }

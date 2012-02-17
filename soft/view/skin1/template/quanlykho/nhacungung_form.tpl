@@ -52,7 +52,7 @@
                         <select id="manhom" name="manhom">
                             <option value=""></option>
                             <?php foreach($nhomnhacungung as $val){ ?>
-                            <option value="<?php echo $val['manhom']?>"><?php echo $val['tennhom']?></option>
+                            <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
                             <?php } ?>
                         </select>
                     </p>
@@ -70,7 +70,7 @@
                         </select>
                     </p>
                     <p>
-                        <label>Tên người đứng đầu</label><br />
+                        <label>Tên người dại diện</label><br />
                         <input type="text" id="tennguoidungdau" name="tennguoidungdau" value="<?php echo $item['tennguoidungdau']?>" class="text" size=60 />
                     </p>
                     <p>

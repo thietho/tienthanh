@@ -181,8 +181,12 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
 		
+		$this->data['nhomsanpham'] = array();
+		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
+		unset($this->data['nhomsanpham'][0]);
+		
 		$this->data['loaisanpham'] = array();
-		$this->model_quanlykho_nhom->getTree("sanpham",$this->data['loaisanpham']);
+		$this->model_quanlykho_nhom->getTree("loaisanpham",$this->data['loaisanpham']);
 		unset($this->data['loaisanpham'][0]);
 		
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
@@ -279,11 +283,25 @@ class ControllerQuanlykhoSanpham extends Controller
       		$this->error['sosanphamtrenlot'] = "Số sản phẩm/Lot phải > 0";
     	}
 		
-		if ($this->string->toNumber($data['dongiaban']) <= 0) 
+		if ($this->string->toNumber($data['dongiabancai']) <= 0) 
 		{
-      		$this->error['dongiaban'] = "Đơn giá bán phải > 0";
+      		$this->error['dongiabancai'] = "Đơn giá bán theo cái phải > 0";
     	}
 		
+		if ($this->string->toNumber($data['dongiabanhop']) <= 0) 
+		{
+      		$this->error['dongiabanhop'] = "Đơn giá bán theo hộp phải > 0";
+    	}
+		
+		if ($this->string->toNumber($data['dongiabanthung']) <= 0) 
+		{
+      		$this->error['dongiabanthung'] = "Đơn giá bán theo thùng phải > 0";
+    	}
+		
+		if ($this->string->toNumber($data['dongiabanlot']) <= 0) 
+		{
+      		$this->error['dongiabanlot'] = "Đơn giá bán theo lot phải > 0";
+    	}
 		
 
 		if (count($this->error)==0) {

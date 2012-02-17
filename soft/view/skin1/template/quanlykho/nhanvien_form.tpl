@@ -32,6 +32,33 @@
                         <label>Họ tên</label><br />
                         <input type="text" id="hoten" name="hoten" value="<?php echo $item['hoten']?>" class="text" size=60 />
                     </p>
+                    <p>
+                        <label>Ngày sinh</label><br />
+                        
+                        <script language="javascript">
+                            $(function() {
+                                $("#ngaysinh").datepicker({
+                                        changeMonth: true,
+                                        changeYear: true,
+                                        dateFormat: 'dd-mm-yy'
+                                        });
+                                });
+                         </script>
+                        <input type="text" id="ngaysinh" name="ngaysinh" value="<?php echo $this->date->formatMySQLDate($item['ngaysinh'])?>" class="text" size=60 />
+                    </p>
+                    <p>
+                        <label>CMND</label><br />
+                        <input type="text" id="cmnd" name="cmnd" value="<?php echo $item['cmnd']?>" class="text" size=60 />
+                    </p>
+                    <p>
+                        <label>Giới tính</label><br />
+                        <select id="gioitinh" name="gioitinh">
+                        	<option value=""></option>
+                            <?php foreach($this->document->gioitinh as $key => $val){ ?>
+                            <option value="<?php echo $key?>"><?php echo $val?></option>
+                            <?php } ?>
+                        </select>
+                    </p>
                    	<p>
                         <label>Phòng ban</label><br />
                         <select id="maphongban" name="maphongban">
@@ -54,7 +81,7 @@
                         <label>Nhóm</label><br />
                         
                         <?php foreach($nhomnhanvien as $val){ ?>
-						<input type="checkbox" name="nhom[<?php echo $val['manhom']?>]" value="<?php echo $val['manhom']?>" <?php echo (in_array($val['manhom'],$item['arrnhom'])?"checked":"")?>/> <?php echo $val['tennhom']?><br />
+						<input type="checkbox" name="nhom[<?php echo $val['manhom']?>]" value="<?php echo $val['manhom']?>" <?php echo (@in_array($val['manhom'],$item['arrnhom'])?"checked":"")?>/> <?php echo $val['tennhom']?><br />
                         <?php } ?>
                         
                     </p>
@@ -63,7 +90,7 @@
                         <select id="chucvu" name="chucvu">
                             <option value=""></option>
                             <?php foreach($chucvus as $key => $val){ ?>
-                            <option value="<?php echo $key ?>"><?php echo $val?></option>
+                            <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
                             <?php } ?>
                         </select>
                     </p>
@@ -213,7 +240,7 @@ function save()
 		}
 	);
 }
-
+$("#gioitinh").val("<?php echo $item['gioitinh']?>");
 $("#maphongban").val("<?php echo $item['maphongban']?>");
 $("#chucvu").val("<?php echo $item['chucvu']?>");
 $("#loai").val("<?php echo $item['loai']?>");

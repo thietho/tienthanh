@@ -45,6 +45,9 @@ class ModelQuanlykhoNhanvien extends Model
 		$id= $this->nextID();
 		$manhanvien=$this->db->escape(@$data['manhanvien']);
 		$hoten=$this->db->escape(@$data['hoten']);
+		$ngaysinh=$this->db->escape(@$data['ngaysinh']);
+		$cmnd=$this->db->escape(@$data['cmnd']);
+		$gioitinh=$this->db->escape(@$data['gioitinh']);
 		$maphongban= $this->db->escape(@$data['maphongban']);
 		$chucvu= $this->db->escape(@$data['chucvu']);
 		$nhom= $this->db->escape(@$data['nhom']);
@@ -71,6 +74,9 @@ class ModelQuanlykhoNhanvien extends Model
 		$field=array(
 						'manhanvien',
 						'hoten',
+						'ngaysinh',
+						'cmnd',
+						'gioitinh',
 						'maphongban',
 						'chucvu',
 						'nhom',
@@ -100,6 +106,9 @@ class ModelQuanlykhoNhanvien extends Model
 
 						$manhanvien,
 						$hoten,
+						$ngach,
+						$cmnd,
+						$gioitinh,
 						$maphongban,
 						$chucvu,
 						$nhom,
@@ -135,6 +144,9 @@ class ModelQuanlykhoNhanvien extends Model
 		$id= (int)@$data['id'];
 		$manhanvien=$this->db->escape(@$data['manhanvien']);
 		$hoten=$this->db->escape(@$data['hoten']);
+		$ngaysinh=$this->db->escape(@$data['ngaysinh']);
+		$cmnd=$this->db->escape(@$data['cmnd']);
+		$gioitinh=$this->db->escape(@$data['gioitinh']);
 		$maphongban= $this->db->escape(@$data['maphongban']);
 		$chucvu= $this->db->escape(@$data['chucvu']);
 		$nhom= $this->db->escape(@$data['nhom']);
@@ -160,6 +172,9 @@ class ModelQuanlykhoNhanvien extends Model
 		$field=array(
 						'manhanvien',
 						'hoten',
+						'ngaysinh',
+						'cmnd',
+						'gioitinh',
 						'maphongban',
 						'chucvu',
 						'nhom',
@@ -180,8 +195,8 @@ class ModelQuanlykhoNhanvien extends Model
 						'ngayvaolam',
 						'ngaykyhopdong',
 						'bhxh',
-						'bhyt',
-						'trangthai'
+						'bhyt'
+						
 						
 						);
 
@@ -189,6 +204,9 @@ class ModelQuanlykhoNhanvien extends Model
 
 						$manhanvien,
 						$hoten,
+						$ngaysinh,
+						$cmnd,
+						$gioitinh,
 						$maphongban,
 						$chucvu,
 						$nhom,
@@ -209,8 +227,7 @@ class ModelQuanlykhoNhanvien extends Model
 						$ngayvaolam,
 						$ngaykyhopdong,
 						$bhxh,
-						$bhyt,
-						"active"
+						$bhyt
 						);
 
 						$where="id = '".$id."'";
