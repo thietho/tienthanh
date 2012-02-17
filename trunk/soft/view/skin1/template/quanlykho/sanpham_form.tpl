@@ -41,7 +41,17 @@
                         <?php } ?>
                     </select>
             	</p>
-               
+               	
+                <p>
+            		<label>Nhom</label><br />
+					<select id="manhom" name="manhom">
+                    	<option value=""></option>
+                   		<?php foreach($nhomsanpham as $val){ ?>
+                        <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
+                        <?php } ?>
+                    </select>
+            	</p>
+                
                 <p>
             		<label>Loại</label><br />
 					<select id="loai" name="loai">
@@ -65,8 +75,20 @@
 					<input type="text" id="sosanphamtrenlot" name="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>" class="text number" size=60 />
             	</p>
                 <p>
-            		<label>Đơn giá bán</label><br />
-					<input type="text" id="dongiaban" name="dongiaban" value="<?php echo $item['dongiaban']?>" class="text number" size=60 />
+            		<label>Đơn giá bán theo cái</label><br />
+					<input type="text" id="dongiabancai" name="dongiabancai" value="<?php echo $item['dongiabancai']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Đơn giá bán theo hộp</label><br />
+					<input type="text" id="dongiabanhop" name="dongiabanhop" value="<?php echo $item['dongiabanhop']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Đơn giá bán theo thùng</label><br />
+					<input type="text" id="dongiabanthung" name="dongiabanthung" value="<?php echo $item['dongiabanthung']?>" class="text number" size=60 />
+            	</p>
+                <p>
+            		<label>Đơn giá bán theo lot</label><br />
+					<input type="text" id="dongiabanlot" name="dongiabanlot" value="<?php echo $item['dongiabanlot']?>" class="text number" size=60 />
             	</p>
                 <p>
             		<label>Đóng gói</label><br />

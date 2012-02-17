@@ -34,13 +34,10 @@ final class Document {
 						   '1' => "Kém"
 						   );
 	
-	public $chucvu = array(
-						   'tp' => "Trưởng phòng",
-						   'pp' => "Phó phòng",
-						   'gd' => "Giám đốc",
-						   'nvvp' => "Nhân viên văn phòng",
-						   'nvgh' => "Nhân viên giao hàng"
-						   );
+	public $gioitinh = array(
+							'male' => "Nam",
+							'female' => "Nữ"
+							);
 	
 	
 	public $loaiphieu = array(

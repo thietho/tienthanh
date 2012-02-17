@@ -182,8 +182,8 @@ class ControllerQuanlykhoTaisan extends Controller
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomtaisan'] = $this->model_quanlykho_nhom->getChild("nhomnguyenlieu");
-		$this->data['loaitaisan'] = $this->model_quanlykho_nhom->getChild("loainguyenlieu");
+		$this->data['nhomtaisan'] = $this->model_quanlykho_nhom->getChild("nhomtaisan");
+		$this->data['loaitaisan'] = $this->model_quanlykho_nhom->getChild("loaitaisan");
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		

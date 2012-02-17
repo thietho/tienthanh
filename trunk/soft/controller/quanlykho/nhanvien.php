@@ -135,8 +135,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 			$phongban = $this->model_quanlykho_phongban->getPhongBan($rows[$i]['maphongban']);
 			$this->data['datas'][$i]['tenphongban'] = $phongban['tenphongban'];
 			
-			$chucvu = $this->document->chucvu[$rows[$i]['chucvu']];
-			$this->data['datas'][$i]['tenchucvu'] = $chucvu;
+			
 			
 			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/nhanvien/update&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
@@ -193,12 +192,17 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->load->helper('image');
 		$this->data['phongbans'] = $this->model_quanlykho_phongban->getTreePhongBan($this->model_quanlykho_phongban->root);
 		unset($this->data['phongbans'][0]);
-		$this->data['chucvus'] = $this->document->chucvu;
+		//$this->data['chucvus'] = $this->document->chucvu;
+		$this->data['chucvus'] = array();
+		$this->model_quanlykho_nhom->getTree("chucvu",$this->data['chucvus']);
+		unset($this->data['chucvus'][0]);
+		
 		$this->data['nhomnhanvien'] = $this->model_quanlykho_nhom->getChild("nhomnhanvien");
 		$this->data['loainhanvien'] = $this->model_quanlykho_nhom->getChild("loainhanvien");
 		if ((isset($this->request->get['id'])) ) 
 		{
       		$this->data['item'] = $this->model_quanlykho_nhanvien->getItem($this->request->get['id']);
+			$this->data['item']['arrnhom'] = array();
 			$this->data['item']['arrnhom'] = $this->string->referSiteMapToArray($this->data['item']['nhom']);
 			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
     	}
@@ -218,7 +222,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 		{
 			$this->load->model("quanlykho/nhanvien");
 			$item = $this->model_quanlykho_nhanvien->getItem($data['id']);
-			
+			$data['ngaysinh'] = $this->date->formatViewDate($data['ngaysinh']);
 			$data['ngayvaolam'] = $this->date->formatViewDate($data['ngayvaolam']);
 			$data['ngaykyhopdong'] = $this->date->formatViewDate($data['ngaykyhopdong']);
 			$data['nhom'] = $this->string->arrayToString($data['nhom']);
@@ -270,6 +274,21 @@ class ControllerQuanlykhoNhanVien extends Controller
 		if ($data['hoten'] == "") 
 		{
       		$this->error['hoten'] = "Bạn chưa nhập tên nhân viên";
+    	}
+		
+		if ($data['ngaysinh'] == "") 
+		{
+      		$this->error['ngaysinh'] = "Bạn chưa nhập ngày sinh";
+    	}
+		
+		if ($data['cmnd'] == "") 
+		{
+      		$this->error['cmnd'] = "Bạn chưa nhập số CMND";
+    	}
+		
+		if ($data['gioitinh'] == "") 
+		{
+      		$this->error['gioitinh'] = "Bạn chưa chọn giới tính";
     	}
 		
 		if ($data['maphongban'] == "") 

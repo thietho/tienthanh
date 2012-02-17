@@ -84,7 +84,7 @@
                         <td><?php echo $item['manhanvien']?></td>
                         <td><?php echo $item['hoten']?></td>
                         <td><?php echo $item['tenphongban']?></td>
-                        <td><?php echo $item['tenchucvu']?></td>
+                        <td><?php echo $this->document->getNhom($item['chucvu'])?></td>
                         <td><?php echo $item['chuyenmon']?></td>
                         <td><?php echo $item['bangcap']?></td>
                         <td><?php echo $this->string->numberFormate($item['luongcoban']) ?></td>

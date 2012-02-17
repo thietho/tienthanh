@@ -138,6 +138,7 @@
 </div>
 <script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
 <script language="javascript">
+
 $(document).ready(function() {
 	$('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
 });
@@ -215,8 +216,11 @@ function unSelcetNguyenLieu()
 	$("#nguyenlieusudung").val("");
 	$("#tennguyenlieu").html("");
 }
+
 //Su ly chi tiet
-<?php foreach($dinhluong as $val){ ?>
+<?php 
+if(count($dinhluong))
+	foreach($dinhluong as $val){ ?>
 createRow("<?php echo $val['id']?>","<?php echo $val['masanpham']?>","<?php echo $val['soluong']?>")
 <?php } ?>
 function selcetSanPham()
@@ -267,6 +271,7 @@ function removeRow(pos,dlid)
 }
 
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
+
 </script>
 <script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
 <script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>

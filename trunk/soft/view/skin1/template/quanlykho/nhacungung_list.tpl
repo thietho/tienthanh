@@ -60,7 +60,7 @@
                         <th>Địa chỉ</th>
                         <th>Điện thoại</th>
                         <th>Fax</th>
-                        <th>Người đứng đầu</th>
+                        <th>Người đại diện</th>
                         <th>Hiệu lực đến ngày</th>
                         <th>Ngày đánh giá lại</th>
                         <?php if($dialog!=true){ ?>

@@ -42,7 +42,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$tensanpham=$this->db->escape(@$data['tensanpham']);
 		$mavach=$this->db->escape(@$data['mavach']);
 		$sosanphamtrenlot= $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
-		$dongiaban= $this->string->toNumber($this->db->escape(@$data['dongiaban']));
+		$dongiabancai= $this->string->toNumber($this->db->escape(@$data['dongiabancai']));
+		$dongiabanhop= $this->string->toNumber($this->db->escape(@$data['dongiabanhop']));
+		$dongiabanthung= $this->string->toNumber($this->db->escape(@$data['dongiabanthung']));
+		$dongiabanlot= $this->string->toNumber($this->db->escape(@$data['dongiabanlot']));
 		$soluongton= $this->string->toNumber($this->db->escape(@$data['soluongton']));
 		$donggoi=$this->string->toNumber($this->db->escape(@$data['donggoi']));
 		$khuvuc=$this->string->toNumber($this->db->escape(@$data['khuvuc']));
@@ -61,7 +64,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'tensanpham',
 						'mavach',
 						'sosanphamtrenlot',
-						'dongiaban',
+						'dongiabancai',
+						'dongiabanhop',
+						'dongiabanthung',
+						'dongiabanlot',
 						'soluongton',
 						'donggoi',
 						'khuvuc',
@@ -82,7 +88,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$tensanpham,
 						$mavach,
 						$sosanphamtrenlot,
-						$dongiaban,
+						$dongiabancai,
+						$dongiabanhop,
+						$dongiabanthung,
+						$dongiabanlot,
 						$soluongton,
 						$donggoi,
 						$khuvuc,
@@ -113,7 +122,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$tensanpham=$this->db->escape(@$data['tensanpham']);
 		$mavach=$this->db->escape(@$data['mavach']);
 		$sosanphamtrenlot= $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
-		$dongiaban= $this->string->toNumber($this->db->escape(@$data['dongiaban']));
+		$dongiabancai= $this->string->toNumber($this->db->escape(@$data['dongiabancai']));
+		$dongiabanhop= $this->string->toNumber($this->db->escape(@$data['dongiabanhop']));
+		$dongiabanthung= $this->string->toNumber($this->db->escape(@$data['dongiabanthung']));
+		$dongiabanlot= $this->string->toNumber($this->db->escape(@$data['dongiabanlot']));
 		$soluongton= $this->string->toNumber($this->db->escape(@$data['soluongton']));
 		$donggoi=$this->string->toNumber($this->db->escape(@$data['donggoi']));
 		$khuvuc=$this->string->toNumber($this->db->escape(@$data['khuvuc']));
@@ -132,7 +144,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'tensanpham',
 						'mavach',
 						'sosanphamtrenlot',
-						'dongiaban',
+						'dongiabancai',
+						'dongiabanhop',
+						'dongiabanthung',
+						'dongiabanlot',
 						'soluongton',
 						'donggoi',
 						'khuvuc',
@@ -143,7 +158,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'manhom',
 						'madonvi',
 						'makho',
-						'trangthai',
+						
 						'imageid',
 						'imagepath'
 						);
@@ -153,7 +168,10 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$tensanpham,
 						$mavach,
 						$sosanphamtrenlot,
-						$dongiaban,
+						$dongiabancai,
+						$dongiabanhop,
+						$dongiabanthung,
+						$dongiabanlot,
 						$soluongton,
 						$donggoi,
 						$khuvuc,
@@ -164,7 +182,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$manhom,
 						$madonvi,
 						$makho,
-						'active',
+						
 						$imageid,
 						$imagepath
 						);

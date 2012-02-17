@@ -82,7 +82,7 @@ class ControllerCommonSitemapmenu extends Controller
 		{
 			$childs = $this->model_core_sitemap->getListByParent($item['sitemapid'], $siteid, "Addon");
 				
-			$link = "<a class='left'>".$item['sitemapname']."</a>";
+			$link = "<a >".$item['sitemapname']."</a>";
 				
 			if(substr($item['moduleid'],0,6) == "group/")
 			{
