@@ -30,6 +30,15 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->helper('image');
+		$this->load->model("quanlykho/nhom");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
+		
+		$this->data['loainguyenlieu'] = array();
+		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
+		unset($this->data['loainguyenlieu'][0]);
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
    	}
 	public function index()
 	{
@@ -284,13 +293,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');		
 		
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomnguyenlieu'] = $this->model_quanlykho_nhom->getChild("nhomnguyenlieu");
-		$this->data['loainguyenlieu'] = $this->model_quanlykho_nhom->getChild("loainguyenlieu");
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
 		
 		$this->data['datas'] = array();
 		$where = "";
@@ -373,15 +376,6 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	private function getForm()
 	{
 		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		
-		$this->data['loainguyenlieu'] = array();
-		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
-		unset($this->data['loainguyenlieu'][0]);
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		
 		if ((isset($this->request->get['id'])) ) 
 		{

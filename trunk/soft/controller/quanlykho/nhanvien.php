@@ -276,15 +276,7 @@ class ControllerQuanlykhoNhanVien extends Controller
       		$this->error['hoten'] = "Bạn chưa nhập tên nhân viên";
     	}
 		
-		if ($data['ngaysinh'] == "") 
-		{
-      		$this->error['ngaysinh'] = "Bạn chưa nhập ngày sinh";
-    	}
 		
-		if ($data['cmnd'] == "") 
-		{
-      		$this->error['cmnd'] = "Bạn chưa nhập số CMND";
-    	}
 		
 		if ($data['gioitinh'] == "") 
 		{

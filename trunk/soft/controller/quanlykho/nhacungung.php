@@ -2,8 +2,7 @@
 class ControllerQuanlykhoNhacungung extends Controller
 {
 	private $error = array();
-	
-	public function index()
+	function __construct() 
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
@@ -24,10 +23,27 @@ class ControllerQuanlykhoNhacungung extends Controller
 		{
 			$this->data['permissionDelete'] = false;
 		}
-		//$this->load->language('quanlykho/nhacungung');
+		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
 		
+		$this->load->model("quanlykho/nhom");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
+		
+		$this->data['nhomnhacungung'] = array();
+		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['nhomnhacungung']);
+		unset($this->data['nhomnhacungung'][0]);
+		
+		$this->data['khuvuc'] = array();
+		$this->model_quanlykho_nhom->getTree("khuvuc",$this->data['khuvuc']);
+		unset($this->data['khuvuc'][0]);
+   	}
+	public function index()
+	{
+		
 		$this->document->title = $this->language->get('heading_title');
+		
+		
 		
 		$this->load->model("quanlykho/nhacungung");
 		$this->getList();
@@ -85,13 +101,7 @@ class ControllerQuanlykhoNhacungung extends Controller
 	
 	private function getList() 
 	{
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomnhacungung'] = $this->model_quanlykho_nhom->getChild("nhomnhacungung");
-		$this->data['khuvuc'] = array();
-		$this->model_quanlykho_nhom->getTree("khuvuc",$this->data['khuvuc']);
-		unset($this->data['khuvuc'][0]);
+		
 		
 		$this->data['insert'] = $this->url->http('quanlykho/nhacungung/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/nhacungung/delete');		
@@ -170,17 +180,7 @@ class ControllerQuanlykhoNhacungung extends Controller
 	private function getForm()
 	{
 		
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		//$this->data['nhomnhacungung'] = $this->model_quanlykho_nhom->getChild("nhomnhacungung");
-		$this->data['nhomnhacungung'] = array();
-		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['nhomnhacungung']);
-		unset($this->data['nhomnhacungung'][0]);
-		$this->data['khuvuc'] = array();
-		$this->model_quanlykho_nhom->getTree("khuvuc",$this->data['khuvuc']);
-		unset($this->data['khuvuc'][0]);
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
 		
 		if ((isset($this->request->get['id'])) ) 
 		{
