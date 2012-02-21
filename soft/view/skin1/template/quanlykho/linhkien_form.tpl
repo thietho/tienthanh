@@ -82,7 +82,7 @@
                         <input type="button" class="button" name="btnChonNguyenLieu" value="Chọn nguyên vật liệu" onClick="selcetNguyenLieu()">
                         <input type="button" class="button" name="btnChonNguyenLieu" value="Bỏ chọn" onClick="unSelcetNguyenLieu()">
                     </p>
-                    <p style="display:none">
+                    <p>
                         <label>Số lượng sử dụng cho 1 linh kiện</label>
                         <input type="text" id="soluongnguyenlieu" name="soluongnguyenlieu" value="<?php echo $item['soluongnguyenlieu']?>" class="text number" size=20 />
                         <select id="madonvinguyenlieu" name="madonvinguyenlieu">
@@ -108,7 +108,7 @@
                 </div>
                 <div id="fragment-sanphamsudung" class="tabs-container">
                 	
-                	<label>CÁC LINH KIỆN BAO GỒM</label>
+                	
                     <p>
                     	<input type="hidden" id="selectsanpham" name="selectsanpham">
                         <table style="width:auto">

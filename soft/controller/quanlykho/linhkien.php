@@ -385,7 +385,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
 		if ($data['soluongnguyenlieu'] == "") 
 		{
-      		$this->error['soluongnguyenlieu'] = "Bạn nhập số lượng nguyên liệu cần cho linh kiện";
+      		$this->error['soluongnguyenlieu'] = "Bạn nhập số lượng nguyên liệu cần cho 1 linh kiện";
     	}
 		
 		if ($data['madonvinguyenlieu'] == "") 

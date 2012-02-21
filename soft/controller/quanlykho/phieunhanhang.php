@@ -96,7 +96,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 		$this->data['delete'] = $this->url->http('quanlykho/phieunhanhang/delete');
 
 		$this->data['datas'] = array();
-		$where = "";
+		$where = " AND manhacungung = '".$manhacungung."'";
 
 
 		$datasearch = array();
@@ -124,7 +124,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 		if($datasearch['denngay'] != "")
 		$arr[] = " AND ngaylap <= '".$datasearch['denngay']."'";
 
-		$where = implode("",$arr);
+		$where .= implode("",$arr);
 
 		$rows = $this->model_quanlykho_phieunhanhang->getList($where);
 		//Page
