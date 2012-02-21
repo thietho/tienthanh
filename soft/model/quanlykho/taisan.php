@@ -353,5 +353,81 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 
 		return $hienhanh;
 	}
+	
+	//Lich su tai san
+	public function getLichSu($id)
+	{
+		$sql = "Select `qlktaisan_lichsu`.*
+									from `qlktaisan_lichsu` 
+									where id ='".$id."' ".$where;
+		$query = $this->db->query($sql);
+		return $query->row;
+	}
+
+	public function getLichSuList($where="", $from=0, $to=0)
+	{
+
+		$sql = "Select `qlktaisan_lichsu`.*
+									from `qlktaisan_lichsu` 
+									where 1=1 " . $where . " Order by id";
+		if($to > 0)
+		{
+			$sql .= " Limit ".$from.",".$to;
+		}
+
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+
+	public function saveLichSu($data)
+	{
+		$id=(int)@$data['id'];
+		$mataisan=$this->db->escape(@$data['mataisan']);
+		$ngaysuachua=$this->db->escape(@$data['ngaysuachua']);
+		$noidung=$this->db->escape(@$data['noidung']);
+		$chungtu=$this->db->escape(@$data['chungtu']);
+		$ngaytao=$this->date->getToday();
+		
+
+		$field=array(
+
+						'mataisan',
+						'ngaysuachua',
+						'noidung',
+						'chungtu',
+						'ngaytao'
+						);
+						$value=array(
+
+						$mataisan,
+						$ngaysuachua,
+						$noidung,
+						$chungtu,
+						$ngaytao
+						
+
+						);
+
+		if($id == 0 )
+		{
+			
+			$this->db->insertData("qlktaisan_lichsu",$field,$value);
+				
+				
+		}
+		else
+		{
+			$where="id = '".$id."'";
+			$this->db->updateData("qlktaisan_lichsu",$field,$value,$where);
+		}
+
+						
+	}
+
+	public function deleteLichSu($id)
+	{
+		$where="id = '".$id."'";
+		$this->db->deleteData("qlktaisan_lichsu",$where);
+	}
 }
 ?>
