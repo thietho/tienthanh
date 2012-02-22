@@ -142,11 +142,11 @@ class ControllerQuanlykhoTaisan extends Controller
 		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
 			$this->data['datas'][$i] = $rows[$i];
-			$this->data['datas'][$i]['hienhanh'] = $this->model_quanlykho_taisan->kientraTaiSan($this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['dachomuon'] = $this->model_quanlykho_taisan->kientraTaiSan($this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/taisan/update&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
-			$this->data['datas'][$i]['link_dinhluong'] = $this->url->http('quanlykho/taisan/dinhluong&id='.$this->data['datas'][$i]['id']);
-			$this->data['datas'][$i]['text_dinhluong'] = "Định lượng";
+			$this->data['datas'][$i]['link_historry'] = $this->url->http('quanlykho/taisan/lichsu&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['text_history'] = "Lý lịch";
 			$this->data['datas'][$i]['link_capnhatgia'] = $this->url->http('quanlykho/taisan/capnhatgia&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_capnhatgia'] = "Cập nhật giá";
 			//
@@ -395,7 +395,7 @@ class ControllerQuanlykhoTaisan extends Controller
 			$this->load->model("quanlykho/taisan");
 			$data['ngaynhan'] = $this->date->formatViewDate($data['ngaynhan']);
 			$this->model_quanlykho_taisan->saveSoTaiSan($data);
-			
+			$this->model_quanlykhoa_taisan->updateCol($data['mataisan'],'tinhtrang','chomuon');
 			$this->data['output'] = "true";
 		}
 		else
@@ -493,6 +493,7 @@ class ControllerQuanlykhoTaisan extends Controller
 			
 			$this->model_quanlykho_taisan->saveTraTaiSan($data);
 			
+			
 			$this->data['output'] = "true";
 		}
 		else
@@ -524,6 +525,15 @@ class ControllerQuanlykhoTaisan extends Controller
 		} else {
 	  		return FALSE;
 		}
+	}
+	
+	public function lichsu()
+	{
+		
+		$this->id='content';
+		$this->template="quanlykho/taisan_lichsu.tpl";
+		$this->layout="layout/center";
+		$this->render();	
 	}
 	
 	//Cac ham xu ly tren form

@@ -32,6 +32,14 @@
                     <?php } ?>
                 </select>
                 <br />
+                <label>Tinh trang</label>
+                <select id="tinhtrang" name="tinhtrang">
+                    <option value=""></option>
+                    <option value="chuachomuon">Chưa cho mượn</option>
+                    <option value="chomuon">Cho mượn</option>
+                    
+                </select>
+                <br />
                 <input type="button" class="button" name="btnSearch" value="Tìm" onclick="searchForm()"/>
                 <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/taisan'"/>
             </div>
@@ -68,7 +76,7 @@
                         <th>Đơn vị tính</th>
                         <th>Ngày mua</th>
                         <th>Phòng ban nhận</th>
-                        <th>Người nhận</th>
+                        <th>Người mượn gần nhất</th>
                         <th>Đơn giá</th>
                         <th>Tinh trang</th>
                         <th>Mục đích sử dụng</th>
@@ -86,10 +94,10 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr>
+                    <tr <?php echo ($item["dachomuon"]==true)?"":'style="background:#CCC"' ;?>>
                         <td class="check-column">
                         	
-                            <input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" >		
+                            <input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" <?php echo ($item["dachomuon"]==true)?"":'disabled="disabled"' ;?>>		
                             
                         </td>
                         <td><?php echo $key+1 ?></td>
@@ -105,7 +113,7 @@
                         <td><?php echo $this->document->getNhom($item['phongbannhan'])?></td>
                         <td><?php echo $item['tennguoinhan']?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongia'],0)?></td>
-                        <td><?php echo ($item["hienhanh"]==true)?"":"Đã cho mượn" ;?></td>
+                        <td><?php echo ($item["dachomuon"]==true)?"":"Đã cho mượn" ;?></td>
                         <td><?php echo $item['mucdichsudung']?></td>
                         <td><?php echo $item['ghichu']?></td>
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
@@ -113,6 +121,7 @@
                         <td class="link-control">
                             
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <input type="button" class="button" name="btnHistory" value="<?php echo $item['text_history']?>" onclick="window.location='<?php echo $item['link_historry']?>'"/>
                            
                            	
                         </td>
@@ -168,7 +177,8 @@ function searchForm()
 		url += "&loai="+ $("#loai").val();
 	if($("#makho").val() != "")
 		url += "&makho=" + $("#makho").val();
-	
+	if($("#tinhtrang").val() != "")
+		url += "&tinhtrang=" + $("#tinhtrang").val();
 	if("<?php echo $_GET['opendialog']?>" == "true")
 	{
 		url += "&opendialog=true";
@@ -183,6 +193,7 @@ $("#tentaisan").val("<?php echo $_GET['tentaisan']?>");
 $("#manhom").val("<?php echo $_GET['manhom']?>");
 $("#loai").val("<?php echo $_GET['loai']?>");
 $("#makho").val("<?php echo $_GET['makho']?>");
+$("#tinhtrang").val("<?php echo $_GET['tinhtrang']?>");
 
 function selectTaiSan()
 {
