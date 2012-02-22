@@ -51,6 +51,7 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 		$ghichu=$this->db->escape(@$data['ghichu']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
+		$tinhtrang = "chuachomuon";
 
 		$field=array(
 
@@ -76,7 +77,8 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						'ghichu',
 						'trangthai',
 						'imageid',
-						'imagepath'
+						'imagepath',
+						'tinhtrang'
 						);
 						$value=array(
 
@@ -102,7 +104,8 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						$ghichu,
 						'active',
 						$imageid,
-						$imagepath
+						$imagepath,
+						$tinhtrang
 						);
 						$this->db->insertData("qlktaisan",$field,$value);
 						$this->updateFileTemp($imageid);
@@ -201,7 +204,7 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 						$where="id = '".$id."'";
 						$this->db->updateData("qlktaisan",$field,$value,$where);
 	}
-
+	
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -210,7 +213,24 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 		}
 	}
 
+	public function updateCol($id,$col,$val)
+	{
+		$id= $this->db->escape(@$id);
+		$col=$this->db->escape(@$col);
+		$val= $this->db->escape(@$val);
+		$field=array(
 
+						$col
+						);
+						$value=array(
+
+
+						$val
+						);
+
+		$where="id = '".$id."'";
+		$this->db->updateData("qlktaisan",$field,$value,$where);
+	}
 
 	//Sổ tai san
 	public function getSoTaiSan($id)
@@ -318,14 +338,12 @@ class ModelQuanlykhoTaisan extends ModelCoreFile
 
 	function saveTraTaiSan($data)
 	{
-
 		$sotaisan = $this->getSoTaiSan($data['id']);
-
 		$sotaisan['ngaytra'] = $data['ngaytra'];
 		$sotaisan['nguoitra'] = $data['nguoitra'];
 		$sotaisan['ghichutra'] = $data['ghichutra'];
 		$this->saveSoTaiSan($sotaisan);
-
+		$this->updateCol($sotaisan['mataisan'],'tinhtrang','chuachomuon');
 
 	}
 
