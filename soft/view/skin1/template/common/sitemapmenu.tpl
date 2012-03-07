@@ -27,7 +27,7 @@
 <div class="content">
 <ul>
 <?php foreach($addonmodule as $key => $item){?>
-	<li><a class="left" href="?route=<?php echo $key?>" title="[Detail]"><?php echo $item?></a></li>
+	<li><a href="?route=<?php echo $key?>" title="[Detail]"><?php echo $item?></a></li>
 	<?php }?>
 </ul>
 </div>
