@@ -378,20 +378,20 @@ class ControllerQuanlykhoLinhkien extends Controller
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
     	}
 		
-		if ($data['nguyenlieusudung'] == "") 
-		{
-      		$this->error['nguyenlieusudung'] = "Bạn chọn nguyên liệu sử dụng";
-    	}
-		
-		if ($data['soluongnguyenlieu'] == "") 
-		{
-      		$this->error['soluongnguyenlieu'] = "Bạn nhập số lượng nguyên liệu cần cho 1 linh kiện";
-    	}
-		
-		if ($data['madonvinguyenlieu'] == "") 
-		{
-      		$this->error['madonvinguyenlieu'] = "Bạn chưa chọn đơn vị tính cho nguyên liệu";
-    	}
+		//if ($data['nguyenlieusudung'] == "") 
+//		{
+//      		$this->error['nguyenlieusudung'] = "Bạn chọn nguyên liệu sử dụng";
+//    	}
+//		
+//		if ($data['soluongnguyenlieu'] == "") 
+//		{
+//      		$this->error['soluongnguyenlieu'] = "Bạn nhập số lượng nguyên liệu cần cho 1 linh kiện";
+//    	}
+//		
+//		if ($data['madonvinguyenlieu'] == "") 
+//		{
+//      		$this->error['madonvinguyenlieu'] = "Bạn chưa chọn đơn vị tính cho nguyên liệu";
+//    	}
 
 		if (count($this->error)==0) {
 	  		return TRUE;
