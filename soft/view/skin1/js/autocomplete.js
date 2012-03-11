@@ -65,6 +65,7 @@ function AutoComplete()
 			if (event.keyCode == '40')
 			{
 				auto.next();
+				
 			}
 			//Press button up
 			if (event.keyCode == '38')

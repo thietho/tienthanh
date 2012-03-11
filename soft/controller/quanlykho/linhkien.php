@@ -218,6 +218,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 			
 			$this->data['dinhluong'] = $this->model_quanlykho_sanpham->getDinhLuongLinhKien($this->request->get['id']);
 			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
+			
     	}
 		
 		$this->id='content';
@@ -230,6 +231,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
+		print_r($data);
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/linhkien");
