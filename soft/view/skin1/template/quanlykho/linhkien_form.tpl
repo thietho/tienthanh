@@ -114,6 +114,7 @@
                         <table style="width:auto">
                         	<thead>
                                 <tr>
+                                	<th>Mã sản phẩm</th>
                                     <th>Sản phẩm</th>
                                     <th>Số lượng sử dụng</th>
                                     <th></th>
@@ -124,7 +125,7 @@
                             </tbody>
                         </table>
                         <input type="hidden" id="deldinhluong" name="deldinhluong" />
-                        <input class="button" type="button" name="btnAddrow" value="Thêm dòng" onClick="selcetSanPham()">
+                        <input class="button" type="button" id="btnAddrow" name="btnAddrow" value="Thêm dòng">
                     </p>
                 
                 </div>
@@ -138,7 +139,116 @@
 </div>
 <script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
 <script language="javascript">
+var auto = new AutoComplete();
+$('#btnAddrow').click(function(){
+	sp.newRow();
+});
+function SanPham()
+{
+	this.index = 0;
+	this.refresh = function()
+	{
+		/*$('input').change(function(e) {
+			ar = this.id.split('-');
+			var row= ar[1];
+			$("#status-"+row).val('update');
+			$('#row-'+row).css('background-color',"#F0F");
+		});*/
+		numberReady();
+		auto.autocomplete();
+	}
+	this.getSanPham = function(col,val,operator)
+	{
+		$.getJSON("?route=quanlykho/sanpham/getSanPham&col="+col+"&val="+val+"&operator="+operator, 
+				function(data) 
+				{
+					//var str = '<option value=""></option>';
+					for( i in data.congdoans)
+					{
+						
+						$("#dinhluongsanpham").append(cd.createRowSanPham(data.sanphams[i]));
+						
+					}
+					sp.refresh()
+				});
+	}
+	
+	this.newRow =function()
+	{
+		var obj = new Object()
+		obj.id='';
+		obj.masanpham='';
+		obj.tensanpham='';
+		obj.mavach='';
+		obj.sosanphamtrenlot='';
+		obj.dongiabancai='';
+		obj.dongiabanhop='';
+		obj.dongiabanthung='';
+		obj.dongiabanlot='';
+		obj.soluongton='';
+		obj.donggoi='';
+		obj.khuvuc='';
+		obj.phancap='';
+		obj.hienhanh='';
+		obj.ghichu='';
+		obj.loai='';
+		obj.manhom='';
+		obj.madonvi='';
+		obj.makho='';
+		obj.imageid=0;
+		obj.imagepath='';
+		
+		
+		$("#dinhluongsanpham").append(sp.createRowSanPhamDinhLuong(obj,0));
+		sp.refresh()
+	}
+	
+	this.createRowSanPhamDinhLuong = function(obj)
+	{
+		var id = '<input type="hidden" id="id-'+ this.index +'" name="id['+ this.index +']" value="'+obj.id+'" />';
+		id += '<input type="hidden" id="status-'+ this.index +'" name="status['+ this.index +']" />';
+		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="cd.delRow('+this.index+')"/>';
+		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="cd.viewCongDoan(\''+obj.masanpham+'\')"/>';
+		var row = '';
+		row+='					<tr id="row-'+ this.index +'">';
+		row+='                    	<td><input type="text" id="masanpham-'+ this.index +'" name="masanpham['+ this.index +']" class="text gridautocomplete" value="'+obj.masanpham+'" /></td>';
+		row+='                      <td><input type="text" id="tensanpham-'+ this.index +'" name="tensanpham['+ this.index +']" class="text" value="'+obj.tensanpham+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="soluong-'+ this.index +'" name="soluong['+ this.index +']" class="text number" value="'+0+'" /></td>';
+		
+		row+='                      <td>'+id+btnXoa+'</td>';
+		row+='                  </tr>';
+		
+		this.index++;
+		return row
+	}
+	
+	this.delRow = function(pos)
+	{
+		$('#delcongdoans').val($('#delcongdoans').val()+ $('#id-'+pos).val()+",");
+		$('#row-'+pos).remove();
+	}
+}
 
+function callBackAutoComplete(val)
+{
+	alert(val.value);
+	
+}
+
+function selectValue(eid)
+{
+	//alert(eid)
+	ar = eid.split("-");
+	if(ar[0]=='tennguyenlieusanxuat')
+	{
+		selectValueNguyenLieu(eid);
+	}
+	if(ar[0]=='tenthietbisanxuatchinh')
+	{
+		selectValueTaiSan(eid);
+	}
+}
+var sp = new SanPham();
 $(document).ready(function() {
 	$('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
 });
@@ -202,7 +312,7 @@ function getNguyenLieu(col,val,operator)
 
 function selcetNguyenLieu()
 {
-	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",1000,800);
+	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",800,500);
 	
 	list = trim($("#manguyenlieu").val(), ',');
 	arr = list.split(",");
@@ -218,14 +328,10 @@ function unSelcetNguyenLieu()
 }
 
 //Su ly chi tiet
-<?php 
-if(count($dinhluong))
-	foreach($dinhluong as $val){ ?>
-createRow("<?php echo $val['id']?>","<?php echo $val['masanpham']?>","<?php echo $val['soluong']?>")
-<?php } ?>
+
 function selcetSanPham()
 {
-	openDialog("?route=quanlykho/sanpham&opendialog=true",1000,800);
+	openDialog("?route=quanlykho/sanpham&opendialog=true",800,500);
 	
 	list = trim($("#selectsanpham").val(), ',');
 	arr = list.split(",");
