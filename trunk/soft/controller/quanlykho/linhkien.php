@@ -231,7 +231,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
-		print_r($data);
+		
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/linhkien");
