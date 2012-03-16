@@ -22,72 +22,6 @@
                 <p>
             		<label>Tên linh kiện: <?php echo $item['tenlinhkien']?></label>
             	</p>
-               	<!--<p>
-                
-            		<label>Mã công đoạn</label><br />
-					<input type="text" id="macongdoan" name="macongdoan" class="text" size=60 />
-                    <input type="hidden" id="id" name="id"/>
-            	</p>
-                <p>
-            		<label>Tên công đoạn</label><br />
-					<input type="text" id="tencongdoan" name="tencongdoan" class="text" size=60/>
-            	</p>
-                <p>
-            		<label>Thứ tự thực hiện</label><br />
-					<input type="text" id="thututhuchien" name="thututhuchien" class="text number" size=20 />
-            	</p>
-               	<p>
-            		<label>Định mức chỉ tiêu</label><br />
-					<input type="text" id="dinhmucchitieu" name="dinhmucchitieu" class="text number" size=20 />
-            	</p>
-               	<p>
-            		<label>Giá gia công</label><br />
-					<input type="text" id="giagiacong" name="giagiacong" class="text number" size=20 />
-            	</p>
-               	<p>
-            		<label>Định mức phế liệu</label><br />
-					<input type="text" id="dinhmucphelieu" name="dinhmucphelieu" class="text number" size=20 />
-            	</p>
-                <p>
-            		<label>Định mức phế phẩm</label><br />
-					<input type="text" id="dinhmucphepham" name="dinhmucphepham" class="text number" size=20 />
-            	</p>
-                <p>
-            		<label>Định mức hao hụt</label><br />
-					<input type="text" id="dinhmuchaohut" name="dinhmuchaohut" class="text number" size=20 />
-            	</p>
-                <p>
-            		<label>Định mức năng xuất</label><br />
-					<input type="text" id="dinhmucnangxuat" name="dinhmucnangxuat" class="text number" size=20 />
-            	</p>
-                <p>
-            		<label>Định mức phụ liệu</label><br />
-					<input type="text" id="dinhmucphulieu" name="dinhmucphulieu" class="text number" size=20 />
-            	</p>
-                <p>
-            		<label>Số lượng/kg</label><br />
-					<input type="text" id="soluongtrenkg" name="soluongtrenkg" class="text number" size=20 />
-            	</p>
-                <p>
-                	<label>Nguyên liệu sản xuất</label><br>
-                    <input type="hidden" id="manguyenlieu" name="manguyenlieu">
-                    <input type="hidden" id="nguyenlieusanxuat" name="nguyenlieusanxuat">
-                    <span id="tennguyenlieu"></span>
-                    <input type="button" class="button" name="btnChonNguyenLieu" value="Chọn nguyên vật liệu" onClick="selcetNguyenLieu()">
-                    <input type="button" class="button" name="btnUnChonNguyenLieu" value="Bỏ chọn" onClick="unSelcetNguyenLieu()">
-                </p>
-                <p>
-                	<label>Thiết bị sản xuất chính</label><br>
-                    <input type="hidden" id="selecttaisan" name="selecttaisan">
-                    <input type="hidden" id="thietbisanxuatchinh" name="thietbisanxuatchinh">
-                    <span id="tentaisan"></span>
-                    <input type="button" class="button" name="btnChonTaiSan" value="Chọn tài sản" onClick="selcetTaiSan()">
-                    <input type="button" class="button" name="btnUnChonTaiSan" value="Bỏ chọn" onClick="unSelcetTaiSan()">
-                </p>
-                <p>
-            		<label>Ghi chú</label><br />
-					<textarea id="ghichu" name="ghichu"></textarea>
-            	</p>-->
             </div>
             <div>
             	<table>
@@ -98,13 +32,15 @@
                             <th>Thứ tự công đoạn</th>
                             <th>Nguyên liệu sản xuất</th>
                             <th>Thiết bị sản xuất</th>
+                            <th>Phòng ban sản xuất</th>
                             <th>Định mức chỉ tiêu</th>
                             <th>Giá gia công</th>
-                            <th>Định mức phế liệu</th>
-                            <th>Định mức phế phẩm</th>
-                            <th>Định mức hao hụt</th>
+                            <th>Định mức phế liệu(%)</th>
+                            <th>Định mức phế phẩm($)</th>
+                            <th>Định mức hao hụt(%)</th>
                             <th>Định mức năng xuất</th>
-                            <th>Định mức phụ liệu</th>
+                            <th>Định mức phụ liệu(%)</th>
+                            
                             <th>Số lượng/Kg</th>
                             <th>Ghi chú</th>
                             <th></th>
@@ -152,6 +88,7 @@ function save()
 function CongDoan()
 {
 	this.index = 0;
+	this.cbphongban = "<?php echo $cbphongban?>";
 	this.refresh = function()
 	{
 		$('input').change(function(e) {
@@ -160,8 +97,17 @@ function CongDoan()
 			$("#status-"+row).val('update');
 			$('#row-'+row).css('background-color',"#F0F");
 		});
+		$('select').change(function(e) {
+            $('input').change();
+        });
+		$('textarea').change(function(e) {
+            $('input').change();
+        });
 		numberReady();
 		auto.autocomplete();
+		$('.phongbansanxuat').each(function(index, element) {
+            $(this).val($(this).attr('ref'));
+        });
 	}
 	this.getCongDoan = function(col,val,operator)
 	{
@@ -174,6 +120,7 @@ function CongDoan()
 						
 						$("#listcongdoan").append(cd.createRowCongDoan(data.congdoans[i]));
 						
+						
 					}
 					cd.refresh()
 				});
@@ -183,13 +130,14 @@ function CongDoan()
 	{
 		var obj = new Object()
 		obj.id='';
-		obj.macongdoan='';
-		obj.tencongdoan='';
-		obj.thututhuchien='';
-		obj.nguyenlieusanxuat='';
-		obj.tennguyenlieusanxuat='';
+		obj.macongdoan="<?php echo $item['malinhkien']?>-"+ (cd.index + 1);
+		obj.tencongdoan="<?php echo $item['tenlinhkien']?>-"+ (cd.index + 1);
+		obj.thututhuchien=this.index + 1;
+		obj.nguyenlieusanxuat="<?php echo $item['nguyenlieusudung']?>";
+		obj.tennguyenlieusanxuat="<?php echo $this->document->getNguyenLieu($item['nguyenlieusudung'])?>";
 		obj.thietbisanxuatchinh='';
 		obj.tenthietbisanxuatchinh='';
+		obj.phongbansanxuat='';
 		obj.dinhmucchitieu='';
 		obj.giagiacong='';
 		obj.dinhmucphelieu='';
@@ -217,6 +165,7 @@ function CongDoan()
 		row+='                      <td class="number"><input type="text" id="thututhuchien-'+ this.index +'" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
 		row+='                      <td><input type="hidden" id="nguyenlieusanxuat-'+ this.index +'" name="nguyenlieusanxuat['+ this.index +']" value="'+obj.nguyenlieusanxuat+'"><input type="text" id="tennguyenlieusanxuat-'+ this.index +'" name="tennguyenlieusanxuat['+ this.index +']" class="text gridautocomplete" value="'+obj.tennguyenlieusanxuat+'" /></td>';
 		row+='                      <td><input type="hidden" id="thietbisanxuatchinh-'+ this.index +'" name="thietbisanxuatchinh['+ this.index +']" value="'+obj.thietbisanxuatchinh+'"><input type="text" id="tenthietbisanxuatchinh-'+ this.index +'" name="tenthietbisanxuatchinh['+ this.index +']" class="text gridautocomplete" value="'+obj.tenthietbisanxuatchinh+'" /></td>';
+		row+='                      <td><select class="phongbansanxuat" ref="'+ obj.phongbansanxuat +'" id="phongbansanxuat-'+ this.index +'" name="phongbansanxuat['+ this.index +']">'+ cd.cbphongban +'</select>';
 		row+='                      <td class="number"><input type="text" id="dinhmucchitieu-'+ this.index +'" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
@@ -225,6 +174,7 @@ function CongDoan()
 		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphulieu-'+ this.index +'" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="soluongtrenkg-'+ this.index +'" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
+		
 		row+='                      <td><textarea class="text" id="ghichu-'+ this.index +'" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
 		row+='                      <td>'+id+btnXoa+btnXemQuaTrinh+'</td>';
 		row+='                  </tr>';

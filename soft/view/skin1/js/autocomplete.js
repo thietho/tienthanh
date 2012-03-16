@@ -37,6 +37,7 @@ function AutoComplete()
 	
 	this.getValue = function()
 	{
+		var str = "";
 		arr = new Array();
 		if($("#rowauto-"+ this.curentRow ).html()!=null)
 		{

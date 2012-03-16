@@ -36,5 +36,19 @@ class ModelCommonControl extends Model
 		}
 		return $str;
 	}
+	
+	public function getDataCombobox($data, $displaymember, $valuemember,$selectedvalue="")
+	{
+		$str = "";
+		
+		for($i=0; $i<count($data); $i++)
+		{
+			$selected = "";
+			if($data[$i][$valuemember] == $selectedvalue) $selected = "selected='selected'";
+			
+			$str .= "<option value='".$data[$i][$valuemember]."' ".$selected.">".$data[$i][$displaymember]."</option>";
+		}
+		return $str;
+	}
 }
 ?>

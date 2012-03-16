@@ -29,6 +29,11 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/linhkien");
+		$this->load->model("quanlykho/phongban");
+		$this->load->model("common/control");
+		$data_phongban = $this->model_quanlykho_phongban->getPhongBans();
+		$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
+		
 		$this->load->helper('image');
 	}
 	
@@ -419,6 +424,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function savecongdoan()
 	{
 		$data = $this->request->post;
+		//print_r($data);
 		$this->load->model("quanlykho/congdoan");
 		$listdel = split(',',$data['delcongdoans']);
 		if(count($listdel))
@@ -437,14 +443,19 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$congdoan['thietbisanxuatchinh'] = $data['thietbisanxuatchinh'][$key];
 			$congdoan['dinhmucchitieu'] = $data['dinhmucchitieu'][$key];
 			$congdoan['giagiacong'] = $data['giagiacong'][$key];
+			$congdoan['dinhmucphelieu'] = $data['dinhmucphelieu'][$key];
+			$congdoan['dinhmucphepham'] = $data['dinhmucphepham'][$key];
+			$congdoan['dinhmuchaohut'] = $data['dinhmuchaohut'][$key];
 			$congdoan['dinhmucnangxuat'] = $data['dinhmucnangxuat'][$key];
+			
 			$congdoan['dinhmucphulieu'] = $data['dinhmucphulieu'][$key];
 			$congdoan['soluongtrenkg'] = $data['soluongtrenkg'][$key];
+			$congdoan['phongbansanxuat'] = $data['phongbansanxuat'][$key];
 			$congdoan['ghichu'] = $data['ghichu'][$key];
 			$congdoan['status'] = $data['status'][$key];
 			if($congdoan['status']=='update')
 			{
-				if($congdoan['id'] == 0)
+				if((int)$congdoan['id'] == 0)
 					$this->model_quanlykho_congdoan->insert($congdoan);
 				else
 					$this->model_quanlykho_congdoan->update($congdoan);
