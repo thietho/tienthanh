@@ -43,6 +43,7 @@ class ModelQuanlykhoCongdoan extends Model
 		$soluongtrenkg=$this->string->toNumber($this->db->escape(@$data['soluongtrenkg']));
 		$nguyenlieusanxuat=$this->db->escape(@$data['nguyenlieusanxuat']);
 		$thietbisanxuatchinh=$this->db->escape(@$data['thietbisanxuatchinh']);
+		$phongbansanxuat=$this->db->escape(@$data['phongbansanxuat']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
 
 		$field=array(
@@ -61,6 +62,7 @@ class ModelQuanlykhoCongdoan extends Model
 						'soluongtrenkg',
 						'nguyenlieusanxuat',
 						'thietbisanxuatchinh',
+						'phongbansanxuat',
 						'ghichu'
 						);
 						$value=array(
@@ -79,6 +81,7 @@ class ModelQuanlykhoCongdoan extends Model
 						$soluongtrenkg,
 						$nguyenlieusanxuat,
 						$thietbisanxuatchinh,
+						$phongbansanxuat,
 						$ghichu
 						);
 						$this->db->insertData("qlkcongdoan",$field,$value);
@@ -91,6 +94,7 @@ class ModelQuanlykhoCongdoan extends Model
 
 	public function update($data)
 	{
+		print_r($data);
 		$id= $this->db->escape(@$data['id']);
 		$macongdoan=$this->db->escape(@$data['macongdoan']);
 		$tencongdoan=$this->db->escape(@$data['tencongdoan']);
@@ -106,6 +110,7 @@ class ModelQuanlykhoCongdoan extends Model
 		$soluongtrenkg=$this->string->toNumber($this->db->escape(@$data['soluongtrenkg']));
 		$nguyenlieusanxuat=$this->db->escape(@$data['nguyenlieusanxuat']);
 		$thietbisanxuatchinh=$this->db->escape(@$data['thietbisanxuatchinh']);
+		$phongbansanxuat=$this->db->escape(@$data['phongbansanxuat']);
 		$ghichu=$this->db->escape(@$data['ghichu']);
 
 		$field=array(
@@ -124,6 +129,7 @@ class ModelQuanlykhoCongdoan extends Model
 						'soluongtrenkg',
 						'nguyenlieusanxuat',
 						'thietbisanxuatchinh',
+						'phongbansanxuat',
 						'ghichu'
 						);
 						$value=array(
@@ -142,6 +148,7 @@ class ModelQuanlykhoCongdoan extends Model
 						$soluongtrenkg,
 						$nguyenlieusanxuat,
 						$thietbisanxuatchinh,
+						$phongbansanxuat,
 						$ghichu
 						);
 
