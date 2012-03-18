@@ -107,6 +107,7 @@ function createRow(id,machiphi,chiphi)
 		var cellmachiphi = '<input type="hidden" name="machiphi['+index+']" value="' +data.chiphi.machiphi+ '">';
 		var cellchiphi = '<input type="text" name="chiphi['+index+']" value="'+chiphi+'" class="text number" size=5 />';
 		row+='						<tr id="row'+index+'">';
+		row+='                      	<td>'+cellid + data.chiphi.machiphi+'</td>';
 		row+='                      	<td>'+cellid + data.chiphi.tenchiphi+'</td>';
 		row+='                          <td>'+cellmachiphi+cellchiphi+'</td>';
 		row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
