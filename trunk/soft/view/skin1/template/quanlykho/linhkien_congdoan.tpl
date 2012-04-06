@@ -36,7 +36,7 @@
                             <th>Định mức chỉ tiêu</th>
                             <th>Giá gia công</th>
                             <th>Định mức phế liệu(%)</th>
-                            <th>Định mức phế phẩm($)</th>
+                            <th>Định mức phế phẩm(%)</th>
                             <th>Định mức hao hụt(%)</th>
                             <th>Định mức năng xuất</th>
                             <th>Định mức phụ liệu(%)</th>
@@ -98,10 +98,16 @@ function CongDoan()
 			$('#row-'+row).css('background-color',"#F0F");
 		});
 		$('select').change(function(e) {
-            $('input').change();
+            ar = this.id.split('-');
+			var row= ar[1];
+			$("#status-"+row).val('update');
+			$('#row-'+row).css('background-color',"#F0F");
         });
 		$('textarea').change(function(e) {
-            $('input').change();
+            ar = this.id.split('-');
+			var row= ar[1];
+			$("#status-"+row).val('update');
+			$('#row-'+row).css('background-color',"#F0F");
         });
 		numberReady();
 		auto.autocomplete();

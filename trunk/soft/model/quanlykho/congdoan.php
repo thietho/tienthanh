@@ -94,7 +94,6 @@ class ModelQuanlykhoCongdoan extends Model
 
 	public function update($data)
 	{
-		print_r($data);
 		$id= $this->db->escape(@$data['id']);
 		$macongdoan=$this->db->escape(@$data['macongdoan']);
 		$tencongdoan=$this->db->escape(@$data['tencongdoan']);
