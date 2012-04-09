@@ -409,7 +409,7 @@ function unSelectKho()
 
 function callBackAutoComplete(val)
 {
-	getNguyenLieu("manguyenlieu",val.val(),"like");
+	getNguyenLieu("manguyenlieu",val.value,"like");
 }
 
 function getNguyenLieu(col,val,operator)
@@ -440,7 +440,7 @@ function selectValue(eid)
 				pos = ar[1];
 				for( i in data.nguyenlieus)
 				{
-					
+					$("#manguyenlieutext-"+pos).val(data.nguyenlieus[i].manguyenlieu);
 					$("#tennguyenlieu-"+pos).val(data.nguyenlieus[i].tennguyenlieu);
 					$("#itemid-"+pos).val(data.nguyenlieus[i].id);
 					$("#madonvi-"+pos).val(data.nguyenlieus[i].madonvi);

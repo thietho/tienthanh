@@ -472,7 +472,7 @@ function selectValue(eid)
 				pos = ar[1];
 				for( i in data.nguyenlieus)
 				{
-					
+					$("#manguyenlieutext-"+pos).val(data.nguyenlieus[i].manguyenlieu);
 					$("#tennguyenlieu-"+pos).val(data.nguyenlieus[i].tennguyenlieu);
 					$("#itemid-"+pos).val(data.nguyenlieus[i].id);
 					$("#madonvi-"+pos).val(data.nguyenlieus[i].madonvi);

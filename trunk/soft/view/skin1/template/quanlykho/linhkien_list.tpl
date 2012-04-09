@@ -10,13 +10,7 @@
                 <input type="text" id="malinhkien" name="malinhkien" class="text" value="" />
                 <label>Tên</label>
                 <input type="text" id="tenlinhkien" name="tenlinhkien" class="text" value="" />
-                <label>Nhóm</label>
-					<select id="manhom" name="manhom">
-                    	<option value=""></option>
-                    	<?php foreach($nhomlinhkien as $val){ ?>
-                        <option value="<?php echo $val['manhom']?>"><?php echo $val['tennhom']?></option>
-                        <?php } ?>
-                    </select>
+                
                 
                 <label>Kho</label>
                 <select id="makho" name="makho">

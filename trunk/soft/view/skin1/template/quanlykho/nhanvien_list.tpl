@@ -88,8 +88,8 @@
                         <td><?php echo $item['chuyenmon']?></td>
                         <td><?php echo $item['bangcap']?></td>
                         <td><?php echo $this->string->numberFormate($item['luongcoban']) ?></td>
-                        <td><?php echo $this->string->numberFormate($item['ngach']) ?></td>
-                        <td><?php echo $this->string->numberFormate($item['thang']) ?></td>
+                        <td><?php echo $item['ngach'] ?></td>
+                        <td><?php echo $item['thang'] ?></td>
                         <td><?php echo $this->string->numberFormate($item['heso']) ?></td>
                         <td><?php echo $this->date->formatMySQLDate($item['ngayvaolam'])?></td>
                         <td><?php echo $this->date->formatMySQLDate($item['ngaykyhopdong'])?></td>
