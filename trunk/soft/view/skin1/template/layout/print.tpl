@@ -1022,7 +1022,7 @@ img.alignright,img.right {
 
 <div id="site-wrapper">
 
-<div id="header"><?php echo $header?></div>
+
 
 <div class="main">
 
@@ -1034,7 +1034,7 @@ img.alignright,img.right {
 
 </div>
 
-<div id="footer"><?php echo $footer?></div>
+
 
 </div>
 
