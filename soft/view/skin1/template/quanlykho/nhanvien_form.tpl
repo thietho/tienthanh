@@ -185,7 +185,7 @@
                     
                     <p>
                         <label>Ngạch</label><br />
-                        <input type="text" class="text number" id="ngach" name="ngach" value="<?php echo $item['ngach']?>" class="text" size=60 />
+                        <input type="text" class="text" id="ngach" name="ngach" value="<?php echo $item['ngach']?>" class="text" size=60 />
                     </p>
                     <p>
                         <label>Bật lương</label><br />
@@ -193,7 +193,7 @@
                     </p>
                     <p>
                         <label>Thang</label><br />
-                        <input type="text" class="text number" id="thang" name="thang" value="<?php echo $item['thang']?>" class="text" size=60 />
+                        <input type="text" class="text" id="thang" name="thang" value="<?php echo $item['thang']?>" class="text" size=60 />
                     </p>
                     
                     <p>
