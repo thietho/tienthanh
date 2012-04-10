@@ -5,12 +5,12 @@
         	<h2>PHIẾU NHẬP VẬT TƯ HÀNG HÓA</h2>
 	        <p>Ngày <?php echo $this->date->getDay($item['ngaylapphieu'])?> tháng <?php echo $this->date->getMonth($item['ngaylapphieu'])?> năm <?php echo $this->date->getYear($item['ngaylapphieu'])?></p>
       	</td>
-      	<td width="150px">
+      	<td width="180px">
             <p>Mã hiệu: BM-VT-16</p>
             <p>Lần phát hành: 01</p>
             <p>Lần sửa đổi: 00</p>
             <p>Ngày phát hành: 25/05/08</p>
-            <p>Số:</p>
+            <p>Số: <?php echo $item['maphieu']?></p>
       	</td>
     </tr>
 </table>
