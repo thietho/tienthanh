@@ -226,7 +226,7 @@ class ControllerQuanlykhoPhieunhapnguyenlieu extends Controller
 		{
 			
       		$this->data['item'] = $this->model_quanlykho_phieunhapnguyenlieu->getItem($this->request->get['id']);
-			//get chi tiet phieu xuat
+			//get chi tiet phieu nhap
 			$this->data['chitiet'] = $this->model_quanlykho_phieunhapnguyenlieu->getChiTietPhieuNhaps($this->request->get['id']);
 		
 			$nguoilap = $this->model_quanlykho_nhanvien->getItem($this->data['item']['nguoilap']);
@@ -244,7 +244,10 @@ class ControllerQuanlykhoPhieunhapnguyenlieu extends Controller
 		$this->layout="layout/center";
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->template='quanlykho/phieunhapnguyenlieu_print.tpl';
+			
+			if($this->data['item']['loainguon']=="nhapdoingoai")
+				$this->template='bieumau/bm_vt_16.tpl';
+			
 			$this->layout="layout/print";
 			$this->data['dialog'] = true;
 		}
