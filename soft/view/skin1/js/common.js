@@ -187,6 +187,11 @@ function stringtoNumber(str)
 }
 function formateNumber(num)
 {
+	if(num =="")
+		return 0;
+	
+	num = String(num).replace(/,/g,"");
+	num = Number(num);
 	ar = (""+num).split("\.");
 	div = ar[0];
 	mod = ar[1];
@@ -218,10 +223,11 @@ function formateNumber(num)
 }
 function numberView(str)
 {
-	str = (""+str).replace(/,/g,"");
-	str = parseFloat(str);
-	var obj = new Number(str);
-	num=obj.toFixed(2);
+	if(num =="")
+		return 0;
+	
+	num = String(num).replace(/,/g,"");
+	num = Number(num);
 	ar = (""+num).split("\.");
 	div = ar[0];
 	mod = ar[1];
@@ -246,7 +252,7 @@ function numberView(str)
 	divnum = arr.join(",");
 	divnum = trim(divnum,",")
 	divnum = divnum.replace("-,","-")
-	if(mod == undefined || mod == 0)
+	if(mod == undefined)
 		return divnum;
 	else
 		return divnum+"\."+mod;
@@ -294,10 +300,27 @@ function numberReady()
 	  	return isNumber(e.which);
 	});
 	
+	$('.number').focus(function(e) {
+        if(this.value == 0)
+			this.value = "";
+    });
+	$('.number').blur(function(e) {
+        if(this.value == "")
+			this.value = 0;
+    });
+	$(".ben-datepicker").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'dd-mm-yy'
+			});
 	$(".number").each(function(index){
-		num = formateNumber($(this).val().replace(/,/g,""));
-		$(this).val(num)
-	});
+		//alert(formateNumber($(this).val()))
+		$(this).val(formateNumber($(this).val()))
+		
+	});	
+	
+		
+	
 }
 
 $(document).ready(function(){

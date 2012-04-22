@@ -56,9 +56,9 @@
 
 <table style="margin:15px 0">
 	<tr>
-    	<th>Trưởng kho</th>
-        <th>Kế toán</th>
-        <th>Người giao</th>
-        <th>Thủ kho</th>
+    	<th width="25%">Trưởng kho</th>
+        <th width="25%">Kế toán</th>
+        <th width="25%">Người giao</th>
+        <th width="25%">Thủ kho</th>
     </tr>
 </table>
