@@ -53,8 +53,9 @@ final class Document {
 							 "1" => "Hiện hành"
 							 );
 	public $thanhtoan = array(
-							  "dathanhtoan" => "Đã thanh toán",
-							  "chuathanhtoan" => "Chưa thanh toán"
+								"chuathanhtoan" => "Chưa thanh toán",
+							  	"dathanhtoan" => "Đã thanh toán",
+							  
 							  );
 	
 	public $loainguonxuat = array(

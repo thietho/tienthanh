@@ -42,7 +42,7 @@
                         <td><?php echo $this->document->thanhtoan[$item['tinhtrang']]?></td>
                         <td class="link-control">
                             <input type="button" class="button" name="btnEdit" value="Sửa" onClick="window.location='<?php echo $item['link_edit']?>'">
-                            <input type="button" class="button" value="Xem" onclick="view('<?php echo $item['phieunhapvattuhanghoaid']?>')"/>
+                            <input type="button" class="button" value="In" onclick="view('<?php echo $item['phieunhapvattuhanghoaid']?>')"/>
                         </td>
                     </tr>
         <?php
@@ -66,7 +66,7 @@ function deleteorder()
 	var answer = confirm("Are you sure delete?")
 	if (answer)
 	{
-		$.post("?route=addon/order/delete", 
+		$.post("?route=quanlykho/phieunhapvattuhanghoa", 
 				$("#listitem").serialize(), 
 				function(data)
 				{
@@ -82,6 +82,6 @@ function deleteorder()
 function view(phieunhapvattuhanghoaid)
 {
 	
-	openDialog("?route=addon/biennhan/view&phieunhapvattuhanghoaid="+phieunhapvattuhanghoaid,800,500)
+	openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+phieunhapvattuhanghoaid+"&dialog=print",800,500);
 }
 </script>
