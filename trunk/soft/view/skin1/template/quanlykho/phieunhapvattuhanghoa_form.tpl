@@ -7,7 +7,8 @@
     	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="phieunhapvattuhanghoaid" value="<?php echo $item['phieunhapvattuhanghoaid']?>">	
             <div class="button right">
-                <a class="button save" onclick="save()">Lưu</a>
+                <a class="button save" onclick="phieu.save()">Lưu</a>
+                <a class="button save" onclick="phieu.saveandprint()">Lưu & in</a>
                 <a class="button cancel" href="?route=quanlykho/phieunhapvattuhanghoa">Bỏ qua</a>    
         	</div>
             <div class="clearer">&nbsp;</div>
@@ -30,6 +31,14 @@
                 </p>
                 <div class="clearer">&nbsp;</div>
                 
+                <p>
+                	<label>Tình trạng</label>
+                    <select id="tinhtrang" name="tinhtrang">
+                    	<?php foreach($this->document->thanhtoan as $key => $val){ ?>
+                        <option value="<?php echo $key?>"><?php echo $val?></option>
+                        <?php } ?>
+                    </select>
+                </p>
             </div>
             <div>
             	<input type="button" class="button" id="btnThemDong" value="Thêm"/>
@@ -43,6 +52,7 @@
                             <th>Tên hàng - qui cách</th>
                             <th>Lot hàng</th>
                             <th>Đơn vị tính</th>
+                            <th>Kho nhập</th>
                             <th>Chứng từ</th>
                             <th>Thực nhập</th>
                             <th>Đơn giá</th>
@@ -79,6 +89,7 @@
 <?php } ?>
 </div>
 <script language="javascript">
+$('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 $(document).ready(function(e) {
     $('#btnThemDong').click(function(e) {
 		var obj = new Object();
@@ -98,18 +109,28 @@ $(document).ready(function(e) {
         var obj = $.parseJSON($(this).html());
 		phieu.addRow(obj)
     });
+	
+	$('#btnXoaDong').click(function(e) {
+        $('.chitietid').each(function(index, element) {
+			if(this.checked == true)
+			{
+				var pos = $(this).attr('ref');
+				phieu.removeRow(pos);
+			}
+		});
+    });
 });
 
 var auto = new AutoComplete();
 function PhieuNhapVatTuHangHoa()
 {
 	this.index = 0;
-	
+	this.cbKhos = "<?php echo $cbKhos?>";
 	this.addRow = function(obj)
 	{
 		var str ="";
 		//Check box
-		str+= '<td><input type="checkbox" class="chitietbn" ref="'+ this.index +'" value="'+obj.id+'"><input type="hidden" id="id-'+this.index+'" name="id['+this.index+']" value="'+obj.id+'"></td>';
+		str+= '<td><input type="checkbox" class="chitietid" ref="'+ this.index +'" value="'+obj.id+'"><input type="hidden" id="id-'+this.index+'" name="id['+this.index+']" value="'+obj.id+'"></td>';
 		//Ma nguyen lieu
 		str+= '<td><input type="hidden" id="nguyenlieuid-'+ this.index +'" name="nguyenlieuid['+this.index+']" value="'+obj.nguyenlieuid+'"><input type="text" class="text gridautocomplete" id="manguyenlieu-'+ this.index +'" name="manguyenlieu['+this.index+']" value="'+obj.manguyenlieu+'"></td>';
 		//Ten nguyen lieu
@@ -118,6 +139,8 @@ function PhieuNhapVatTuHangHoa()
 		str+= '<td><input type="text" class="text" id="lotnguyenlieu-'+ this.index +'" name="lotnguyenlieu['+this.index+']" value="'+obj.lotnguyenlieu+'"></td>';
 		//Don vi tinh
 		str+= '<td id="madonvi-'+this.index+'">'+obj.tendonvi+'</td>';
+		//Kho nhap
+		str+= '<td><select id="makho-'+this.index+'" name="makho['+this.index+']">'+this.cbKhos+'</select></td>';
 		//Chung tu
 		str+= '<td class="number"><input type="text" class="text number" id="chungtu-'+this.index+'" name="chungtu['+this.index+']" value="'+obj.chungtu+'"></td>';
 		//Thuc nhap
@@ -130,7 +153,7 @@ function PhieuNhapVatTuHangHoa()
 		var row = '<tr id="row-'+this.index+'">'+str+'</tr>';
 		
 		$('#listnguyenlieu').append(row);
-		
+		$('#makho-'+this.index).val(obj.makho);
 		this.index++;
 		numberReady();
 		this.getTotal();
@@ -146,6 +169,7 @@ function PhieuNhapVatTuHangHoa()
             $('#thanhtien-'+pos).html(formateNumber(phieu.getSubTotal(pos)));
 			phieu.getTotal();
         });
+		
 	}
 	
 	this.removeRow = function(pos)
@@ -168,6 +192,56 @@ function PhieuNhapVatTuHangHoa()
 			sum += Number(num);
     	});
 		$('#total').html(formateNumber(sum));
+	}
+	
+	this.save =function()
+	{
+		$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+		
+		$.post("?route=quanlykho/phieunhapvattuhanghoa/save", $("#frm").serialize(),
+			function(data){
+				var obj = $.parseJSON(data);
+				if(obj.error == "")
+				{
+					window.location = "?route=quanlykho/phieunhapvattuhanghoa";
+				}
+				else
+				{
+				
+					$('#error').html(obj.error).show('slow');
+					
+					
+				}
+				$.unblockUI();
+				
+			}
+		);
+	}
+	this.saveandprint =function()
+	{
+		$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+		
+		$.post("?route=quanlykho/phieunhapvattuhanghoa/save", $("#frm").serialize(),
+			function(data){
+				var obj = $.parseJSON(data);
+				if(obj.error == "")
+				{
+					openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print",800,500);
+					//window.location = "?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print";
+					//$('#ifprint').attr('src',"?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print");
+					window.location = "?route=quanlykho/phieunhapvattuhanghoa";
+				}
+				else
+				{
+				
+					$('#error').html(obj.error).show('slow');
+					
+					
+				}
+				$.unblockUI();
+				
+			}
+		);
 	}
 }
 var phieu = new PhieuNhapVatTuHangHoa();
@@ -211,6 +285,7 @@ function selectValue(eid)
 					$("#tennguyenlieu-"+pos).val(data.nguyenlieus[i].tennguyenlieu);
 					$("#nguyenlieuid-"+pos).val(data.nguyenlieus[i].id);
 					$("#madonvi-"+pos).html(data.nguyenlieus[i].tendonvitinh);
+					$('#makho-'+pos).val(data.nguyenlieus[i].makho);
 				}
 				
 			});
@@ -218,26 +293,6 @@ function selectValue(eid)
 }
 
 
-function save()
-{
-	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
-	
-	$.post("?route=quanlykho/phieunhapvattuhanghoa/save", $("#frm").serialize(),
-		function(data){
-			var obj = $.parseJSON(data);
-			if(obj.error == "")
-			{
-				window.location = "?route=quanlykho/phieunhapvattuhanghoa";
-			}
-			else
-			{
-			
-				$('#error').html(obj.error).show('slow');
-				$.unblockUI();
-				
-			}
-			
-		}
-	);
-}
+
 </script>
+<iframe id="ifprint"></iframe>

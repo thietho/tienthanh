@@ -25,7 +25,10 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 		}
 		
 	 	$this->load->model("quanlykho/phieunhapvattuhanghoa");
-		
+		$this->load->model("quanlykho/kho");
+		$this->load->model("common/control");
+		$this->data['data_kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['cbKhos'] = $this->model_common_control->getDataCombobox($this->data['data_kho'], "tenkho", "makho");
    	}
 	
 	public function index()
@@ -133,19 +136,30 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 	
 	public function view()
 	{
-		$this->data['item'] = $this->model_quanlykho_phieunhapvattuhanghoa->getItem($this->request->get['biennhanid']);
-		$where = " AND biennhanid = '".$this->request->get['biennhanid']."'";
+		$this->data['item'] = $this->model_quanlykho_phieunhapvattuhanghoa->getItem($this->request->get['phieunhapvattuhanghoaid']);
+		$where = " AND phieunhapvattuhanghoaid = '".$this->request->get['phieunhapvattuhanghoaid']."'";
 		$this->data['data_chitiet'] = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
+		foreach($this->data['data_chitiet'] as $key =>$ct)
+		{
+			$this->data['data_chitiet'][$key]['tendonvi'] = $this->document->getDonViTinh($ct['donvi']);
+		}
 		$this->id='content';
-		$this->template='quanlykho/phieunhapvattuhanghoa_view.tpl';
-		
+		$this->template='bieumau/bm_vt_16.tpl';
+		$this->layout="layout/center";
+		if($this->request->get['dialog']=='print')
+		{
+			
+			
+			$this->layout="layout/print";
+			$this->data['dialog'] = "print";
+		}
 		$this->render();
 	}
 	
 	public function save()
 	{
 		$data = $this->request->post;
-		
+		print_r($data);
 		if($this->validateForm($data))
 		{
 			
@@ -164,7 +178,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 				$arr_idct = split(',',$data['delchitietid']);
 				foreach($arr_idct as $id)
 				{
-					$this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTiet($id);	
+					$this->model_quanlykho_phieunhapvattuhanghoa->deletePhieuNhanVatTuHangHoaChiTiet($id);	
 				}
 			}
 			
@@ -174,6 +188,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 			$arr_manguyenlieu = $data['manguyenlieu'];
 			$arr_tennguyenlieu = $data['tennguyenlieu'];
 			$arr_lotnguyenlieu = $data['lotnguyenlieu'];
+			$arr_makho = $data['makho'];
 			$arr_chungtu = $data['chungtu'];
 			$arr_thucnhap = $data['thucnhap'];
 			$arr_dongia = $data['dongia'];
@@ -187,6 +202,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 				$ct['manguyenlieu'] = $arr_manguyenlieu[$key];
 				$ct['tennguyenlieu'] = $arr_tennguyenlieu[$key];
 				$ct['lotnguyenlieu'] = $arr_lotnguyenlieu[$key];
+				$ct['makho'] = $arr_makho[$key];
 				$ct['donvi'] = $this->document->getNguyenLieu($ct['nguyenlieuid'],'madonvi');
 				$ct['chungtu'] = $arr_chungtu[$key];
 				$ct['thucnhap'] = $arr_thucnhap[$key];

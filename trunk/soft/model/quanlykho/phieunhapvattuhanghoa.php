@@ -9,6 +9,8 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 								'createby',
 								'kehoachdathang',
 								'kehoachngay',
+								
+								'tinhtrang',
 								'status'
 							);
 	public function getList($where = "")
