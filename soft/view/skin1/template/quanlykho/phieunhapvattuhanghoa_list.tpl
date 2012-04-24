@@ -10,7 +10,7 @@
         	<div class="button right">
             	
                 <input class="button" type="button" name="btnAdd" value="Thêm" onclick="window.location='<?php echo $insert?>'"/>  
-            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteorder()"/>  
+            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteList()"/>  
             </div>
             <div class="clearer">&nbsp;</div>
             
@@ -61,12 +61,12 @@
     
 </div>
 <script language="javascript">
-function deleteorder()
+function deleteList()
 {
-	var answer = confirm("Are you sure delete?")
+	var answer = confirm("Bạn có muốn xóa?")
 	if (answer)
 	{
-		$.post("?route=quanlykho/phieunhapvattuhanghoa", 
+		$.post("?route=quanlykho/phieunhapvattuhanghoa/delete", 
 				$("#listitem").serialize(), 
 				function(data)
 				{

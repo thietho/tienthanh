@@ -53,13 +53,13 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 	
 	public function delete() 
 	{
-		$listbiennhanid=$this->request->post['delete'];
+		$listphieuid=$this->request->post['delete'];
 		
-		if(count($listbiennhanid))
+		if(count($listphieuid))
 		{
-			foreach($listbiennhanid as $biennhanid)
+			foreach($listphieuid as $phieuid)
 			{
-				$this->model_quanlykho_phieunhapvattuhanghoa->delete($biennhanid);	
+				$this->model_quanlykho_phieunhapvattuhanghoa->delete($phieuid);	
 			}
 			$this->data['output'] = "true";
 		}
@@ -159,7 +159,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
-		print_r($data);
+		
 		if($this->validateForm($data))
 		{
 			
@@ -198,6 +198,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 			{
 				$ct['id'] = $arr_id[$key];
 				$ct['phieunhapvattuhanghoaid']= $data['phieunhapvattuhanghoaid'];
+				$ct['ngaynhap']= $this->date->formatViewDate($data['ngaylap']);
 				$ct['nguyenlieuid'] = $arr_nguyenlieuid[$key];
 				$ct['manguyenlieu'] = $arr_manguyenlieu[$key];
 				$ct['tennguyenlieu'] = $arr_tennguyenlieu[$key];

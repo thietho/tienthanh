@@ -116,7 +116,7 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 	{
 		$sql = "Select `qlkphieunhapvattuhanghoa_chitiet`.* 
 									from `qlkphieunhapvattuhanghoa_chitiet` 
-									where 1=1 " . $where ;
+									where status <> 'deleted' " . $where ;
 		
 		$query = $this->db->query($sql);
 		return $query->rows;
@@ -191,5 +191,7 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 		$prefix.="-".$year.$month;
 		return $this->db->getNextIdVarChar('qlkphieunhapvattuhanghoa_chitiet','lotnguyenlieu',$prefix);
 	}
+	
+	
 }
 ?>
