@@ -353,8 +353,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
 			$imagepreview = "";
-			
-			
+			$this->data['datas'][$i]['soluongton'] = $this->model_quanlykho_nguyenlieu->getTonKho($this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
 			
 		}
@@ -596,24 +595,17 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	public function viewTonKho()
 	{
 		$id = $this->request->get['id'];
-		$where = "";
-		if($id!="")
-		{
-			$where = " AND id = '".$id."'";
-		}
 		
-		$this->load->model("quanlykho/phieunhapxuat");
-		$this->data['datas'] = $this->model_quanlykho_nguyenlieu->getList($where);
-		foreach($this->data['datas'] as $key => $val)
-		{
-			$where = " AND itemid ='".$val['id']."' ";
-			$where .= " AND phieuxuat = 0 AND trangthai = 'completed'";
-			$this->data['datas'][$key]['chitiets'] = $this->model_quanlykho_phieunhapxuat->getChiTietPhieuXuatNhap($where);
-		}
+		
+		$this->load->model("quanlykho/phieunhapvattuhanghoa");
+		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($id);
+		$this->data['item']['soluongton'] = $this->model_quanlykho_nguyenlieu->getTonKho($id);
+		$where = " AND 	nguyenlieuid = '".$id."' AND machungtuxuatkho = ''";
+		$this->data['datact'] = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
 		
 		$this->id='content';
 		$this->template="quanlykho/nguyenlieu_tonkho.tpl";
-		$this->layout="layout/dialog";
+		//$this->layout="layout/dialog";
 		$this->data['dialog'] = true;
 		$this->render();
 	}

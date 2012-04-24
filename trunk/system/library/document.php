@@ -180,6 +180,15 @@ final class Document {
 		return $query->row[$name];
 	}
 	
+	public function getPhieuNhapVatTuHangHoa($phieunhapvattuhanghoaid,$name = "sophieu")
+	{
+		$sql = "Select `qlkphieunhanvattuhanghoa`.* 
+									from `qlkphieunhanvattuhanghoa` 
+									where phieunhapvattuhanghoaid ='".$phieunhapvattuhanghoaid."' ";
+		$query = $this->db->query($sql);
+		return $query->row[$name];
+	}
+	
 	private function createDB()
 	{
 		$arr = array();

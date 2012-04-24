@@ -448,5 +448,19 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		$where="mabangbaogia = '".$id."'";
 		$this->db->deleteData("mabangbaogia",$where);
 	}
+	
+	//
+	public function getTonKho($nguyenlieuid)
+	{
+		$sql = "SELECT sum(thucnhap) as soluongton
+				FROM  `qlkphieunhapvattuhanghoa_chitiet` 
+				WHERE nguyenlieuid = '".$nguyenlieuid."'
+						AND machungtuxuatkho = ''
+						AND status <> 'deleted'
+				";
+		$query = $this->db->query($sql);
+		return $query->row['soluongton'];
+		
+	}
 }
 ?>

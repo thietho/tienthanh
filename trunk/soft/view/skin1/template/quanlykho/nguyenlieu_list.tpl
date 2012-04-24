@@ -54,7 +54,7 @@
                         <th>STT</th>
                         <th>Mã nguyên vật liệu</th>
                         <th>Tên nguyên vật liệu</th>
-                        <th>Nhóm</th>
+                        
                         <th>Loại</th>
                         <th>Kho</th>
                         
@@ -84,7 +84,7 @@
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['manguyenlieu']?></td>
                         <td><?php echo $item['tennguyenlieu']?></td>
-                        <td><?php echo $item['tennhom']?></td>
+                        
                         <td><?php echo $item['tenloai']?></td>
                         <td><?php echo $item['tenkho']?></td>
                         
@@ -199,6 +199,29 @@ function selectNguyenLieu()
 
 function viewTonKho(id)
 {
-	openDialog("?route=quanlykho/nguyenlieu/viewTonKho&id="+id,1000,800);
+	$("#popup").attr('title','Tồn kho');
+				$( "#popup" ).dialog({
+					autoOpen: false,
+					show: "blind",
+					hide: "explode",
+					width: 800,
+					height: 500,
+					modal: true,
+					buttons: {
+						
+						
+						'Đóng': function() {
+							$( this ).dialog( "close" );
+						},
+						
+						
+					}
+				});
+			
+				
+	$("#popup-content").load("?route=quanlykho/nguyenlieu/viewTonKho&id="+id,function(){
+		$("#popup").dialog("open");	
+	});
+	//openDialog("?route=quanlykho/nguyenlieu/viewTonKho&id="+id,1000,800);
 }
 </script>
