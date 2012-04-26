@@ -102,6 +102,14 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 		$where="phieunhapvattuhanghoaid = '".$phieunhapvattuhanghoaid."'";
 		$this->db->updateData('qlkphieunhapvattuhanghoa_chitiet',$field,$value,$where);
 	}
+	//Huy phieu
+	public function destroy($lenhsanxuatid)
+	{
+		
+		$where="lenhsanxuatid = '".$lenhsanxuatid."'";
+		$this->db->updateData('qlkphieunhapvattuhanghoa_chitiet',$field,$value,$where);
+		$this->db->deleteData('qlkphieunhanvattuhanghoa',$where);
+	}
 	//chi tiet phieu
 	public function getPhieuNhanVatTuHangHoaChiTiet($id)
 	{

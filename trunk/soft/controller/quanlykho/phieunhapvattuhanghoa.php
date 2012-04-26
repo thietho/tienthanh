@@ -78,7 +78,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$where .= " Order by ngaylap DESC";
+		$where .= " Order by sophieu DESC";
 		$rows = $this->model_quanlykho_phieunhapvattuhanghoa->getList($where);
 		//Page
 		$page = $this->request->get['page'];		
