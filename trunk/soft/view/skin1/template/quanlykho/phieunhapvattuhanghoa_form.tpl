@@ -32,6 +32,15 @@
                 <div class="clearer">&nbsp;</div>
                 
                 <p>
+                	<label>Nhà cung cấp</label>
+                    <select id="nhacungungid" name="nhacungungid">
+                    	<option value=""></option>
+                    	<?php foreach($data_nhacungung as $key => $val){ ?>
+                        <option value="<?php echo $val['id']?>"><?php echo $val['tennhacungung']?> (<?php echo $val['manhacungung']?>)</option>
+                        <?php } ?>
+                    </select>
+                </p>
+                <p>
                 	<label>Tình trạng</label>
                     <select id="tinhtrang" name="tinhtrang">
                     	<?php foreach($this->document->thanhtoan as $key => $val){ ?>
@@ -89,6 +98,7 @@
 <?php } ?>
 </div>
 <script language="javascript">
+$('#nhacungungid').val("<?php echo $item['nhacungungid']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 $(document).ready(function(e) {
     $('#btnThemDong').click(function(e) {
