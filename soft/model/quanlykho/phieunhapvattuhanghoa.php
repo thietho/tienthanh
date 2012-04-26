@@ -9,7 +9,7 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 								'createby',
 								'kehoachdathang',
 								'kehoachngay',
-								
+								'nhacungungid',
 								'tinhtrang',
 								'status'
 							);
@@ -57,6 +57,7 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 	{	
 		$data['ngaylap']=$this->db->escape(@$this->date->formatViewDate($data['ngaylap']));
 		$data['kehoachngay']=$this->db->escape(@$this->date->formatViewDate($data['kehoachngay']));
+		$data['nhacungungid'];
 		foreach($this->columns as $val)
 		{
 	

@@ -25,10 +25,13 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 		}
 		
 	 	$this->load->model("quanlykho/phieunhapvattuhanghoa");
+		$this->load->model("quanlykho/nhacungung");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("common/control");
 		$this->data['data_kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['data_nhacungung'] = $this->model_quanlykho_nhacungung->getList();
 		$this->data['cbKhos'] = $this->model_common_control->getDataCombobox($this->data['data_kho'], "tenkho", "makho");
+		
    	}
 	
 	public function index()
@@ -73,10 +76,44 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/phieunhapvattuhanghoa/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/phieunhapvattuhanghoa/delete');		
 		
-		
-		
 		$this->data['datas'] = array();
 		$where = "";
+		
+		$data = $this->request->get;
+		if($data['sophieu'])
+		{
+			$where .= " AND sophieu = '".$data['sophieu']."'";
+		}
+		if($data['tungay'])
+		{
+			$where .= " AND ngaylap >= '". $this->date->formatViewDate($data['tungay']) ."'";
+		}
+		if($data['denngay'])
+		{
+			$where .= " AND ngaylap <= '". $this->date->formatViewDate($data['denngay']) ."'";
+		}
+		if($data['kehoachngay'])
+		{
+			$where .= " AND kehoachngay = '".$data['kehoachngay']."'";
+		}
+		if($data['nhacungungid'])
+		{
+			$where .= " AND nhacungungid = '".$data['nhacungungid']."'";
+		}
+		if($data['tinhtrang'])
+		{
+			$where .= " AND tinhtrang = '".$data['tinhtrang']."'";
+		}
+		if($data['sotientu'])
+		{
+			$where .= " AND tongsotien >= '".$this->string->toNumber($data['sotientu'])."'";
+		}
+		if($data['sotienden'])
+		{
+			$where .= " AND tongsotien <= '".$this->string->toNumber($data['sotienden'])."'";
+		}
+		
+		
 		
 		$where .= " Order by sophieu DESC";
 		$rows = $this->model_quanlykho_phieunhapvattuhanghoa->getList($where);
@@ -203,6 +240,7 @@ class ControllerQuanlykhoPhieunhapvattuhanghoa extends Controller
 				$ct['manguyenlieu'] = $arr_manguyenlieu[$key];
 				$ct['tennguyenlieu'] = $arr_tennguyenlieu[$key];
 				$ct['lotnguyenlieu'] = $arr_lotnguyenlieu[$key];
+				$ct['nhacungungid'] = $data['nhacungungid'];
 				$ct['makho'] = $arr_makho[$key];
 				$ct['donvi'] = $this->document->getNguyenLieu($ct['nguyenlieuid'],'madonvi');
 				$ct['chungtu'] = $arr_chungtu[$key];
