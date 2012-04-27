@@ -1,11 +1,11 @@
 <div class="section" id="sitemaplist">
 
-	<div class="section-title">Phiếu nhập vật tư hàng hóa</div>
+	<div class="section-title">Lệnh sản xuất</div>
     
     <div class="section-content padding1">
     
     	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="phieunhapvattuhanghoaid" value="<?php echo $item['phieunhapvattuhanghoaid']?>">	
+        <input type="hidden" name="lenhsanxuatid" value="<?php echo $item['lenhsanxuatid']?>">	
             <div class="button right">
                 <a class="button save" onclick="phieu.save()">Lưu</a>
                 <a class="button save" onclick="phieu.saveandprint()">Lưu & in</a>
@@ -15,30 +15,56 @@
         	<div id="error" class="error" style="display:none"></div>
         	<div>   
                 
-                <p class="left">
+                <p>
                     <label>Ngày lập</label><br />
                     <input type="text" name="ngaylap" value="<?php echo $this->date->formatMySQLDate($item['ngaylap'])?>" class="text ben-datepicker"/>
                     
                 </p>
-                <div class="clearer">&nbsp;</div>
-                <p class="left">
-                    <label>Kế hoạch đặt hàng số:</label><br />
-                    <input type="text" id="kehoachdathang" name="kehoachdathang" value="<?php echo $item['kehoachdathang']?>" class="text" size=60 />
+                <p>
+                	<label>Phòng ban nhận lệnh</label>
+                    <select id="phongbannhan" name="phongbannhan">
+                    </select>
                 </p>
-                <p class="left">
-                    <label>Ngày</label><br />
-                    <input type="text" id="kehoachngay" name="kehoachngay" value="<?php echo $this->date->formatMySQLDate($item['kehoachngay'])?>" class="text ben-datepicker" size=60 />
+                <p>
+                    <label>Nhân viên:</label>
+                    <input type="hidden" id="nhanvien" name="nhanvien" value="<?php echo $item['nhanvien']?>">
+                    <span id="tennhanvien"><?php echo $this->document->getNhanVien($item['nhanvien'])?></span>
+                    <input type="button" class="button" id="btnChonNhanVien" value="Chọn nhân viên">
+                
+                    <label>KTV phụ trách:</label>
+                    <input type="hidden" id="ktvien" name="ktvien" value="<?php echo $item['ktvien']?>">
+                    <span id="tenktvien"><?php echo $this->document->getNhanVien($item['ktvien'])?></span>
+                    <input type="button" class="button" id="btnChonKTVien" value="Chọn KT viên">
+                
+                    <label>Phụ trách chính:</label>
+                    <input type="hidden" id="phutrachchinh" name="phutrachchinh" value="<?php echo $item['phutrachchinh']?>">
+                    <span id="tenphutrachchinh"><?php echo $this->document->getNhanVien($item['phutrachchinh'])?></span>
+                    <input type="button" class="button" id="btnChonPhuTrachChinh" value="Chọn phụ trách chính">
                 </p>
-                <div class="clearer">&nbsp;</div>
                 
                 <p>
-                	<label>Nhà cung cấp</label>
-                    <select id="nhacungungid" name="nhacungungid">
-                    	<option value=""></option>
-                    	<?php foreach($data_nhacungung as $key => $val){ ?>
-                        <option value="<?php echo $val['id']?>"><?php echo $val['tennhacungung']?> (<?php echo $val['manhacungung']?>)</option>
-                        <?php } ?>
-                    </select>
+                	<label>Sản phẩm SX:</label>
+                    <input type="hidden" id="sanphamid" name="sanphamid" value="<?php echo $item['sanphamid']?>">
+                    <input type="hidden" id="masanpham" name="masanpham" value="<?php echo $item['masanpham']?>">
+                    <input type="hidden" id="tensanpham" name="tensanpham" value="<?php echo $item['tensanpham']?>">
+                    <span id="sanpham_text"><?php echo $item['tensanpham']?></span>
+                    <input type="button" class="button" id="btnChonSanPham" value="Chọn sản phẩm">
+                
+                	<label>T/lượng SX:</label>
+                    <input type="text" id="trongluongsx" name="trongluongsx" value="<?php echo $item['trongluongsx']?>" class="text number"/>
+                </p>
+               
+                <p>
+                	<label>Quyết định giá số:</label>
+                    <input type="text" id="qdgiaso" name="qdgiaso" class="text" value="<?php $item['qdgiaso']?>">
+                
+                    <label>Ngày</label>
+                    <input type="text" id="ngayqdg" name="ngayqdg" value="<?php echo $this->date->formatMySQLDate($item['ngayqdg'])?>" class="text ben-datepicker"/>
+                    
+                </p>
+                <p>
+                	<label>Phiếu CAR số:</label>
+                    <input type="text" id="phieucarso" name="phieucarso" class="text" value="<?php $item['phieucarso']?>">
                 </p>
                 <p>
                 	<label>Tình trạng</label>
@@ -237,9 +263,9 @@ function PhieuNhapVatTuHangHoa()
 				var obj = $.parseJSON(data);
 				if(obj.error == "")
 				{
-					openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print",800,500);
-					//window.location = "?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print";
-					//$('#ifprint').attr('src',"?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+obj.phieunhapvattuhanghoaid+"&dialog=print");
+					openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print",800,500);
+					//window.location = "?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print";
+					//$('#ifprint').attr('src',"?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print");
 					window.location = "?route=quanlykho/phieunhapvattuhanghoa";
 				}
 				else
