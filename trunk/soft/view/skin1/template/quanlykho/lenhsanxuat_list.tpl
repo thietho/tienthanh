@@ -1,14 +1,14 @@
 <script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
 <div class="section">
 
-	<div class="section-title">Phiếu nhập vật tư hàng hóa</div>
+	<div class="section-title">Lệnh sản xuất</div>
     
     <div class="section-content">
     	
         <form action="" method="post" id="listitem" name="listitem">
         	<div id="ben-search">
             	<label>Số phiếu</label>
-                <input type="text" id="sophieu" name="sophieu" class="text"/>
+                <input type="text" id="solenhsanxuat" name="solenhsanxuat" class="text"/>
                 <label>Ngày lập</label>
                 từ
                 <input type="text" id="tungay" name="tungay" class="text ben-datepicker" />
@@ -58,12 +58,17 @@
                     <tr class="tr-head">
                         <th width="1%"><input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);"></th>
                         
-                        <th>Số phiếu</th>
+                        <th>Số</th>
                         <th>Ngày lập</th>
-                        <th>Số kế hoạch đăt hàng</th>
-                        <th>Cung cấp bởi</th>
-                        <th>Tổng tiền</th>
-                        <th>Tình trạng</th>
+                        <th>Nhân viên nhân lệnh</th>
+                        <th>KTV phụ trách</th>
+                        <th>Sản phẩm</th>
+                        <th>Lot sản phẩm</th>
+                        <th>T/lượng SX</th>
+                        <th>BM-SX-07 số</th>
+                        <th>Nhóm sản xuất</th>
+                        <th>Ngày SX</th>
+                        <th>Ngày hoàn thành</th>
                         <th width="10%"></th>                                  
                     </tr>
         
@@ -73,16 +78,22 @@
             {
         ?>
                     <tr>
-                        <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['phieunhapvattuhanghoaid']?>]" value="<?php echo $item['phieunhapvattuhanghoaid']?>" ></td>
-                        <td><?php echo $item['sophieu']?></td>
-                        <td><?php echo $this->date->formatMySQLDate($item['ngaylap'])?></td>
-                        <td><?php echo $item['kehoachngay']?></td>
-                        <td><?php echo $this->document->getNhaCungUng($item['nhacungungid'])?></td>
-                        <td class="number"><?php echo $this->string->numberFormate($item['tongsotien'])?></td>
+                        <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['lenhsanxuatid']?>]" value="<?php echo $item['lenhsanxuatid']?>" ></td>
+                        <td><?php echo $item['solenhsanxuat']?></td>
+                        <td><?php echo $this->date->formatMySQLDate($item['ngayphatlenh'])?></td>
+                        <td><?php echo $this->document->getNhanVien($item['nhanvien'])?></td>
+                        <td><?php echo $this->document->getNhanVien($item['ktvien'])?></td>
+                        <td><?php echo $item['tensanpham']?>(<?php echo $item['masanpham']?>)</td>
+                        <td><?php echo $item['lotsp']?></td>
+                        <td class="number"><?php echo $this->string->numberFormate($item['trongluongsx'])?></td>
+                        <td><?php echo $item['bmsx07']?></td>
+                        <td><?php echo $item['nhomsx']?></td>
+                        <td><?php echo $this->date->formatMySQLDate($item['ngaysx'])?></td>
+                        <td><?php echo $this->date->formatMySQLDate($item['ngayhoanthanh'])?></td>
                         <td><?php echo $this->document->thanhtoan[$item['tinhtrang']]?></td>
                         <td class="link-control">
                             <input type="button" class="button" name="btnEdit" value="Sửa" onClick="window.location='<?php echo $item['link_edit']?>'">
-                            <input type="button" class="button" value="In" onclick="view('<?php echo $item['phieunhapvattuhanghoaid']?>')"/>
+                            <input type="button" class="button" value="In" onclick="view('<?php echo $item['lenhsanxuatid']?>')"/>
                         </td>
                     </tr>
         <?php
@@ -119,17 +130,17 @@ function deleteList()
 		);
 	}
 }
-function view(phieunhapvattuhanghoaid)
+function view(lenhsanxuatid)
 {
 	
-	openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&phieunhapvattuhanghoaid="+phieunhapvattuhanghoaid+"&dialog=print",800,500);
+	openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+lenhsanxuatid+"&dialog=print",800,500);
 }
 
 function searchForm()
 {
 	var url =  "?route=quanlykho/phieunhapvattuhanghoa";
-	if($("#sophieu").val() != "")
-		url += "&sophieu=" + $("#sophieu").val();
+	if($("#solenhsanxuat").val() != "")
+		url += "&solenhsanxuat=" + $("#solenhsanxuat").val();
 	if($("#tungay").val() != "")
 		url += "&tungay="+ $("#tungay").val();
 	if($("#denngay").val() != "")
@@ -147,7 +158,7 @@ function searchForm()
 	window.location = url;
 }
 
-$("#sophieu").val("<?php echo $_GET['sophieu']?>");
+$("#solenhsanxuat").val("<?php echo $_GET['solenhsanxuat']?>");
 $("#tungay").val("<?php echo $_GET['tungay']?>");
 $("#denngay").val("<?php echo $_GET['denngay']?>");
 $("#kehoachngay").val("<?php echo $_GET['kehoachngay']?>");

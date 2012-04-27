@@ -1,17 +1,31 @@
 <?php
-class ModelQuanlykhoPhieunhapvattuhanghoa extends Model 
+class ModelQuanlykhoLenhsanxuat extends Model 
 {
 	private $columns = array(
 								'lenhsanxuatid',
 								'solenhsanxuat',
-								'ngayphatlenh',
-								'createdate',
-								'createby',
-								'kehoachdathang',
+								'phongbannhan',
+								'nhanvien',
+								'ktvien',
+								'sanphamid',
+								'masanpham',
+								'tensanpham',
+								'lotsp',
+								'bmsx07',
+								'nhomsx',
 								'ngaysx',
-								
+								'ngayhoanthanh',
+								'qdgiaso',
+								'ngayqdg',
+								'trongluongsx',
+								'phutrachchinh',
+								'phieucarso',
+								'ngayphatlenh',
 								'tinhtrang',
-								'status'
+								'status',
+								'createdate',
+								'createby'
+								
 							);
 	public function getList($where = "")
 	{
@@ -146,6 +160,7 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 		$data['chitieutp']=$this->db->escape(@$this->string->toNumber($data['chitieutp']));
 		$data['chitieupl']=$this->db->escape(@$this->string->toNumber($data['chitieupl']));
 		$data['chitieupp']=$this->db->escape(@$this->string->toNumber($data['chitieupp']));
+		$data['nangsuat']=$this->db->escape(@$this->string->toNumber($data['nangsuat']));
 		$data['status']='active';
 		
 		foreach($data as $key => $val)

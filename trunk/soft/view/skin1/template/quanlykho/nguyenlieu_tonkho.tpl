@@ -8,6 +8,7 @@
                     <th>Số phiếu</th>
                     <th>Ngày nhập</th>
                     <th>Lot nguyên liệu</th>
+                    <th>Cung cấp bởi</th>
                     <th>Kho</th>
                     <th>Số lượng</th>
                     <th>Thực nhập</th>
@@ -20,6 +21,7 @@
                     <td><?php echo $this->document->getPhieuNhapVatTuHangHoa($val['phieunhapvattuhanghoaid'])?></td>
                     <td><?php echo $val['ngaynhap']?></td>
                     <td><?php echo $val['lotnguyenlieu']?></td>
+                    <td><?php echo $this->document->getNhaCungUng($val['nhacungungid'])?></td>
                     <td><?php echo $this->document->getNhom($val['makho'])?></td>
                     <td class="number">
                         <?php echo $this->string->numberFormate($val['chungtu'])?>
