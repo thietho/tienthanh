@@ -573,7 +573,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 				$where = " AND ".$col." = '".$val."'";
 				break;
 			case "like":
-				$where = " AND ".$col." = '%".$val."%'";
+				$where = " AND ".$col." like '%".$val."%'";
 				break;
 			case "other":
 				$where = " AND ".$col." <> '".$val."'";
@@ -583,9 +583,9 @@ class ControllerQuanlykhoLinhkien extends Controller
 				break;
 			
 		}
-			
-			
+		
 		$datas = $this->model_quanlykho_linhkien->getList($where);
+		
 		$this->data['output'] = json_encode(array('linhkiens' => $datas));
 		$this->id="linhkien";
 		$this->template="common/output.tpl";
