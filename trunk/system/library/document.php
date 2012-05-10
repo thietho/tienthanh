@@ -1,6 +1,6 @@
 <?php
 final class Document {
-	public $title = "MUABANXE.US";
+	public $title = "";
 	public $description;
 	public $base;	
 	public $charset = 'utf-8';		
@@ -69,6 +69,7 @@ final class Document {
 								  "nhapdoingoai" => "Nhập đối ngoại",
 								  "tamnhaptaixuat" => "Tạm nhập tái xuất"
 								  );
+	public $thuchien = array();
 	
 	public $text = array();
 	public $setting = array();

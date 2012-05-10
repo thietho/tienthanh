@@ -26,7 +26,7 @@
                 </select>
                 <br />
                 <input type="button" class="button" name="btnSearch" value="Tìm" onclick="searchForm()"/>
-                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/nhanvien'"/>
+                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/nhanvien<?php echo $_GET['opendialog']=='true'?'&opendialog=true':''?>'"/>
             </div>
             <!-- end search -->
             

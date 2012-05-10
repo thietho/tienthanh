@@ -25,11 +25,10 @@ class ControllerQuanlykhoLenhsanxuat extends Controller
 		}
 		
 		$this->load->model("quanlykho/lenhsanxuat");
-		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/phongban");
 		$this->load->model("common/control");
-		$this->data['data_kho'] = $this->model_quanlykho_kho->getKhos();
-		
-		$this->data['cbKhos'] = $this->model_common_control->getDataCombobox($this->data['data_kho'], "tenkho", "makho");
+		$this->data['data_phongbang'] = $this->model_quanlykho_phongban->getPhongBans();
+		$this->data['cbPhongBang'] = $this->model_common_control->getDataCombobox($this->data['data_phongbang'], "tenphongban", "maphongban");
 		
    	}
 	

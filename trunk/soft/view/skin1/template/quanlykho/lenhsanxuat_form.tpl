@@ -6,6 +6,8 @@
     
     	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="lenhsanxuatid" value="<?php echo $item['lenhsanxuatid']?>">	
+        <input type="hidden" id="selectnhanvien">
+        <input type="hidden" id="selectsanpham">
             <div class="button right">
                 <a class="button save" onclick="phieu.save()">Lưu</a>
                 <a class="button save" onclick="phieu.saveandprint()">Lưu & in</a>
@@ -23,23 +25,25 @@
                 <p>
                 	<label>Phòng ban nhận lệnh</label>
                     <select id="phongbannhan" name="phongbannhan">
+                    	<option value=""></option>
+                    	<?php echo $cbPhongBang?>
                     </select>
                 </p>
                 <p>
                     <label>Nhân viên:</label>
                     <input type="hidden" id="nhanvien" name="nhanvien" value="<?php echo $item['nhanvien']?>">
                     <span id="tennhanvien"><?php echo $this->document->getNhanVien($item['nhanvien'])?></span>
-                    <input type="button" class="button" id="btnChonNhanVien" value="Chọn nhân viên">
-                
+                    <input type="button" class="button" id="btnChonNhanVien" value="Chọn nhân viên" onClick="chonNhanVien('nhanvien','tennhanvien')">
+                	
                     <label>KTV phụ trách:</label>
                     <input type="hidden" id="ktvien" name="ktvien" value="<?php echo $item['ktvien']?>">
                     <span id="tenktvien"><?php echo $this->document->getNhanVien($item['ktvien'])?></span>
-                    <input type="button" class="button" id="btnChonKTVien" value="Chọn KT viên">
+                    <input type="button" class="button" id="btnChonKTVien" value="Chọn KT viên" onClick="chonNhanVien('ktvien','tenktvien')">
                 
                     <label>Phụ trách chính:</label>
                     <input type="hidden" id="phutrachchinh" name="phutrachchinh" value="<?php echo $item['phutrachchinh']?>">
                     <span id="tenphutrachchinh"><?php echo $this->document->getNhanVien($item['phutrachchinh'])?></span>
-                    <input type="button" class="button" id="btnChonPhuTrachChinh" value="Chọn phụ trách chính">
+                    <input type="button" class="button" id="btnChonPhuTrachChinh" value="Chọn phụ trách chính" onClick="chonNhanVien('phutrachchinh','tenphutrachchinh')">
                 </p>
                 
                 <p>
@@ -48,7 +52,7 @@
                     <input type="hidden" id="masanpham" name="masanpham" value="<?php echo $item['masanpham']?>">
                     <input type="hidden" id="tensanpham" name="tensanpham" value="<?php echo $item['tensanpham']?>">
                     <span id="sanpham_text"><?php echo $item['tensanpham']?></span>
-                    <input type="button" class="button" id="btnChonSanPham" value="Chọn sản phẩm">
+                    <input type="button" class="button" id="btnChonSanPham" value="Chọn sản phẩm" onClick="chonSanPham()">
                 
                 	<label>T/lượng SX:</label>
                     <input type="text" id="trongluongsx" name="trongluongsx" value="<?php echo $item['trongluongsx']?>" class="text number"/>
@@ -83,33 +87,24 @@
                 	<thead>
                     	<tr>
                         	<th width="1%"><input type="checkbox" onclick="$('.chitietbn').attr('checked', this.checked);"></th>
-                            <th>Mã nguyên liệu</th>
-                            <th>Tên hàng - qui cách</th>
-                            <th>Lot hàng</th>
-                            <th>Đơn vị tính</th>
-                            <th>Kho nhập</th>
-                            <th>Chứng từ</th>
-                            <th>Thực nhập</th>
+                            <th>Linh kiện</th>
+                            <th>Tên linh kiện</th>
+                            <th>Tên chi tiết / công đoạn</th>
+                            <th>Nguyên liệu</th>
+                            <th>Lot NL</th>
+                            <th>BM-SX-01 số</th>
+                            <th>SL</th>
                             <th>Đơn giá</th>
-                            <th>Thành tiền</th>
+                            <th>Thành phẩm</th>
+                            <th>Phế liệu</th>
+                            <th>Phế phẩm</th>
+                            <th>Năng suất</th>
                         </tr>
                     </thead>
-                    <tbody id="listnguyenlieu">
+                    <tbody id="listcongdoan">
                     	
                     </tbody>
-                   	<tfoot>
-                    	<tr>
-                        	<td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-right">Tông cộng</td>
-                            <td class="number" id="total"></td>
-                        </tr>
-                    </tfoot>
+                   	
                 </table>
                 
             </div>
@@ -126,25 +121,74 @@
 <script language="javascript">
 $('#nhacungungid').val("<?php echo $item['nhacungungid']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
+function chonNhanVien(eid,tenview)
+{
+	openDialog("?route=quanlykho/nhanvien&opendialog=true",800,500);
+	var listnhanvien = $('#selectnhanvien').val().split(',');
+	for(i in listnhanvien )
+	{
+		if(listnhanvien[i]!="")
+		{
+			$.getJSON('?route=quanlykho/nhanvien/getNhanVien&col=id&val='+listnhanvien[i],function(data){
+				for(i in data.nhanviens)
+				{
+					$('#'+eid).val(data.nhanviens[i].id);	
+					$('#'+tenview).html(data.nhanviens[i].hoten);	
+					
+				}
+			});
+		}
+		
+	}
+}
+
+function chonSanPham()
+{
+	openDialog("?route=quanlykho/sanpham&opendialog=true",800,500);
+	var listsanpham = $('#selectsanpham').val().split(',');
+	for(i in listsanpham )
+	{
+		if(listsanpham[i]!="")
+		{
+			$.getJSON('?route=quanlykho/sanpham/getSanPham&col=id&val='+listsanpham[i],function(data){
+				for(i in data.sanphams)
+				{
+					
+					$('#sanphamid').val(data.sanphams[i].id);
+					$('#tensanpham').val(data.sanphams[i].tensanpham);
+					$('#masanpham').val(data.sanphams[i].masanpham);
+					$('#sanpham_text').html(data.sanphams[i].tensanpham);
+				}
+			});
+		}
+		
+	}
+}
+
 $(document).ready(function(e) {
     $('#btnThemDong').click(function(e) {
 		var obj = new Object();
 		obj.id = 0;
+		obj.linhkiendid = 0,
+		obj.malinhkien = "",
+		obj.tenlinhkien = "",
 		obj.nguyenlieuid = 0;
 		obj.manguyenlieu = '';
 		obj.tennguyenlieu = '';
+		obj.congdoanid = 0;
 		obj.lotnguyenlieu = '';
-		obj.donvi = '';
-		obj.tendonvi = '';
-		obj.chungtu = 0;
-		obj.thucnhap = 0;
+		obj.bmsx01so = '';
+		obj.soluong = 0;
 		obj.dongia = 0;
-		obj.thanhtien = 0;
-        phieu.addRow(obj);
+		obj.chitieutp = 0;
+		obj.chitieupl = 0;
+		obj.chitieupp = 0;
+		obj.nangsuat = 0;
+        lsx.addRow(obj);
     });
 	$('.chitietphieu').each(function(index, element) {
         var obj = $.parseJSON($(this).html());
-		phieu.addRow(obj)
+		lsx.addRow(obj)
     });
 	
 	$('#btnXoaDong').click(function(e) {
@@ -159,7 +203,7 @@ $(document).ready(function(e) {
 });
 
 var auto = new AutoComplete();
-function PhieuNhapVatTuHangHoa()
+function LenhSanXuat()
 {
 	this.index = 0;
 	this.cbKhos = "<?php echo $cbKhos?>";
@@ -168,45 +212,37 @@ function PhieuNhapVatTuHangHoa()
 		var str ="";
 		//Check box
 		str+= '<td><input type="checkbox" class="chitietid" ref="'+ this.index +'" value="'+obj.id+'"><input type="hidden" id="id-'+this.index+'" name="id['+this.index+']" value="'+obj.id+'"></td>';
-		//Ma nguyen lieu
-		str+= '<td><input type="hidden" id="nguyenlieuid-'+ this.index +'" name="nguyenlieuid['+this.index+']" value="'+obj.nguyenlieuid+'"><input type="text" class="text gridautocomplete" id="manguyenlieu-'+ this.index +'" name="manguyenlieu['+this.index+']" value="'+obj.manguyenlieu+'"></td>';
+		//Ma linh kien
+		str+= '<td><input type="hidden" id="linhkienid-'+ this.index +'" name="linhkienid['+this.index+']" value="'+obj.linhkienid+'"><input type="text" class="text gridautocomplete" id="malinhkien-'+ this.index +'" name="malinhkien['+this.index+']" value="'+obj.malinhkien+'"></td>';
+		//Ten linh kien
+		str+= '<td><input type="text" class="text" id="tenlinhkien-'+ this.index +'" name="tenlinhkien['+this.index+']" value="'+obj.tenlinhkien+'"></td>';
+		//Ten chi tiet cong doan
+		str+= '<td><select id="congdoanid-'+ this.index +'" name="congdoanid['+this.index+']"></select></td>';
 		//Ten nguyen lieu
-		str+= '<td><input type="text" class="text" id="tennguyenlieu-'+ this.index +'" name="tennguyenlieu['+this.index+']" value="'+obj.tennguyenlieu+'"></td>';
+		str+= '<td><input type="hidden" id="nguyenlieuid-'+ this.index +'" name="nguyenlieuid['+this.index+']" value="'+obj.nguyenlieuid+'"><input type="hidden" id="manguyenlieu-'+ this.index +'" name="manguyenlieu['+this.index+']" value="'+obj.manguyenlieu+'"><input type="hidden" id="tennguyenlieu-'+ this.index +'" name="tennguyenlieu['+this.index+']" value="'+obj.tennguyenlieu+'"><span id="tennguyenlieutext-'+this.index+'"></span></td>';
 		//Lot nguuyen lieu
 		str+= '<td><input type="text" class="text" id="lotnguyenlieu-'+ this.index +'" name="lotnguyenlieu['+this.index+']" value="'+obj.lotnguyenlieu+'"></td>';
-		//Don vi tinh
-		str+= '<td id="madonvi-'+this.index+'">'+obj.tendonvi+'</td>';
-		//Kho nhap
-		str+= '<td><select id="makho-'+this.index+'" name="makho['+this.index+']">'+this.cbKhos+'</select></td>';
-		//Chung tu
-		str+= '<td class="number"><input type="text" class="text number" id="chungtu-'+this.index+'" name="chungtu['+this.index+']" value="'+obj.chungtu+'"></td>';
-		//Thuc nhap
-		str+= '<td class="number"><input type="text" class="text number thucnhap" id="thucnhap-'+this.index+'" name="thucnhap['+this.index+']" value="'+obj.thucnhap+'" ref="'+this.index+'"></td>';
+		//BM-SX-01 so
+		str+= '<td><input type="text" class="text" id="bmsx01so-'+ this.index +'" name="bmsx01so['+this.index+']" value="'+obj.bmsx01so+'"></td>';
+		//So luong
+		str+= '<td class="number"><input type="text" class="text number" id="soluong-'+this.index+'" name="soluong['+this.index+']" value="'+obj.soluong+'"></td>';
 		//Don gia
-		str+= '<td class="number"><input type="text" class="text number dongia" id="dongia-'+this.index+'" name="dongia['+this.index+']" value="'+obj.dongia+'" ref="'+this.index+'"></td>';
-		//Thanh tien
-		str+= '<td class="number thanhtien" id="thanhtien-'+this.index+'">'+formateNumber(obj.thanhtien)+'</td>';
+		str+= '<td class="number"><input type="text" class="text number" id="dongia-'+this.index+'" name="dongia['+this.index+']" value="'+obj.dongia+'" ref="'+this.index+'"></td>';
+		//Phành phẩm
+		str+= '<td class="number"><input type="text" class="text number" id="chitieutp-'+this.index+'" name="chitieutp['+this.index+']" value="'+obj.chitieutp+'" ref="'+this.index+'"></td>';
+		//Phế liệu
+		str+= '<td class="number"><input type="text" class="text number" id="chitieupl-'+this.index+'" name="chitieupl['+this.index+']" value="'+obj.chitieupl+'" ref="'+this.index+'"></td>';
+		//Phế phẩm
+		str+= '<td class="number"><input type="text" class="text number" id="chitieupp-'+this.index+'" name="chitieupp['+this.index+']" value="'+obj.chitieupp+'" ref="'+this.index+'"></td>';
+		//Nang suat
+		str+= '<td class="number"><input type="text" class="text number" id="nangsuat-'+this.index+'" name="nangsuat['+this.index+']" value="'+obj.nangsuat+'" ref="'+this.index+'"></td>';
 		
 		var row = '<tr id="row-'+this.index+'">'+str+'</tr>';
 		
-		$('#listnguyenlieu').append(row);
-		$('#makho-'+this.index).val(obj.makho);
+		$('#listcongdoan').append(row);
 		this.index++;
 		numberReady();
-		this.getTotal();
 		auto.autocomplete();
-		$('.thucnhap').keyup(function(e) {
-			pos = $(this).attr('ref');
-            $('#thanhtien-'+pos).html(formateNumber(phieu.getSubTotal(pos)));
-			phieu.getTotal();
-			
-        });
-		$('.dongia').keyup(function(e) {
-            pos = $(this).attr('ref');
-            $('#thanhtien-'+pos).html(formateNumber(phieu.getSubTotal(pos)));
-			phieu.getTotal();
-        });
-		
 	}
 	
 	this.removeRow = function(pos)
@@ -214,21 +250,6 @@ function PhieuNhapVatTuHangHoa()
 		var id = $('#id-'+pos).val();
 		$('#delchitietid').val($('#delchitietid').val()+","+id);
 		$('#row-'+pos).remove();
-	}
-	this.getSubTotal = function(pos)
-	{
-		var thucnhap = $('#thucnhap-'+pos).val().replace(/,/g,"");
-		var dongia = $('#dongia-'+pos).val().replace(/,/g,"");
-		return Number(thucnhap)*Number(dongia);
-	}
-	this.getTotal = function()
-	{
-		sum = 0;
-		$('.thanhtien').each(function(index, element) {
-        	var num = String($(this).html()).replace(/,/g,"");
-			sum += Number(num);
-    	});
-		$('#total').html(formateNumber(sum));
 	}
 	
 	this.save =function()
@@ -281,26 +302,28 @@ function PhieuNhapVatTuHangHoa()
 		);
 	}
 }
-var phieu = new PhieuNhapVatTuHangHoa();
+var lsx = new LenhSanXuat();
 
 function callBackAutoComplete(val)
 {
-	getNguyenLieu("manguyenlieu",val.value,"like");
+	getLinhKien("malinhkien",val.value,"like");
 }
 
 
-function getNguyenLieu(col,val,operator)
+function getLinhKien(col,val,operator)
 {
-	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col="+col+"&val="+val+"&operator="+operator, 
+	
+	$.getJSON("?route=quanlykho/linhkien/getLinhKien&col="+col+"&val="+val+"&operator="+operator, 
 			function(data) 
 			{
 				str = "";
-				for( i in data.nguyenlieus)
+				for( i in data.linhkiens)
 				{
-					str+= '<li id=rowauto-'+i+' class=autocompleterow>'+ data.nguyenlieus[i].manguyenlieu + ':' +data.nguyenlieus[i].tennguyenlieu+'</li><input type="hidden" id="idnguyenlieu-'+i+'" value="'+ data.nguyenlieus[i].id +'" />';
+					str+= '<li id=rowauto-'+i+' class=autocompleterow>'+ data.linhkiens[i].malinhkien + ':' +data.linhkiens[i].tenlinhkien+'</li><input type="hidden" id="idnguyenlieu-'+i+'" value="'+ data.linhkiens[i].id +'" />';
 				}
 				$("#autocomplete").html("<ul class='autocomplete'>"+str+"</ul>");
 				auto.selectRow();
+				
 			});
 }
 
@@ -310,19 +333,37 @@ function selectValue(eid)
 	arr = str.split(":");
 	
 	$("#"+eid).val(arr[0]);
-	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=manguyenlieu&val="+arr[0]+"&operator=", 
+	$.getJSON("?route=quanlykho/linhkien/getLinhKien&col=malinhkien&val="+arr[0]+"&operator=", 
 			function(data) 
 			{
 				
 				ar = eid.split("-");
 				pos = ar[1];
-				for( i in data.nguyenlieus)
+				for( i in data.linhkiens)
 				{
-					$("#manguyenlieu-"+pos).val(data.nguyenlieus[i].manguyenlieu);
-					$("#tennguyenlieu-"+pos).val(data.nguyenlieus[i].tennguyenlieu);
-					$("#nguyenlieuid-"+pos).val(data.nguyenlieus[i].id);
-					$("#madonvi-"+pos).html(data.nguyenlieus[i].tendonvitinh);
-					$('#makho-'+pos).val(data.nguyenlieus[i].makho);
+					$("#malinhkien-"+pos).val(data.linhkiens[i].malinhkien);
+					$("#tenlinhkien-"+pos).val(data.linhkiens[i].tenlinhkien);
+					$("#linhkienid-"+pos).val(data.linhkiens[i].id);
+					//Lay nguyen lien su dung
+					$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=id&val="+data.linhkiens[i].nguyenlieusudung,function(nguyenlieu){
+						for(i in nguyenlieu.nguyenlieus)
+						{
+							$('#nguyenlieuid-'+pos).val(nguyenlieu.nguyenlieus[i].id);
+							$('#manguyenlieu-'+pos).val(nguyenlieu.nguyenlieus[i].manguyenlieu);	
+							$('#tennguyenlieu-'+pos).val(nguyenlieu.nguyenlieus[i].tennguyenlieu);
+							$('#tennguyenlieutext-'+pos).html(nguyenlieu.nguyenlieus[i].tennguyenlieu);
+						}
+					});
+					//Lay cac cong doan cua linh kien vua duoc chon
+					$.getJSON("?route=quanlykho/congdoan/getCongDoan&col=malinhkien&val="+data.linhkiens[i].id,function(congdoan){
+						var str = "";
+						for(i in congdoan.congdoans)
+						{
+							str += '<option value="'+congdoan.congdoans[i].id+'">'+ congdoan.congdoans[i].macongdoan + ' - ' + congdoan.congdoans[i].tencongdoan+'</option>';
+							
+						}
+						$('#congdoanid-'+pos).html(str);
+					});
 				}
 				
 			});
