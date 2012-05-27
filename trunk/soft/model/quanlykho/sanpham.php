@@ -55,6 +55,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$manhom=$this->db->escape(@$data['manhom']);
 		$loai=$this->db->escape(@$data['loai']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
+		$trongluong=$this->string->toNumber($this->db->escape(@$data['trongluong']));
 		$makho=$this->db->escape(@$data['makho']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
@@ -77,6 +78,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'loai',
 						'manhom',
 						'madonvi',
+						'trongluong',
 						'makho',
 						'trangthai',
 						'imageid',
@@ -101,6 +103,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$loai,
 						$manhom,
 						$madonvi,
+						$trongluong,
 						$makho,
 						'active',
 						$imageid,
@@ -135,6 +138,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$manhom=$this->db->escape(@$data['manhom']);
 		$loai=$this->db->escape(@$data['loai']);
 		$madonvi=$this->db->escape(@$data['madonvi']);
+		$trongluong=$this->string->toNumber($this->db->escape(@$data['trongluong']));
 		$makho=$this->db->escape(@$data['makho']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath=$this->db->escape(@$data['imagepath']);
@@ -157,6 +161,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'loai',
 						'manhom',
 						'madonvi',
+						'trongluong',
 						'makho',
 						
 						'imageid',
@@ -181,6 +186,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$loai,
 						$manhom,
 						$madonvi,
+						$trongluong,
 						$makho,
 						
 						$imageid,

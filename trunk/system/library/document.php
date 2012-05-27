@@ -69,7 +69,12 @@ final class Document {
 								  "nhapdoingoai" => "Nhập đối ngoại",
 								  "tamnhaptaixuat" => "Tạm nhập tái xuất"
 								  );
-	public $thuchien = array();
+	public $thuchien = array(
+								"moi" => "Mới",
+								"dangthuchien" => "Đang thực hiện",
+								"chuaduyet" => "Chưa duyệt",
+								"daduyet" => "Đã duyệt"
+							);
 	
 	public $text = array();
 	public $setting = array();

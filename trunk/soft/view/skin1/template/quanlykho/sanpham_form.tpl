@@ -41,7 +41,10 @@
                         <?php } ?>
                     </select>
             	</p>
-               	
+               	<p>
+            		<label>Trọng lượng</label><br />
+					<input type="text" id="trongluong" name="trongluong" value="<?php echo $item['trongluong']?>" class="text number" size=60 /> Kg
+            	</p>
                 <p>
             		<label>Nhom</label><br />
 					<select id="manhom" name="manhom">
