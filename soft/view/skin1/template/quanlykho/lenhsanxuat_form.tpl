@@ -53,11 +53,14 @@
                     <input type="hidden" id="tensanpham" name="tensanpham" value="<?php echo $item['tensanpham']?>">
                     <span id="sanpham_text"><?php echo $item['tensanpham']?></span>
                     <input type="button" class="button" id="btnChonSanPham" value="Chọn sản phẩm" onClick="chonSanPham()">
-                
+                	
+                    <label>Lot SP</label>
+                    <input type="text" id="lotsp" name="lotsp" value="<?php echo $item['lotsp']?>" class="text"/>
+                    
                 	<label>T/lượng SX:</label>
                     <input type="text" id="trongluongsx" name="trongluongsx" value="<?php echo $item['trongluongsx']?>" class="text number"/>
                 </p>
-               
+               	
                 <p>
                 	<label>Quyết định giá số:</label>
                     <input type="text" id="qdgiaso" name="qdgiaso" class="text" value="<?php $item['qdgiaso']?>">
@@ -73,11 +76,12 @@
                 <p>
                 	<label>Tình trạng</label>
                     <select id="tinhtrang" name="tinhtrang">
-                    	<?php foreach($this->document->thanhtoan as $key => $val){ ?>
+                    	<?php foreach($this->document->thuchien as $key => $val){ ?>
                         <option value="<?php echo $key?>"><?php echo $val?></option>
                         <?php } ?>
                     </select>
                 </p>
+                
             </div>
             <div>
             	<input type="button" class="button" id="btnThemDong" value="Thêm"/>
@@ -87,8 +91,7 @@
                 	<thead>
                     	<tr>
                         	<th width="1%"><input type="checkbox" onclick="$('.chitietbn').attr('checked', this.checked);"></th>
-                            <th>Linh kiện</th>
-                            <th>Tên linh kiện</th>
+                            
                             <th>Tên chi tiết / công đoạn</th>
                             <th>Nguyên liệu</th>
                             <th>Lot NL</th>
@@ -158,6 +161,7 @@ function chonSanPham()
 					$('#tensanpham').val(data.sanphams[i].tensanpham);
 					$('#masanpham').val(data.sanphams[i].masanpham);
 					$('#sanpham_text').html(data.sanphams[i].tensanpham);
+					
 				}
 			});
 		}
@@ -210,12 +214,6 @@ function LenhSanXuat()
 	this.addRow = function(obj)
 	{
 		var str ="";
-		//Check box
-		str+= '<td><input type="checkbox" class="chitietid" ref="'+ this.index +'" value="'+obj.id+'"><input type="hidden" id="id-'+this.index+'" name="id['+this.index+']" value="'+obj.id+'"></td>';
-		//Ma linh kien
-		str+= '<td><input type="hidden" id="linhkienid-'+ this.index +'" name="linhkienid['+this.index+']" value="'+obj.linhkienid+'"><input type="text" class="text gridautocomplete" id="malinhkien-'+ this.index +'" name="malinhkien['+this.index+']" value="'+obj.malinhkien+'"></td>';
-		//Ten linh kien
-		str+= '<td><input type="text" class="text" id="tenlinhkien-'+ this.index +'" name="tenlinhkien['+this.index+']" value="'+obj.tenlinhkien+'"></td>';
 		//Ten chi tiet cong doan
 		str+= '<td><select id="congdoanid-'+ this.index +'" name="congdoanid['+this.index+']"></select></td>';
 		//Ten nguyen lieu

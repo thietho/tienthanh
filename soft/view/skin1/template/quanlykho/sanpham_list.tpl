@@ -68,6 +68,7 @@
                         <th>Đơn giá bán theo lot</th>
                         <th>Số lượng tồn</th>
                         <th>Đóng gói</th>
+                        <th>Số sản phẩm /Lot</th>
                         <th>Khu vực</th>
                         <th>Phân cấp</th>
                         <th>Hiện hành</th>
@@ -100,6 +101,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanlot'])?></td>
                 		<td class="number"><?php echo $this->string->numberFormate($item['soluongton'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['donggoi'])?></td>
+                        <td class="number"><?php echo $this->string->numberFormate($item['sosanphamtrenlot'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['khuvuc'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['phancap'])?></td>
                         <td><?php echo $this->document->hienhanh[$item['hienhanh']]?></td>
