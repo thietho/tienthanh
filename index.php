@@ -1,5 +1,5 @@
 <?php
-header("Location: soft/");
+header("Location: soft/"); 
 include('system/config/directory.php');
 include('system/config/config.php');
 include('system/config/startup.php');
