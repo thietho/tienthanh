@@ -11,6 +11,7 @@ class ModelQuanlykhoLenhsanxuat extends Model
 								'masanpham',
 								'tensanpham',
 								'lotsp',
+								'solotsx',
 								'bmsx07',
 								'nhomsx',
 								'ngaysx',
@@ -24,8 +25,8 @@ class ModelQuanlykhoLenhsanxuat extends Model
 								'tinhtrang',
 								'status',
 								'createdate',
-								'createby'
-								
+								'createby',
+								'loaisx'
 							);
 	public function getList($where = "")
 	{
