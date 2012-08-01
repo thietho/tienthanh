@@ -207,50 +207,7 @@ class ControllerQuanlykhoLenhsanxuat extends Controller
 			{
 				$this->model_quanlykho_lenhsanxuat->update($data);	
 			}
-			//Xoa chi tiet bien nhan
-			if($data['delchitietid']!="")
-			{
-				$arr_idct = split(',',$data['delchitietid']);
-				foreach($arr_idct as $id)
-				{
-					$this->model_quanlykho_lenhsanxuat->deletePhieuNhanVatTuHangHoaChiTiet($id);	
-				}
-			}
 			
-			//Luu chi tiet
-			$arr_id = $data['id'];
-			$arr_nguyenlieuid = $data['nguyenlieuid'];
-			$arr_manguyenlieu = $data['manguyenlieu'];
-			$arr_tennguyenlieu = $data['tennguyenlieu'];
-			$arr_lotnguyenlieu = $data['lotnguyenlieu'];
-			$arr_makho = $data['makho'];
-			$arr_chungtu = $data['chungtu'];
-			$arr_thucnhap = $data['thucnhap'];
-			$arr_dongia = $data['dongia'];
-			
-			$sum = 0;
-			foreach($arr_nguyenlieuid as $key => $dichvuid)
-			{
-				$ct['id'] = $arr_id[$key];
-				$ct['lenhsanxuatid']= $data['lenhsanxuatid'];
-				$ct['ngaynhap']= $this->date->formatViewDate($data['ngaylap']);
-				$ct['nguyenlieuid'] = $arr_nguyenlieuid[$key];
-				$ct['manguyenlieu'] = $arr_manguyenlieu[$key];
-				$ct['tennguyenlieu'] = $arr_tennguyenlieu[$key];
-				$ct['lotnguyenlieu'] = $arr_lotnguyenlieu[$key];
-				$ct['nhacungungid'] = $data['nhacungungid'];
-				$ct['makho'] = $arr_makho[$key];
-				$ct['donvi'] = $this->document->getNguyenLieu($ct['nguyenlieuid'],'madonvi');
-				$ct['chungtu'] = $arr_chungtu[$key];
-				$ct['thucnhap'] = $arr_thucnhap[$key];
-				$ct['dongia'] = $arr_dongia[$key];
-				$ct['thanhtien'] = $this->string->toNumber($ct['thucnhap'])*$this->string->toNumber($ct['dongia']);
-				
-				$this->model_quanlykho_lenhsanxuat->savePhieuNhanVatTuHangHoaChiTiet($ct);
-				$sum +=$this->string->toNumber($ct['thanhtien']);
-			}
-			
-			$this->model_quanlykho_lenhsanxuat->updateCol($data['lenhsanxuatid'],'tongsotien',$sum);
 			$data['error'] = "";
 			
 		}
