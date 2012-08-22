@@ -89,13 +89,15 @@ function CongDoan()
 {
 	this.index = 0;
 	this.cbphongban = "<?php echo $cbphongban?>";
-	this.refresh = function()
+	this.refreshform = function()
 	{
+		
 		$('input').change(function(e) {
 			ar = this.id.split('-');
 			var row= ar[1];
 			$("#status-"+row).val('update');
 			$('#row-'+row).css('background-color',"#F0F");
+			
 		});
 		$('select').change(function(e) {
             ar = this.id.split('-');
@@ -128,7 +130,7 @@ function CongDoan()
 						
 						
 					}
-					cd.refresh()
+					cd.refreshform()
 				});
 	}
 	
@@ -155,7 +157,7 @@ function CongDoan()
 		obj.ghichu='';
 		
 		$("#listcongdoan").append(cd.createRowCongDoan(obj));
-		cd.refresh()
+		cd.refreshform()
 	}
 	
 	this.createRowCongDoan = function(obj)

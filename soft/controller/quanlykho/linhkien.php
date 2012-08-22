@@ -438,21 +438,22 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$congdoan['malinhkien'] = $data['malinhkien'];
 			$congdoan['macongdoan'] = $data['macongdoan'][$key];
 			$congdoan['tencongdoan'] = $data['tencongdoan'][$key];
-			$congdoan['thututhuchien'] = $data['thututhuchien'][$key];
+			$congdoan['thututhuchien'] = $this->string->toNumber($data['thututhuchien'][$key]);
 			$congdoan['nguyenlieusanxuat'] = $data['nguyenlieusanxuat'][$key];
 			$congdoan['thietbisanxuatchinh'] = $data['thietbisanxuatchinh'][$key];
 			$congdoan['dinhmucchitieu'] = $data['dinhmucchitieu'][$key];
-			$congdoan['giagiacong'] = $data['giagiacong'][$key];
-			$congdoan['dinhmucphelieu'] = $data['dinhmucphelieu'][$key];
-			$congdoan['dinhmucphepham'] = $data['dinhmucphepham'][$key];
-			$congdoan['dinhmuchaohut'] = $data['dinhmuchaohut'][$key];
-			$congdoan['dinhmucnangxuat'] = $data['dinhmucnangxuat'][$key];
+			$congdoan['giagiacong'] = $this->string->toNumber($data['giagiacong'][$key]);
+			$congdoan['dinhmucphelieu'] = $this->string->toNumber($data['dinhmucphelieu'][$key]);
+			$congdoan['dinhmucphepham'] = $this->string->toNumber($data['dinhmucphepham'][$key]);
+			$congdoan['dinhmuchaohut'] = $this->string->toNumber($data['dinhmuchaohut'][$key]);
+			$congdoan['dinhmucnangxuat'] = $this->string->toNumber($data['dinhmucnangxuat'][$key]);
 			
-			$congdoan['dinhmucphulieu'] = $data['dinhmucphulieu'][$key];
-			$congdoan['soluongtrenkg'] = $data['soluongtrenkg'][$key];
+			$congdoan['dinhmucphulieu'] = $this->string->toNumber($data['dinhmucphulieu'][$key]);
+			$congdoan['soluongtrenkg'] = $this->string->toNumber($data['soluongtrenkg'][$key]);
 			$congdoan['phongbansanxuat'] = $data['phongbansanxuat'][$key];
 			$congdoan['ghichu'] = $data['ghichu'][$key];
 			$congdoan['status'] = $data['status'][$key];
+			print_r($congdoan);
 			if($congdoan['status']=='update')
 			{
 				if((int)$congdoan['id'] == 0)
