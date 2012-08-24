@@ -92,7 +92,7 @@ function CongDoan()
 	this.refreshform = function()
 	{
 		
-		$('input').change(function(e) {
+		/*$('input').change(function(e) {
 			ar = this.id.split('-');
 			var row= ar[1];
 			$("#status-"+row).val('update');
@@ -110,7 +110,7 @@ function CongDoan()
 			var row= ar[1];
 			$("#status-"+row).val('update');
 			$('#row-'+row).css('background-color',"#F0F");
-        });
+        });*/
 		numberReady();
 		auto.autocomplete();
 		$('.phongbansanxuat').each(function(index, element) {
@@ -176,7 +176,7 @@ function CongDoan()
 		row+='                      <td><select class="phongbansanxuat" ref="'+ obj.phongbansanxuat +'" id="phongbansanxuat-'+ this.index +'" name="phongbansanxuat['+ this.index +']">'+ cd.cbphongban +'</select>';
 		row+='                      <td class="number"><input type="text" id="dinhmucchitieu-'+ this.index +'" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number" value="'+obj.dinhmucphelieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number grid" value="'+obj.dinhmucphelieu+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucphepham-'+ this.index +'" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmuchaohut-'+ this.index +'" name="dinhmuchaohut['+ this.index +']" class="text number" value="'+obj.dinhmuchaohut+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';

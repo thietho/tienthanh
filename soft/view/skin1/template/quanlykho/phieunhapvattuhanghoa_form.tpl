@@ -80,6 +80,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td class="text-right">Tông cộng</td>
                             <td class="number" id="total"></td>
                         </tr>
