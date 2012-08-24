@@ -43,54 +43,8 @@
             </div>
         </form>
         <div class="clearer">^&nbsp;</div>
-        <div id="error" class="error" style="display:none"></div>
-    	<div id="container" class="hidden">
-            <ul class="tabs-nav">
-                <li class="tabs-selected"><a href="#fragment-phatsinhnhap"><span>Phát sinh nhập</span></a></li>
-                <li class="tabs"><a href="#fragment-phatsinhxuat"><span>Phát sinh xuất</span></a></li>
-            </ul>
-
-            <div id="fragment-phatsinhnhap" class="tabs-container">   
-                <p>
-                	<label>Phát sinh nhập kho nguyên liệu</label>
-                    <table>
-                    	<thead>
-                        	<th>Ngày</th>
-                            <th>Mã phiếu</th>
-                            <th>Mã nguyên liệu</th>
-                            <th>Tên nguyên liệu</th>
-                            <th>Thực nhập</th>
-                            <th>ĐVT</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
-                        </thead>
-                        <tbody id="showphatsinhnhap">
-                        </tbody>
-                    </table>
-                </p>
-            </div>
-            
-            <!-- chi tiet phieu nhap nguyen lieu -->
-            <div id="fragment-phatsinhxuat" class="tabs-container">
-               	<p>
-                	<label>Phát sinh xuất kho nguyên liệu</label>
-                    <table>
-                    	<thead>
-                        	<th>Ngày</th>
-                            <th>Mã phiếu</th>
-                            <th>Mã nguyên liệu</th>
-                            <th>Tên nguyên liệu</th>
-                            <th>Thực xuất</th>
-                            <th>ĐVT</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
-                        </thead>
-                        <tbody id="showphatsinhxuat">
-                        </tbody>
-                    </table>
-                </p>
-            </div>
-            <!-- end chi tiet phieu nhan hang -->
+        
+    	<div id="container" class="hidden padding1">
             
         </div>
     </div>
@@ -106,18 +60,10 @@ function lapBaoCao()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/baocaonguyenlieunhapxuat/getPhieuNhapXuatNguyenLieu&loainhapxuat=phieunhapnguyenlieu", $("#frmbaocao").serialize(),
+	$.post("?route=quanlykho/baocaonguyenlieunhapxuat/showReport", $("#frmbaocao").serialize(),
 		function(data){
-				$("#showphatsinhnhap").html(data);
-				
-				$.post("?route=quanlykho/baocaonguyenlieunhapxuat/getPhieuNhapXuatNguyenLieu&loainhapxuat=phieuxuatnguyenlieu", $("#frmbaocao").serialize(),
-				function(data){
-						$("#showphatsinhxuat").html(data);
-						
-						$("#container").show();
-						$.unblockUI();
-				}
-			);
+			$('#container').html(data).show();
+			$.unblockUI();				
 		}
 	);
 	

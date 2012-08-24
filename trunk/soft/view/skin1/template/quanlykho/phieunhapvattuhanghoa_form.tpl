@@ -61,7 +61,6 @@
                             <th>Tên hàng - qui cách</th>
                             <th>Lot hàng</th>
                             <th>Đơn vị tính</th>
-                            <th>Kho nhập</th>
                             <th>Chứng từ</th>
                             <th>Thực nhập</th>
                             <th>Đơn giá</th>
@@ -74,7 +73,6 @@
                    	<tfoot>
                     	<tr>
                         	<td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -150,9 +148,9 @@ function PhieuNhapVatTuHangHoa()
 		//Lot nguuyen lieu
 		str+= '<td><input type="text" class="text" id="lotnguyenlieu-'+ this.index +'" name="lotnguyenlieu['+this.index+']" value="'+obj.lotnguyenlieu+'"></td>';
 		//Don vi tinh
-		str+= '<td id="madonvi-'+this.index+'">'+obj.tendonvi+'</td>';
+		str+= '<td id="madonvi-'+this.index+'">'+obj.tendonvi+'<input type="hidden" id="makho-'+this.index+'" name="makho['+this.index+']" value="'+obj.makho+'"></td>';
 		//Kho nhap
-		str+= '<td><select id="makho-'+this.index+'" name="makho['+this.index+']">'+this.cbKhos+'</select></td>';
+		str+= '';
 		//Chung tu
 		str+= '<td class="number"><input type="text" class="text number" id="chungtu-'+this.index+'" name="chungtu['+this.index+']" value="'+obj.chungtu+'"></td>';
 		//Thuc nhap

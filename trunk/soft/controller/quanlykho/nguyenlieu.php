@@ -600,7 +600,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->load->model("quanlykho/phieunhapvattuhanghoa");
 		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($id);
 		$this->data['item']['soluongton'] = $this->model_quanlykho_nguyenlieu->getTonKho($id);
-		$where = " AND 	nguyenlieuid = '".$id."' AND machungtuxuatkho = ''";
+		$where = " AND 	nguyenlieuid = '".$id."'";
 		$this->data['datact'] = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
 		
 		$this->id='content';

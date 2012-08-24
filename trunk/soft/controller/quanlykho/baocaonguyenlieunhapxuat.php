@@ -37,7 +37,75 @@ class ControllerQuanlykhoBaocaonguyenlieunhapxuat extends Controller
 		$this->render();
 	}
 	
-	public function getPhieuNhapXuatNguyenLieu()
+	private function validateForm($data)
+	{	
+    	if($data['makho'] == "")
+		{
+      		$this->error['macongdoan'] = "Chưa chọn kho";
+    	}
+		
+		if (count($this->error)==0) 
+		{
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}
+	}
+	
+	private function getNhapKho($makho,$tungay,$denngay)
+	{
+		$this->load->model('quanlykho/phieunhapvattuhanghoa');
+		$where = "";
+		if($makho !="")
+		{
+			$where .= " AND makho = '".$makho."'";	
+		}
+		if($tungay!="")
+		{
+			$where .= " AND ngaynhap >= '".$tungay."'";	
+		}
+		
+		if($dengay!="")
+		{
+			$where .= " AND ngaynhap <= '".$dengay."'";	
+		}
+		
+		$datas = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
+		return $datas;
+	}
+	
+	public function showReport()
+	{
+		$data = $this->request->post;
+		
+		if($this->validateForm($data))
+		{
+			$this->load->model('quanlykho/nguyenlieu');
+			
+			$tungay = $this->date->formatViewDate($data['tungay']);
+			$dengay = $this->date->formatViewDate($data['dengay']);
+			
+			$this->data['data_nhapkhotrongky'] = $this->getNhapKho($data['makho'],$tungay,$dengay);
+			
+			$where = " AND makho = '".$data['makho']."'";
+			$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList($where);
+			
+			$this->id='content';
+			$this->template='quanlykho/baocaotonkho_nguyenlieu.tpl';
+			$this->render();	
+		}
+		else
+		{
+			foreach($this->error as $item)
+			{
+				$this->data['output'] .= $item."<br>";
+			}
+			$this->id='content';
+			$this->template='common/output.tpl';
+			$this->render();
+		}
+	}
+	/*public function getPhieuNhapXuatNguyenLieu()
 	{
 		$data = $this->request->post;
 		
@@ -140,6 +208,6 @@ class ControllerQuanlykhoBaocaonguyenlieunhapxuat extends Controller
 		}
 		
 		return $rows;
-	}
+	}*/
 }
 ?>

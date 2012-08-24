@@ -455,7 +455,7 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		$sql = "SELECT sum(thucnhap) as soluongton
 				FROM  `qlkphieunhapvattuhanghoa_chitiet` 
 				WHERE nguyenlieuid = '".$nguyenlieuid."'
-						AND machungtuxuatkho = ''
+						
 						AND status <> 'deleted'
 				";
 		$query = $this->db->query($sql);
