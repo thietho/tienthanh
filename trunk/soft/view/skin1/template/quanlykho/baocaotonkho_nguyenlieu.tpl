@@ -15,11 +15,11 @@
         <tr>
         	<td><?php echo $key+1 ?></td>
             <td><?php echo $item['manguyenlieu']?></td>
-            <td><?php echo $item['tennguyenlieu']?></td>
+            <td><?php echo $item['tennguyenlieu']?> <?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['nhapdauky'])?> <?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['nhaptrongky'])?> <?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
             <td class="number">0</td>
-            <td class="number">0</td>
-            <td class="number">0</td>
-            <td class="number">0</td>
+            <td class="number"><?php echo $this->string->numberFormate($item['soducuoiky'])?> <?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
             
         </tr>
         <?php } ?>

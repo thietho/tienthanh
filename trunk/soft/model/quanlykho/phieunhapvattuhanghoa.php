@@ -201,6 +201,12 @@ class ModelQuanlykhoPhieunhapvattuhanghoa extends Model
 		return $this->db->getNextIdVarChar('qlkphieunhapvattuhanghoa_chitiet','lotnguyenlieu',$prefix);
 	}
 	
-	
+	public function getYear()
+	{
+		$sql = "SELECT DISTINCT YEAR( ngaynhap ) as year
+				FROM  `qlkphieunhapvattuhanghoa_chitiet` ";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 }
 ?>
