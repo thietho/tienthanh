@@ -29,6 +29,8 @@ class ControllerQuanlykhoBaocaonguyenlieunhapxuat extends Controller
 		
 		$this->load->model("quanlykho/kho");
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->load->model('quanlykho/phieunhapvattuhanghoa');
+		$this->data['data_year'] = $this->model_quanlykho_phieunhapvattuhanghoa->getYear();
 		
 		$this->id='content';
 		$this->template='quanlykho/baocaonguyenlieunhapxuat.tpl';
@@ -65,9 +67,9 @@ class ControllerQuanlykhoBaocaonguyenlieunhapxuat extends Controller
 			$where .= " AND ngaynhap >= '".$tungay."'";	
 		}
 		
-		if($dengay!="")
+		if($denngay!="")
 		{
-			$where .= " AND ngaynhap <= '".$dengay."'";	
+			$where .= " AND ngaynhap <= '".$denngay."'";	
 		}
 		
 		$datas = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
@@ -83,12 +85,35 @@ class ControllerQuanlykhoBaocaonguyenlieunhapxuat extends Controller
 			$this->load->model('quanlykho/nguyenlieu');
 			
 			$tungay = $this->date->formatViewDate($data['tungay']);
-			$dengay = $this->date->formatViewDate($data['dengay']);
-			
-			$this->data['data_nhapkhotrongky'] = $this->getNhapKho($data['makho'],$tungay,$dengay);
+			$denngay = $this->date->formatViewDate($data['denngay']);
+			$this->data['data_nhapkhodauky'] = $this->getNhapKho($data['makho'],'',$this->date->addday($tungay,-1));
+			$this->data['data_nhapkhotrongky'] = $this->getNhapKho($data['makho'],$tungay,$denngay);
 			
 			$where = " AND makho = '".$data['makho']."'";
 			$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList($where);
+			foreach($this->data['data_nguyenlieu'] as $key => $item)
+			{
+				//Dau ky
+				$data_nguyenlieunhapdauky = $this->string->array_Filter($this->data['data_nhapkhodauky'],'nguyenlieuid',$item['id']);
+				$nhapdauky = 0;
+				foreach($data_nguyenlieunhapdauky as $val)
+				{
+					$nhapdauky += $val['thucnhap'];
+				}
+				$this->data['data_nguyenlieu'][$key]['nhapdauky'] = $nhapdauky;
+				
+				//Nhap Trong ky
+				$data_nguyenlieunhaptrongky = $this->string->array_Filter($this->data['data_nhapkhotrongky'],'nguyenlieuid',$item['id']);
+				$nhanptrongky = 0;
+				foreach($data_nguyenlieunhaptrongky as $val)
+				{
+					$nhanptrongky += $val['thucnhap'];
+				}
+				$this->data['data_nguyenlieu'][$key]['nhaptrongky'] = $nhanptrongky;
+				
+				//Cuoi ky
+				$this->data['data_nguyenlieu'][$key]['soducuoiky'] = $nhapdauky + $nhanptrongky;
+			}
 			
 			$this->id='content';
 			$this->template='quanlykho/baocaotonkho_nguyenlieu.tpl';
