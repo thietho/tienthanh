@@ -453,8 +453,8 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$congdoan['phongbansanxuat'] = $data['phongbansanxuat'][$key];
 			$congdoan['ghichu'] = $data['ghichu'][$key];
 			$congdoan['status'] = $data['status'][$key];
-			print_r($congdoan);
-			if($congdoan['status']=='update')
+			
+			//if($congdoan['status']=='update')
 			{
 				if((int)$congdoan['id'] == 0)
 					$this->model_quanlykho_congdoan->insert($congdoan);

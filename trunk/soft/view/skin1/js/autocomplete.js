@@ -60,7 +60,7 @@ function AutoComplete()
 			//Press enter
 			if (event.keyCode == '13')
 			{
-				selectValue(this.id);
+				//selectValue(this.id);
 			}
 			//Press button down
 			if (event.keyCode == '40')
