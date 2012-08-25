@@ -62,7 +62,10 @@
                 	
                     <label>Lot SP</label>
                     <input type="text" id="lotsp" name="lotsp" value="<?php echo $item['lotsp']?>" class="text"/>
-                    
+               </p>
+               <p>
+               		<label>Số Lot SX:</label>
+                    <input type="text" id="solotsx" name="solotsx" value="<?php echo $item['solotsx']?>" class="text number"/>
                 	<label>T/lượng SX:</label>
                     <input type="text" id="trongluongsx" name="trongluongsx" value="<?php echo $item['trongluongsx']?>" class="text number"/>
                 </p>
