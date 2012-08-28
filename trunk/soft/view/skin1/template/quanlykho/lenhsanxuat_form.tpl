@@ -10,9 +10,9 @@
         <input type="hidden" id="selectsanpham">
         <input type="hidden" id="selectmalinhkien">
             <div class="button right">
-                <a class="button save" onclick="phieu.save()">Lưu</a>
-                <a class="button save" onclick="phieu.saveandprint()">Lưu & in</a>
-                <a class="button cancel" href="?route=quanlykho/phieunhapvattuhanghoa">Bỏ qua</a>    
+                <a class="button save" onclick="save()">Lưu</a>
+                <a class="button save" onclick="saveandprint()">Lưu & in</a>
+                <a class="button cancel" href="?route=quanlykho/lenhsanxuat">Bỏ qua</a>    
         	</div>
             <div class="clearer">&nbsp;</div>
         	<div id="error" class="error" style="display:none"></div>
@@ -102,6 +102,55 @@
 <script language="javascript">
 $('#nhacungungid').val("<?php echo $item['nhacungungid']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
+function save()
+{
+	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+		
+	$.post("?route=quanlykho/lenhsanxuat/save", $("#frm").serialize(),
+		function(data){
+			var obj = $.parseJSON(data);
+			if(obj.error == "")
+			{
+				window.location = "?route=quanlykho/phieunhapvattuhanghoa";
+			}
+			else
+			{
+			
+				$('#error').html(obj.error).show('slow');
+				
+				
+			}
+			$.unblockUI();
+			
+		}
+	);
+}
+function saveandprint()
+{
+	$.blockUI({ message: "<h1>Please wait...</h1>" });
+	$.post("?route=quanlykho/phieunhapvattuhanghoa/save", $("#frm").serialize(),
+		function(data){
+			var obj = $.parseJSON(data);
+			if(obj.error == "")
+			{
+				openDialog("?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print",800,500);
+				//window.location = "?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print";
+				//$('#ifprint').attr('src',"?route=quanlykho/phieunhapvattuhanghoa/view&lenhsanxuatid="+obj.lenhsanxuatid+"&dialog=print");
+				window.location = "?route=quanlykho/phieunhapvattuhanghoa";
+			}
+			else
+			{
+			
+				$('#error').html(obj.error).show('slow');
+				
+				
+			}
+			$.unblockUI();
+			
+		}
+	);
+}
+
 function chonNhanVien(eid,tenview)
 {
 	openDialog("?route=quanlykho/nhanvien&opendialog=true",800,500);

@@ -228,9 +228,25 @@ class ControllerQuanlykhoLenhsanxuat extends Controller
 	private function validateForm($data)
 	{
 		
-		if (trim($data['kehoachdathang']) == "") 
+		if (trim($data['phongbannhan']) == "") 
 		{
-      		$this->error['kehoachdathang'] = "Bạn chưa nhập kế hoạch đăt hàng";
+      		$this->error['phongbannhan'] = "Bạn chưa chọn phòng ban";
+    	}
+		if (trim($data['nhanvien']) == "") 
+		{
+      		$this->error['nhanvien'] = "Bạn chưa chọn nhân viên";
+    	}
+		if (trim($data['ktvien']) == "") 
+		{
+      		$this->error['ktvien'] = "Bạn chưa chọn kỹ thuật viên";
+    	}
+		if (trim($data['masanpham']) == "") 
+		{
+      		$this->error['masanpham'] = "Bạn chưa chọn sản phẩm";
+    	}
+		if (trim($data['solotsx']) == "") 
+		{
+      		$this->error['solotsx'] = "Bạn chưa nhập số lot sản xuất";
     	}
 		
 		if (count($this->error)==0) {
