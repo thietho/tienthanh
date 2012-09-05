@@ -14,8 +14,7 @@
                 <input type="text" id="tungay" name="tungay" class="text ben-datepicker" />
                 đến
                 <input type="text" id="denngay" name="denngay" class="text ben-datepicker" />
-                <label>Số kế hoạch đặt hàng</label>
-                <input type="text" id="kehoachngay" name="kehoachngay" class="text"/>
+                
                 <br />
                 
                 <label>Số tiền</label>
@@ -24,18 +23,12 @@
                 đến
                 <input type="text" id="sotienden" name="sotienden" class="text number" />
                 
-                <label>Nhà cung cấp</label>
-                <select id="nhacungungid" name="nhacungungid">
-                	<option value=""></option>
-                    <?php foreach($data_nhacungung as $key => $val){ ?>
-                    <option value="<?php echo $val['id']?>"><?php echo $val['tennhacungung']?> (<?php echo $val['manhacungung']?>)</option>
-                    <?php } ?>
-                </select>
+                
            
                 <label>Tình trạng</label>
                 <select id="tinhtrang" name="tinhtrang">
                 	<option value=""></option>
-                    <?php foreach($this->document->thanhtoan as $key => $val){ ?>
+                    <?php foreach($this->document->thuchien as $key => $val){ ?>
                     <option value="<?php echo $key?>"><?php echo $val?></option>
                     <?php } ?>
                 </select>
@@ -69,6 +62,7 @@
                         <th>Nhóm sản xuất</th>
                         <th>Ngày SX</th>
                         <th>Ngày hoàn thành</th>
+                        <th>Tình trạng</th>
                         <th width="10%"></th>                                  
                     </tr>
         
@@ -90,7 +84,7 @@
                         <td><?php echo $item['nhomsx']?></td>
                         <td><?php echo $this->date->formatMySQLDate($item['ngaysx'])?></td>
                         <td><?php echo $this->date->formatMySQLDate($item['ngayhoanthanh'])?></td>
-                        <td><?php echo $this->document->thanhtoan[$item['tinhtrang']]?></td>
+                        <td><?php echo $this->document->thuchien[$item['tinhtrang']]?></td>
                         <td class="link-control">
                             <input type="button" class="button" name="btnEdit" value="Sửa" onClick="window.location='<?php echo $item['link_edit']?>'">
                             <input type="button" class="button" value="In" onclick="view('<?php echo $item['lenhsanxuatid']?>')"/>

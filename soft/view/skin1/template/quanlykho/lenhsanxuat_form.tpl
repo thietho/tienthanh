@@ -20,7 +20,7 @@
                 
                 <p>
                     <label>Ngày lập</label><br />
-                    <input type="text" name="ngaylap" value="<?php echo $this->date->formatMySQLDate($item['ngaylap'])?>" class="text ben-datepicker"/>
+                    <input type="text" name="ngayphatlenh" value="<?php echo $this->date->formatMySQLDate($item['ngayphatlenh'])?>" class="text ben-datepicker"/>
                     
                 </p>
                 <p>
@@ -66,19 +66,26 @@
                <p>
                		<label>Số Lot SX:</label>
                     <input type="text" id="solotsx" name="solotsx" value="<?php echo $item['solotsx']?>" class="text number"/>
-                	<label>T/lượng SX:</label>
-                    <input type="text" id="trongluongsx" name="trongluongsx" value="<?php echo $item['trongluongsx']?>" class="text number"/>
+                	<label>Nhóm sản xuất:</label>
+                    <input type="text" id="nhomsx" name="nhomsx" class="text" value="<?php echo $item['nhomsx']?>">
+                    <label>Ngày sản xuất</label>
+                    <input type="text" id="ngaysx" name="ngaysx" value="<?php echo $this->date->formatMySQLDate($item['ngaysx'])?>" class="text ben-datepicker"/>
+                    <label>Ngày hoàng thành</label>
+                    <input type="text" id="ngayhoanthanh" name="ngayhoanthanh" value="<?php echo $this->date->formatMySQLDate($item['ngayhoanthanh'])?>" class="text ben-datepicker"/>
                 </p>
                	
                 <p>
                 	<label>Quyết định giá số:</label>
-                    <input type="text" id="qdgiaso" name="qdgiaso" class="text" value="<?php $item['qdgiaso']?>">
+                    <input type="text" id="qdgiaso" name="qdgiaso" class="text" value="<?php echo $item['qdgiaso']?>">
                 
                     <label>Ngày</label>
                     <input type="text" id="ngayqdg" name="ngayqdg" value="<?php echo $this->date->formatMySQLDate($item['ngayqdg'])?>" class="text ben-datepicker"/>
                     
                 </p>
                 <p>
+                	<label>BM-SX-07 số:</label>
+                    <input type="text" id="bmsx07" name="bmsx07" class="text" value="<?php $item['bmsx07']?>">
+                    
                 	<label>Phiếu CAR số:</label>
                     <input type="text" id="phieucarso" name="phieucarso" class="text" value="<?php $item['phieucarso']?>">
                 </p>
@@ -100,7 +107,7 @@
 </div>
 
 <script language="javascript">
-$('#nhacungungid').val("<?php echo $item['nhacungungid']?>");
+$('#phongbannhan').val("<?php echo $item['phongbannhan']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 function save()
 {
@@ -111,7 +118,7 @@ function save()
 			var obj = $.parseJSON(data);
 			if(obj.error == "")
 			{
-				window.location = "?route=quanlykho/phieunhapvattuhanghoa";
+				window.location = "?route=quanlykho/lenhsanxuat";
 			}
 			else
 			{

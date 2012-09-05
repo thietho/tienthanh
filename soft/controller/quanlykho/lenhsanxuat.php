@@ -152,11 +152,11 @@ class ControllerQuanlykhoLenhsanxuat extends Controller
 		{
       		$this->data['item'] = $this->model_quanlykho_lenhsanxuat->getItem($this->request->get['lenhsanxuatid']);
 			$where = " AND lenhsanxuatid = '".$this->request->get['lenhsanxuatid']."'";
-			$this->data['data_chitiet'] = $this->model_quanlykho_lenhsanxuat->getPhieuNhanVatTuHangHoaChiTietList($where);
-			foreach($this->data['data_chitiet'] as $key =>$ct)
-			{
-				$this->data['data_chitiet'][$key]['tendonvi'] = $this->document->getDonViTinh($ct['donvi']);
-			}
+			//$this->data['data_chitiet'] = $this->model_quanlykho_lenhsanxuat->getPhieuNhanVatTuHangHoaChiTietList($where);
+			//foreach($this->data['data_chitiet'] as $key =>$ct)
+//			{
+//				$this->data['data_chitiet'][$key]['tendonvi'] = $this->document->getDonViTinh($ct['donvi']);
+//			}
     	}
 		else
 		{
