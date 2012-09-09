@@ -7,8 +7,8 @@
     	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/nguyenlieu')"/>   
+            	<input type="button" value="Lưu" class="button" onClick="save()"/>
+     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/nguyenlieu')"/>   
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>

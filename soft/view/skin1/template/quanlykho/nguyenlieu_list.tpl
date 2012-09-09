@@ -36,8 +36,9 @@
                 <?php }else{ ?>
                 <input class="button" value="Chi tiết tồn kho" type="button" onclick="viewTonKho('')">
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
-                <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>
+                <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
