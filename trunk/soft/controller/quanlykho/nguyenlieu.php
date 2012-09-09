@@ -55,6 +55,18 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
     	$this->getForm();
 	}
+	public function insertlist()
+	{
+		if(!$this->user->hasPermission($this->getRoute(), "add"))
+		{
+			$this->response->redirect("?route=common/permission");
+		}
+		
+    	$this->id='content';
+		$this->template='quanlykho/nguyenlieu_form_list.tpl';
+		$this->layout="layout/center";
+		$this->render();
+	}
 	
 	public function update()
 	{
@@ -290,6 +302,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	{
 		
 		$this->data['bangbaogia'] = $this->url->http('quanlykho/nguyenlieu/bangbaogia');
+		$this->data['insertlist'] = $this->url->http('quanlykho/nguyenlieu/insertlist');
 		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');		
 		
