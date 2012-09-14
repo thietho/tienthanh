@@ -15,17 +15,49 @@
         	<div id="error" class="error" style="display:none"></div>
         	<div>
             	<table>
-                	<tr>
-                    	<th>Mã nguyên liệu</th>
-                        <th>Tên nguyên liệu</th>
-                        <th>Loại</th>
-                        <th>Kho</th>
-                        <th>Đơn vị</th>
-                        <th>Tồn tối thiểu</th>
-                        <th>Tồn tối đa</th>
-                        <th>Mục đích sử dụng</th>
-                        <th>Ghi chú</th>
-                    </tr>
+                	<thead>
+                        <tr>
+                            <th>Mã nguyên liệu</th>
+                            <th>Tên nguyên liệu</th>
+                            <th>Loại</th>
+                            <th>Kho</th>
+                            <th>Đơn vị</th>
+                            <th>Tồn tối thiểu</th>
+                            <th>Tồn tối đa</th>
+                            <th>Mục đích sử dụng</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<tr>
+                        	<td><input type="text" class="text"></td>
+                            <td><input type="text" class="text"></td>
+                            <td>
+                            	<select id="loai" name="loai">
+                                    <option value=""></option>
+                                    <?php foreach($loainguyenlieu as $val){ ?>
+                                    <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
+                                    <?php } ?>
+                                </select>
+                    		</td>
+                            <td>
+                            	<select id="makho" name="makho">
+                                    <option value=""></option>
+                                    <?php foreach($kho as $val){ ?>
+                                    <option value="<?php echo $val['makho']?>"><?php echo $val['tenkho']?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td>
+                            	<select id="madonvi" name="madonvi">
+                                    <option value=""></option>
+                                    <?php foreach($donvitinh as $val){ ?>
+                                    <option value="<?php echo $val['madonvi']?>"><?php echo $val['tendonvitinh']?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                
             </div>
