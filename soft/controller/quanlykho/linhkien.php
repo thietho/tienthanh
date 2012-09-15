@@ -28,12 +28,18 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
 		$this->document->title = $this->language->get('heading_title');
 		
+		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->model("quanlykho/linhkien");
 		$this->load->model("quanlykho/phongban");
 		$this->load->model("common/control");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
 		$data_phongban = $this->model_quanlykho_phongban->getPhongBans();
-		$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
 		
+		$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList();
+		$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		$this->load->helper('image');
 	}
 	
@@ -52,7 +58,18 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
     	$this->getForm();
 	}
-	
+	public function insertlist()
+	{
+		if(!$this->user->hasPermission($this->getRoute(), "add"))
+		{
+			$this->response->redirect("?route=common/permission");
+		}
+		
+    	$this->id='content';
+		$this->template='quanlykho/linhkien_form_list.tpl';
+		$this->layout="layout/center";
+		$this->render();
+	}
 	public function update()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "edit"))
@@ -123,7 +140,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	private function getList() 
 	{
 		
-		
+		$this->data['insertlist'] = $this->url->http('quanlykho/linhkien/insertlist');
 		$this->data['insert'] = $this->url->http('quanlykho/linhkien/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/linhkien/delete');		
 		

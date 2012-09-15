@@ -1,6 +1,6 @@
 <div class="section" id="sitemaplist">
 
-	<div class="section-title"><?php echo $heading_title?>Nguyên liệu</div>
+	<div class="section-title"><?php echo $heading_title?>Linh kiện</div>
     
     <div class="section-content padding1">
     
@@ -8,7 +8,7 @@
         
         	<div class="button right">
             	<input type="button" value="Lưu" class="button" onClick="save(0)"/>
-     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/nguyenlieu')"/>   
+     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/linhkien')"/>   
      	        
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -17,31 +17,26 @@
             	<table>
                 	<thead>
                         <tr>
-                            <th>Mã nguyên liệu</th>
-                            <th>Tên nguyên liệu</th>
-                            <th>Loại</th>
+                            <th>Mã linh kiện</th>
+                            <th>Tên linh kiện</th>
                             <th>Kho</th>
                             <th>Đơn vị</th>
-                            <th>Tồn tối thiểu</th>
-                            <th>Tồn tối đa</th>
-                            <th>Mục đích sử dụng</th>
+                            <th>Linh kiện/Lot</th>
+                            <th>Số lượng con/Kg</th>
+                            <th>Tiên công</th>
+                            <th>Định mức</th>
                             <th>Ghi chú</th>
+                            <th>Nguyên liệu sử dụng</th>
+                            <th>Số lượng</th>
                         </tr>
                     </thead>
                     <tbody>
                     	<?php for($i=0;$i<25;$i++){ ?>
                         <form id="frm<?php echo $i?>" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
                     	<tr>
-                        	<td><input type="text" class="text" name="manguyenlieu"></td>
-                            <td><input type="text" class="text" name="tennguyenlieu"></td>
-                            <td>
-                            	<select name="loai">
-                                    <option value=""></option>
-                                    <?php foreach($loainguyenlieu as $val){ ?>
-                                    <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
-                                    <?php } ?>
-                                </select>
-                    		</td>
+                        	<td><input type="text" class="text" name="malinhkien"></td>
+                            <td><input type="text" class="text" name="tenlinhkien"></td>
+                            
                             <td>
                             	<select name="makho">
                                     <option value=""></option>
@@ -58,10 +53,20 @@
                                     <?php } ?>
                                 </select>
                             </td>
-                            <td><input type="text" class="text number" name="tontoithieu" size="5"></td>
-                            <td><input type="text" class="text number" name="tontoida" size="5"></td>
-                            <td><input type="text" class="text" name="mucdichsudung"></td>
+                            <td><input type="text" class="text number" name="solinhkientrenlot" size="5"></td>
+                            <td><input type="text" class="text number" name="soluongcontrenkg" size="5"></td>
+                            <td><input type="text" class="text number" name="tiencong" size="5"></td>
+                            <td><input type="text" class="text number" name="dinhmuc" size="5"></td>
                             <td><input type="text" class="text" name="ghichu"></td>
+                            <td>
+                            	<select name="nguyenlieusudung">
+                                    <option value=""></option>
+                                    <?php foreach($data_nguyenlieu as $val){ ?>
+                                    <option value="<?php echo $val['id']?>"><?php echo $val['tennguyenlieu']?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td><input type="text" class="text number" name="soluongnguyenlieu" size="5"></td>
                         </tr>
                         </form>
                         <?php } ?>
@@ -80,7 +85,7 @@ function save(i)
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/nguyenlieu/save", $("#frm"+i).serialize(),
+	$.post("?route=quanlykho/linhkien/save", $("#frm"+i).serialize(),
 		function(data){
 			if(data == "true")
 			{
@@ -90,7 +95,7 @@ function save(i)
 			else
 			{
 			
-				window.location = "?route=quanlykho/nguyenlieu";
+				window.location = "?route=quanlykho/linhkien";
 				
 			}
 			

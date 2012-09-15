@@ -16,7 +16,7 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 
 		$sql = "Select `qlklinhkien`.*
 									from `qlklinhkien` 
-									where trangthai <> 'deleted' " . $where . " Order by id";
+									where trangthai <> 'deleted' " . $where . " Order by tenlinhkien";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;

@@ -29,6 +29,19 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/sanpham");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("quanlykho/nhom");
+		
+		$this->data['nhomsanpham'] = array();
+		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
+		unset($this->data['nhomsanpham'][0]);
+		
+		$this->data['loaisanpham'] = array();
+		$this->model_quanlykho_nhom->getTree("loaisanpham",$this->data['loaisanpham']);
+		unset($this->data['loaisanpham'][0]);
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		$this->load->helper('image');
    	}
 	public function index()
@@ -45,7 +58,18 @@ class ControllerQuanlykhoSanpham extends Controller
 		
     	$this->getForm();
 	}
-	
+	public function insertlist()
+	{
+		if(!$this->user->hasPermission($this->getRoute(), "add"))
+		{
+			$this->response->redirect("?route=common/permission");
+		}
+		
+    	$this->id='content';
+		$this->template='quanlykho/sanpham_form_list.tpl';
+		$this->layout="layout/center";
+		$this->render();
+	}
 	public function update()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "edit"))
@@ -86,7 +110,7 @@ class ControllerQuanlykhoSanpham extends Controller
 	private function getList() 
 	{
 		
-		
+		$this->data['insertlist'] = $this->url->http('quanlykho/sanpham/insertlist');
 		$this->data['insert'] = $this->url->http('quanlykho/sanpham/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/sanpham/delete');	
 		
@@ -181,13 +205,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
 		
-		$this->data['nhomsanpham'] = array();
-		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
-		unset($this->data['nhomsanpham'][0]);
 		
-		$this->data['loaisanpham'] = array();
-		$this->model_quanlykho_nhom->getTree("loaisanpham",$this->data['loaisanpham']);
-		unset($this->data['loaisanpham'][0]);
 		
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();

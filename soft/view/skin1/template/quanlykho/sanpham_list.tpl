@@ -40,7 +40,8 @@
             	<input class="button" value="Select" type="button" onclick="selectSanPham()">
                 <input type="hidden" id="selectsanpham" name="selectsanpham" />
                 <?php }else{ ?>
-                <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
+                <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
             	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>
                 <?php } ?>
             </div>
