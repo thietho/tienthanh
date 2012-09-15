@@ -29,11 +29,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                    	<?php for($i=0;$i<25;$i++){ ?>
                     	<tr>
-                        	<td><input type="text" class="text"></td>
-                            <td><input type="text" class="text"></td>
+                        	<td><input type="text" class="text" name="manguyenlieu[<?php echo $i?>]"></td>
+                            <td><input type="text" class="text" name="tennguyenlieu[<?php echo $i?>]"></td>
                             <td>
-                            	<select id="loai" name="loai">
+                            	<select name="loai[<?php echo $i?>]">
                                     <option value=""></option>
                                     <?php foreach($loainguyenlieu as $val){ ?>
                                     <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
@@ -41,7 +42,7 @@
                                 </select>
                     		</td>
                             <td>
-                            	<select id="makho" name="makho">
+                            	<select name="makho[<?php echo $i?>]">
                                     <option value=""></option>
                                     <?php foreach($kho as $val){ ?>
                                     <option value="<?php echo $val['makho']?>"><?php echo $val['tenkho']?></option>
@@ -49,14 +50,19 @@
                                 </select>
                             </td>
                             <td>
-                            	<select id="madonvi" name="madonvi">
+                            	<select name="madonvi[<?php echo $i?>]">
                                     <option value=""></option>
                                     <?php foreach($donvitinh as $val){ ?>
                                     <option value="<?php echo $val['madonvi']?>"><?php echo $val['tendonvitinh']?></option>
                                     <?php } ?>
                                 </select>
                             </td>
+                            <td><input type="text" class="text number" name="tontoithieu[<?php echo $i?>]" size="5"></td>
+                            <td><input type="text" class="text number" name="tontoida[<?php echo $i?>]" size="5"></td>
+                            <td><input type="text" class="text" name="mucdichsudung[<?php echo $i?>]"></td>
+                            <td><input type="text" class="text" name="ghichu[<?php echo $i?>]"></td>
                         </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
                
@@ -97,5 +103,4 @@ $("#madonvi").val("<?php echo $item['madonvi']?>");
 
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 </script>
-<script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
-<script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>
+
