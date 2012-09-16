@@ -296,7 +296,7 @@ class ControllerQuanlykhoSanpham extends Controller
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
     	}
 		
-		if ($this->string->toNumber($data['sosanphamtrenlot']) <= 0) 
+		/*if ($this->string->toNumber($data['sosanphamtrenlot']) <= 0) 
 		{
       		$this->error['sosanphamtrenlot'] = "Số sản phẩm/Lot phải > 0";
     	}
@@ -319,7 +319,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		if ($this->string->toNumber($data['dongiabanlot']) <= 0) 
 		{
       		$this->error['dongiabanlot'] = "Đơn giá bán theo lot phải > 0";
-    	}
+    	}*/
 		
 
 		if (count($this->error)==0) {

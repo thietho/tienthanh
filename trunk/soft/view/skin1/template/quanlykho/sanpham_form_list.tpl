@@ -108,17 +108,16 @@ function save(i)
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/linhkien/save", $("#frm"+i).serialize(),
+	$.post("?route=quanlykho/sanpham/save", $("#frm"+i).serialize(),
 		function(data){
 			if(data == "true")
 			{
-				//window.location = "?route=quanlykho/nguyenlieu";
 				save(i+1);
 			}
 			else
 			{
 			
-				window.location = "?route=quanlykho/linhkien";
+				window.location = "?route=quanlykho/sanpham";
 				
 			}
 			
