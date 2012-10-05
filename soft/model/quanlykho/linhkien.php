@@ -116,7 +116,7 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						'malinhkien',
 						'tenlinhkien',
 						'solinhkientrenlot',
-						'soluongton',
+						
 						'soluongcontrenkg',
 						'tiencong',
 						'dinhmuc',
@@ -135,7 +135,7 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						$malinhkien,
 						$tenlinhkien,
 						$solinhkientrenlot,
-						$soluongton,
+						
 						$soluongcontrenkg,
 						$tiencong,
 						$dinhmuc,

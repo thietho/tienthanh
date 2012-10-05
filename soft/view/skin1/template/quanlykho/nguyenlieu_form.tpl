@@ -107,7 +107,7 @@ function save()
 		function(data){
 			if(data == "true")
 			{
-				//window.location = "?route=quanlykho/nguyenlieu";
+				window.location = "?route=quanlykho/nguyenlieu";
 			}
 			else
 			{
