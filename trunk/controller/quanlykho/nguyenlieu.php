@@ -408,14 +408,17 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$data = $this->request->post;
 		if($this->validateForm($data))
 		{
-			
-			$item = $this->model_quanlykho_nguyenlieu->getItem($data['id']);
+			$where = " AND manguyenlieu = '".$data['manguyenlieu']."'";
+			$data_nguyenlieu = $this->model_quanlykho_nguyenlieu->getList($where);
+			$item = $data_nguyenlieu[0];
+			print_r($data_nguyenlieu);
 			if(count($item)==0)
 			{
 				$this->model_quanlykho_nguyenlieu->insert($data);
 			}
 			else
 			{
+				$data['id'] = $item['id'];
 				$this->model_quanlykho_nguyenlieu->update($data);
 			}
 			$this->data['output'] = "true";
@@ -514,7 +517,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		{
       		$this->error['manguyenlieu'] = "Mã nguyên liệu không được rỗng";
     	}
-		else
+		/*else
 		{
 			if($data['id'] == "")
 			{
@@ -550,7 +553,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		if ($data['madonvi'] == "") 
 		{
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
-    	}
+    	}*/
 
 		if (count($this->error)==0) {
 	  		return TRUE;
