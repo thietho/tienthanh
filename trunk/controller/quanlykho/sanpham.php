@@ -4,7 +4,7 @@ class ControllerQuanlykhoSanpham extends Controller
 	private $error = array();
 	function __construct() 
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
+		/*if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
 			$this->response->redirect("?route=common/permission");
 		}
@@ -22,7 +22,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		if(!$this->user->hasPermission($this->getRoute(), "delete"))
 		{
 			$this->data['permissionDelete'] = false;
-		}
+		}*/
 		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
 		
@@ -229,13 +229,22 @@ class ControllerQuanlykhoSanpham extends Controller
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/sanpham");
-			$item = $this->model_quanlykho_sanpham->getItem($data['id']);
+			$this->load->model("quanlykho/donvitinh");
+			$where = " AND masanpham = '".$data['masanpham']."'";
+			$data_sanpham = $this->model_quanlykho_sanpham->getList($where);
+			$item = $data_sanpham[0];
+			
+			$tendonvi = $data['madonvi'];
+			$where = " AND tendonvitinh = '".$tendonvi."'";
+			$data_donvi = $this->model_quanlykho_donvitinh->getList($where);
+			$data['madonvi'] = $data_donvi[0]['madonvi'];
 			if(count($item)==0)
 			{
 				$this->model_quanlykho_sanpham->insert($data);
 			}
 			else
 			{
+				$data['id'] = $item['id'];
 				$this->model_quanlykho_sanpham->update($data);
 			}
 			$this->data['output'] = "true";
@@ -260,7 +269,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		{
       		$this->error['masanpham'] = "Mã sản phẩm không được rỗng";
     	}
-		else
+		/*else
 		{
 			if($data['id'] == "")
 			{
@@ -294,7 +303,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		if ($data['madonvi'] == "") 
 		{
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
-    	}
+    	}*/
 		
 		/*if ($this->string->toNumber($data['sosanphamtrenlot']) <= 0) 
 		{
