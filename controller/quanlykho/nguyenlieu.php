@@ -411,7 +411,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$where = " AND manguyenlieu = '".$data['manguyenlieu']."'";
 			$data_nguyenlieu = $this->model_quanlykho_nguyenlieu->getList($where);
 			$item = $data_nguyenlieu[0];
-			print_r($data_nguyenlieu);
+			
 			if(count($item)==0)
 			{
 				$this->model_quanlykho_nguyenlieu->insert($data);

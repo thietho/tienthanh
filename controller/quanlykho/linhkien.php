@@ -4,7 +4,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	private $error = array();
 	function __construct() 
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
+		/*if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
 			$this->response->redirect("?route=common/permission");
 		}
@@ -22,7 +22,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		if(!$this->user->hasPermission($this->getRoute(), "delete"))
 		{
 			$this->data['permissionDelete'] = false;
-		}
+		}*/
 		//$this->load->language('quanlykho/nguyenlieu');
 		//$this->data = array_merge($this->data, $this->language->getData());
 		
@@ -31,13 +31,13 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->model("quanlykho/linhkien");
 		$this->load->model("quanlykho/phongban");
-		$this->load->model("common/control");
+		//$this->load->model("common/control");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
 		$data_phongban = $this->model_quanlykho_phongban->getPhongBans();
 		
 		$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList();
-		$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
+		//$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		$this->load->helper('image');
@@ -258,7 +258,9 @@ class ControllerQuanlykhoLinhkien extends Controller
 		{
 			$this->load->model("quanlykho/linhkien");
 			
-			$item = $this->model_quanlykho_linhkien->getItem($data['id']);
+			$where = " AND malinhkien = '".$data['malinhkien']."'";
+			$data_linhkien = $this->model_quanlykho_linhkien->getList($where);
+			$item = $data_linhkien[0];
 			if(count($item)==0)
 			{
 				$this->model_quanlykho_linhkien->insert($data);
@@ -289,37 +291,26 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
 		$malinhkien = $item[0]['id'];
 		
-		$arrsoluong = $data['soluong'];
-		$arrdinhluong = $data['dinhluong'];
-		$masanpham = $data['masanpham'];
+		$soluong = $data['soluong'];
 		
+		
+		$where = "AND masanpham = '".$data['masanpham']."'";
 		$this->load->model("quanlykho/sanpham");
-		$list = trim( $data['deldinhluong'],",");
-		$arrdel = split(",", $list);
-		
-		foreach($arrdel as $val)
+		$item = $this->model_quanlykho_sanpham->getList($where);
+		$masanpham = $item[0]['id'];
+		if($masanpham)
 		{
-			$this->model_quanlykho_sanpham->deletedSanPhamDinhLuong($val)	;
+			$where = " AND masanpham = '".$masanpham."' AND malinhkien = '".$malinhkien."'";
+			$data_dinhluong = $this->model_quanlykho_sanpham->getDinhLuongs($where);
+			$id = (int)$data_dinhluong[0]['id'];
+			
+			$datadinhluong['id'] = $arrdinhluong[$key];
+			$datadinhluong['malinhkien'] = $malinhkien;
+			$datadinhluong['masanpham'] = $masanpham;
+			$datadinhluong['soluong'] = $soluong;
+			
+			$this->model_quanlykho_sanpham->saveSanPhamDinhLuong($datadinhluong);
 		}
-		$logdinhluong = array();
-		if(count($arrsoluong)>0)
-		{
-			foreach($arrsoluong as $key => $val)
-			{
-				$datadinhluong['malinhkien'] = $malinhkien;
-				
-				$datadinhluong['id'] = $arrdinhluong[$key];
-				$datadinhluong['masanpham'] = $masanpham[$key];
-				$datadinhluong['soluong'] = $val;
-				
-				$this->model_quanlykho_sanpham->saveSanPhamDinhLuong($datadinhluong);
-				$logdinhluong[] = $datadinhluong;
-			}
-		}
-		$log['tablename'] = "qlksanpham_dinhluong";
-		$log['data'] = $logdinhluong;
-		$this->user->writeLog(json_encode($log));
-		
 		$this->data['output'] = "true";
 		$this->id='content';
 		$this->template='common/output.tpl';
@@ -371,7 +362,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		{
       		$this->error['malinhkien'] = "Mã linh kiện không được rỗng";
     	}
-		else
+		/*else
 		{
 			if($data['id'] == "")
 			{
@@ -400,7 +391,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		if ($data['madonvi'] == "") 
 		{
       		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
-    	}
+    	}*/
 		
 		//if ($data['nguyenlieusudung'] == "") 
 //		{
