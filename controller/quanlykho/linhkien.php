@@ -265,10 +265,10 @@ class ControllerQuanlykhoLinhkien extends Controller
 			{
 				$this->model_quanlykho_linhkien->insert($data);
 			}
-			else
+			/*else
 			{
 				$this->model_quanlykho_linhkien->update($data);
-			}
+			}*/
 			$this->savedinhluongsanpham($data);
 			$this->data['output'] = "true";
 		}
@@ -498,6 +498,35 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->render();
 	}
 	
+	public function saveCongDoanItem()
+	{
+		$data = $this->request->post;
+		
+		if($data['macongdoan'])
+		{
+			$this->load->model("quanlykho/congdoan");
+			$where = " AND macongdoan = '".$data['macongdoan']."'";
+			
+			$data_congdoan = $this->model_quanlykho_congdoan->getList($where);
+			$item = $data_congdoan[0];
+			if(count($item)==0)
+			{
+				$this->model_quanlykho_congdoan->insert($data);
+			}
+			else
+			{
+				$this->model_quanlykho_congdoan->update($data);
+			}
+			$this->data['output'] = "true";
+		}
+		else
+		{
+			$this->data['output'] = "false";
+		}
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
 	private function validateFormCongDoan($data)
 	{
 		
