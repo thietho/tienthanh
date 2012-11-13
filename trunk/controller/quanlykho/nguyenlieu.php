@@ -416,11 +416,11 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			{
 				$this->model_quanlykho_nguyenlieu->insert($data);
 			}
-			else
+			/*else
 			{
 				$data['id'] = $item['id'];
 				$this->model_quanlykho_nguyenlieu->update($data);
-			}
+			}*/
 			$this->data['output'] = "true";
 		}
 		else

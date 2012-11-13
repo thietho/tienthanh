@@ -242,11 +242,11 @@ class ControllerQuanlykhoSanpham extends Controller
 			{
 				$this->model_quanlykho_sanpham->insert($data);
 			}
-			else
+			/*else
 			{
 				$data['id'] = $item['id'];
 				$this->model_quanlykho_sanpham->update($data);
-			}
+			}*/
 			$this->data['output'] = "true";
 		}
 		else
