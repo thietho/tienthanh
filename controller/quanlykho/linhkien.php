@@ -505,10 +505,18 @@ class ControllerQuanlykhoLinhkien extends Controller
 		if($data['macongdoan'])
 		{
 			$this->load->model("quanlykho/congdoan");
+			$this->load->model("quanlykho/linhkien");
+			
 			$where = " AND macongdoan = '".$data['macongdoan']."'";
 			
 			$data_congdoan = $this->model_quanlykho_congdoan->getList($where);
 			$item = $data_congdoan[0];
+			
+			//Lay id link tu malinhkien
+			$where = " AND malinhkien = '".$data['malinhkien']."'";
+			$data_linhkien = $this->model_quanlykho_linhkien->getList($where);
+			$data['malinhkien'] = $data_linhkien[0]['id'];
+			
 			if(count($item)==0)
 			{
 				$this->model_quanlykho_congdoan->insert($data);
