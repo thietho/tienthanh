@@ -10,7 +10,7 @@ class ModelCoreMedia extends ModelCoreFile
 		return $query->row;
 	}
 	
-	public function getList($where="", $from=0, $to=5)
+	public function getList($where="", $from=0, $to=0)
 	{
 		
 		$sql = "Select `media`.* 
