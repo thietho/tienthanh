@@ -30,10 +30,11 @@
                         	<tr>
                             	<td>Nhóm</td>
                                 <td>
-                                	<select id="manhom" name="manhom" onChange="getNguyenLieu('manhom',this.value,'')">
-                                    <option value=""></option>
-                                        <?php foreach($nhomnguyenlieu as $val){ ?>
-                                        <option value="<?php echo $val['manhom']?>"><?php echo $val['tennhom']?></option>
+                                	
+                                    <select id="loai" name="loai" onChange="getNguyenLieu('loai',this.value,'')">
+                                        <option value=""></option>
+                                        <?php foreach($loainguyenlieu as $val){ ?>
+                                        <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
                                         <?php } ?>
                                     </select>
                                 </td>
