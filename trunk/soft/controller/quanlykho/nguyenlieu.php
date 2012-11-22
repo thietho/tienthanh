@@ -561,9 +561,9 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	
 	private function validateDinhLuong($data)
 	{
-		if ($data['manhom'] == "") 
+		if ($data['loai'] == "") 
 		{
-      		$this->error['manhom'] = "Bạn chưa chọn nhóm";
+      		$this->error['loai'] = "Bạn chưa chọn nhóm";
     	}
 		
 		if ($data['nguyenlieugoc'] == "") 
