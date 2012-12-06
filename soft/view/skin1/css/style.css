@@ -1216,3 +1216,6 @@ textarea.ben-grid {
 ul.autocomplete {
 	list-style-type: none;
 }
+.ui-autocomplete-loading {
+	background: white url(../image/ui-anim_basic_16x16.gif) right center no-repeat !important;
+}

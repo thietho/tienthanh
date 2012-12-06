@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript'
+<ul><script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript'
 	language='javascript'> </script>
 <div class="section" id="sitemaplist">
 
@@ -63,3 +63,4 @@ function save()
 	);
 }
 </script>
+</ul>

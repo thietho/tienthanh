@@ -67,7 +67,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$this->data['readonly'] = 'readonly="readonly"';
 				
 
-			$this->setup();
+			$this->chonsanpham();
 		}
 
 	}
@@ -185,7 +185,17 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 		$this->render();
 	}
+	
+	private function chonsanpham()
+	{
+		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
 
+		$this->id='content';
+		$this->template='quanlykho/kehoachnam_chonsanpham.tpl';
+		$this->layout="layout/center";
+		$this->render();
+	}
+	
 	private function setup()
 	{
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);

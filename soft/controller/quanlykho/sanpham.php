@@ -603,6 +603,46 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->template="common/output.tpl";
 		$this->render();
 	}
-	
+	public function getSanPham1()
+	{
+		$col = $this->request->get['col'];
+		$val = $this->request->get['val'];
+		$operator = $this->request->get['operator'];
+		$maxrows = $this->request->get['maxrows'];
+		if($operator == "")
+			$operator = "equal";
+		$this->load->model("quanlykho/sanpham");
+		$where = "";
+		switch($operator)
+		{
+			case "equal":
+				$where = " AND ".$col." = '".$val."'";
+				break;
+			case "like":
+				$where = " AND ".$col." like '%".$val."%'";
+				break;
+			case "other":
+				$where = " AND ".$col." <> '".$val."'";
+				break;
+			case "in":
+				$where = " AND ".$col." in  (".$val.")";
+				break;
+			
+		}
+		
+		if($maxrows)
+		{
+			$datas = $this->model_quanlykho_sanpham->getList($where,0,$maxrows);
+		}
+		else
+		{
+			$datas = $this->model_quanlykho_sanpham->getList($where);
+		}
+		
+		$this->data['output'] = json_encode(array('totalResultsCount'=>count($datas),'sanphams' => $datas));
+		$this->id="sanpham";
+		$this->template="common/output.tpl";
+		$this->render();
+	}
 }
 ?>
