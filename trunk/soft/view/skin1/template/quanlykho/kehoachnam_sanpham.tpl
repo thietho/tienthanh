@@ -23,7 +23,7 @@
     	<tr>
         	<td>
             	<input type="hidden" id="id-<?php echo $key?>" name="id[<?php echo $key?>]" value="<?php echo $item['id']?>"/>
-            	<?php echo $this->document->getSanPham($item['masanpham'])?>
+            	<?php echo $this->document->getSanPham($item['masanpham'],'masanpham')?>
             	<input type="hidden" id="masanpham-<?php echo $key?>" name="masanpham[<?php echo $key?>]" value="<?php echo $item['masanpham']?>"/>
             </td>
             <td>

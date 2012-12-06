@@ -12,14 +12,9 @@
     <link rel='stylesheet' type='text/css' href='<?php echo DIR_CSS?>jquery.tabs.css'>
     
     
-   <script src="<?php echo DIR_JS?>jquery.js" type="text/javascript"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.core.js"></script>
-	<script src="<?php echo DIR_JS?>jquery.ui.widget.js"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.mouse.js"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.draggable.js"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.droppable.js"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.sortable.js"></script>
-    <script src="<?php echo DIR_JS?>jquery.ui.position.js"></script>
+   	<script src="<?php echo DIR_JS?>jquery.js" type="text/javascript"></script>
+    <script src="<?php echo DIR_JS?>jquery-ui.js" type="text/javascript"></script>
+    
     
     <link rel="stylesheet" href="<?php echo DIR_CSS?>jquery.treeview.css" />
 	<script src="<?php echo DIR_JS?>jquery.cookie.js" type="text/javascript"></script>
