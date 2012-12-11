@@ -258,7 +258,7 @@ class ModelQuanlykhoNhanvien extends Model
 		$field=array(
 						'username'
 						);
-						$value=array(
+		$value=array(
 						$username
 						);
 
@@ -266,19 +266,19 @@ class ModelQuanlykhoNhanvien extends Model
 						$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
 
-	public function	updatePermission($data)
+	public function	updateCol($id,$col,$val)
 	{
 		$field=array(
-						'permission'
+						$col
 						);
-						$value=array(
-						$data['permission']
-						);
+		$value=array(
+						$val
+		);
 
-						$where="id = '".$data['nhanvienid']."'";
-						$this->db->updateData("qlknhanvien",$field,$value,$where);
+		echo $where=" id = '".$id."'";
+		$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
-
+	
 	public function deletedatas($listid)
 	{
 		foreach($listid as $item)
@@ -330,15 +330,15 @@ class ModelQuanlykhoNhanvien extends Model
 						$deletedby,
 						$userip
 						);
-						$this->load->model("core/user");
-						$arr = $this->model_core_user->getItemByUserName($username);
-						if(count($arr)==0)
-						{
-							$this->db->insertData("user",$field,$value);
-							return $userid;
-						}
-						else
-						return $arr['userid'];
+		$this->load->model("core/user");
+		$arr = $this->model_core_user->getItemByUserName($username);
+		if(count($arr)==0)
+		{
+			$this->db->insertData("user",$field,$value);
+			return $userid;
+		}
+		else
+			return $arr['userid'];
 	}
 
 }

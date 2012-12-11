@@ -441,9 +441,14 @@ class ControllerQuanlykhoNhanVien extends Controller
 		
 		if($this->validateFormUser($data))
 		{
+			$this->load->model("quanlykho/phongban");
 			$this->load->model("quanlykho/nhanvien");
 			$userid = $this->model_quanlykho_nhanvien->saveuser($data);
 			$this->model_quanlykho_nhanvien->updateusername($data['nhanvienid'], $userid);
+			//Lap quyen tu phong ban qua
+			$nhanvien = $this->model_quanlykho_nhanvien->getItem($data['nhanvienid']);
+			$phongban = $this->model_quanlykho_phongban->getPhongBan($nhanvien['maphongban']);
+			$this->model_quanlykho_nhanvien->updateCol($nhanvien['id'],'permission',$phongban['permission']);
 			$this->data['output'] = "true";
 		}
 		else
