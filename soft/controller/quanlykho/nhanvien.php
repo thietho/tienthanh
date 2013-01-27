@@ -2,8 +2,7 @@
 class ControllerQuanlykhoNhanVien extends Controller
 {
 	private $error = array();
-	
-	public function index()
+	function __construct()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "access"))
 		{
@@ -30,6 +29,10 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/nhanvien");
+	}
+	public function index()
+	{
+		
 		$this->getList();
 	}
 	
@@ -153,6 +156,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 				
 				$this->data['datas'][$i]['link_phanquyen'] = $this->url->http('quanlykho/nhanvien/phanquyen&id='.$this->data['datas'][$i]['id']);
 				$this->data['datas'][$i]['text_phanquyen'] = "Phân quyền";
+				$this->data['datas'][$i]['text_resetpass'] = "Reset password";	
 			
 				if($user['status'] == "lock")	
 				{
@@ -163,7 +167,9 @@ class ControllerQuanlykhoNhanVien extends Controller
 				if($user['status'] == "active")	
 				{
 					$this->data['datas'][$i]['link_taikhoan'] = $this->url->http("quanlykho/nhanvien/khoataikhoan&username=".$this->data['datas'][$i]['username']);
-				$this->data['datas'][$i]['text_taikhoan'] = "Khóa tài khoản";
+					$this->data['datas'][$i]['text_taikhoan'] = "Khóa tài khoản";
+					
+					
 				}
 				
 				
@@ -513,6 +519,14 @@ class ControllerQuanlykhoNhanVien extends Controller
 	  		return FALSE;
 		}
 	}
-	
+	//Reset password
+	public function resetPass()
+	{
+		$id = $this->request->get['id'];
+		$this->data['nhanvien'] = $this->model_quanlykho_nhanvien->getItem($id);
+		$this->id='content';
+		$this->template = 'quanlykho/nhanvien_resetpass.tpl';
+		$this->render();
+	}
 }
 ?>

@@ -102,6 +102,7 @@
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
                             <?php if($item['text_phanquyen'] != "") { ?>
                            	<input type="button" class="button" name="btnPhanQuyen" value="<?php echo $item['text_phanquyen']?>" onclick="window.location='<?php echo $item['link_phanquyen']?>'"/>
+                            <input type="button" class="button" name="btnResetPass" value="<?php echo $item['text_resetpass']?>" onclick="resetPass('<?php echo $item['id']?>')"/>
                             <?php } ?>
                             <input type="button" class="button" name="btnTaiKhoan" value="<?php echo $item['text_taikhoan']?>" onclick="window.location='<?php echo $item['link_taikhoan']?>'"/>
                         </td>
@@ -123,6 +124,11 @@
     
 </div>
 <script language="javascript">
+function resetPass(id)
+{
+	showPopup("#popup", 500, 300, true )
+	$("#popup-content").load("?route=quanlykho/nhanvien/resetPass&id="+id);
+}
 
 function deleteitem()
 {
