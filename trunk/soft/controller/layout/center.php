@@ -3,7 +3,7 @@ class ControllerLayoutCenter extends Controller
 {
 	public function index()
 	{
-		$this->template="layout/center.tpl";
+		$this->template="layout/center1.tpl";
 		$this->children=array(
 				'common/header',
 				'common/footer',
