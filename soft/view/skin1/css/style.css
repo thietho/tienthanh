@@ -935,9 +935,9 @@ img.alignright,img.right {
 
 .main#main-two-columns #main-content,.main#main-two-columns-left #main-content
 	{
-	width: 75%;
+	
 	border: 1px solid #F2F2F2;
-	margin-right: 10px
+	
 }
 
 /* Sidebar */
@@ -1218,4 +1218,32 @@ ul.autocomplete {
 }
 .ui-autocomplete-loading {
 	background: white url(../image/ui-anim_basic_16x16.gif) right center no-repeat !important;
+}
+.qlk_group
+{
+	border:thin solid #999;
+	border-radius:10px;
+	margin:5px;
+}
+.qlk_group .title
+{
+	font-weight:bold;
+	padding:0 10px;	
+}
+.qlk_icon
+{
+	width:100px;
+	border:thin solid #999;
+	border-radius:10px;
+	text-align:center;
+	vertical-align:middle;
+	padding:25px 0;
+	margin:10px;
+	font-weight:bold;
+}
+.qlk_icon:hover
+{
+	background:#666;
+	color:#FF0;
+	cursor:pointer;
 }
