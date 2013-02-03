@@ -6,7 +6,7 @@ class ControllerPageHome extends Controller
 		$this->id="content";
 		$this->template="page/home.tpl";
 		$this->layout="layout/center";
-		$this->response->redirect('?route=core/message');
+		//$this->response->redirect('?route=core/message');
 		$this->render();
 	}
 }
