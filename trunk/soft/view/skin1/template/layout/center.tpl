@@ -47,10 +47,10 @@
 
 
 <body>
-
+<div id="header"><?php echo $header?></div>
 <div id="site-wrapper">
 
-<div id="header"><?php echo $header?></div>
+
 
 <div class="main" >
 	<div id="main-content"><?php echo $content?></div>
