@@ -177,11 +177,11 @@ li ul,li ol {
 }
 
 ul,ol {
-	margin: 0 0 1.5em 1.5em;
+	
 }
 
 ul {
-	list-style-type: disc;
+	list-style-type: none;
 }
 
 ol {
@@ -240,7 +240,7 @@ ul.nice-list li .right {
 
 /* Tables */
 table {
-	margin-bottom: 1.4em;
+	
 	width: 100%;
 }
 
@@ -825,8 +825,9 @@ img.alignright,img.right {
 
 /* Header */
 #header {
-	padding-top: 10px;
-	position: relative
+	width:100%;
+	position: fixed;
+	background:#fff;
 }
 
 /* Top */
@@ -922,7 +923,7 @@ img.alignright,img.right {
 
 /* Main */
 .main {
-	margin: 24px 0;
+	padding-top:85px;
 }
 
 .main#main-two-columns {
