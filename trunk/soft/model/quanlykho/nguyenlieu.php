@@ -11,17 +11,23 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		return $query->row;
 	}
 
-	public function getList($where="", $from=0, $to=0)
+	public function getList($where="", $from=0, $to=0,$order="")
 	{
 
 		$sql = "Select `qlknguyenlieu`.*
 									from `qlknguyenlieu` 
-									where trangthai <> 'deleted' " . $where . " Order by tennguyenlieu";
+									where trangthai <> 'deleted' " . $where;
+		if($order=="")
+		{
+			$order = " Order by tennguyenlieu";
+			
+		}
+		$sql.=$order;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
 		}
-
+		
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}

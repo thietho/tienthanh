@@ -189,26 +189,13 @@ function unSelcetNhaCungCap()
 
 function selectNguyenLieu()
 {
-	/*$('#manguyenlieu').val('');
-	
-	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",1000,800);
-	
-	list = trim($("#manguyenlieu").val(), ',');
-	arr = list.split(",");*/
-	
-	/*malinhkien = arr[0];
-	getLinhKien("id",malinhkien,'');*/
-	/*for(i in arr)
-	{
-		if(arr[i] != "<?php echo $item['id']?>")
-			createRow(0,arr[i], 0, 0, "", 0);
-	}*/
+
 	$("#popup").attr('title','Chọn nguyên liệu');
 		$( "#popup" ).dialog({
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
+			width: 900,
 			height: 600,
 			modal: true,
 			buttons: {

@@ -107,14 +107,6 @@ function searchForm()
 	$('#listnguyenlieu').load("?route=quanlykho/nguyenlieu/getList"+url);
 }
 
-
-
-function selectNguyenLieu()
-{
-	window.opener.document.getElementById('manguyenlieu').value = $("#selectnguyenlieu").val();
-	window.close();
-}
-
 <?php if($dialog==true){ ?>
 	$(".inputchk").click(function()
 	{
