@@ -12,7 +12,7 @@ final class MailSMTP {
 		$mail->SMTPSecure = 'ssl';
 		$mail->Username = "thietho1982@gmail.com"; // your SMTP username or your gmail username
 		$mail->Password = "9501424ho"; // your SMTP password or your gmail password
-
+		
 		$from = $data['from']; // Reply to this email
 		$to=$data['to']; // Recipients email ID
 		$name= $data['name']; // Recipient's name

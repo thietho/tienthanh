@@ -1,6 +1,6 @@
 <?php
 final class Response {
-	private $headers = array();
+	private $headers = array(); 
 	private $output;
 
 	public function addHeader($key, $value) {
@@ -25,7 +25,7 @@ final class Response {
 	private function compress($data, $level = 4) {
 		if (strpos(@$_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 			$encoding = 'gzip';
-		}
+		} 
 
 		if (strpos(@$_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
 			$encoding = 'x-gzip';
@@ -59,12 +59,12 @@ final class Response {
 			$ouput = $this->compress($this->output, $level);
 		} else {
 			$ouput = $this->output;
-		}
-
+		}		
+		
 		foreach ($this->headers as $key => $value) {
 			header($key. ': ' . $value);
 		}
-
+				
 		echo $ouput;
 	}
 }
