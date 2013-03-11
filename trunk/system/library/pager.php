@@ -110,7 +110,7 @@ class Pager
 		{
 			if($j==$page)
 			{
-				array_push($data_paginations,'<a class="button"><b>'.$j.'</b></a>');
+				array_push($data_paginations,'<b>'.$j.'</b>');
 
 			}
 			else

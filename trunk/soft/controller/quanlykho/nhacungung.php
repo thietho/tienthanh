@@ -29,7 +29,7 @@ class ControllerQuanlykhoNhacungung extends Controller
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
-		
+		$this->load->model("quanlykho/nhacungung");
 		$this->data['nhomnhacungung'] = array();
 		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['nhomnhacungung']);
 		unset($this->data['nhomnhacungung'][0]);
@@ -45,8 +45,20 @@ class ControllerQuanlykhoNhacungung extends Controller
 		
 		
 		
-		$this->load->model("quanlykho/nhacungung");
-		$this->getList();
+		
+		
+		
+		$this->id='content';
+		$this->template="quanlykho/nhacungung_list.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			//$this->layout="layout/dialog";
+			$this->layout ="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -99,7 +111,7 @@ class ControllerQuanlykhoNhacungung extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
 		
 		
@@ -164,12 +176,13 @@ class ControllerQuanlykhoNhacungung extends Controller
 			
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
+		
 		$this->id='content';
-		$this->template="quanlykho/nhacungung_list.tpl";
-		$this->layout="layout/center";
+		$this->template="quanlykho/nhacungung_table.tpl";
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			//$this->layout="layout/dialog";
+			$this->layout ="";
 			$this->data['dialog'] = true;
 			
 		}
