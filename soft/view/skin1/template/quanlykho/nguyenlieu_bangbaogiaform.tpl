@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+
 <div class="section" id="sitemaplist">
 
 	<div class="section-title">Bảng báo giá</div>
@@ -120,12 +120,42 @@ function getNhaCungCap(col,val,operator)
 
 function selcetNhaCungCap()
 {
-	openDialog("?route=quanlykho/nhacungung&opendialog=true",1000,800);
+	/*openDialog("?route=quanlykho/nhacungung&opendialog=true",1000,800);
 	
 	list = trim($("#manhacungung").val(), ',');
 	arr = list.split(",");
 	manhacungcap = arr[0];
-	getNhaCungCap("id",manhacungcap,'');
+	getNhaCungCap("id",manhacungcap,'');*/
+	$("#popup").attr('title','Chọn nhà cung cấp');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_nhacungung .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							//alert(this.value)
+							getNhaCungCap("id",this.value,'');
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/nhacungung&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 }
 
 function unSelcetNhaCungCap()
@@ -159,20 +189,50 @@ function unSelcetNhaCungCap()
 
 function selectNguyenLieu()
 {
-	$('#manguyenlieu').val('');
+	/*$('#manguyenlieu').val('');
 	
 	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",1000,800);
 	
 	list = trim($("#manguyenlieu").val(), ',');
-	arr = list.split(",");
+	arr = list.split(",");*/
 	
 	/*malinhkien = arr[0];
 	getLinhKien("id",malinhkien,'');*/
-	for(i in arr)
+	/*for(i in arr)
 	{
 		if(arr[i] != "<?php echo $item['id']?>")
 			createRow(0,arr[i], 0, 0, "", 0);
-	}
+	}*/
+	$("#popup").attr('title','Chọn nguyên liệu');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_nguyenlieu .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							//alert(this.value)
+							createRow(0,this.value, 0, 0, "", 0);
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 	
 }
 

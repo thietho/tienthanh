@@ -43,7 +43,17 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	public function index()
 	{
 		
-		$this->getList();
+		$this->id='content';
+		$this->template="quanlykho/nguyenlieu_list.tpl";
+		$this->layout="layout/center";
+		
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -298,7 +308,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
 		
 		$this->data['bangbaogia'] = $this->url->http('quanlykho/nguyenlieu/bangbaogia');
@@ -339,7 +349,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listnguyenlieu"); 
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -372,12 +382,11 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/nguyenlieu_list.tpl";
-		$this->layout="layout/center";
+		$this->template="quanlykho/nguyenlieu_table.tpl";
 		
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			$this->layout="";
 			$this->data['dialog'] = true;
 			
 		}
