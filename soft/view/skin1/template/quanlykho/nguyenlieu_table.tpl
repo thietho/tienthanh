@@ -3,13 +3,16 @@
                 <thead>
                     <tr class="tr-head">
                         <th width="1%">
-                        	<?php if($dialog!=true){ ?>
-                        	<input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
-                            <?php } ?>
+                        	
+                        	<input id="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
+                           
                         </th>
                         <th>STT</th>
                         <th>Mã nguyên vật liệu</th>
-                        <th>Tên nguyên vật liệu</th>
+                        <th>
+                        	Tên nguyên vật liệu
+                            <a href="#down"><img src="<?php echo DIR_IMAGE?>icon/sortup.png"></a>
+                        </th>
                         
                         <th>Loại</th>
                         <th>Kho</th>
@@ -77,3 +80,11 @@
                 </tbody>
                 </table>
                 <?php echo $pager?>
+<script language="javascript">
+$('#inputchk').click(function(e) {
+	var chk=this.checked;
+    $('.inputchk').each(function(index, element) {
+        this.checked = chk;
+    });
+});
+</script>
