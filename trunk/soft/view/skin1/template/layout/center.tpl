@@ -18,12 +18,13 @@
 	<script src="<?php echo DIR_JS?>jquery.cookie.js" type="text/javascript"></script>
     <script src="<?php echo DIR_JS?>jquery.treeview.js" type="text/javascript"></script>
     <script src="<?php echo DIR_JS?>jquery.treeview.edit.js" type="text/javascript"></script>
-    <script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+    
    
     <script type='text/javascript' language='javascript' src='<?php echo DIR_JS?>jquery.blockUI.js'></script>
 	
 	<script type='text/javascript' language='javascript' src='<?php echo DIR_COMPONENT?>ckeditor/ckeditor.js'></script>
     <script src="<?php echo DIR_JS?>common.js" type="text/javascript"></script>
+    <script src="<?php echo DIR_JS?>control.js" type="text/javascript"></script>
 
     <script src="<?php echo DIR_JS?>menu-collapsed.js" type="text/javascript"></script>
 

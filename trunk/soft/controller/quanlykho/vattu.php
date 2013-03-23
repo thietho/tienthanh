@@ -1,5 +1,5 @@
 <?php
-class ControllerQuanlykhoNguyenlieu extends Controller
+class ControllerQuanlykhoVattu extends Controller
 {
 	private $error = array();
 	function __construct() 
@@ -15,7 +15,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->load->model("quanlykho/donvitinh");
 		
 		$this->data['loainguyenlieu'] = array();
-		$this->model_quanlykho_nhom->getTree("NL",$this->data['loainguyenlieu']);
+		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
 		//unset($this->data['loainguyenlieu'][0]);
 		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
@@ -24,7 +24,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	{
 		
 		$this->id='content';
-		$this->template="quanlykho/nguyenlieu_list.tpl";
+		$this->template="quanlykho/vattu_list.tpl";
 		$this->layout="layout/center";
 		
 		if($this->request->get['opendialog']=='true')
@@ -37,29 +37,28 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	}
 	
 	public function insert()
-	{
+	{	
     	$this->getForm();
 	}
 	public function insertlist()
-	{		
+	{
+		
+		
     	$this->id='content';
-		$this->template='quanlykho/nguyenlieu_form_list.tpl';
+		$this->template='quanlykho/vattu_form_list.tpl';
 		$this->layout="layout/center";
 		$this->render();
 	}
 	
 	public function update()
-	{
+	{			
 		$this->data['haspass'] = false;
 		$this->data['readonly'] = 'readonly="readonly"';
-		$this->getForm();		
+		$this->getForm();
   	}
 	
 	public function dinhluong()
 	{
-		
-		//$this->load->language('quanlykho/nguyenlieu');
-		//$this->data = array_merge($this->data, $this->language->getData());
 		$this->load->model("quanlykho/nhom");
 		
 		$this->load->model("quanlykho/donvitinh");
@@ -71,20 +70,20 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
 		
 		$this->data['dinhluong'] = $this->model_quanlykho_nguyenlieu->getItem($this->data['item']['nguyenlieugoc']);
-			
-			
-			$this->id='content';
-			$this->template='quanlykho/nguyenlieu_dinhluong.tpl';
-			$this->layout="layout/center";
-			$this->render();
 		
 		
+		$this->id='content';
+		$this->template='quanlykho/vattu_dinhluong.tpl';
+		$this->layout="layout/center";
+		$this->render();
+	
   	}
 	
 	public function bangbaogia()
-	{		
-		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insertbangbaogia');
-		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/deletebangbaogia');
+	{
+		
+		$this->data['insert'] = $this->url->http('quanlykho/vattu/insertbangbaogia');
+		$this->data['delete'] = $this->url->http('quanlykho/vattu/deletebangbaogia');
 		
 		
 		$rows = $this->model_quanlykho_nguyenlieu->getBangBaoGias($where);
@@ -106,39 +105,39 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
 			$this->data['datas'][$i] = $rows[$i];
-			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/nguyenlieu/updatebangbaogia&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/vattu/updatebangbaogia&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
 			
 		}
 		
 		
 		$this->id='content';
-		$this->template='quanlykho/nguyenlieu_bangbaogia.tpl';
+		$this->template='quanlykho/vattu_bangbaogia.tpl';
 		$this->layout="layout/center";
 		$this->render();
-	
+		
 		
   	}
 	
 	public function insertbangbaogia()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
 		
     	$this->getFormBangBaoGia();
 	}
 	
 	public function updatebangbaogia()
-	{	
+	{			
 		$this->data['haspass'] = false;
-		$this->data['readonly'] = 'readonly="readonly"';	
+		$this->data['readonly'] = 'readonly="readonly"';
 		$this->getFormBangBaoGia();
+		
 	}
 	
 	private function getFormBangBaoGia()
 	{
+		
+		
+		
 		if ((isset($this->request->get['id'])) ) 
 		{
       		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getBangBaoGia($this->request->get['id']);
@@ -148,7 +147,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
     	}
 		
 		$this->id='content';
-		$this->template='quanlykho/nguyenlieu_bangbaogiaform.tpl';
+		$this->template='quanlykho/vattu_bangbaogiaform.tpl';
 		$this->layout="layout/center";
 		
 		$this->render();
@@ -164,14 +163,18 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$donvi = $this->model_quanlykho_donvitinh->getItem($this->data['item']['madonvi']);
 		$this->data['item']['tendonvitinh'] = $donvi['tendonvitinh'];
 		$this->id='content';
-		$this->template='quanlykho/nguyenlieu_capnhatgia.tpl';
+		$this->template='quanlykho/vattu_capnhatgia.tpl';
 		$this->layout="layout/center";
 		$this->render();
+		
   	}
 	
 	public function savecapnhatgia()
 	{
 		$data = $this->request->post;
+		
+		
+		
 		if(count($data))
 		{
 			$data['ngay'] = $this->date->formatViewDate($data['ngay']);
@@ -185,26 +188,17 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	}
 	
 	function xemgia()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			
-			
-			
-			$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
-			
-			$where = " AND manguyenlieu ='".$this->request->get['id']."' ORDER BY `ngay` DESC";
-			$this->data['chitiet'] = $this->model_quanlykho_nguyenlieu->getCapNhatGias($where);
-			
-			$this->id='content';
-			$this->template='quanlykho/nguyenlieu_xemgia.tpl';
-			$this->layout="layout/center";
-			$this->render();
-		}
+	{			
+		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
+		
+		$where = " AND manguyenlieu ='".$this->request->get['id']."' ORDER BY `ngay` DESC";
+		$this->data['chitiet'] = $this->model_quanlykho_nguyenlieu->getCapNhatGias($where);
+		
+		$this->id='content';
+		$this->template='quanlykho/vattu_xemgia.tpl';
+		$this->layout="layout/center";
+		$this->render();
+		
 	}
 	
 	public function delete() 
@@ -225,12 +219,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	public function getList() 
 	{
 		
-		$this->data['bangbaogia'] = $this->url->http('quanlykho/nguyenlieu/bangbaogia');
-		$this->data['insertlist'] = $this->url->http('quanlykho/nguyenlieu/insertlist');
-		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');		
-		
-		
+		$this->data['bangbaogia'] = $this->url->http('quanlykho/vattu/bangbaogia');
+		$this->data['insertlist'] = $this->url->http('quanlykho/vattu/insertlist');
+		$this->data['insert'] = $this->url->http('quanlykho/vattu/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/vattu/delete');		
 		
 		$this->data['datas'] = array();
 		$where = "";
@@ -253,10 +245,11 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			if($item !="")
 				$arr[] = " AND " . $key ." = '".$item."'";
 		}
+		
 		$arrnhom = $this->string->matrixToArray($this->data['loainguyenlieu'],'manhom');
 		$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
 		
-		$where = implode("",$arr);
+		$where .= implode("",$arr);
 		
 		$rows = $this->model_quanlykho_nguyenlieu->getList($where);
 		//Page
@@ -275,14 +268,14 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
 			$this->data['datas'][$i] = $rows[$i];
-			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/nguyenlieu/update&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/vattu/update&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
-			$this->data['datas'][$i]['link_dinhluong'] = $this->url->http('quanlykho/nguyenlieu/dinhluong&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['link_dinhluong'] = $this->url->http('quanlykho/vattu/dinhluong&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_dinhluong'] = "Định lượng";
-			$this->data['datas'][$i]['link_capnhatgia'] = $this->url->http('quanlykho/nguyenlieu/capnhatgia&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['link_capnhatgia'] = $this->url->http('quanlykho/vattu/capnhatgia&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_capnhatgia'] = "Cập nhật giá";
 			
-			$this->data['datas'][$i]['link_xemgia'] = $this->url->http('quanlykho/nguyenlieu/xemgia&id='.$this->data['datas'][$i]['id']);
+			$this->data['datas'][$i]['link_xemgia'] = $this->url->http('quanlykho/vattu/xemgia&id='.$this->data['datas'][$i]['id']);
 			$this->data['datas'][$i]['text_xemgia'] = "Xem giá";
 			//
 			$nhom = $this->model_quanlykho_nhom->getItem($rows[$i]['manhom']);
@@ -298,7 +291,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/nguyenlieu_table.tpl";
+		$this->template="quanlykho/vattu_table.tpl";
 		
 		if($this->request->get['opendialog']=='true')
 		{
@@ -322,7 +315,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
     	}
 		
 		$this->id='content';
-		$this->template='quanlykho/nguyenlieu_form.tpl';
+		$this->template='quanlykho/vattu_form.tpl';
 		$this->layout="layout/center";
 		
 		$this->render();
@@ -542,7 +535,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->data['datact'] = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
 		
 		$this->id='content';
-		$this->template="quanlykho/nguyenlieu_tonkho.tpl";
+		$this->template="quanlykho/vattu_tonkho.tpl";
 		//$this->layout="layout/dialog";
 		$this->data['dialog'] = true;
 		$this->render();

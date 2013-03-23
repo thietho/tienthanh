@@ -381,7 +381,7 @@ function Price()
 </div>
 <div id="popup" class="hidden"></div>
 <script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 
 <script type="text/javascript" charset="utf-8">
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";

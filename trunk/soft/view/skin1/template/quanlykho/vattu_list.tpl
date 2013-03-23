@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Quản lý danh mục nguyên vật liệu</div>
+	<div class="section-title">Quản lý danh mục vật tư</div>
     
     <div class="section-content">
     	
@@ -27,17 +27,15 @@
                 </select>
                 <br />
                 <input type="button" class="button" name="btnSearch" value="Tìm" onclick="searchForm()"/>
-                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/nguyenlieu'"/>
+                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/vattu'"/>
             </div>
         	<div class="button right">
             	<?php if($dialog==true){ ?>
             	
                 <?php }else{ ?>
                 <input class="button" value="Chi tiết tồn kho" type="button" onclick="viewTonKho('')">
-                <?php if($this->user->getUserTypeId() == "admin"){ ?>
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
-                <?php } ?>
-                <input class="button" value="Thêm nhiều nguyên liệu" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>')">
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
                 <?php } ?>
@@ -61,7 +59,7 @@ function deleteitem()
 	var answer = confirm("Bạn có muốn xóa không?")
 	if (answer)
 	{
-		$.post("?route=quanlykho/nguyenlieu/delete", 
+		$.post("?route=quanlykho/vattu/delete", 
 				$("#listitem").serialize(), 
 				function(data)
 				{
@@ -79,7 +77,7 @@ $(document).ready(function(e) {
 });
 function viewAll()
 {
-	url = "?route=quanlykho/nguyenlieu/getList";
+	url = "?route=quanlykho/vattu/getList";
 	if("<?php echo $_GET['opendialog']?>" == "true")
 	{
 		url += "&opendialog=true";
@@ -106,7 +104,7 @@ function searchForm()
 		url += "&opendialog=true";
 	}
 	
-	$('#listnguyenlieu').load("?route=quanlykho/nguyenlieu/getList"+url);
+	$('#listnguyenlieu').load("?route=quanlykho/vattu/getList"+url);
 }
 
 <?php if($dialog==true){ ?>
@@ -145,10 +143,10 @@ function viewTonKho(id)
 				});
 			
 				
-	$("#popup-content").load("?route=quanlykho/nguyenlieu/viewTonKho&id="+id,function(){
+	$("#popup-content").load("?route=quanlykho/vattu/viewTonKho&id="+id,function(){
 		$("#popup").dialog("open");	
 	});
-	//openDialog("?route=quanlykho/nguyenlieu/viewTonKho&id="+id,1000,800);
+	//openDialog("?route=quanlykho/vattu/viewTonKho&id="+id,1000,800);
 }
 
 function moveto(url,eid)

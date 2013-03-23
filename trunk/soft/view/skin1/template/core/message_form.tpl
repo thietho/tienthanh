@@ -64,8 +64,7 @@
 
 <script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript'
 	language='javascript'> </script>
-<script
-	src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 
 <script type="text/javascript" charset="utf-8">
 var DIR_UPLOADATTACHMENT = "<?php echo $DIR_UPLOADATTACHMENT?>";

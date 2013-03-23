@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+
 <div class="section">
 
 	<div class="section-title">Lịch sử giao dịch của nhà cung ứng <?php echo $nhacungung['tennhacungung']?></div>

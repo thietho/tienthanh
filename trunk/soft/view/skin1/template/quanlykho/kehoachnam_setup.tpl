@@ -1,5 +1,4 @@
-<ul><script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript'
-	language='javascript'> </script>
+<ul>
 <div class="section" id="sitemaplist">
 
 <div class="section-title">Kê hoạch năm</div>

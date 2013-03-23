@@ -368,7 +368,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->load->model("core/usertype");
 		
 		$this->data['nhanvien'] = $this->model_quanlykho_nhanvien->getItem($this->request->get['id']);
-		$this->data['usertype'] = $this->model_core_usertype->getList(" AND usertypeid <> 'admin'");
+		$this->data['usertype'] = $this->model_core_usertype->getList("");
 		$this->data['cancel'] = $this->url->https('quanlykho/nhanvien');
 		
 		$this->id='content';

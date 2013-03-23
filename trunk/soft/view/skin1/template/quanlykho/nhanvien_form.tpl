@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+
 <div class="section" id="sitemaplist">
 
 	<div class="section-title">Nhân viên</div>
@@ -211,7 +211,7 @@
 </div>
 <script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
 
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 <script language="javascript">
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 $(document).ready(function() { 
