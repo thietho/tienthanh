@@ -137,7 +137,7 @@
     </div>
     
 </div>
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 <script language="javascript">
 var auto = new AutoComplete();
 $('#btnAddrow').click(function(){

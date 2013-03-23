@@ -6,6 +6,7 @@
         <a href="?route=quanlykho/kho"><div class="qlk_icon left">Kho</div></a>
         <a href="?route=quanlykho/donvitinh"><div class="qlk_icon left">Đơn vị tính</div></a>
         <a href="?route=quanlykho/nguyenlieu"><div class="qlk_icon left">Nguyên liệu</div></a>
+        <a href="?route=quanlykho/vattu"><div class="qlk_icon left">Vật tư</div></a>
         <a href="?route=quanlykho/linhkien"><div class="qlk_icon left">Linh kiện</div></a>
         <a href="?route=quanlykho/sanpham"><div class="qlk_icon left">Sản phẩm</div></a>
         <a href="?route=quanlykho/phongban"><div class="qlk_icon left">Phòng ban</div></a>

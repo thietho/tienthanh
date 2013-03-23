@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+
 <div class="section" id="sitemaplist">
 
 	<div class="section-title">Đánh giá nhà cung ứng</div>
@@ -86,7 +86,7 @@
     </div>
     
 </div>
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 <script language="javascript">
 
 function save()

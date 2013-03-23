@@ -1,4 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript' language='javascript'> </script>
+
 
 <div class="section" id="sitemaplist">
 
@@ -162,7 +162,7 @@
 <div id="autocomplete" style="display:none;position:absolute;background:#FFF;">
 
 </div>
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 <script language="javascript">
 var auto = new AutoComplete();
 var index = 0;

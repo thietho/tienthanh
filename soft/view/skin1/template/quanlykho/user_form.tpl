@@ -43,7 +43,7 @@
                     
             	</p>
                 <?php }?>
-                <!--<p>
+                <p>
             		<label>User type</label><br />
 					<select id="usertypeid" name="usertypeid">
                     <?php
@@ -58,7 +58,7 @@
                         }
                     ?>
                     </select>
-            	</p>-->
+            	</p>
             </div>
             
         </form>

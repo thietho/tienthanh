@@ -1,5 +1,4 @@
-<script src='<?php echo DIR_JS?>ui.datepicker.js' type='text/javascript'
-	language='javascript'> </script>
+
 <div class="section">
 
 <div class="section-title">Quản lý danh mục phiếu yêu cầu</div>

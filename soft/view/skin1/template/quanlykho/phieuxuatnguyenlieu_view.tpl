@@ -122,7 +122,7 @@
     
 </div>
 
-<script src="<?php echo DIR_JS?>jquery.tabs.pack.js" type="text/javascript"></script>
+
 <script language="javascript">
 function printPhieu(id)
 {	
