@@ -53,7 +53,7 @@ $(document).ready(function(e) {
             	
                 <a class="button add" onclick="module.add(0)">Thêm mới</a>
                 
-                <a class="button exit" href="?route=deliman/home">Về trang chủ</a>
+                <a class="button exit" href="?route=page/home">Về trang chủ</a>
                 <!--<a class="button save" onclick="module.savePostion()">Cập nhật</a>-->
             </div>
             <div class="clearer">^&nbsp;</div>
