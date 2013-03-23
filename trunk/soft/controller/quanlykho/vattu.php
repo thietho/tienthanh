@@ -5,15 +5,12 @@ class ControllerQuanlykhoVattu extends Controller
 	function __construct() 
 	{
 		
-		
 		$this->document->title = $this->language->get('heading_title');
-		
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->helper('image');
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		
+		$this->load->model("quanlykho/donvitinh");	
 		$this->data['loainguyenlieu'] = array();
 		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
 		//unset($this->data['loainguyenlieu'][0]);
@@ -22,6 +19,10 @@ class ControllerQuanlykhoVattu extends Controller
    	}
 	public function index()
 	{
+		$this->data['bangbaogia'] = $this->url->http('quanlykho/vattu/bangbaogia');
+		$this->data['insertlist'] = $this->url->http('quanlykho/vattu/insertlist');
+		$this->data['insert'] = $this->url->http('quanlykho/vattu/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/vattu/delete');
 		
 		$this->id='content';
 		$this->template="quanlykho/vattu_list.tpl";
@@ -196,7 +197,7 @@ class ControllerQuanlykhoVattu extends Controller
 		
 		$this->id='content';
 		$this->template='quanlykho/vattu_xemgia.tpl';
-		$this->layout="layout/center";
+		
 		$this->render();
 		
 	}
@@ -227,8 +228,8 @@ class ControllerQuanlykhoVattu extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['manguyenlieu'] = $this->request->get['manguyenlieu'];
-		$datasearchlike['tennguyenlieu'] = $this->request->get['tennguyenlieu'];
+		$datasearchlike['manguyenlieu'] = urldecode($this->request->get['manguyenlieu']);
+		$datasearchlike['tennguyenlieu'] = urldecode($this->request->get['tennguyenlieu']);
 		$datasearch['manhom'] = $this->request->get['manhom'];
 		$datasearch['loai'] = $this->request->get['loai'];
 		$datasearch['makho'] = $this->request->get['makho'];

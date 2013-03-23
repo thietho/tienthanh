@@ -97,19 +97,19 @@ function searchForm()
 		url += "&manhacungung=" + $("#frm_nhacungung #manhacungung").val();
 	
 	if($("#frm_nhacungung #tennhacungung").val() != "")
-		url += "&tennhacungung="+ $("#frm_nhacungung #tennhacungung").val();
+		url += "&tennhacungung="+ encodeURI($("#frm_nhacungung #tennhacungung").val());
 	if($("#frm_nhacungung #manhom").val() != "")
 		url += "&manhom="+ $("#frm_nhacungung #manhom").val();
 	if($("#frm_nhacungung #diachi").val() != "")
-		url += "&diachi=" + $("#frm_nhacungung #diachi").val();
+		url += "&diachi=" + encodeURI($("#frm_nhacungung #diachi").val());
 	if($("#frm_nhacungung #khuvuc").val() != "")
 		url += "&khuvuc=" + $("#frm_nhacungung #khuvuc").val();
 	if($("#frm_nhacungung #dienthoai").val() != "")
-		url += "&dienthoai="+ $("#frm_nhacungung #dienthoai").val();
+		url += "&dienthoai="+ encodeURI($("#frm_nhacungung #dienthoai").val());
 	if($("#fax").val() != "")
-		url += "&fax=" + $("#fax").val();
+		url += "&fax=" + encodeURI($("#fax").val());
 	if($("#frm_nhacungung #tennguoidungdau").val() != "")
-		url += "&tennguoidungdau=" + $("#frm_nhacungung #tennguoidungdau").val();
+		url += "&tennguoidungdau=" + encodeURI($("#frm_nhacungung #tennguoidungdau").val());
 	
 	if("<?php echo $_GET['opendialog']?>" == "true")
 	{

@@ -40,14 +40,14 @@
                 </p>
                
                 <p>
-                    <label>Chi tiết phiếu nhập nguyên vật liệu</label>
+                    <label>Chi tiết phiếu nhập vật tư</label>
                     <p>
                         <input type="hidden" id="manguyenlieu" name="manguyenlieu">
                         <table style="width:auto">
                             <thead>
                                 <tr>
-                                    <th>Mã nguyên vật liệu</th>
-                                    <th>Tên nguyên vật liệu</th>
+                                    <th>Mã vật tư</th>
+                                    <th>Tên vật tư</th>
                                     
                                     
                                     <th>Đơn giá</th>
@@ -80,11 +80,11 @@ function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/nguyenlieu/savebangbaogia", $("#frm").serialize(),
+	$.post("?route=quanlykho/vattu/savebangbaogia", $("#frm").serialize(),
 		function(data){
 			if(data == "true")
 			{
-				window.location = "?route=quanlykho/nguyenlieu/bangbaogia";
+				window.location = "?route=quanlykho/vattu/bangbaogia";
 			}
 			else
 			{
@@ -190,7 +190,7 @@ function unSelcetNhaCungCap()
 function selectNguyenLieu()
 {
 
-	$("#popup").attr('title','Chọn nguyên liệu');
+	$("#popup").attr('title','Chọn vật tư');
 		$( "#popup" ).dialog({
 			autoOpen: false,
 			show: "blind",
@@ -217,7 +217,7 @@ function selectNguyenLieu()
 		});
 	
 		
-		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
+		$("#popup-content").load("?route=quanlykho/vattu&opendialog=true",function(){
 			$("#popup").dialog("open");	
 		});
 	
@@ -226,7 +226,7 @@ function selectNguyenLieu()
 var index = 0;
 function createRow(id, manguyenlieu,   dongia)
 {
-	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=id&val="+manguyenlieu, 
+	$.getJSON("?route=quanlykho/vattu/getNguyenLieu&col=id&val="+manguyenlieu, 
 	function(data) 
 	{
 		var row = "";
