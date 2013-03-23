@@ -126,7 +126,7 @@ class ControllerCoreModule extends Controller
 		foreach($modules as $item)
 		{
 			$child = $this->model_core_module->getChild($item['id']);
-			$str.='<li id="node'.$item['moduleid'].'" class="closed" ref="'.$root.'">';
+			$str.='<li id="node'.$item['id'].'" class="closed" ref="'.$root.'">';
 			$type = 'folder';
 			$btnRemove ="";
 			if(count($child)==0)
@@ -195,12 +195,14 @@ class ControllerCoreModule extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
+		
 		if($this->validateForm($data))
 		{
 			
+			
 			if($data['id']==0)
 			{
-				$this->model_core_module->insert($data);	
+				$data['id'] = $this->model_core_module->insert($data);	
 			}
 			else
 			{
