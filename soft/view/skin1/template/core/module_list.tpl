@@ -78,24 +78,65 @@ function Module()
 	this.drop="";
 	this.edit = function(moduleid)
 	{
-		$('#popup-content').load('?route=core/module/update&moduleid='+moduleid,
-			function()
-			{
+		$("#popup").attr('title','Module');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						buttons: {
+							
+							'Lưu': function() {
+								module.save()
+								$( this ).dialog( "close" );
+							},
+							'Đóng': function() {
+								$( this ).dialog( "close" );
+							},
+							
+							
+						}
+					});
 				
-				showPopup('#popup', 700, 500, true );
-				//numberReady();
-			});	
+					
+		$("#popup-content").load('?route=core/module/update&moduleid='+moduleid,function(){
+			$("#popup").dialog("open");	
+		});
+		
+		
 	}
 	
 	this.add = function(parent)
 	{
-		$('#popup-content').load('?route=core/module/insert&parent='+parent,
-			function()
-			{
+		$("#popup").attr('title','Module');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						buttons: {
+							
+							'Lưu': function() {
+								module.save()
+								$( this ).dialog( "close" );
+							},
+							'Đóng': function() {
+								$( this ).dialog( "close" );
+							},
+							
+							
+						}
+					});
 				
-				showPopup('#popup', 700, 500, true );
-				//numberReady();
-			});	
+					
+		$("#popup-content").load('?route=core/module/insert&parent='+parent,function(){
+			$("#popup").dialog("open");	
+		});
+		
 	}
 	
 	this.move = function(moduleid)
