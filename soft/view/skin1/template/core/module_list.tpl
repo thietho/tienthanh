@@ -1,69 +1,256 @@
-<div class="section" id="modulelist">
 
-<div class="section-title">MODULE MANAGEMENT</div>
 
-<div class="section-content">
 
-<form action="" name="f" method="post">
+<script type="text/javascript">
+	$(function() {
+		$("#group0").treeview();
+		
+	})
+	
+</script>
+<script>
+	/*$(function() {
+		
+		$( "ul" ).sortable({
+			 connectWith: '.ui-sortable' ,
+			 
+			 stop: function(event, ui) 
+			 {
+				  module.drag = this.id; 
+				  //$('#drag').html(module.drag);
+			   	  $('#'+module.drag).treeview();
+				  $('#'+module.drop).treeview();
+				  module.updateChild(module.drop);
+				
+			 },
+			 over: function(event, ui) 
+			 {
+				 module.drop = this.id; 
+				 //$('#drop').html(module.drop);
+				
+			 }
+		})
+		
+		
+	});*/
+$(document).ready(function(e) {
+    
+	
+});
+	
+	</script>
+<div class="section">
 
-<div class="button right">
-<p><?php echo $btnAdd?> <?php echo $btnDelete?> <?php echo $btnUpdate?>
-</p>
+	<div class="section-title">Quản lý module</div>
+    
+    <div class="section-content">
+    	<!--<div id="idcur"></div>
+    	<div id="drag"></div>
+        <div id="drop"></div>-->
+        <form action="" method="post" id="listitem" name="listitem">
+        
+        	<div class="button right">
+            	
+                <a class="button add" onclick="module.add(0)">Thêm mới</a>
+                
+                <a class="button exit" href="?route=deliman/home">Về trang chủ</a>
+                <!--<a class="button save" onclick="module.savePostion()">Cập nhật</a>-->
+            </div>
+            <div class="clearer">^&nbsp;</div>
+            
+            <div>
+                <ul id="group0" class="filetree">
+                	<?php echo $treemodule?>
+                </ul>
+            </div>
+        	
+        
+        </form>
+        
+    </div>
+    
 </div>
-<div class="clearer">^&nbsp;</div>
-
-<div class="sitemap treeindex">
-<table class="data-table" cellpadding="0" cellspacing="0">
-	<tbody>
-		<tr class="tr-head">
-			<th width="3%"><input class="inputchk" type="checkbox"
-				onclick="$('input[name*=\'delete\']').attr('checked', this.checked);"></th>
-			<th width="10%">ModuleID</th>
-			<th width="25%">ModuleName</th>
-			<th width="10%">Pos</th>
-			<th width="5%">Status</th>
-			<th width="10%">Control</th>
-		</tr>
-		<?php
-		foreach($modules as $module)
-		{
-			?>
-		<tr>
-			<td class="check-column"><input class="inputchk" type="checkbox"
-				name="delete[<?php echo $module['moduleid']?>]" value="1"></td>
-			<td><?php echo $module['moduleid']?></td>
-			<td><?php echo $module['modulename']?></td>
-			<td><input class="text" maxlength="2" size="1" type="text"
-				name="position[<?php echo $module['moduleid']?>]"
-				value="<?php echo $module['position']?>"></td>
-			<td><?php echo $module['status']?></td>
-
-			<td class="link-control"><?php echo $module['controlEdit']?> <?php echo $module['controlDelete']?>
-			</td>
-		</tr>
-		<?php
-		}
-		?>
-
-
-	</tbody>
-</table>
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-
-
-
-
 <script language="javascript">
- function submitForm(value)
- {
- 	document.f.type.value=value
-	document.f.submit()
- }
- </script>
+function Module()
+{
+	this.idcur = "";
+	this.drag="";
+	this.drop="";
+	this.edit = function(moduleid)
+	{
+		$('#popup-content').load('?route=core/module/update&moduleid='+moduleid,
+			function()
+			{
+				
+				showPopup('#popup', 700, 500, true );
+				//numberReady();
+			});	
+	}
+	
+	this.add = function(parent)
+	{
+		$('#popup-content').load('?route=core/module/insert&parent='+parent,
+			function()
+			{
+				
+				showPopup('#popup', 700, 500, true );
+				//numberReady();
+			});	
+	}
+	
+	this.move = function(moduleid)
+	{
+		$('#popup-content').load('?route=core/module/move&moduleid='+moduleid,
+			function()
+			{
+				
+				showPopup('#popup', 700, 500, true );
+				//numberReady();
+			});	
+	}
+	
+	this.setNode = function(e)
+	{
+		module.idcur = e;
+		//alert('test');
+		$('#idcur').html(module.idcur);
+	}
+	this.updateChild = function(moduleid)
+	{
+		
+		parent = moduleid.replace('group','');
+		$('#'+moduleid).children().each(function(index, element) {
+           
+			itemmoduleid =this.id.replace('node','');
+			
+			parentitem = $('#nodeparent_'+this.id.replace('node','')).val();
+			if(parentitem != parent)
+			{
+				$('#nodeparent_'+this.id.replace('node','')).val(parent);
+				//module.updateParent(itemmoduleid,parent);
+			}
+        });
+	}
+	this.remove = function(moduleid)
+	{
+		anser=confirm("Bạn có chắc muốn xóa "+ $('#modulename'+moduleid).html() +" không?")
+	
+		if(anser==true)
+		{
+			$.ajax({
+				url: "?route=core/module/remove&moduleid="+moduleid,
+				cache: false,
+				success: function(html){
+					var obj = $.parseJSON(html);
+					if(obj.error=="")
+					{
+						$("#node"+moduleid).remove();
+						if($('#group'+obj.moduleparent).html()=="")
+							module.folderToFile(obj.moduleparent);
+						$('#group'+obj.moduleparent).treeview();
+						alert("Xóa thành công");
+					}
+					else
+					{
+						alert(obj.error)	
+					}
+				}
+			});
+		}
+	}
+	
+	this.folderToFile = function(moduleid)
+	{
+		//$('#module'+moduleid).attr('class','file');
+		var parent = $('#node'+moduleid).attr('ref');
+		
+		$('#group'+parent).load("?route=core/module/getTreeView&root="+parent,function(){
+							
+			$('#group'+parent).treeview();
+		});
+		
+	}
+	this.updateParent = function(moduleid,parent)
+	{
+		$.post("?route=core/module/updateParent", 
+			{
+				moduleid:moduleid,
+				moduleparent:parent
+			},
+			function(data){
+				if(data == "true")
+				{
+					/*$('#group'+parent).load("?route=core/module/getTreeView&root="+parent,function(){
+							
+						$('#group'+parent).treeview();
+					});*/
+					window.location.reload();
+				}
+			});
+	}
+	
+	this.savePostion = function()
+	{
+		$.post("?route=core/module/savePostion", $("#listitem").serialize(),
+			function(data){
+				if(data == "true")
+				{
+					window.location.reload();
+				}
+			});
+	}
+	
+	this.save = function()
+	{
+		
+		
+		$.post("?route=core/module/save", $("#frmmodule").serialize(),
+			function(data){
+				if(data == "true")
+				{
+					var moduleid = $('#moduleid').val();
+					$('#modulename'+moduleid).html($('#modulename').val());
+					$.unblockUI();
+					
+					//Load cac con
+					var khuvutructhuoc = $('#moduleparent').val();
+					
+					
+					if($('#group'+khuvutructhuoc).html() == null)
+					{
+						//$('#node'+khuvutructhuoc).append('<ul id="group'+khuvutructhuoc+'"></ul>');
+						var parent = $('#node'+khuvutructhuoc).attr('ref');
+						if(parent == undefined)
+						{
+							window.location.reload();	
+						}
+						
+						$('#group'+parent).load("?route=core/module/getTreeView&root="+parent,function(){
+							
+							$('#group'+parent).treeview();
+						});
+					}
+					else
+					{
+						$('#group'+khuvutructhuoc).load("?route=core/module/getTreeView&root="+$('#moduleparent').val(),function(){
+							
+							$('#group'+khuvutructhuoc).treeview();
+						});
+						
+					}
+					
+				}
+				else
+				{
+				
+					$('#error').html(data).show('slow');
+					
+					
+				}
+				
+			}
+		);
+	}
+}
+var module = new Module();
+</script>

@@ -22,6 +22,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
    	}
 	public function index()
 	{
+		$this->data['bangbaogia'] = $this->url->http('quanlykho/nguyenlieu/bangbaogia');
+		$this->data['insertlist'] = $this->url->http('quanlykho/nguyenlieu/insertlist');
+		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');
 		
 		$this->id='content';
 		$this->template="quanlykho/nguyenlieu_list.tpl";
@@ -228,15 +232,15 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->data['bangbaogia'] = $this->url->http('quanlykho/nguyenlieu/bangbaogia');
 		$this->data['insertlist'] = $this->url->http('quanlykho/nguyenlieu/insertlist');
 		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');		
+		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/delete');
 		
 		
 		
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['manguyenlieu'] = $this->request->get['manguyenlieu'];
-		$datasearchlike['tennguyenlieu'] = $this->request->get['tennguyenlieu'];
+		$datasearchlike['manguyenlieu'] = urldecode($this->request->get['manguyenlieu']);
+		$datasearchlike['tennguyenlieu'] = urldecode($this->request->get['tennguyenlieu']);
 		$datasearch['manhom'] = $this->request->get['manhom'];
 		$datasearch['loai'] = $this->request->get['loai'];
 		$datasearch['makho'] = $this->request->get['makho'];

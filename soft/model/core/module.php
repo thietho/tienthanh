@@ -1,184 +1,162 @@
 <?php
-class ModelCoreModule extends Model
+class ModelCoreModule extends Model 
 {
-	public function getModules()
+	public function getList($where = "")
 	{
-		$query = $this->db->query("Select * from `module` Order By position");
+		$sql = "Select * from `module` where 1=1 ".$where;
+		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-
-	public function getSitemapModules()
+	
+	
+	public function getItem($id)
 	{
-		$query = $this->db->query("Select * from `module` where status = 'Sitemap' OR status = 'Active' Order By position");
-		return $query->rows;
-	}
-
-	public function getModulesIn($list)
-	{
-		$query = $this->db->query("Select * from `module` Where moduleid in ($list) Order By position");
-		return $query->rows;
-	}
-
-	public function getModule($moduleid)
-	{
-		$query = $this->db->query("SELECT *
-									FROM `module` 
-									WHERE `moduleid` = '".$moduleid."'
-									");
+		$sql = "Select * from `module` where id = '".$id."'";
+		$query = $this->db->query($sql);
 		return $query->row;
 	}
-
-	public function liststatus()
-	{
-		return array(
-				"Active"=>"Active",
-				"Sitemap"=>"Sitemap",
-				"UnActive"=>"UnActive"
-				);
-	}
-
-	public function nextID()
-	{
-		return $this->db->getNextIdVarChar("module","moduleid","Module");
-	}
-
-	public function nextPosition($parent)
-	{
-		$query = $this->db->query("Select max(position) as max From module where moduleparent='".$parent."' Order By position");
-		return $query->rows[0]['max'] +1 ;
-	}
-
-	public function insertModule($data)
+		
+	public function insert($data)
 	{
 		$moduleid=$this->db->escape(@$data['moduleid']);
 		$modulename=$this->db->escape(@$data['modulename']);
+		$position=$this->db->escape(@$data['position']);
 		$moduleparent=$this->db->escape(@$data['moduleparent']);
-		$position=(int)@$data['position'];
-		$status=$this->db->escape(@$data['status']);
-		$modulepath=$this->db->escape(@$data['modulepath']);
-		$permission=$this->db->escape(@$data['permission']);
-		$permission=$this->db->escape(@$data['permission']);
+		
+		
+				
 		$field=array(
 						'moduleid',
 						'modulename',
-						'moduleparent',
 						'position',
-						'status',
-						'modulepath',
-						'permission'
-						);
-						$value=array(
-						$moduleid,
-						$modulename,
-						$moduleparent,
-						$position,
-						$status,
-						$modulepath,
-						$permission
-						);
-						$this->db->insertData("module",$field,$value);
-	}
-
-
-
-
-	public function updateModule($data, $cache)
-	{
-		$lastmoduleid = $this->db->escape(@$cache['moduleid']);
-		$moduleid=$this->db->escape(@$data['moduleid']);
-		$modulename=$this->db->escape(@$data['modulename']);
-		$moduleparent=$this->db->escape(@$data['moduleparent']);
-		$position=(int)@$data['position'];
-		$status=$this->db->escape(@$data['status']);
-		$modulepath=$this->db->escape(@$data['modulepath']);
-		$permission=$this->db->escape(@$data['permission']);
-		$field=array(
-						'moduleid',
-						'modulename',
-						'moduleparent',
-						'position',
-						'status',
-						'modulepath',
-						'permission'
-						);
-						$value=array(
-						$moduleid,
-						$modulename,
-						$moduleparent,
-						$position,
-						$status,
-						$modulepath,
-						$permission
-						);
-						$where="moduleid = '".$lastmoduleid."'";
-						$this->db->updateData("module",$field,$value,$where);
-	}
-
-	public function updateModulePosition($moduleid,$position)
-	{
-		$moduleid=$this->db->escape(@$moduleid);
-
-		$position=(int)@$position;
-
-		$field=array(
-						'moduleid',
-
-						'position'
+						'moduleparent'
 						
-						);
-						$value=array(
+					);
+		$value=array(
 						$moduleid,
-
-						$position
-
-						);
-						$where="moduleid = '".$moduleid."'";
-						$this->db->updateData("module",$field,$value,$where);
+						$modulename,
+						$position,
+						$moduleparent
+					);
+		$getLastId = $this->db->insertData("module",$field,$value);
+		
+		return $getLastId;
 	}
-
-	public function deleteModule($moduleid)
+	
+	public function update($data)
 	{
-		if($this->validateDelete($moduleid))
-		{
-			$where="moduleid = '".$moduleid."'";
-			$this->db->deleteData('module',$where);
-			return true;
-		}
-		return false;
-	}
-
-	public function validateDelete($id)
+		$id=$this->db->escape(@$data['id']);
+		$moduleid=$this->db->escape(@$data['moduleid']);
+		$modulename=$this->db->escape(@$data['modulename']);
+		$position=$this->db->escape(@$data['position']);
+		$moduleparent=$this->db->escape(@$data['moduleparent']);
+		
+		
+				
+		$field=array(
+						'moduleid',
+						'modulename',
+						'position',
+						'moduleparent'
+					);
+		$value=array(
+						$moduleid,
+						$modulename,
+						$position,
+						$moduleparent
+					);
+					
+		
+					
+		$where="id = '".$id."'";
+		$this->db->updateData("module",$field,$value,$where);
+	}	
+	
+	
+	
+	public function updateCol($id,$col,$val)
 	{
-		//Sitemap
 		$moduleid=$this->db->escape(@$id);
-		$sql="SELECT *
-									FROM `sitemap` 
-									WHERE `moduleid` = '".$moduleid."'
-									";
-		$query = $this->db->query($sql);
-		$arr = $query->rows;
-		if(count($arr))
-		return false;
-
-		//Sitemap content
-		$query = $this->db->query("SELECT *
-									FROM `sitemap_media` 
-									WHERE `moduleid` = '".$moduleid."'
-									");
-		$arr = $query->rows;
-		if(count($arr))
-		return false;
-
-		return true;
+		$col=$this->db->escape(@$col);
+		$val=$this->db->escape(@$val);
+		
+		$field=array(
+						$col
+						
+					);
+		$value=array(
+						$val
+					);
+		
+		$where="moduleid = '".$moduleid."'";
+		$this->db->updateData("module",$field,$value,$where);
 	}
-
-	public function validateDuplikey($id)
+			
+	public function delete($id)
 	{
-		$rows=$this->getModule($id);
-		if(count($rows))
-		return true;
-		else
-		return false;
+		$moduleid=$this->db->escape(@$id);
+		$data_khuvuc = $this->getChild($id);
+		if(count($data_khuvuc) == 0)
+		{
+			$where="id = '".$id."'";
+			$this->db->deleteData('module',$where);
+		}
+		
+	}
+	
+	public function getChild($id,$order = " Order by `modulename`")
+	{
+		$where = " AND `moduleparent` = '".$id."' ".$order;
+		return $this->getList($where);
+	}
+	
+	public function getPath($id,$col)
+	{
+		$path = array();
+		$khuvuc = $this->getItem($id);
+		while(count($khuvuc))
+		{
+			array_push($path,$khuvuc[$col]);
+			$khuvuc = $this->getItem($khuvuc['moduleparent']);
+		}
+		return $path;
+	}
+	
+	function getTree($id, &$data,$root="",$notid = -1, $level=-1, $path="", $parentpath="")
+	{
+		
+		$arr=$this->getItem($id);
+		
+		$rows = $this->getChild($id);
+		//if(count($rows))
+		{
+			$arrmodulename = $this->getPath($arr['moduleid'],"modulename");
+			$arr['modulename'] =  implode(" - ", $arrmodulename);	
+		}
+		$arr['countchild'] = count($rows);
+		
+		if($arr['moduleparent'] != 0 && $id!=$root) 
+			$parentpath .= "-".$arr['moduleparent'];
+		
+		if($id!=0 && $id!=$notid)
+		{
+			$level += 1;
+			$path .= "-".$id;
+			
+			$arr['level'] = $level;
+			$arr['path'] = $path;
+			$arr['parentpath'] = $parentpath;
+			
+			array_push($data,$arr);
+		}
+		
+		
+		if(count($rows) && $id!=$notid)
+			foreach($rows as $row)
+			{
+				$this->getTree($row['moduleid'], $data,$root,$notid, $level, $path, $parentpath);
+			}
 	}
 }
+
 ?>

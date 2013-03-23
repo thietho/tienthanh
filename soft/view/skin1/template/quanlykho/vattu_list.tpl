@@ -89,10 +89,10 @@ function searchForm()
 {
 	var url =  "";
 	if($("#frm_nguyenlieu #manguyenlieu").val() != "")
-		url += "&manguyenlieu=" + $("#frm_nguyenlieu #manguyenlieu").val();
+		url += "&manguyenlieu=" + encodeURI($("#frm_nguyenlieu #manguyenlieu").val());
 	
 	if($("#frm_nguyenlieu #tennguyenlieu").val() != "")
-		url += "&tennguyenlieu="+ $("#frm_nguyenlieu #tennguyenlieu").val();
+		url += "&tennguyenlieu="+ encodeURI($("#frm_nguyenlieu #tennguyenlieu").val());
 	
 	if($("#frm_nguyenlieu #loai").val() != "")
 		url += "&loai="+ $("#frm_nguyenlieu #loai").val();

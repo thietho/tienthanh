@@ -3,29 +3,7 @@ class ControllerQuanlykhoNhacungung extends Controller
 {
 	private $error = array();
 	function __construct() 
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
-		}
-		//$this->load->language('quanlykho/nguyenlieu');
-		//$this->data = array_merge($this->data, $this->language->getData());
-		
+	{	
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
@@ -41,9 +19,11 @@ class ControllerQuanlykhoNhacungung extends Controller
 	public function index()
 	{
 		
-		$this->document->title = $this->language->get('heading_title');
 		
 		
+		$this->data['insert'] = $this->url->http('quanlykho/nhacungung/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/nhacungung/delete');		
+		$this->data['list'] = $this->url->http('quanlykho/nhacungung');
 		
 		
 		
@@ -73,24 +53,10 @@ class ControllerQuanlykhoNhacungung extends Controller
 	
 	public function update()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			//$this->load->language('quanlykho/nhacungung');
-			//$this->data = array_merge($this->data, $this->language->getData());
-			
-			
-			$this->load->model("quanlykho/nhacungung");
-			$this->data['haspass'] = false;
-			$this->data['readonly'] = 'readonly="readonly"';
-			
-		
-			$this->getForm();
-		}
-		
+		$this->load->model("quanlykho/nhacungung");
+		$this->data['haspass'] = false;
+		$this->data['readonly'] = 'readonly="readonly"';
+		$this->getForm();		
   	}
 	
 	
@@ -123,14 +89,14 @@ class ControllerQuanlykhoNhacungung extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['manhacungung'] = $this->request->get['manhacungung'];
-		$datasearchlike['tennhacungung'] = $this->request->get['tennhacungung'];
+		$datasearchlike['manhacungung'] = urldecode($this->request->get['manhacungung']);
+		$datasearchlike['tennhacungung'] = urldecode($this->request->get['tennhacungung']);
 		$datasearch['manhom'] = $this->request->get['manhom'];
-		$datasearchlike['diachi'] = $this->request->get['diachi'];
+		$datasearchlike['diachi'] = urldecode($this->request->get['diachi']);
 		$datasearch['khuvuc'] = $this->request->get['khuvuc'];
-		$datasearchlike['dienthoai'] = $this->request->get['dienthoai'];
-		$datasearchlike['fax'] = $this->request->get['fax'];
-		$datasearchlike['tennguoidungdau'] = $this->request->get['tennguoidungdau'];
+		$datasearchlike['dienthoai'] = urldecode($this->request->get['dienthoai']);
+		$datasearchlike['fax'] = urldecode($this->request->get['fax']);
+		$datasearchlike['tennguoidungdau'] = urldecode($this->request->get['tennguoidungdau']);
 		
 		$arr = array();
 		foreach($datasearchlike as $key => $item)

@@ -100,6 +100,14 @@ final class Document {
 		return $query->row[$name];	
 	}
 	
+	public function getModule($id,$name = 'modulename')
+	{
+		$query = $this->db->query("Select `module`.* 
+									from `module` 
+									where id ='".$id."' ");
+		return $query->row[$name];	
+	}
+	
 	public function getTenDonVi($madonvi)
 	{
 		$query = $this->db->query("Select `qlkdonvitinh`.* 

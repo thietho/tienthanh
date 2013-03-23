@@ -67,7 +67,7 @@
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
                             <!--<input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>-->
                             <!--<input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_capnhatgia']?>" onclick="window.location='<?php echo $item['link_capnhatgia']?>'"/>-->
-                           	<input type="button" class="button" name="btnXemGia" value="<?php echo $item['text_xemgia']?>" onclick="window.location='<?php echo $item['link_xemgia']?>'"/>
+                           	<input type="button" class="button" name="btnXemGia" value="<?php echo $item['text_xemgia']?>" onclick="viewPrice(<?php echo $item['id']?>)"/>
                         </td>
                         <?php } ?>
                     </tr>
@@ -86,4 +86,33 @@ $('#inputchk').click(function(e) {
         this.checked = chk;
     });
 });
+function viewPrice(id)
+{
+	$("#popup").attr('title','Giá vật tư');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Đóng': function() 
+				{
+					
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/vattu/xemgia&id="+id,function(){
+			$("#popup").dialog("open");	
+		});
+	
+
+}
 </script>
