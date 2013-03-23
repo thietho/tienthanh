@@ -7,8 +7,7 @@
     	<form name="frmmodule" id="frmmodule" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<a class="button save" onclick="module.save()">Lưu</a>
-     	        <a class="button cancel" onclick="closePopup()">Bỏ qua</a>
+            	
      	        
                 <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>">
                 <input type="hidden" id="moduleparent" name="moduleparent" value="<?php echo $item['moduleparent']?>">

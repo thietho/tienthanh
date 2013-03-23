@@ -20,7 +20,7 @@ class ModelCoreModule extends Model
 	{
 		$moduleid=$this->db->escape(@$data['moduleid']);
 		$modulename=$this->db->escape(@$data['modulename']);
-		$position=$this->db->escape(@$data['position']);
+		
 		$moduleparent=$this->db->escape(@$data['moduleparent']);
 		
 		
@@ -28,14 +28,14 @@ class ModelCoreModule extends Model
 		$field=array(
 						'moduleid',
 						'modulename',
-						'position',
+						
 						'moduleparent'
 						
 					);
 		$value=array(
 						$moduleid,
 						$modulename,
-						$position,
+						
 						$moduleparent
 					);
 		$getLastId = $this->db->insertData("module",$field,$value);
@@ -48,7 +48,7 @@ class ModelCoreModule extends Model
 		$id=$this->db->escape(@$data['id']);
 		$moduleid=$this->db->escape(@$data['moduleid']);
 		$modulename=$this->db->escape(@$data['modulename']);
-		$position=$this->db->escape(@$data['position']);
+		
 		$moduleparent=$this->db->escape(@$data['moduleparent']);
 		
 		
@@ -56,13 +56,13 @@ class ModelCoreModule extends Model
 		$field=array(
 						'moduleid',
 						'modulename',
-						'position',
+						
 						'moduleparent'
 					);
 		$value=array(
 						$moduleid,
 						$modulename,
-						$position,
+						
 						$moduleparent
 					);
 					
@@ -104,7 +104,7 @@ class ModelCoreModule extends Model
 		
 	}
 	
-	public function getChild($id,$order = " Order by `modulename`")
+	public function getChild($id,$order = " Order by `id`")
 	{
 		$where = " AND `moduleparent` = '".$id."' ".$order;
 		return $this->getList($where);

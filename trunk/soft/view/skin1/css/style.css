@@ -108,6 +108,7 @@ a:focus,a:hover {
 a {
 	color: #456;
 	text-decoration: none;
+	cursor:pointer;
 }
 
 a:hover {
