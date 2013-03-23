@@ -42,7 +42,7 @@ class ControllerCommonPermission extends Controller {
 						
 					$this->load->model('core/module');
 						
-					$dataModule = $this->model_core_module->getModule($ModuleID);
+					//$dataModule = $this->model_core_module->getModule($ModuleID);
 						
 					$arrModulePermission = array();
 					if(count($dataModule) > 0)

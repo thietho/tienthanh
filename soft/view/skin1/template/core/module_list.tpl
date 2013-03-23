@@ -148,6 +148,7 @@ function Module()
 						if($('#group'+obj.moduleparent).html()=="")
 							module.folderToFile(obj.moduleparent);
 						$('#group'+obj.moduleparent).treeview();
+						
 						alert("Xóa thành công");
 					}
 					else
@@ -208,8 +209,8 @@ function Module()
 			function(data){
 				if(data == "true")
 				{
-					var moduleid = $('#moduleid').val();
-					$('#modulename'+moduleid).html($('#modulename').val());
+					var id = $('#id').val();
+					$('#modulename'+id).html($('#modulename').val());
 					$.unblockUI();
 					
 					//Load cac con

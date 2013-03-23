@@ -5,29 +5,8 @@ class ControllerQuanlykhoKho extends Controller
 	 
 	public function index()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
-		}
-		//$this->load->language('quanlykho/kho');
-		//$this->data = array_merge($this->data, $this->language->getData());
-
-		$this->document->title = $this->language->get('heading_title');
+		
+		
 
 		$this->load->model("quanlykho/kho");
 		$this->getList();
@@ -35,41 +14,25 @@ class ControllerQuanlykhoKho extends Controller
 
 	public function insert()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-
 		$this->getForm();
 	}
 
 	public function update()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
+	{				
+		$this->load->model("quanlykho/kho");
+		$this->data['haspass'] = false;
+		$this->data['readonly'] = 'readonly="readonly"';
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm()))
 		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			//$this->load->language('quanlykho/kho');
-			//$this->data = array_merge($this->data, $this->language->getData());
-				
-				
-			$this->load->model("quanlykho/kho");
-			$this->data['haspass'] = false;
-			$this->data['readonly'] = 'readonly="readonly"';
-			if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateForm()))
-			{
-				$this->request->post['makho'] = $this->request->get['makho'];
-				$this->request->post['birthday'] = $this->date->formatViewDate($this->request->post['birthday']);
-				$this->model_quanlykho_kho->updateitem($this->request->post);
-				$this->session->data['success'] = $this->language->get('text_success');
-				$this->redirect($this->url->http('quanlykho/kho'));
-			}
-
-			$this->getForm();
+			$this->request->post['makho'] = $this->request->get['makho'];
+			$this->request->post['birthday'] = $this->date->formatViewDate($this->request->post['birthday']);
+			$this->model_quanlykho_kho->updateitem($this->request->post);
+			$this->session->data['success'] = $this->language->get('text_success');
+			$this->redirect($this->url->http('quanlykho/kho'));
 		}
 
+		$this->getForm();
+		
 	}
 
 
