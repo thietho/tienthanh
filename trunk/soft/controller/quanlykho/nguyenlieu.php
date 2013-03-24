@@ -7,7 +7,6 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
 		$this->load->model("core/module");
 		$moduleid = $_GET['route'];
-		
 		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
 		
 		$this->load->model("quanlykho/nguyenlieu");

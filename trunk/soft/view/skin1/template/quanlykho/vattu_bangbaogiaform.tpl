@@ -1,7 +1,7 @@
 
 <div class="section" id="sitemaplist">
 
-	<div class="section-title">Bảng báo giá</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content padding1">
     
