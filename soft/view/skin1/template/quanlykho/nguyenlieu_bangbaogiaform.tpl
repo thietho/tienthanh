@@ -1,15 +1,15 @@
 
 <div class="section" id="sitemaplist">
 
-	<div class="section-title">Bảng báo giá</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content padding1">
     
     	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/nguyenlieu/bangbaogia')"/>   
+            	<input type="button" value="Lưu" class="button" onClick="save()"/>
+     	        <input type="button" value="Trở về" class="button" onclick="linkto('?route=quanlykho/nguyenlieu/bangbaogia')"/>   
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>

@@ -4,8 +4,10 @@ class ControllerQuanlykhoVattu extends Controller
 	private $error = array();
 	function __construct() 
 	{
+		$this->load->model("core/module");
+		$moduleid = $_GET['route'];
+		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
 		
-		$this->document->title = $this->language->get('heading_title');
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->helper('image');
 		$this->load->model("quanlykho/nhom");

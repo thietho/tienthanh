@@ -116,6 +116,7 @@ class ModelCoreModule extends Model
 		$data_module = $this->getList($where);
 		$module = $data_module[0];
 		$data_module = $this->getModulePath($module['id']);
+		array_shift($data_module);
 		$arr = array();
 		foreach($data_module as $item)
 		{

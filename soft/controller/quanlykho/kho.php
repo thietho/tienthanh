@@ -2,7 +2,12 @@
 class ControllerQuanlykhoKho extends Controller
 {
 	private $error = array();
-	 
+	function __construct() 
+	{
+		$this->load->model("core/module");
+		$moduleid = $_GET['route'];
+		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
+	}
 	public function index()
 	{
 		
