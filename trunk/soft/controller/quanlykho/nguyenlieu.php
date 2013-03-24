@@ -5,8 +5,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	function __construct() 
 	{
 		
+		$this->load->model("core/module");
+		$moduleid = $_GET['route'];
 		
-		$this->document->title = $this->language->get('heading_title');
+		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
 		
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->helper('image');

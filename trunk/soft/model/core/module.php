@@ -95,8 +95,8 @@ class ModelCoreModule extends Model
 	public function delete($id)
 	{
 		$moduleid=$this->db->escape(@$id);
-		$data_khuvuc = $this->getChild($id);
-		if(count($data_khuvuc) == 0)
+		$data_module = $this->getChild($id);
+		if(count($data_module) == 0)
 		{
 			$where="id = '".$id."'";
 			$this->db->deleteData('module',$where);
@@ -110,14 +110,43 @@ class ModelCoreModule extends Model
 		return $this->getList($where);
 	}
 	
+	public function getBreadcrumbs($moduleid)
+	{
+		$where = " AND moduleid = '".$moduleid."'";
+		$data_module = $this->getList($where);
+		$module = $data_module[0];
+		$data_module = $this->getModulePath($module['id']);
+		$arr = array();
+		foreach($data_module as $item)
+		{
+			$arr[] = "<a href='?route=".$item['moduleid']."'>".$item['modulename']."</a>";
+		}
+		if(count($arr))
+			return implode(" &raquo; ",$arr);
+		else
+			return "";
+	}
+	
+	public function getModulePath($id)
+	{
+		$data = array();
+		$module = $this->getItem($id);
+		while(count($module))
+		{
+			array_push($data,$module);
+			$module = $this->getItem($module['moduleparent']);
+		}
+		return $this->string->swapArray($data);
+	}
+	
 	public function getPath($id,$col)
 	{
 		$path = array();
-		$khuvuc = $this->getItem($id);
-		while(count($khuvuc))
+		$module = $this->getItem($id);
+		while(count($module))
 		{
-			array_push($path,$khuvuc[$col]);
-			$khuvuc = $this->getItem($khuvuc['moduleparent']);
+			array_push($path,$module[$col]);
+			$module = $this->getItem($module['moduleparent']);
 		}
 		return $path;
 	}
