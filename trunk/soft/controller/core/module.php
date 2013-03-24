@@ -30,9 +30,9 @@ class ControllerCoreModule extends Controller
 	
 	public function move()
 	{
-		$this->data['item'] = $this->model_core_module->getItem($this->request->get['moduleid']);
+		$this->data['item'] = $this->model_core_module->getItem($this->request->get['id']);
 		$this->data['modules'] = array();
-		$this->model_core_module->getTree(0, $this->data['modules'],0,$this->request->get['moduleid']);
+		$this->model_core_module->getTree(0, $this->data['modules']);
 		$this->id='content';
 		$this->template='core/module_move.tpl';
 		$this->render();
@@ -141,7 +141,7 @@ class ControllerCoreModule extends Controller
 			//if($this->data['list_button']['insert'])
 				$btnAdd = '[<a onClick="module.add(\''.$item['id'].'\')">Add child</a>]';
 		
-			//$btnMove = '<a onClick="module.move('.$item['moduleid'].')">Move</a>';
+			$btnMove = '<a onClick="module.move('.$item['id'].')">Move</a>';
 			$parent = '<input type="hidden" id="nodeparent_'.$item['id'].'" name="parent['.$item['id'].']" value="'.$root.'">';
 			$str.='<span id="module'.$item['id'].'" class="'.$type.'"><b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$btnMove.' '.$btnEdit.' '.$btnAdd.'  '.$btnRemove.$parent.'</span>';
 			if(count($child))
@@ -261,7 +261,7 @@ class ControllerCoreModule extends Controller
 	public function updateParent()
 	{
 		$data = $this->request->post;
-		$this->model_core_module->updateCol($data['moduleid'],'moduleparent',$data['moduleparent']);
+		$this->model_core_module->updateCol($data['id'],'moduleparent',$data['moduleparent']);
 		$this->data['output'] = "true";
 		$this->id='content';
 		$this->template='common/output.tpl';

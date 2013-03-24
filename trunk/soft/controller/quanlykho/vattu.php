@@ -79,7 +79,7 @@ class ControllerQuanlykhoVattu extends Controller
 		$this->render();
 	
   	}
-	
+	//Báo giá
 	public function bangbaogia()
 	{
 		
@@ -201,7 +201,21 @@ class ControllerQuanlykhoVattu extends Controller
 		$this->render();
 		
 	}
-	
+	public function deleteBaoGia()
+	{
+		$listid=$this->request->post['delete'];
+		//$listmadonvi=$_POST['delete'];
+		
+		if(count($listid))
+		{
+			$this->model_quanlykho_nguyenlieu->deletedBangBaoGia($listid);
+			$this->data['output'] = "Xóa thành công";
+		}
+		$this->id="content";
+		$this->template="common/output.tpl";
+		$this->render();
+	}
+	//End báo giá
 	public function delete() 
 	{
 		$listid=$this->request->post['delete'];

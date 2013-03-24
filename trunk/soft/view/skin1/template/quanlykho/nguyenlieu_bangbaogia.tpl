@@ -75,7 +75,7 @@ function deleteitem()
 	var answer = confirm("Bạn có muốn xóa không?")
 	if (answer)
 	{
-		$.post("?route=quanlykho/nguyenlieu/delete", 
+		$.post("?route=quanlykho/nguyenlieu/deletedBangBaoGia", 
 				$("#listitem").serialize(), 
 				function(data)
 				{
