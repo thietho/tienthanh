@@ -7,9 +7,9 @@
     	<form name="frmkhuvuc" id="frmkhuvuc" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<a class="button save" onclick="khuvuc.updateParent($('#khuvucid').val(),$('#khuvuccha').val())">Lưu</a>
+            	
      	        
-     	        <input type="hidden" id="khuvucid" name="khuvucid" value="<?php echo $item['khuvucid']?>">
+     	        <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>">
                 
                 
             </div>
@@ -20,19 +20,16 @@
                 
                 
                 <p>
-                    <label>Tên khu vực:</label><br />
-                    <?php echo $item['tenkhuvuc']?>
+                    <label>Tên module:</label><br />
+                    <?php echo $item['modulename']?>
                 </p>               
+                
                 <p>
-                    <label>Loại khu vực:</label><br />
-                    <?php echo $this->document->loaikhuvuc[$item['loaikhuvuc']]?>
-                </p>
-                <p>
-                    <label>Chọn khu vực cha:</label><br />
-                    <select id="khuvuccha" name="khuvuccha">
+                    <label>Module cha:</label><br />
+                    <select id="moduleparent" name="moduleparent">
                         <option value="">Khu vực gốc</option>
-                        <?php foreach($khuvucs as $khuvuc){ ?>
-                        <option value="<?php echo $khuvuc['khuvucid']?>"><?php echo $this->string->getPrefix("&nbsp; &nbsp; &nbsp; &nbsp;",$khuvuc['level']);?><?php echo $khuvuc['tenkhuvuc']?></option>
+                        <?php foreach($modules as $module){ ?>
+                        <option value="<?php echo $module['id']?>"><?php echo $this->string->getPrefix("&nbsp; &nbsp; &nbsp; &nbsp;",$module['level']);?><?php echo $module['modulename']?></option>
                       <?php }?>
                     </select>
                 </p>
@@ -43,3 +40,6 @@
     </div>
     
 </div>
+<script language="javascript">
+$('#moduleparent').val("<?php echo $item['moduleparent']?>");
+</script>

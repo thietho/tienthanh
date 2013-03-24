@@ -139,15 +139,36 @@ function Module()
 		
 	}
 	
-	this.move = function(moduleid)
+	this.move = function(id)
 	{
-		$('#popup-content').load('?route=core/module/move&moduleid='+moduleid,
-			function()
-			{
+		$("#popup").attr('title','Module');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						buttons: {
+							
+							'Lưu': function() {
+								module.updateParent($('#id').val(),$('#moduleparent').val());
+								$( this ).dialog( "close" );
+							},
+							'Đóng': function() {
+								$( this ).dialog( "close" );
+							},
+							
+							
+						}
+					});
 				
-				showPopup('#popup', 700, 500, true );
-				//numberReady();
-			});	
+					
+		$("#popup-content").load('?route=core/module/move&id='+id,function(){
+			$("#popup").dialog("open");	
+		});
+		
+		
 	}
 	
 	this.setNode = function(e)
@@ -212,11 +233,11 @@ function Module()
 		});
 		
 	}
-	this.updateParent = function(moduleid,parent)
+	this.updateParent = function(id,parent)
 	{
 		$.post("?route=core/module/updateParent", 
 			{
-				moduleid:moduleid,
+				id:id,
 				moduleparent:parent
 			},
 			function(data){

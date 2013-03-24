@@ -123,7 +123,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	
 		
   	}
-	
+	//Báo giá
 	public function insertbangbaogia()
 	{
 		if(!$this->user->hasPermission($this->getRoute(), "add"))
@@ -210,7 +210,21 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$this->render();
 		}
 	}
-	
+	public function deleteBaoGia()
+	{
+		$listid=$this->request->post['delete'];
+		//$listmadonvi=$_POST['delete'];
+		
+		if(count($listid))
+		{
+			$this->model_quanlykho_nguyenlieu->deletedBangBaoGia($listid);
+			$this->data['output'] = "Xóa thành công";
+		}
+		$this->id="content";
+		$this->template="common/output.tpl";
+		$this->render();
+	}
+	//End báo gia
 	public function delete() 
 	{
 		$listid=$this->request->post['delete'];

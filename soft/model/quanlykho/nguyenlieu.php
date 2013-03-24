@@ -452,7 +452,7 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		$this->db->deleteData("qlkbangbaogia",$where);
 
 		$where="mabangbaogia = '".$id."'";
-		$this->db->deleteData("mabangbaogia",$where);
+		$this->db->deleteData("qlknguyenlieugia",$where);
 	}
 	
 	//

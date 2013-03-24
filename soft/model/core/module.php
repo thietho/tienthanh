@@ -88,7 +88,7 @@ class ModelCoreModule extends Model
 						$val
 					);
 		
-		$where="moduleid = '".$moduleid."'";
+		$where="id = '".$id."'";
 		$this->db->updateData("module",$field,$value,$where);
 	}
 			
@@ -122,17 +122,18 @@ class ModelCoreModule extends Model
 		return $path;
 	}
 	
-	function getTree($id, &$data,$root="",$notid = -1, $level=-1, $path="", $parentpath="")
+	function getTree($id, &$data,$root=0,$notid = -1, $level=-1, $path="", $parentpath="")
 	{
 		
 		$arr=$this->getItem($id);
 		
 		$rows = $this->getChild($id);
-		//if(count($rows))
+		if(count($rows))
 		{
-			$arrmodulename = $this->getPath($arr['moduleid'],"modulename");
+			$arrmodulename = $this->getPath($arr['id'],"modulename");
 			$arr['modulename'] =  implode(" - ", $arrmodulename);	
 		}
+		
 		$arr['countchild'] = count($rows);
 		
 		if($arr['moduleparent'] != 0 && $id!=$root) 
@@ -154,7 +155,7 @@ class ModelCoreModule extends Model
 		if(count($rows) && $id!=$notid)
 			foreach($rows as $row)
 			{
-				$this->getTree($row['moduleid'], $data,$root,$notid, $level, $path, $parentpath);
+				$this->getTree($row['id'], $data,$root,$notid, $level, $path, $parentpath);
 			}
 	}
 }
