@@ -15,27 +15,32 @@ class ModelCoreModule extends Model
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-		
+	
+	public function checkPermission($usertypeid,$moduleid)
+	{
+		$where = " AND moduleid = '".$moduleid."' AND permission like '%[".$usertypeid."]%'";
+		$data_module = $this->getList($where);
+		if(count($data_module))
+			return true;
+		else
+			return false;
+	}
+	
 	public function insert($data)
 	{
 		$moduleid=$this->db->escape(@$data['moduleid']);
 		$modulename=$this->db->escape(@$data['modulename']);
-		
 		$moduleparent=$this->db->escape(@$data['moduleparent']);
 		
-		
-				
 		$field=array(
 						'moduleid',
 						'modulename',
-						
 						'moduleparent'
 						
 					);
 		$value=array(
 						$moduleid,
 						$modulename,
-						
 						$moduleparent
 					);
 		$getLastId = $this->db->insertData("module",$field,$value);
@@ -48,11 +53,8 @@ class ModelCoreModule extends Model
 		$id=$this->db->escape(@$data['id']);
 		$moduleid=$this->db->escape(@$data['moduleid']);
 		$modulename=$this->db->escape(@$data['modulename']);
-		
 		$moduleparent=$this->db->escape(@$data['moduleparent']);
 		
-		
-				
 		$field=array(
 						'moduleid',
 						'modulename',
