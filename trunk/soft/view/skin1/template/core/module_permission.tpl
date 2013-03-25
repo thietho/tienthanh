@@ -25,13 +25,10 @@
                 </p>               
                 
                 <p>
-                    <label>Module cha:</label><br />
-                    <select id="moduleparent" name="moduleparent">
-                        <option value="">Khu vực gốc</option>
-                        <?php foreach($modules as $module){ ?>
-                        <option value="<?php echo $module['id']?>"><?php echo $this->string->getPrefix("&nbsp; &nbsp; &nbsp; &nbsp;",$module['level']);?><?php echo $module['modulename']?></option>
-                      <?php }?>
-                    </select>
+                    <label>Loại user:</label><br />
+                    <?php foreach($usertypes as $usertype){ ?>
+                    <input type="checkbox" name="usertypeid[<?php echo $usertype['usertypeid']?>]" value="<?php echo $usertype['usertypeid']?>" <?php echo in_array($usertype['usertypeid'],$permission)?"checked":"" ?>> <?php echo $usertype['usertypename']?>
+                    <?php } ?>
                 </p>
             </div>
             
@@ -40,6 +37,3 @@
     </div>
     
 </div>
-<script language="javascript">
-$('#moduleparent').val("<?php echo $item['moduleparent']?>");
-</script>

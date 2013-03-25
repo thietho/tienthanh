@@ -38,6 +38,34 @@ class ControllerCoreModule extends Controller
 		$this->render();
 	}
 	
+	public function permission()
+	{
+		$this->data['item'] = $this->model_core_module->getItem($this->request->get['id']);
+		$this->data['permission'] = $this->string->referSiteMapToArray($this->data['item']['permission']);
+		$this->load->model("core/usertype");
+		$where = " AND usertypeid <> 'admin' ORDER BY `id` ASC ";
+		$this->data['usertypes'] = $this->model_core_usertype->getList($where);
+		$this->id='content';
+		$this->template='core/module_permission.tpl';
+		$this->render();
+	}
+	
+	public function updatePermission()
+	{
+		$data = $this->request->post;
+		$permission = "";
+		if(count($data['usertypeid']))
+		{
+			$permission = $this->string->arrayToString($data['usertypeid']);	
+		}
+		
+		$this->model_core_module->updateCol($data['id'],'permission',$permission);
+		$this->data['output'] = "true";
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
+	
 	public function delete() 
 	{
 		$listmoduleid=$this->request->post['delete'];
@@ -137,13 +165,13 @@ class ControllerCoreModule extends Controller
 			$btnEdit ="";
 			$btnAdd ="";
 			//if($this->data['list_button']['update'])
-				$btnEdit = '[<a onClick="module.edit(\''.$item['id'].'\')">Edit</a>]';
+			$btnEdit = '[<a onClick="module.edit(\''.$item['id'].'\')">Edit</a>]';
 			//if($this->data['list_button']['insert'])
-				$btnAdd = '[<a onClick="module.add(\''.$item['id'].'\')">Add child</a>]';
-		
+			$btnAdd = '[<a onClick="module.add(\''.$item['id'].'\')">Add child</a>]';
+			$btnPermission = '[<a onClick="module.permission(\''.$item['id'].'\')">Permission</a>]';
 			$btnMove = '<a onClick="module.move('.$item['id'].')">Move</a>';
 			$parent = '<input type="hidden" id="nodeparent_'.$item['id'].'" name="parent['.$item['id'].']" value="'.$root.'">';
-			$str.='<span id="module'.$item['id'].'" class="'.$type.'"><b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$btnMove.' '.$btnEdit.' '.$btnAdd.'  '.$btnRemove.$parent.'</span>';
+			$str.='<span id="module'.$item['id'].'" class="'.$type.'"><b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$btnMove.' '.$btnEdit.' '.$btnAdd.'  '.$btnRemove.$btnPermission.$parent.'</span>';
 			if(count($child))
 			{
 				$str .= "<ul id='group".$item['id']."'>";
