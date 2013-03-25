@@ -37,12 +37,12 @@
 			<td><?php echo $item['maphongban']?></td>
 			<td><?php echo $item['tenphongban']?></td>
 			<td><?php echo $item['ghichu']?></td>
-			<td class="link-control"><input type="button" class="button"
-				name="btnPhanQuyen" value="<?php echo $item['text_edit']?>"
-				onclick="window.location = '<?php echo $item['link_edit']?>'" /> <input
+			<td class="link-control">
+            	<input type="button" class="button" name="btnPhanQuyen" value="<?php echo $item['text_edit']?>" onclick="window.location = '<?php echo $item['link_edit']?>'" /> 
+                <!--<input
 				type="button" class="button" name="btnPhanQuyen"
 				value="<?php echo $item['text_phanquyen']?>"
-				onclick="window.location = '<?php echo $item['link_phanquyen']?>'" />
+				onclick="window.location = '<?php echo $item['link_phanquyen']?>'" />-->
 			</td>
 		</tr>
 		<?php
