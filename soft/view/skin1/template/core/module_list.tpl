@@ -171,6 +171,38 @@ function Module()
 		
 	}
 	
+	this.permission = function(id)
+	{
+		$("#popup").attr('title','Phân quyền');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						buttons: {
+							
+							'Lưu': function() {
+								module.savePermission($('#id').val(),$('#moduleparent').val());
+								$( this ).dialog( "close" );
+							},
+							'Đóng': function() {
+								$( this ).dialog( "close" );
+							},
+							
+							
+						}
+					});
+				
+					
+		$("#popup-content").load('?route=core/module/permission&id='+id,function(){
+			$("#popup").dialog("open");	
+		});
+		
+		
+	}
+	
 	this.setNode = function(e)
 	{
 		module.idcur = e;
@@ -259,6 +291,17 @@ function Module()
 				if(data == "true")
 				{
 					window.location.reload();
+				}
+			});
+	}
+	
+	this.savePermission = function()
+	{
+		$.post("?route=core/module/updatePermission", $("#frmmodule").serialize(),
+			function(data){
+				if(data == "true")
+				{
+					alert("Cập nhật quyền thành công");
 				}
 			});
 	}
