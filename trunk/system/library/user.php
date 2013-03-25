@@ -274,6 +274,45 @@ final class User {
 		}
 		return $layout;
 	}
+	public function writeLog($detail)
+	{
+		$logdate = $this->date->getToday();
+		$field=array(
+
+						'logdate',
+						'detail',
+						'userid'
+						
+						);
+						$value=array(
+
+						$logdate,
+						$detail,
+						$this->userid
+						);
+						$this->db->insertData("log",$field,$value);
+
+	}
+
+	private function getNhanVien()
+	{
+		$sql = "Select *
+									from `qlknhanvien` 
+									where username = '".$this->username."' ";
+
+		$query = $this->db->query($sql);
+		return $query->rows[0];
+	}
+
+	public function getLogs($where)
+	{
+		$sql = "Select `log`.*
+									from `log` 
+									where 1=1 " . $where;
+
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 	
 //BENGIN PERMISSION JSON
 	

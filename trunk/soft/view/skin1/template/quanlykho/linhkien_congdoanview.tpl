@@ -32,6 +32,7 @@
                     	</tr>
                     </thead>
                     <tbody id="listcongdoan">
+                    	<?php if(count($logcongdoan)){?>
                     	<?php foreach($logcongdoan as $item){ ?>
                         <tr>
                         	<!--<td><?php echo $item->macongdoan?></td>-->
@@ -50,6 +51,7 @@
                             <td><?php echo $item->ghichu?></td>
                             <td><?php echo $this->date->formatMySQLDate($item->logdate,"longdate")?></td>
                     	</tr>
+                        <?php } ?>
                         <?php } ?>
                     </tbody>
                 </table>
