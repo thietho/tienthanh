@@ -2,6 +2,20 @@
 
 
 <script type="text/javascript">
+var CLASSES = ($.treeview.classes = {
+		open: "open",
+		closed: "closed",
+		expandable: "expandable",
+		expandableHitarea: "expandable-hitarea",
+		lastExpandableHitarea: "lastExpandable-hitarea",
+		collapsable: "collapsable",
+		collapsableHitarea: "collapsable-hitarea",
+		lastCollapsableHitarea: "lastCollapsable-hitarea",
+		lastCollapsable: "lastCollapsable",
+		lastExpandable: "lastExpandable",
+		last: "last",
+		hitarea: "hitarea"
+	});
 	$(function() {
 		$("#group0").treeview();
 		
