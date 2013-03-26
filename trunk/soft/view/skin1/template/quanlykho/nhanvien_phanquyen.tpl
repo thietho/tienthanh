@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
     $("#group0").treeview();
-
+	
 	arr = new Array();
 	
 	<?php 
@@ -13,7 +13,39 @@ $(document).ready(function(e) {
         if(arr.indexOf(this.value)!=-1)
 			this.checked = true;
     });
+	
+	$('.permission').click(function(e) {
+        var flag = this.checked;
+		if(flag == true)
+		{
+			var obj = $(this);
+			while(obj.attr('parent')!=0)
+			{
+				var objparent = document.getElementById('per'+obj.attr('parent'));
+				objparent.checked = flag;
+				obj = $('#per'+obj.attr('parent'));
+			}			
+		}
+		else
+		{
+			//Bo check tat ca module con
+			var obj = $(this);
+			unchecked(obj);
+		}
+    });
 });
+
+function unchecked(obj)
+{
+	var id = obj.attr('id').replace('per','');
+	$('.permission').each(function(index, element) {
+        if($(this).attr('parent') == id)
+		{
+			this.checked = false;
+			unchecked($(this));
+		}
+    });
+}
 
 function save()
 {
@@ -23,8 +55,8 @@ function save()
 		function(data){
 			if(data == "true")
 			{
-				
-				
+				alert('Cập nhật phân quyền thành công');
+				window.location = '?route=quanlykho/nhanvien';
 			}
 			else
 			{
@@ -50,12 +82,21 @@ function save()
         	<div class="button right">
             	
                 <a class="button save" onclick="save()">Lưu</a>
+                <a class="button cancel" href="?route=quanlykho/nhanvien">Trở về</a>
                 <input type="hidden" name="nhanvienid" value="<?php echo $nhanvien['id']?>">
                 
             </div>
             <div class="clearer">^&nbsp;</div>
             
             <div>
+            	<p>
+                	<label>Tên nhân viên</label> <?php echo $nhanvien['hoten']?>
+                </p>
+                <p>
+                	<label>Loại tài khoản</label> <?php echo $this->document->getUserType($this->document->getUser($nhanvien['username'],'usertypeid'))?>
+                </p>
+                
+				
                 <ul id="group0" class="filetree">
                 	<?php echo $treemodule?>
                 </ul>

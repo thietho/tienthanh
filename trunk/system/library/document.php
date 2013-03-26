@@ -178,6 +178,24 @@ final class Document {
 		return $query->row[$name];
 	}
 	
+	
+	public function getUserType($usertypeid,$name = 'usertypename')
+	{
+		$sql = "Select `usertype`.* 
+									from `usertype` 
+									where usertypeid ='".$usertypeid."' ";
+		$query = $this->db->query($sql);
+		return $query->row[$name];
+	}
+	
+	public function getUser($userid,$name = 'fullname')
+	{
+		$sql = "Select `user`.* 
+									from `user` 
+									where userid ='".$userid."' ";
+		$query = $this->db->query($sql);
+		return $query->row[$name];
+	}
 	public function getPhieuNhapXuat($id,$name = 'maphieu')
 	{
 		$sql = "Select `qlkphieunhapxuat`.* 

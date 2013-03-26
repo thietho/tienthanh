@@ -425,11 +425,11 @@ class ControllerQuanlykhoNhanVien extends Controller
 			$type = 'folder';
 			
 			
-			$chk = '<input type="checkbox" class="permission" name="permission" value="'.$item['moduleid'].'">';
+			$chk = '<input type="checkbox" id="per'.$item['id'].'" class="permission" name="permission[]" value="'.$item['moduleid'].'" parent="'.$item['moduleparent'].'">';
 			
 			
 			$parent = '<input type="hidden" id="nodeparent_'.$item['id'].'" name="parent['.$item['id'].']" value="'.$root.'">';
-			$str.='<span id="module'.$item['id'].'" class="'.$type.'"><b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$chk.$parent.'</span>';
+			$str.='<span id="module'.$item['id'].'" class="'.$type.'">'.$chk.' <b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$parent.'</span>';
 			if(count($child))
 			{
 				$str .= "<ul id='group".$item['id']."'>";
@@ -505,7 +505,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 	{
 		$this->load->model("quanlykho/nhanvien");
 		$id = $this->request->post['nhanvienid'];
-		$permission = $this->request->post['permission'];
+		$permission = $this->string->arrayToString($this->request->post['permission']);
 		$this->model_quanlykho_nhanvien->updateCol($id,'permission',$permission);
 		$this->data['output'] = "true";
 		$this->id="content";
