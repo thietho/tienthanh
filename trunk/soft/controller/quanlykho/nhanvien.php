@@ -455,6 +455,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 			//Lay cac module duoc phep truy cap cua usertype do tu bang module
 			$where = " AND permission like '%[".$data['usertypeid']."]%'";
 			$data_module = $this->model_core_module->getList($where);
+			$arr_module = $this->string->matrixToArray($data_module,'moduleid');
 			//Luu cac module duoc phep truy cap vao permission cua nhan vien
 			$nhanvien = $this->model_quanlykho_nhanvien->getItem($data['nhanvienid']);
 			$phongban = $this->model_quanlykho_phongban->getPhongBan($nhanvien['maphongban']);
