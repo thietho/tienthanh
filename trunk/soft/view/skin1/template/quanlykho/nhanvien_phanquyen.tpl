@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
-	CLASSES = ($.treeview.classes = {
+	var CLASSES = ($.treeview.classes = {
 		open: "open",
 		//closed: "closed",
 		expandable: "expandable",
