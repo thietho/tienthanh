@@ -238,19 +238,6 @@
 	// classes used by the plugin
 	// need to be styled via external stylesheet, see first example
 	$.treeview = {};
-	var CLASSES = ($.treeview.classes = {
-		open: "open",
-		//closed: "closed",
-		expandable: "expandable",
-		expandableHitarea: "expandable-hitarea",
-		lastExpandableHitarea: "lastExpandable-hitarea",
-		collapsable: "collapsable",
-		collapsableHitarea: "collapsable-hitarea",
-		lastCollapsableHitarea: "lastCollapsable-hitarea",
-		lastCollapsable: "lastCollapsable",
-		lastExpandable: "lastExpandable",
-		last: "last",
-		hitarea: "hitarea"
-	});
+	
 	
 })(jQuery);

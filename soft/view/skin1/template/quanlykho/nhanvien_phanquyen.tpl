@@ -1,5 +1,19 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
+	CLASSES = ($.treeview.classes = {
+		open: "open",
+		//closed: "closed",
+		expandable: "expandable",
+		expandableHitarea: "expandable-hitarea",
+		lastExpandableHitarea: "lastExpandable-hitarea",
+		collapsable: "collapsable",
+		collapsableHitarea: "collapsable-hitarea",
+		lastCollapsableHitarea: "lastCollapsable-hitarea",
+		lastCollapsable: "lastCollapsable",
+		lastExpandable: "lastExpandable",
+		last: "last",
+		hitarea: "hitarea"
+	});
     $("#group0").treeview();
 	
 	arr = new Array();
