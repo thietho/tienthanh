@@ -303,7 +303,24 @@ final class User {
 		$query = $this->db->query($sql);
 		return $query->rows[0];
 	}
-
+	
+	public function checkPermission($moduleid)
+	{
+		$nhanvien = $this->getNhanVien();
+		$arr_allowmodule = $this->string->referSiteMapToArray($nhanvien['permission']);
+		if(in_array($moduleid,$arr_allowmodule))
+			return true;
+		else
+			return false;
+	}
+	
+	public function getAllowModule()
+	{
+		$nhanvien = $this->getNhanVien();
+		$arr_allowmodule = $this->string->referSiteMapToArray($nhanvien['permission']);
+		return $arr_allowmodule;
+	}
+	
 	public function getLogs($where)
 	{
 		$sql = "Select `log`.*

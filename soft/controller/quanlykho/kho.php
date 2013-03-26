@@ -7,7 +7,7 @@ class ControllerQuanlykhoKho extends Controller
 		$this->load->model("core/module");
 		$moduleid = $_GET['route'];
 		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
-		if($this->model_core_module->checkPermission($this->user->getUserTypeId(),$moduleid)==false)
+		if($this->user->checkPermission($moduleid)==false)
 		{
 			$this->response->redirect('?route=page/home');
 		}

@@ -5,7 +5,7 @@ class ModelQuanlykhoKho extends ModelQuanlykhoNhom
 	private $root = "qlkkho";
 	function __construct()
 	{
-
+		
 		$data = $this->getItem($this->root);
 		if(count($data)==0)
 		{

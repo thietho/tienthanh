@@ -275,7 +275,7 @@ class ModelQuanlykhoNhanvien extends Model
 						$val
 		);
 
-		$where=" id = '".$id."'";
+		echo $where=" id = '".$id."'";
 		$this->db->updateData("qlknhanvien",$field,$value,$where);
 	}
 	
