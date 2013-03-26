@@ -449,9 +449,13 @@ class ControllerQuanlykhoNhanVien extends Controller
 		{
 			$this->load->model("quanlykho/phongban");
 			$this->load->model("quanlykho/nhanvien");
+			$this->load->model("core/module");
 			$userid = $this->model_quanlykho_nhanvien->saveuser($data);
 			$this->model_quanlykho_nhanvien->updateusername($data['nhanvienid'], $userid);
-			//Lap quyen tu phong ban qua
+			//Lay cac module duoc phep truy cap cua usertype do tu bang module
+			$where = " AND permission like '%[".$data['usertypeid']."]%'";
+			$data_module = $this->model_core_module->getList($where);
+			//Luu cac module duoc phep truy cap vao permission cua nhan vien
 			$nhanvien = $this->model_quanlykho_nhanvien->getItem($data['nhanvienid']);
 			$phongban = $this->model_quanlykho_phongban->getPhongBan($nhanvien['maphongban']);
 			$this->model_quanlykho_nhanvien->updateCol($nhanvien['id'],'permission',$phongban['permission']);
