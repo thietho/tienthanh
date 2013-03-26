@@ -7,6 +7,10 @@ class ControllerQuanlykhoDonvitinh extends Controller
 		$this->load->model("core/module");
 		$moduleid = $_GET['route'];
 		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
+		if($this->user->checkPermission($moduleid)==false)
+		{
+			$this->response->redirect('?route=page/home');
+		}
 	}
 	public function index()
 	{

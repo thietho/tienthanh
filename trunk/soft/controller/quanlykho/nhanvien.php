@@ -381,39 +381,64 @@ class ControllerQuanlykhoNhanVien extends Controller
 	public function phanquyen()
 	{
 		
-		$this->load->model("core/usertype");
-		$this->load->model("core/user");
+		
 		$this->load->model("quanlykho/nhanvien");
-		$this->load->model("quanlykho/phongban");
+		
 		$this->load->model("core/module");
 		$this->load->model("core/sitemap");
-		$this->load->model("common/control");
 		
-		/*$this->data['usertype'] = $this->model_quanlykho_nhanvien->getItem($this->request->get['id']);
-		$this->data['permission'] = $this->string->referSiteMapToArray($this->data['usertype']['permission']);*/
+		$this->data['treemodule'] = $this->getTree();
+		
 		$this->data['nhanvien'] = $this->model_quanlykho_nhanvien->getItem($this->request->get['id']);
 		
 		$this->data['permission'] = $this->string->referSiteMapToArray($this->data['nhanvien']['permission']);
 		
-		if(count($this->data['permission']) == 0)
-		{
-			$phongban = $this->model_quanlykho_phongban->getPhongBan($this->data['nhanvien']['maphongban']);
-			$this->data['nhanvien']['permission'] = $phongban['permission'];
-			$this->data['permission'] = $this->string->referSiteMapToArray($phongban['permission']);
-			//print_r($this->data['permission']);
-		}
-		$this->data['sitemaps'] = array();
-		$this->data['listPermission'] = $this->model_core_usertype->listPermission;
-		$this->model_core_sitemap->getTreeSitemap("",$this->data['sitemaps'],$this->user->getSiteId());
-		$this->data['modules'] = $this->model_core_sitemap->getModuleAddons();
-		$this->data['modulesquanlykho'] = $this->model_core_sitemap->getModuleQuanLyKho();
+		
 		
 		$this->data['cancel'] = $this->url->https('quanlykho/nhanvien');
 		
 		$this->id='content';
-		$this->template = 'quanlykho/usertype_form.tpl';
+		$this->template = 'quanlykho/nhanvien_phanquyen.tpl';
 		$this->layout="layout/center";
 		$this->render();
+	}
+	
+	public function getTreeView()
+	{
+		
+		$root = @(int)$this->request->get['root'];
+		$this->data['output'] = $this->getTree($root);
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
+	
+	private function getTree($root = 0)
+	{
+		
+		$modules = $this->model_core_module->getChild($root);
+		$str = "";
+		foreach($modules as $item)
+		{
+			$child = $this->model_core_module->getChild($item['id']);
+			$str.='<li id="node'.$item['id'].'" class="closed" ref="'.$root.'">';
+			$type = 'folder';
+			
+			
+			$chk = '<input type="checkbox" class="permission" name="permission" value="'.$item['moduleid'].'">';
+			
+			
+			$parent = '<input type="hidden" id="nodeparent_'.$item['id'].'" name="parent['.$item['id'].']" value="'.$root.'">';
+			$str.='<span id="module'.$item['id'].'" class="'.$type.'"><b><span id="modulename'.$item['id'].'">'.$item['moduleid']."->".$item['modulename'].'</span></b> '.$chk.$parent.'</span>';
+			if(count($child))
+			{
+				$str .= "<ul id='group".$item['id']."'>";
+				$str .= $this->getTree($item['id']);
+				$str .= "</ul>";
+			}
+			$str.='</li>';
+		}
+		return $str;
 	}
 	
 	public function motaikhoan()
@@ -456,10 +481,12 @@ class ControllerQuanlykhoNhanVien extends Controller
 			$where = " AND permission like '%[".$data['usertypeid']."]%'";
 			$data_module = $this->model_core_module->getList($where);
 			$arr_module = $this->string->matrixToArray($data_module,'moduleid');
+			$permission = $this->string->arrayToString($arr_module);
+			
 			//Luu cac module duoc phep truy cap vao permission cua nhan vien
-			$nhanvien = $this->model_quanlykho_nhanvien->getItem($data['nhanvienid']);
-			$phongban = $this->model_quanlykho_phongban->getPhongBan($nhanvien['maphongban']);
-			$this->model_quanlykho_nhanvien->updateCol($nhanvien['id'],'permission',$phongban['permission']);
+			//$nhanvien = $this->model_quanlykho_nhanvien->getItem($data['nhanvienid']);
+			$this->model_quanlykho_nhanvien->updateCol($data['nhanvienid'],'permission',$permission);
+			
 			$this->data['output'] = "true";
 		}
 		else
@@ -477,9 +504,9 @@ class ControllerQuanlykhoNhanVien extends Controller
 	public function savePermission()
 	{
 		$this->load->model("quanlykho/nhanvien");
-		$data['nhanvienid'] = $this->request->post['id'];
-		$data['permission'] = $this->request->post['permission'];
-		$this->model_quanlykho_nhanvien->updatePermission($data);
+		$id = $this->request->post['nhanvienid'];
+		$permission = $this->request->post['permission'];
+		$this->model_quanlykho_nhanvien->updateCol($id,'permission',$permission);
 		$this->data['output'] = "true";
 		$this->id="content";
 		$this->template="common/output.tpl";
