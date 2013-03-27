@@ -306,6 +306,8 @@ final class User {
 	
 	public function checkPermission($moduleid)
 	{
+		if($this->getUserTypeId() == 'admin')
+			return true;
 		$nhanvien = $this->getNhanVien();
 		$arr_allowmodule = $this->string->referSiteMapToArray($nhanvien['permission']);
 		if(in_array($moduleid,$arr_allowmodule))
