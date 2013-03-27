@@ -6,10 +6,14 @@
 
 <form action="" method="post" id="listitem" name="listitem">
 
-<div class="button right"><input class="button" value="Add new"
-	type="button" onclick="linkto('<?php echo $insert?>')"> <input
-	class="button" type="button" name="delete_all" value="Xóa"
-	onclick="deleteitem()" /></div>
+<div class="button right">
+	<?php if($this->user->checkPermission("quanlykho/phongban/insert")==true){ ?>
+	<input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+    <?php } ?>
+    <?php if($this->user->checkPermission("quanlykho/phongban/delete")==true){ ?>
+    <input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()" />
+    <?php } ?>
+</div>
 <div class="clearer">^&nbsp;</div>
 
 <div class="sitemap treeindex">
@@ -38,7 +42,9 @@
 			<td><?php echo $item['tenphongban']?></td>
 			<td><?php echo $item['ghichu']?></td>
 			<td class="link-control">
-            	<input type="button" class="button" name="btnPhanQuyen" value="<?php echo $item['text_edit']?>" onclick="window.location = '<?php echo $item['link_edit']?>'" /> 
+            	<?php if($this->user->checkPermission("quanlykho/phongban/update")==true){ ?>
+            	<input type="button" class="button" name="btnPhanQuyen" value="<?php echo $item['text_edit']?>" onclick="window.location = '<?php echo $item['link_edit']?>'" />
+                <?php } ?>
                 <!--<input
 				type="button" class="button" name="btnPhanQuyen"
 				value="<?php echo $item['text_phanquyen']?>"

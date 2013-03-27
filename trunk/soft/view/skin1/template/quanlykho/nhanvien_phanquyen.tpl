@@ -1,8 +1,7 @@
 <script type="text/javascript">
-$(document).ready(function(e) {
-	var CLASSES = ($.treeview.classes = {
+var CLASSES = ($.treeview.classes = {
 		open: "open",
-		//closed: "closed",
+		closed: "closed",
 		expandable: "expandable",
 		expandableHitarea: "expandable-hitarea",
 		lastExpandableHitarea: "lastExpandable-hitarea",
@@ -14,6 +13,8 @@ $(document).ready(function(e) {
 		last: "last",
 		hitarea: "hitarea"
 	});
+$(document).ready(function(e) {
+	
     $("#group0").treeview();
 	
 	arr = new Array();
@@ -70,7 +71,7 @@ function save()
 			if(data == "true")
 			{
 				alert('Cập nhật phân quyền thành công');
-				window.location = '?route=quanlykho/nhanvien';
+				$.unblockUI();
 			}
 			else
 			{

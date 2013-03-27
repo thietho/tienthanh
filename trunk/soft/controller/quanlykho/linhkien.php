@@ -4,29 +4,13 @@ class ControllerQuanlykhoLinhkien extends Controller
 	private $error = array();
 	function __construct() 
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
+		$this->load->model("core/module");
+		$moduleid = $_GET['route'];
+		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
+		if($this->user->checkPermission($moduleid)==false)
 		{
-			$this->response->redirect("?route=common/permission");
+			$this->response->redirect('?route=page/home');
 		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
-		}
-		//$this->load->language('quanlykho/nguyenlieu');
-		//$this->data = array_merge($this->data, $this->language->getData());
-		
-		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/nguyenlieu");
 		$this->load->model("quanlykho/linhkien");
@@ -51,73 +35,38 @@ class ControllerQuanlykhoLinhkien extends Controller
 	
 	public function insert()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		
     	$this->getForm();
 	}
 	public function insertlist()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		
+	{	
     	$this->id='content';
 		$this->template='quanlykho/linhkien_form_list.tpl';
 		$this->layout="layout/center";
 		$this->render();
 	}
 	public function update()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			//$this->load->language('quanlykho/linhkien');
-			//$this->data = array_merge($this->data, $this->language->getData());
-			
-			
-			$this->load->model("quanlykho/linhkien");
-			$this->data['haspass'] = false;
-			$this->data['readonly'] = 'readonly="readonly"';
-			
-		
-			$this->getForm();
-		}
-		
+	{		
+		$this->load->model("quanlykho/linhkien");
+		$this->data['haspass'] = false;
+		$this->data['readonly'] = 'readonly="readonly"';
+		$this->getForm();
   	}
 	
 	public function dinhluong()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			//$this->load->language('quanlykho/linhkien');
-			//$this->data = array_merge($this->data, $this->language->getData());
-			$this->load->model("quanlykho/nhom");
-			
-			$this->load->model("quanlykho/donvitinh");
-			$this->data['nhomlinhkien'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
-			$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
-			$this->load->model("quanlykho/linhkien");
-			$this->data['haspass'] = false;
-			$this->data['readonly'] = 'readonly="readonly"';
-			$this->data['item'] = $this->model_quanlykho_linhkien->getItem($this->request->get['id']);
-			$this->data['dinhluong'] = $this->model_quanlykho_linhkien->getDinhLuong($this->request->get['id']);
-			$this->id='content';
-			$this->template='quanlykho/linhkien_dinhluong.tpl';
-			$this->layout="layout/center";
-			$this->render();
-		}
-		
+	{			
+		$this->load->model("quanlykho/nhom");	
+		$this->load->model("quanlykho/donvitinh");
+		$this->data['nhomlinhkien'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		$this->load->model("quanlykho/linhkien");
+		$this->data['haspass'] = false;
+		$this->data['readonly'] = 'readonly="readonly"';
+		$this->data['item'] = $this->model_quanlykho_linhkien->getItem($this->request->get['id']);
+		$this->data['dinhluong'] = $this->model_quanlykho_linhkien->getDinhLuong($this->request->get['id']);
+		$this->id='content';
+		$this->template='quanlykho/linhkien_dinhluong.tpl';
+		$this->layout="layout/center";
+		$this->render();
   	}
 	
 	

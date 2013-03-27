@@ -33,11 +33,21 @@
             	<?php if($dialog==true){ ?>
             	
                 <?php }else{ ?>
+                <?php if($this->user->checkPermission("quanlykho/vattu/viewTonKho")==true){ ?>
                 <input class="button" value="Chi tiết tồn kho" type="button" onclick="viewTonKho('')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/vattu/xemgia")==true){ ?>
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/vattu/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/vattu/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/vattu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>

@@ -63,11 +63,14 @@
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/vattu/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
                             <!--<input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>-->
                             <!--<input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_capnhatgia']?>" onclick="window.location='<?php echo $item['link_capnhatgia']?>'"/>-->
+                            <?php if($this->user->checkPermission("quanlykho/vattu/xemgia")==true){ ?>
                            	<input type="button" class="button" name="btnXemGia" value="<?php echo $item['text_xemgia']?>" onclick="viewPrice(<?php echo $item['id']?>)"/>
+                            <?php } ?>
                         </td>
                         <?php } ?>
                     </tr>
