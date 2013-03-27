@@ -1,7 +1,7 @@
 
 <div class="section">
 
-	<div class="section-title">Danh sách phiếu nhập nguyên vật liệu</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	

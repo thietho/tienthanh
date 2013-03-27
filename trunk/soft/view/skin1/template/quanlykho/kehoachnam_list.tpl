@@ -1,15 +1,19 @@
 <div class="section">
 
-<div class="section-title">Quản lý tài sản</div>
+<div class="section-title"><?php echo $this->document->title?></div>
 
 <div class="section-content">
 
 <form action="" method="post" id="listitem" name="listitem">
 
-<div class="button right"><input class="button" value="Add new"
-	type="button" onclick="linkto('<?php echo $insert?>')"> <input
-	class="button" type="button" name="delete_all" value="Delete"
-	onclick="deleteitem()" /></div>
+<div class="button right">
+	<?php if($this->user->checkPermission("quanlykho/kehoachnam/insert")==true){ ?>
+	<input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+    <?php } ?>
+    <?php if($this->user->checkPermission("quanlykho/kehoachnam/delete")==true){ ?>
+    <input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()" />
+    <?php } ?>
+</div>
 <div class="clearer">^&nbsp;</div>
 
 <div class="sitemap treeindex">
@@ -59,13 +63,13 @@
 
 
 			<td class="link-control">
-				<a class="button"
-				href="<?php echo $item['link_edit']?>"
-				title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+            	<?php if($this->user->checkPermission("quanlykho/kehoachnam/update")==true){ ?>
+				<a class="button" href="<?php echo $item['link_edit']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+                <?php } ?>
 				<?php if($item['link_danhgia']!=''){ ?>
-				<a class="button"
-				href="<?php echo $item['link_danhgia']?>"
-				title="<?php echo $item['text_danhgia']?>"><?php echo $item['text_danhgia']?></a>
+                <?php if($this->user->checkPermission("quanlykho/kehoachnam/danhgia")==true){ ?>
+				<a class="button" href="<?php echo $item['link_danhgia']?>" title="<?php echo $item['text_danhgia']?>"><?php echo $item['text_danhgia']?></a>
+                <?php } ?>
 				<?php } ?>
 			</td>
 		</tr>

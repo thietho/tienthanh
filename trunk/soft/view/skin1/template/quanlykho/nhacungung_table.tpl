@@ -34,10 +34,15 @@
                         <td><?php echo $this->date->formatMySQLDate($item['ngaydanhgialai'])?></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/nhacungung/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/phieunhanhang")==true){ ?>
                            	<input type="button" class="button" name="btnLichsugiaodich" value="<?php echo $item['text_lichsugiaodich']?>" onclick="window.location='<?php echo $item['link_lichsugiaodich']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/nhacungung/lichsudanhgia")==true){ ?>
                             <input type="button" class="button" name="btnLichsudanhgia" value="<?php echo $item['text_lichsudanhgia']?>" onclick="window.location='<?php echo $item['link_lichsudanhgia']?>'"/>
+                            <?php } ?>
                             
                         </td>
                         <?php } ?>

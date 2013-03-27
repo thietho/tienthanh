@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Quản lý danh mục nhà cung ứng</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -42,8 +42,12 @@
             	
                 <?php } ?>
                 <?php if($dialog!=true){ ?>
+                <?php if($this->user->checkPermission("quanlykho/nhacungung/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/nhacungung/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>  
             </div>
             <div class="clearer">^&nbsp;</div>

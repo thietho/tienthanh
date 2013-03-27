@@ -1,6 +1,6 @@
 <div class="section">
 
-<div class="section-title">Báo cáo thống kê nguyên liệu</div>
+<div class="section-title"><?php echo $this->document->title?></div>
 
 <div class="section-content">
 <div class="button right"><input class="button"

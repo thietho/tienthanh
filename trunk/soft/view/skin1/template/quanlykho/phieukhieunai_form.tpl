@@ -2,7 +2,7 @@
 
 <div class="section" id="sitemaplist">
 
-	<div class="section-title">Phiếu khiếu nại</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content padding1">
     

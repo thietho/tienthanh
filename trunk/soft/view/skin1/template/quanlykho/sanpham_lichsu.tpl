@@ -1,6 +1,6 @@
 <div class="section" id="sitemaplist">
-
-	<div class="section-title">Quá trinh thay đổi sản phẩm <?php echo $logsanpham[0]->masanpham?></div>
+	<div class="section-title"><?php echo $this->document->title?></div>
+	<div>Quá trinh thay đổi sản phẩm <?php echo $logsanpham[0]->masanpham?></div>
     
     <div class="section-content padding1">
     

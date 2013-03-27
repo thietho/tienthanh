@@ -1,6 +1,6 @@
 <div class="section">
 
-<div class="section-title">Tồn kho</div>
+<div class="section-title"><?php echo $this->document->title?></div>
 
 <div class="section-content"><?php foreach($datas as $item){ ?>
 <div><label><?php echo $item['tenkho']?></label>
