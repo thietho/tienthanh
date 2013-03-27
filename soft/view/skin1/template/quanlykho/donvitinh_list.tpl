@@ -7,8 +7,12 @@
         <form action="" method="post" id="listitem" name="listitem">
         
         	<div class="button right">
+            	<?php if($this->user->checkPermission("quanlykho/donvitinh/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>  
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/donvitinh/delete")==true){ ?>
+            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
             
@@ -43,8 +47,9 @@
                             <?php } ?>
                         </td>
                         <td class="link-control">
+                        	<?php if($this->user->checkPermission("quanlykho/donvitinh/update")==true){ ?>
                             <a class="button" href="<?php echo $item['link_edit']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
-                           
+                           	<?php } ?>
                         </td>
                     </tr>
         <?php

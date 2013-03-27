@@ -40,9 +40,15 @@
             	<input class="button" value="Select" type="button" onclick="selectSanPham()">
                 <input type="hidden" id="selectsanpham" name="selectsanpham" />
                 <?php }else{ ?>
+                <?php if($this->user->checkPermission("quanlykho/sanpham/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/sanpham/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/sanpham/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -110,13 +116,24 @@
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/dinhluong")==true){ ?>
                             <input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/congdoan")==true){ ?>
                             <input type="button" class="button" name="btnCongDoan" value="<?php echo $item['text_congdoan']?>" onclick="window.location='<?php echo $item['link_congdoan']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/lichsu")==true){ ?>
                             <input type="button" class="button" name="btnLichSu" value="<?php echo $item['text_lichsu']?>" onclick="viewSanPham('<?php echo $item['masanpham']?>')"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/catdatchiphi")==true){ ?>
                             <input type="button" class="button" name="btnCaiDatChiPhi" value="<?php echo $item['text_caidatchiphi']?>" onclick="window.location='<?php echo $item['link_caidatchiphi']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/sanpham/tinhtiencongtonghop")==true){ ?>
                             <input type="button" class="button" name="btnTinhTienCongTonghop" value="<?php echo $item['text_tinhtiencongtonghop']?>" onclick="window.location='<?php echo $item['link_tinhtiencongtonghop']?>'"/>
+                            <?php } ?>
                            	
                         </td>
                         <?php } ?>

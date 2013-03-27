@@ -5,29 +5,6 @@ class ControllerQuanlykhoKhachhang extends Controller
 	
 	public function index()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
-		}
-		//$this->load->language('quanlykho/khachhang');
-		//$this->data = array_merge($this->data, $this->language->getData());
-		
-		$this->document->title = $this->language->get('heading_title');
 		
 		$this->load->model("quanlykho/khachhang");
 		$this->getList();
@@ -35,32 +12,15 @@ class ControllerQuanlykhoKhachhang extends Controller
 	
 	public function insert()
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		
     	$this->getForm();
 	}
 	
 	public function update()
-	{
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->response->redirect("?route=common/permission");
-		}
-		else
-		{
-			//$this->load->language('quanlykho/khachhang');
-			//$this->data = array_merge($this->data, $this->language->getData());
-			
-			$this->load->model("quanlykho/khachhang");
-			$this->data['haspass'] = false;
-			$this->data['readonly'] = 'readonly="readonly"';
-			
-			$this->getForm();
-		}
-		
+	{		
+		$this->load->model("quanlykho/khachhang");
+		$this->data['haspass'] = false;
+		$this->data['readonly'] = 'readonly="readonly"';	
+		$this->getForm();
   	}
 	
 	public function delete() 

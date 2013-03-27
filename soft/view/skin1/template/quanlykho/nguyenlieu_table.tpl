@@ -56,18 +56,19 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoithieu'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoida'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['soluongmoilandathang'],0)?></td>
-                        <td><?php echo $item['madonvi']?></td>
+                        <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
                         
                         <td><?php echo $item['mucdichsudung']?></td>
                         <td><?php echo $item['ghichu']?></td>
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/nguyenlieu/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
                             <!--<input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>-->
                             <!--<input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_capnhatgia']?>" onclick="window.location='<?php echo $item['link_capnhatgia']?>'"/>-->
-                            <?php if($this->user->getUserTypeId() == "admin"){ ?>
+                            <?php if($this->user->checkPermission("quanlykho/nguyenlieu/xemgia")==true){ ?>
                            	<input type="button" class="button" name="btnXemGia" value="<?php echo $item['text_xemgia']?>" onclick="window.location='<?php echo $item['link_xemgia']?>'"/>
                             <?php } ?>
                         </td>

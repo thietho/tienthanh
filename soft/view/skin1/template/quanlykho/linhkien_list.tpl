@@ -28,9 +28,15 @@
             	<input class="button" value="Select" type="button" onclick="selectLinhKien()">
                 <input type="hidden" id="selectlinhkien" name="selectlinhkien" />
                 <?php }else{ ?>
+                <?php if($this->user->checkPermission("quanlykho/linhkien/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/linhkien/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>  
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/linhkien/delete")==true){ ?>
+            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -80,11 +86,15 @@
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/linhkien/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/linhkien/dinhluong")==true){ ?>
                             <input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/linhkien/caidatcongdoan")==true){ ?>
                             <input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_caidatcongdoan']?>" onclick="window.location='<?php echo $item['link_caidatcongdoan']?>'"/>
-                           	
+                           	<?php } ?>
                         </td>
                         <?php } ?>
                     </tr>

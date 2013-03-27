@@ -6,11 +6,16 @@
 
 <form action="" method="post" id="listitem" name="listitem">
 
-<div class="button right"><input class="button" type="button"
-	name="btnUpdate" value="Update" onclick="updatethutu()" /> <input
-	class="button" value="Add new" type="button"
-	onclick="linkto('<?php echo $insert?>')"> <input class="button"
-	type="button" name="delete_all" value="Delete" onclick="deleteitem()" />
+<div class="button right">
+	<?php if($this->user->checkPermission("quanlykho/nhom/update")==true){ ?>
+	<input class="button" type="button" name="btnUpdate" value="Update" onclick="updatethutu()" />
+    <?php } ?>
+    <?php if($this->user->checkPermission("quanlykho/nhom/insert")==true){ ?>
+    <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
+    <?php } ?>
+    <?php if($this->user->checkPermission("quanlykho/nhom/delete")==true){ ?>
+    <input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()" />
+    <?php } ?>
 </div>
 <div class="clearer">^&nbsp;</div>
 
@@ -58,11 +63,13 @@
 			<td><input type="text" name="thutu[<?php echo $item['manhom']?>]"
 				value="<?php echo $item['thutu']?>" size=3 class="text number" /></td>
 			<td><?php echo $item['ghichu']?></td>
-			<td class="link-control"><a class="button"
-				href="<?php echo $item['link_edit']?>"
-				title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
-			<a class="button" href="<?php echo $item['link_addchild']?>"
-				title="<?php echo $item['text_edit']?>"><?php echo $item['text_addchild']?></a>
+			<td class="link-control">
+            	<?php if($this->user->checkPermission("quanlykho/nhom/update")==true){ ?>
+            	<a class="button" href="<?php echo $item['link_edit']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+                <?php }?>
+                <?php if($this->user->checkPermission("quanlykho/nhom/insert")==true){ ?>
+				<a class="button" href="<?php echo $item['link_addchild']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_addchild']?></a>
+                <?php } ?>
 
 			</td>
 		</tr>

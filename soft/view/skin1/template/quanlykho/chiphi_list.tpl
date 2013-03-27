@@ -6,13 +6,19 @@
 
 <form action="" method="post" id="listitem" name="listitem">
 
-<div class="button right"><?php if($dialog==true){ ?> <input
-	class="button" value="Select" type="button" onclick="selectChiPhi()"> <input
-	type="hidden" id="selectchiphi" name="selectchiphi" /> <?php }else{ ?>
-<input class="button" value="Thêm" type="button"
-	onclick="linkto('<?php echo $insert?>')"> <input class="button"
-	type="button" name="delete_all" value="Xóa" onclick="deleteitem()" />
-<?php } ?></div>
+<div class="button right">
+	<?php if($dialog==true){ ?> 
+	<input class="button" value="Select" type="button" onclick="selectChiPhi()"> 
+    <input type="hidden" id="selectchiphi" name="selectchiphi" /> 
+    <?php }else{ ?>
+	<?php if($this->user->checkPermission("quanlykho/chiphi/insert")==true){ ?>
+    <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+    <?php } ?>
+    <?php if($this->user->checkPermission("quanlykho/chiphi/delete")==true){ ?>
+    <input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()" />
+    <?php }?>
+	<?php } ?>
+</div>
 <div class="clearer">^&nbsp;</div>
 
 <div class="sitemap treeindex">
@@ -44,9 +50,10 @@
 			<td><?php echo $item['machiphi']?></td>
 			<td><?php echo $item['tenchiphi']?></td>
 			<?php if($dialog!=true){ ?>
-			<td class="link-control"><a class="button"
-				href="<?php echo $item['link_edit']?>"
-				title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+			<td class="link-control">
+            	<?php if($this->user->checkPermission("quanlykho/chiphi/update")==true){ ?>
+            	<a class="button" href="<?php echo $item['link_edit']?>" title="<?php echo $item['text_edit']?>"><?php echo $item['text_edit']?></a>
+                <?php } ?>
 
 			</td>
 			<?php } ?>

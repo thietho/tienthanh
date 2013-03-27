@@ -36,8 +36,12 @@
                 <input type="hidden" id="selectkhachhang" name="selectkhachhang" />
                 <?php } ?>
                 <?php if($dialog!=true){ ?>
+                <?php if($this->user->checkPermission("quanlykho/khachhang/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/khachhang/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>  
             </div>
             
@@ -85,7 +89,9 @@
                         <td><?php echo $item['nguoidaidien'] ?></td>
                         <td><?php echo $this->document->getTenNhom($item['loaikhachhang']) ?></td>
                         <td class="link-control">
+                        	<?php if($this->user->checkPermission("quanlykho/khachhang/update")==true){ ?>
                         	<input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
                         </td>
                     </tr>
         <?php

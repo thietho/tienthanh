@@ -304,10 +304,25 @@ final class User {
 		return $query->rows[0];
 	}
 	
+	private function getAllModule()
+	{
+		$sql = "Select *
+									from `module`";
+
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+	
 	public function checkPermission($moduleid)
 	{
 		if($this->getUserTypeId() == 'admin')
 			return true;
+		//Nhung module ko co khai bao thi ko can kiem tra
+		$data_module = $this->getAllModule();
+		$arr_allmodule = $this->string->matrixToArray($data_module,'moduleid');
+		if(!in_array($moduleid,$arr_allmodule))
+			return true;
+		
 		$nhanvien = $this->getNhanVien();
 		$arr_allowmodule = $this->string->referSiteMapToArray($nhanvien['permission']);
 		if(in_array($moduleid,$arr_allowmodule))
