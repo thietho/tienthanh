@@ -1,6 +1,6 @@
 <div class="section" id="sitemaplist">
 
-	<div class="section-title"><?php echo $heading_title?>Danh mục phòng ban</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content padding1">
     

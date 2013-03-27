@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Quản lý danh mục nhân viên</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -36,8 +36,12 @@
                 <input type="hidden" id="selectnhanvien" name="selectnhanvien" />
                 <?php } ?>
                 <?php if($dialog!=true){ ?>
+                <?php if($this->user->checkPermission("quanlykho/nhanvien/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/nhanvien/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
+                <?php } ?>
                 <?php } ?>  
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -98,13 +102,20 @@
                         <td><?php echo $item['username'] ?></td>
                         <?php if($dialog==false){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/nhanvien/delete")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
                             <?php if($item['text_phanquyen'] != "") { ?>
+                            <?php if($this->user->checkPermission("quanlykho/nhanvien/phanquyen")==true){ ?>
                            	<input type="button" class="button" name="btnPhanQuyen" value="<?php echo $item['text_phanquyen']?>" onclick="window.location='<?php echo $item['link_phanquyen']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/nhanvien/resetPass")==true){ ?>
                             <input type="button" class="button" name="btnResetPass" value="<?php echo $item['text_resetpass']?>" onclick="resetPass('<?php echo $item['id']?>')"/>
                             <?php } ?>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/nhanvien/taotaikhoan")==true){ ?>
                             <input type="button" class="button" name="btnTaiKhoan" value="<?php echo $item['text_taikhoan']?>" onclick="window.location='<?php echo $item['link_taikhoan']?>'"/>
+                            <?php } ?>
                         </td>
                         <?php } ?>
                     </tr>

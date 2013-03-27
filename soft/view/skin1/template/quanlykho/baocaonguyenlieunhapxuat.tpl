@@ -1,7 +1,7 @@
 
 <div class="section">
 
-	<div class="section-title">Báo cáo nhập xuất nguyên liệu phát sinh theo kho</div>
+	<<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	<form id="frmbaocao" method="post">

@@ -1,6 +1,6 @@
 <div class="section" id="sitemaplist">
-
-	<div class="section-title">Quá trinh thay đổi công doan <?php echo $logcongdoan[0]->macongdoan?></div>
+	<div class="section-title"><?php echo $this->document->title?></div>
+	<div>Quá trinh thay đổi công doan <?php echo $logcongdoan[0]->macongdoan?></div>
     
     <div class="section-content padding1">
     

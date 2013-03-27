@@ -86,7 +86,7 @@ function save()
 </script>
 <div class="section">
 
-	<div class="section-title">Quản lý module</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	<!--<div id="idcur"></div>

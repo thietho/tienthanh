@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Quản lý tài sản</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -49,9 +49,15 @@
                 <input type="hidden" id="selecttaisan" name="selecttaisan" />
                 <?php } ?>
                 <?php if($dialog!=true){ ?>
+                <?php if($this->user->checkPermission("quanlykho/taisan/sotaisan")==true){ ?>
             	<input class="button" value="Sổ tài sản" type="button" onclick="linkto('<?php echo $sotaisan?>')">
-                <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>  
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/taisan/insert")==true){ ?>
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/taisan/delete")==true){ ?>
+            	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/> 
+                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -119,10 +125,12 @@
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/taisan/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/taisan/lichsu")==true){ ?>
                             <input type="button" class="button" name="btnHistory" value="<?php echo $item['text_history']?>" onclick="window.location='<?php echo $item['link_historry']?>'"/>
-                           
+                           	<?php } ?>
                            	
                         </td>
                         <?php } ?>

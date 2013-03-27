@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Lịch sử đánh giá nhà cung ứng</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -12,7 +12,9 @@
                 <?php echo $item['tennhacungung']?>
             </div>
         	<div class="button right">
-                <input class="button" value="Add new" type="button" onclick="linkto('<?php echo $insert?>')">
+            	<?php if($this->user->checkPermission("quanlykho/nhacungung/themlichsudanhgia")==true){ ?>
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
             	
             </div>
             <div class="clearer">^&nbsp;</div>

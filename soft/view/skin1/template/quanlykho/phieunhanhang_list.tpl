@@ -1,7 +1,7 @@
 
 <div class="section">
 
-	<div class="section-title">Lịch sử giao dịch của nhà cung ứng <?php echo $nhacungung['tennhacungung']?></div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -57,8 +57,11 @@
             	<input class="button" value="Select" type="button" onclick="selectPhieuNhanHang()">
                 <input type="hidden" id="selectphieunhanhang" name="selectphieunhanhang" />
                 <?php }else{ ?>
+                <?php if($this->user->checkPermission("quanlykho/phieunhanhang/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
-            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>  
+                <?php } ?>
+                <?php if($this->user->checkPermission("quanlykho/phieunhanhang/delete")==true){ ?>
+            	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>  				<?php } ?>
 				<input class="button" type="button" name="cancel" value="Trở lại" onclick="window.location = '?route=quanlykho/nhacungung'"/>
                 <?php } ?>
             </div>
@@ -115,7 +118,9 @@
                         <td><?php echo $this->document->thanhtoan[$item['tinhtrangthanhtoan']]; ?></td>
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
+                        	<?php if($this->user->checkPermission("quanlykho/phieunhanhang/update")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
                         </td>
                         <?php } ?>
                     </tr>

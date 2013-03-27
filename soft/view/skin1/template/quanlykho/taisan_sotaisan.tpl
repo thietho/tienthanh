@@ -1,6 +1,6 @@
 <div class="section">
 
-	<div class="section-title">Sổ tài sản</div>
+	<div class="section-title"><?php echo $this->document->title?></div>
     
     <div class="section-content">
     	
@@ -23,8 +23,9 @@
                 <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/taisan/sotaisan'"/>
             </div>
         	<div class="button right">
-            	
+            	<?php if($this->user->checkPermission("quanlykho/taisan/captaisan")==true){ ?>
                 <input class="button" value="Cấp tài sản" type="button" onclick="linkto('<?php echo $insert?>')">
+                <?php } ?>
             	<input class="button" type="button" value="Cancel" onclick="window.location='?route=quanlykho/taisan'"/>  
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -63,9 +64,12 @@
                         <td><?php echo $this->date->formatMySQLDate($item['ngaytra'])?></td>
                         
                         <td class="link-control">
-                            
+                            <?php if($this->user->checkPermission("quanlykho/taisan/captaisan")==true){ ?>
                             <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>'"/>
+                            <?php } ?>
+                            <?php if($this->user->checkPermission("quanlykho/taisan/trataisan")==true){ ?>
                            	<?php echo $item['btnTra']?>
+                            <?php } ?>
                            	
                         </td>
                     </tr>
