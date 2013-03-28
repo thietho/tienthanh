@@ -60,7 +60,7 @@
                             <td><?php echo $this->document->getTenNhom($item->loai)?></td>
                             <td><?php echo $this->document->getTenNhom($item->makho)?></td>
                             <td><?php echo $this->document->getTenDonVi($item->madonvi)?></td>
-                            <td class="number"><?php echo $item->dongiaban?></td>
+                            <td class="number"><?php echo $item->dongiabancai?></td>
                             <td class="number"><?php echo $item->donggoi?></td>
                             <td class="number"><?php echo $item->khuvuc?></td>
                             <td class="number"><?php echo $item->phancap?></td>
@@ -79,15 +79,21 @@
                     $arrtime = array();
                     $max = 0;
                     $arry = array();
+                    
                     foreach($logsanpham as $item)
                     {
-                    	//$arry[] = $this->string->toNumber($item->dongiaban);
-                    	if($this->string->toNumber($item->dongiaban) > $max)
-                        	$max = $this->string->toNumber($item->dongiaban);
+                    
+                    	
+                    	//$arry[] = $this->string->toNumber($item->dongiabancai);
+                    	if($this->string->toNumber($item->dongiabancai) > $max)
+                        {
+                        	$max = $this->string->toNumber($item->dongiabancai);
+                        }
                     }
+                    echo $max;
                 	foreach($logsanpham as $item)
                     {
-                    	$arrgia[] =  $this->string->toNumber($item->dongiaban)*100/$max;
+                    	$arrgia[] =  $this->string->toNumber($item->dongiabancai)*100/$max;
                         $arrtime[] = $this->date->formatMySQLDate($item->logdate);
                     }
                    	//sort($arry);

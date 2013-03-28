@@ -30,7 +30,16 @@ class ControllerQuanlykhoSanpham extends Controller
    	}
 	public function index()
 	{
-		$this->getList();
+		$this->id='content';
+		$this->template="quanlykho/sanpham_list.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="layout/dialog";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -67,7 +76,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
 		
 		$this->data['insertlist'] = $this->url->http('quanlykho/sanpham/insertlist');
@@ -85,10 +94,10 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['masanpham'] = $this->request->get['masanpham'];
-		$datasearchlike['tensanpham'] = $this->request->get['tensanpham'];
-		$datasearch['manhom'] = $this->request->get['manhom'];
-		$datasearch['loai'] = $this->request->get['loai'];
+		$datasearchlike['masanpham'] = urldecode($this->request->get['masanpham']);
+		$datasearchlike['tensanpham'] = urldecode($this->request->get['tensanpham']);
+		$datasearch['manhom'] = urldecode($this->request->get['manhom']);
+		$datasearch['loai'] = urldecode($this->request->get['loai']);
 		$datasearch['makho'] = $this->request->get['makho'];
 		
 		$arr = array();
@@ -113,7 +122,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listlinhkien"); 
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -146,14 +155,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/sanpham_list.tpl";
-		$this->layout="layout/center";
-		if($this->request->get['opendialog']=='true')
-		{
-			$this->layout="layout/dialog";
-			$this->data['dialog'] = true;
-			
-		}
+		$this->template="quanlykho/sanpham_table.tpl";
 		$this->render();
 	}
 	

@@ -78,18 +78,37 @@ var dl = new DinhLuong();
 <?php } ?>
 function selcetLinhKien()
 {
-	openDialog("?route=quanlykho/linhkien&opendialog=true",1000,800);
 	
-	list = trim($("#selectmalinhkien").val(), ',');
-	arr = list.split(",");
-	/*malinhkien = arr[0];
-	getLinhKien("id",malinhkien,'');*/
-	for(i in arr)
-	{
-		if(arr[i] != "<?php echo $item['id']?>")
-			dl.createRow(0,arr[i],0);
-	}
+	$("#popup").attr('title','Chọn linh kiện');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_linhkien .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							//alert(this.value)
+							dl.createRow("id",this.value,1);
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
 	
+		
+		$("#popup-content").load("?route=quanlykho/linhkien&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 }
 function DinhLuong()
 {
@@ -104,17 +123,17 @@ function DinhLuong()
 			for( i in data.linhkiens)
 			{
 				
-				var cellid = '<input type="hidden" name="dinhluong['+this.index+']" value="' +id+ '">';
-				var cellmalinhkien = '<input type="hidden" name="linhkienthanhphan['+this.index+']" value="' +data.linhkiens[i].id+ '">';
-				var cellsoluong = '<input type="text" name="soluong['+this.index+']" value="'+soluong+'" class="text number" size=5 />';
-				row+='						<tr id="row'+this.index+'">';
+				var cellid = '<input type="hidden" name="dinhluong['+dl.index+']" value="' +id+ '">';
+				var cellmalinhkien = '<input type="hidden" name="linhkienthanhphan['+dl.index+']" value="' +data.linhkiens[i].id+ '">';
+				var cellsoluong = '<input type="text" name="soluong['+dl.index+']" value="'+soluong+'" class="text number" size=5 />';
+				row+='						<tr id="row'+dl.index+'">';
 				row+='                      	<td>'+cellid + data.linhkiens[i].tenlinhkien+' ('+data.linhkiens[i].madonvi+')</td>';
 				row+='                          <td>'+cellmalinhkien+cellsoluong+'</td>';
-				row+='                          <td><input type="button" class="button" value="Xóa" onclick="dl.removeRow('+this.index+','+id+')"></td>';
+				row+='                          <td><input type="button" class="button" value="Xóa" onclick="dl.removeRow('+dl.index+','+id+')"></td>';
 				row+='                      </tr>';
 			}
 			$("#dinhluonglinhkien").append(row);
-			this.index++;
+			dl.index++;
 			numberReady();
 		});	
 	}

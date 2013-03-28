@@ -79,18 +79,48 @@ var dl = new DinhLuong();
 <?php } ?>
 function selcetLinhKien()
 {
-	openDialog("?route=quanlykho/linhkien&opendialog=true",1000,800);
+	/*openDialog("?route=quanlykho/linhkien&opendialog=true",1000,800);
 	
 	list = trim($("#selectmalinhkien").val(), ',');
-	arr = list.split(",");
+	arr = list.split(",");*/
 	/*malinhkien = arr[0];
 	getLinhKien("id",malinhkien,'');*/
-	for(i in arr)
+	/*for(i in arr)
 	{
 		if(arr[i] != "<?php echo $item['id']?>")
 			dl.createRow(0,arr[i],0);
-	}
+	}*/
 	
+	$("#popup").attr('title','Chọn linh kiện');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_linhkien .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							//alert(this.value)
+							dl.createRow("id",this.value,);
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/linhkien&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 }
 function DinhLuong()
 {
@@ -126,5 +156,34 @@ function DinhLuong()
 		$("#row"+pos).remove();
 	}
 }
-
+$("#popup").attr('title','Chọn linh kiện');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_linhkien .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							//alert(this.value)
+							dl.createRow("id",this.value,'');
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/linhkien&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 </script>
