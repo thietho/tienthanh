@@ -29,13 +29,17 @@ class ControllerQuanlykhoLinhkien extends Controller
 	
 	public function index()
 	{
+		$this->data['insertlist'] = $this->url->http('quanlykho/linhkien/insertlist');
+		$this->data['insert'] = $this->url->http('quanlykho/linhkien/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/linhkien/delete');
 		
 		$this->id='content';
 		$this->template="quanlykho/linhkien_list.tpl";
 		$this->layout="layout/center";
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			//$this->layout="layout/dialog";
+			$this->layout = "";
 			$this->data['dialog'] = true;
 			
 		}
@@ -98,9 +102,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function getList() 
 	{
 		
-		$this->data['insertlist'] = $this->url->http('quanlykho/linhkien/insertlist');
-		$this->data['insert'] = $this->url->http('quanlykho/linhkien/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/linhkien/delete');		
+		
 		
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
@@ -166,6 +168,11 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->data['dialog'] = true;
+			
+		}
 		$this->id='content';
 		$this->template="quanlykho/linhkien_table.tpl";
 		$this->render();

@@ -20,12 +20,14 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		return $query->row;
 	}
 
-	public function getList($where="", $from=0, $to=0)
+	public function getList($where="", $from=0, $to=0,$order="")
 	{
 
 		$sql = "Select `qlksanpham`.*
 									from `qlksanpham` 
 									where trangthai <> 'deleted' " . $where ;
+		if($order == "")
+			$sql .= " Order by tensanpham ASC";
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;

@@ -25,8 +25,7 @@
             </div>
         	<div class="button right">
             	<?php if($dialog==true){ ?>
-            	<input class="button" value="Select" type="button" onclick="selectLinhKien()">
-                <input type="hidden" id="selectlinhkien" name="selectlinhkien" />
+            	
                 <?php }else{ ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>')">
