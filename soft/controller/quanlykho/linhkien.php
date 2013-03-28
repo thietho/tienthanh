@@ -30,7 +30,16 @@ class ControllerQuanlykhoLinhkien extends Controller
 	public function index()
 	{
 		
-		$this->getList();
+		$this->id='content';
+		$this->template="quanlykho/linhkien_list.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="layout/dialog";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -86,7 +95,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
 		
 		$this->data['insertlist'] = $this->url->http('quanlykho/linhkien/insertlist');
@@ -103,11 +112,11 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['malinhkien'] = $this->request->get['malinhkien'];
-		$datasearchlike['tenlinhkien'] = $this->request->get['tenlinhkien'];
-		$datasearch['manhom'] = $this->request->get['manhom'];
-		$datasearch['loai'] = $this->request->get['loai'];
-		$datasearch['makho'] = $this->request->get['makho'];
+		$datasearchlike['malinhkien'] = urldecode($this->request->get['malinhkien']);
+		$datasearchlike['tenlinhkien'] = urldecode($this->request->get['tenlinhkien']);
+		$datasearch['manhom'] = urldecode($this->request->get['manhom']);
+		$datasearch['loai'] = urldecode($this->request->get['loai']);
+		$datasearch['makho'] = urldecode($this->request->get['makho']);
 		
 		$arr = array();
 		foreach($datasearchlike as $key => $item)
@@ -131,7 +140,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listlinhkien"); 
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -158,14 +167,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/linhkien_list.tpl";
-		$this->layout="layout/center";
-		if($this->request->get['opendialog']=='true')
-		{
-			$this->layout="layout/dialog";
-			$this->data['dialog'] = true;
-			
-		}
+		$this->template="quanlykho/linhkien_table.tpl";
 		$this->render();
 	}
 	
