@@ -1,7 +1,7 @@
 <script type="text/javascript">
 var CLASSES = ($.treeview.classes = {
 		open: "open",
-		closed: "closed",
+		//closed: "closed",
 		expandable: "expandable",
 		expandableHitarea: "expandable-hitarea",
 		lastExpandableHitarea: "lastExpandable-hitarea",
