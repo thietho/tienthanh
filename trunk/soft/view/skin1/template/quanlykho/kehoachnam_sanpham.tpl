@@ -1,6 +1,7 @@
 <table>
 	<thead>
     	<tr>
+        	<th>STT</th>
             <th>Mã SP</th>
             <th>Tên SP</th>
             <th>SL theo kê hoạch kỳ trước</th>
@@ -21,6 +22,7 @@
     <tbody>
     	<?php foreach($khsp as $key => $item){ ?>	
     	<tr>
+        	<td align="center"><?php echo $key+1?></td>
         	<td>
             	<input type="hidden" id="id-<?php echo $key?>" name="id[<?php echo $key?>]" value="<?php echo $item['id']?>"/>
             	<?php echo $this->document->getSanPham($item['masanpham'],'masanpham')?>
