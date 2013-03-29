@@ -14,10 +14,12 @@
                         <th>Loại</th>
                         <th>Kho</th>
                         <th>Đơn vị tính</th>
+                        <?php if($this->user->getUserTypeId()=='admin'){ ?>
                         <th>Đơn giá bán theo cái</th>
                         <th>Đơn giá bán theo hộp</th>
                         <th>Đơn giá bán theo thùng</th>
                         <th>Đơn giá bán theo lot</th>
+                        <?php } ?>
                         <th>Số lượng tồn</th>
                         <th>Đóng gói</th>
                         <th>Số sản phẩm /Lot</th>
@@ -47,10 +49,12 @@
                         <td><?php echo $item['tenloai']?></td>
                         <td><?php echo $item['tenkho']?></td>
                         <td><?php echo $item['madonvi']?></td>
+                        <?php if($this->user->getUserTypeId()=='admin'){ ?>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabancai'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanhop'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanthung'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanlot'])?></td>
+                        <?php } ?>
                 		<td class="number"><?php echo $this->string->numberFormate($item['soluongton'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['donggoi'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['sosanphamtrenlot'])?></td>

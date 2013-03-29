@@ -213,7 +213,21 @@ class ModelCoreUser extends ModelCoreFile
 						$where="userid = '".$userid."'";
 						$this->db->updateData("user",$field,$value,$where);
 	}
-		
+	public function updateCol($userid,$col,$val)
+	{
+		$userid=$this->db->escape(@$userid);
+		$col=$this->db->escape(@$col);
+		$val=$this->db->escape(@$val);
+
+		$field=array(
+						$col
+						);
+		$value=array(
+						$val
+						);
+		$where="userid = '".$userid."'";
+		$this->db->updateData("user",$field,$value,$where);
+	}
 	public function deleteuser($userid)
 	{
 		/*$userid=$this->db->escape(@$userid);

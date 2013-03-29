@@ -349,7 +349,9 @@ class ControllerQuanlykhoNhanVien extends Controller
 	
 	public function phanquyen()
 	{
-		
+		$this->load->model("core/usertype");
+		$this->load->model("core/usertype");
+		$this->data['usertype'] = $this->model_core_usertype->getList(" Order by id");
 		
 		$this->load->model("quanlykho/nhanvien");
 		
@@ -359,6 +361,9 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->data['treemodule'] = $this->getTree();
 		
 		$this->data['nhanvien'] = $this->model_quanlykho_nhanvien->getItem($this->request->get['id']);
+		
+		
+		$this->data['nhanvien']['usertypeid'] = $this->document->getUser($this->data['nhanvien']['username'],'usertypeid');
 		
 		$this->data['permission'] = $this->string->referSiteMapToArray($this->data['nhanvien']['permission']);
 		
@@ -473,9 +478,16 @@ class ControllerQuanlykhoNhanVien extends Controller
 	public function savePermission()
 	{
 		$this->load->model("quanlykho/nhanvien");
+		$this->load->model("core/user");
+		//Cap nhat quyen
 		$id = $this->request->post['nhanvienid'];
 		$permission = $this->string->arrayToString($this->request->post['permission']);
 		$this->model_quanlykho_nhanvien->updateCol($id,'permission',$permission);
+		//Cap nhat loai nhan vien
+		$userid = $this->request->post['userid'];
+		$usertypeid = $this->request->post['usertypeid'];
+		$this->model_core_user->updateCol($userid,'usertypeid',$usertypeid);
+		
 		$this->data['output'] = "true";
 		$this->id="content";
 		$this->template="common/output.tpl";
@@ -527,6 +539,16 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->data['nhanvien'] = $this->model_quanlykho_nhanvien->getItem($id);
 		$this->id='content';
 		$this->template = 'quanlykho/nhanvien_resetpass.tpl';
+		$this->render();
+	}
+	
+	public function profile()
+	{
+		$this->data['nhanvien'] = $this->user->getNhanVien();
+		
+		$this->id='content';
+		$this->template = 'quanlykho/nhanvien_profile.tpl';
+		$this->layout="layout/center";
 		$this->render();
 	}
 }

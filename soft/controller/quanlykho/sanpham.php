@@ -30,6 +30,10 @@ class ControllerQuanlykhoSanpham extends Controller
    	}
 	public function index()
 	{
+		$this->data['insertlist'] = $this->url->http('quanlykho/sanpham/insertlist');
+		$this->data['insert'] = $this->url->http('quanlykho/sanpham/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/sanpham/delete');	
+		
 		$this->id='content';
 		$this->template="quanlykho/sanpham_list.tpl";
 		$this->layout="layout/center";
@@ -79,9 +83,7 @@ class ControllerQuanlykhoSanpham extends Controller
 	public function getList() 
 	{
 		
-		$this->data['insertlist'] = $this->url->http('quanlykho/sanpham/insertlist');
-		$this->data['insert'] = $this->url->http('quanlykho/sanpham/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/sanpham/delete');	
+		
 		
 		$this->load->model("quanlykho/nhom");
 		$this->load->model("quanlykho/kho");
