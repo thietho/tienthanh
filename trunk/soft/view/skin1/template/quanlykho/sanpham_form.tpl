@@ -77,6 +77,7 @@
             		<label>Số sản phẩm/Lot</label><br />
 					<input type="text" id="sosanphamtrenlot" name="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>" class="text number" size=60 />
             	</p>
+                <?php if($this->user->getUserTypeId()=='admin'){ ?>
                 <p>
             		<label>Đơn giá bán theo cái</label><br />
 					<input type="text" id="dongiabancai" name="dongiabancai" value="<?php echo $item['dongiabancai']?>" class="text number" size=60 />
@@ -93,6 +94,7 @@
             		<label>Đơn giá bán theo lot</label><br />
 					<input type="text" id="dongiabanlot" name="dongiabanlot" value="<?php echo $item['dongiabanlot']?>" class="text number" size=60 />
             	</p>
+                <?php } ?>
                 <p>
             		<label>Đóng gói</label><br />
 					<input type="text" id="donggoi" name="donggoi" value="<?php echo $item['donggoi']?>" class="text number" size=60 />

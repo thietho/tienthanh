@@ -26,10 +26,12 @@
                             <th>Nhóm</th>
                             <th>Loại</th>
                             <th>Số lượng / Lot</th>
+                            <?php if($this->user->getUserTypeId()=='admin'){ ?>
                             <th>Đơn giá theo cái</th>
                             <th>Đơn giá theo hộp</th>
                             <th>Đơn giá theo thùng</th>
                             <th>Đơn giá theo lot</th>
+                            <?php } ?>
                             <th>Đóng gói</th>
                             <th>Khu vực</th>
                             <th>Phân cấp</th>
@@ -80,10 +82,12 @@
                                 </select>
                             </td>
                             <td><input type="text" class="text number" name="sosanphamtrenlot" size="5"></td>
+                            <?php if($this->user->getUserTypeId()=='admin'){ ?>
                             <td><input type="text" class="text number" name="dongiabancai" size="5"></td>
                             <td><input type="text" class="text number" name="dongiabanhop" size="5"></td>
                             <td><input type="text" class="text number" name="dongiabanthung" size="5"></td>
                             <td><input type="text" class="text number" name="dongiabanlot" size="5"></td>
+                            <?php } ?>
                             <td><input type="text" class="text number" name="donggoi" size="5"></td>
                             <td><input type="text" class="text number" name="khuvuc" size="5"></td>
                             <td><input type="text" class="text number" name="phancap" size="5"></td>

@@ -294,7 +294,7 @@ final class User {
 
 	}
 
-	private function getNhanVien()
+	public function getNhanVien()
 	{
 		$sql = "Select *
 									from `qlknhanvien` 

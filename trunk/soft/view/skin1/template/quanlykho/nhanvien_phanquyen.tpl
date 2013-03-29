@@ -48,6 +48,8 @@ $(document).ready(function(e) {
 			unchecked(obj);
 		}
     });
+	
+	$('#usertypeid').val("<?php echo $nhanvien['usertypeid']?>");
 });
 
 function unchecked(obj)
@@ -99,7 +101,7 @@ function save()
                 <a class="button save" onclick="save()">Lưu</a>
                 <a class="button cancel" href="?route=quanlykho/nhanvien">Trở về</a>
                 <input type="hidden" name="nhanvienid" value="<?php echo $nhanvien['id']?>">
-                
+                <input type="hidden" name="userid" value="<?php echo $nhanvien['username']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
             
@@ -108,7 +110,12 @@ function save()
                 	<label>Tên nhân viên</label> <?php echo $nhanvien['hoten']?>
                 </p>
                 <p>
-                	<label>Loại tài khoản</label> <?php echo $this->document->getUserType($this->document->getUser($nhanvien['username'],'usertypeid'))?>
+                	<label>Loại tài khoản</label>
+                    <select id="usertypeid" name="usertypeid">
+                    	<?php foreach($usertype as $val){ ?>
+                        <option value="<?php echo $val['usertypeid']?>"><?php echo $val['usertypename']?></option>
+                        <?php } ?>
+                    </select>
                 </p>
                 
 				
