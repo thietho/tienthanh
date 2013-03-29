@@ -81,7 +81,7 @@ createRow("<?php echo $val['id']?>","<?php echo $val['machiphi']?>","<?php echo 
 <?php } ?>
 function selcetChiPhi()
 {
-	openDialog("?route=quanlykho/chiphi&opendialog=true",1000,800);
+	/*openDialog("?route=quanlykho/chiphi&opendialog=true",1000,800);
 	
 	list = trim($("#selectmachiphi").val(), ',');
 	arr = list.split(",");
@@ -90,7 +90,37 @@ function selcetChiPhi()
 	{
 		
 		createRow(0,arr[i],0);
-	}
+	}*/
+	$("#popup").attr('title','Chọn chi phí');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Chọn': function() 
+				{
+					$('#frm_chiphi .inputchk').each(function(index, element) {
+                        if(this.checked)
+						{
+							
+							createRow(0,this.value,0);
+						}
+                    });
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/chiphi&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
 	
 }
 var index = 0;

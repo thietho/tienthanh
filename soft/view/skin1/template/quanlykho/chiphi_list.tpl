@@ -4,12 +4,11 @@
 
 <div class="section-content">
 
-<form action="" method="post" id="listitem" name="listitem">
+<form action="" method="post" id="frm_chiphi">
 
 <div class="button right">
 	<?php if($dialog==true){ ?> 
-	<input class="button" value="Select" type="button" onclick="selectChiPhi()"> 
-    <input type="hidden" id="selectchiphi" name="selectchiphi" /> 
+	
     <?php }else{ ?>
 	<?php if($this->user->checkPermission("quanlykho/chiphi/insert")==true){ ?>
     <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">

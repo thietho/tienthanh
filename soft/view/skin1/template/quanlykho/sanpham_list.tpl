@@ -120,27 +120,6 @@ function searchForm()
 	
 	$('#listsanpham').load("?route=quanlykho/sanpham/getList"+url);
 }
-
-function selectSanPham()
-{
-	window.opener.document.getElementById('selectsanpham').value = $("#selectsanpham").val();
-	window.close();
-}
-
-<?php if($dialog==true){ ?>
-	$(".inputchk").click(function()
-	{
-		$("#selectsanpham").val('');
-		$(".inputchk").each(function(){
-			if(this.checked == true)
-			{
-				$("#selectsanpham").val($("#selectsanpham").val()+","+$(this).val());
-			}
-		})
-		
-	});
-<?php } ?>
-
 function viewSanPham(masanpham)
 {
 	

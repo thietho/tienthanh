@@ -2,8 +2,7 @@
 class ControllerQuanlykhoKhachhang extends Controller
 {
 	private $error = array();
-	
-	public function index()
+	function __construct() 
 	{
 		$this->load->model("core/module");
 		$moduleid = $_GET['route'];
@@ -14,7 +13,31 @@ class ControllerQuanlykhoKhachhang extends Controller
 		}
 		
 		$this->load->model("quanlykho/khachhang");
-		$this->getList();
+		$this->load->model("quanlykho/nhom");
+		
+		$this->data['khuvuc'] = array();
+		$this->model_quanlykho_nhom->getTree("khuvuc",$this->data['khuvuc']);
+		unset($this->data['khuvuc'][0]);
+		
+		$this->data['loaikhachhang'] = array();
+		$this->model_quanlykho_nhom->getTree("loaikhachhang",$this->data['loaikhachhang']);
+		unset($this->data['loaikhachhang'][0]);
+	}
+	public function index()
+	{
+		$this->data['insert'] = $this->url->http('quanlykho/khachhang/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/khachhang/delete');
+		
+		$this->id='content';
+		$this->template="quanlykho/khachhang_list.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			//$this->data['list'] = $this->url->http('quanlykho/nhacungung&opendialog=true');
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -45,28 +68,15 @@ class ControllerQuanlykhoKhachhang extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
-		$this->load->model("quanlykho/nhom");
-		
-		$this->data['khuvuc'] = array();
-		$this->model_quanlykho_nhom->getTree("khuvuc",$this->data['khuvuc']);
-		unset($this->data['khuvuc'][0]);
-		
-		$this->data['loaikhachhang'] = array();
-		$this->model_quanlykho_nhom->getTree("loaikhachhang",$this->data['loaikhachhang']);
-		unset($this->data['loaikhachhang'][0]);
-		
-		$this->data['insert'] = $this->url->http('quanlykho/khachhang/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/khachhang/delete');		
-		
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['makhachhang'] = $this->request->get['makhachhang'];
-		$datasearchlike['hoten'] = $this->request->get['hoten'];
-		$datasearchlike['khuvuc'] = $this->request->get['khuvuc'];
-		$datasearch['loaikhachhang'] = $this->request->get['loaikhachhang'];
+		$datasearchlike['makhachhang'] = urldecode($this->request->get['makhachhang']);
+		$datasearchlike['hoten'] = urldecode($this->request->get['hoten']);
+		$datasearchlike['khuvuc'] = urldecode($this->request->get['khuvuc']);
+		$datasearch['loaikhachhang'] = urldecode($this->request->get['loaikhachhang']);
 		
 		$arr = array();
 		foreach($datasearchlike as $key => $item)
@@ -90,7 +100,7 @@ class ControllerQuanlykhoKhachhang extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listkhachhang");
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -112,13 +122,13 @@ class ControllerQuanlykhoKhachhang extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/khachhang_list.tpl";
-		$this->layout="layout/center";
+		$this->template="quanlykho/khachhang_table.tpl";
+		
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			
 			$this->data['dialog'] = true;
-			//$this->data['list'] = $this->url->http('quanlykho/nhacungung&opendialog=true');
+			
 		}
 		$this->render();
 	}
