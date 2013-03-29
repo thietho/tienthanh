@@ -108,7 +108,7 @@ function selcetLinhKien()
                         if(this.checked)
 						{
 							//alert(this.value)
-							dl.createRow("id",this.value,);
+							dl.createRow("id",this.value,1);
 						}
                     });
 					$( this ).dialog( "close" );

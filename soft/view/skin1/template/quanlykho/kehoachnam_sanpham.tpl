@@ -62,8 +62,12 @@
 $('.soluong').keyup(function(e) {
     var arr = this.id.split('-');
 	var currow = arr[1];
-	var thanhtien = stringtoNumber(this.value) * $('#dongia-'+currow).val();
-	var solot = stringtoNumber(this.value) / $('#sosanphamtrenlot-'+currow).val();
+	var soluong = stringtoNumber(this.value);
+	var dongia = $('#dongia-'+currow).val();
+	var sosanphamtrenlot = $('#sosanphamtrenlot-'+currow).val();
+	var thanhtien = soluong * dongia;
+	
+	var solot = soluong / sosanphamtrenlot;
 	$('#thanhtienview-'+currow).html(numberView(thanhtien));
 	$('#solot-'+currow).val(numberView(solot))
 });
