@@ -59,14 +59,15 @@ class ControllerQuanlykhoChiphi extends Controller
 		$limit = 20;
 		$total = count($rows);
 		// work out the pager values
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
+		//$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
 
-		$pager  = $this->pager->getPagerData($total, $limit, $page);
-		$offset = $pager->offset;
-		$limit  = $pager->limit;
-		$page   = $pager->page;
-		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
-		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
+		//$pager  = $this->pager->getPagerData($total, $limit, $page);
+		//$offset = $pager->offset;
+		//$limit  = $pager->limit;
+		//$page   = $pager->page;
+		//for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
+		$this->data['datas'] = $rows;
+		for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
 			$this->data['datas'][$i] = $rows[$i];
 			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/chiphi/update&machiphi='.$this->data['datas'][$i]['machiphi']);
@@ -80,7 +81,7 @@ class ControllerQuanlykhoChiphi extends Controller
 		$this->layout="layout/center";
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			$this->layout="";
 			$this->data['dialog'] = true;
 				
 		}

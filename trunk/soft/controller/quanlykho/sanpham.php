@@ -124,7 +124,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listlinhkien"); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listsanpham"); 
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
