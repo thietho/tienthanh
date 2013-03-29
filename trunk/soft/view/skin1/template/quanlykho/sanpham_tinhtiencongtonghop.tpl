@@ -27,7 +27,8 @@
                     <table style="width:auto">
                         	<thead>
                                 <tr>
-                                    <th>Nguyên liệu</th>
+                                	<th>STT</th>
+                                    <th>Linh kiện</th>
                                     <th>Số lượng</th>
                                     <th>Đơn vị</th>
                                     <th>Tiền công của 1 linh kiện</th>
@@ -37,11 +38,12 @@
                             <tbody id="dinhluonglinhkien">
                             	<?php 
                                 $sum = 0;
-                                foreach($dinhluong as $item)
+                                foreach($dinhluong as $key => $item)
                                 { 
                                 	
                                 ?>
                                 <tr>
+                                	<td><?php echo $key+1?></td>
                                 	<td><?php echo $this->document->getLinhKien($item['malinhkien'])?></td>
                                     <td class="number"><?php echo $item['soluong']?></td>
                                     <td><?php echo $this->document->getTenDonVi($this->document->getLinhKien($item['malinhkien'],"madonvi"))?></td>

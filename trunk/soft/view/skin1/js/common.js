@@ -221,7 +221,7 @@ function formateNumber(num)
 	else
 		return divnum+"\."+mod;
 }
-function numberView(str)
+function numberView(num)
 {
 	if(num =="")
 		return 0;
