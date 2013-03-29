@@ -5,19 +5,18 @@
 
 <div class="section-content padding1">
 
-<form name="frm" id="frm" action="<?php echo $action?>" method="post"
-	enctype="multipart/form-data">
+<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
 
-<div class="button right"><input type="button" value="Save"
-	class="button" onClick="save()" /> <input type="button" value="Cancel"
-	class="button" onclick="linkto('?route=quanlykho/kehoachnam')" /> <input
-	type="hidden" name="id" value="<?php echo $item['id']?>"></div>
+<div class="button right">
+	<input type="button" id="btnSave" value="Save" class="button" />
+    <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/kehoachnam')" />
+    <input type="hidden" name="id" value="<?php echo $item['id']?>">
+</div>
 <div class="clearer">^&nbsp;</div>
 <div id="error" class="error" style="display: none"></div>
 <div>
 <p><label>Năm</label><br />
-<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>"
-	class="text" /></p>
+	<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>" class="text" /></p>
 <p><label>Ghi chú</label><br />
 <textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
 </p>
@@ -32,9 +31,8 @@
 
 </div>
 <script language="javascript">
-function save()
-{
-	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+$('#btnSave').click(function(e) {
+    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
 	$.post("?route=quanlykho/kehoachnam/save", $("#frm").serialize(),
 		function(data){
@@ -53,7 +51,8 @@ function save()
 			
 		}
 	);
-}
+});
+
 
 
 </script>

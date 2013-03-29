@@ -36,8 +36,10 @@
 
 </div>
 <script language="javascript">
+$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 $('#listkehoachsanpham').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&id=<?php echo $item['id']?>",function(){
 		numberReady();
+		$.unblockUI();
 	});
 function save()
 {

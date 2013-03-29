@@ -35,7 +35,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->load->model("quanlykho/taisan");
 		$this->data['haspass'] = false;
 		$this->data['readonly'] = 'readonly="readonly"';
-		$this->chonsanpham();
+		$this->setup();
 	}
 
 	public function  danhgia()
