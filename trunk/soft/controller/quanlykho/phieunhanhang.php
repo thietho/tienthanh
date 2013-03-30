@@ -2,8 +2,7 @@
 class ControllerQuanlykhoPhieunhanhang extends Controller
 {
 	private $error = array();
-
-	public function index()
+	function __construct() 
 	{
 		$this->load->model("core/module");
 		$moduleid = $_GET['route'];
@@ -14,6 +13,10 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 		}
 		
 		$this->load->model("quanlykho/phieunhanhang");
+	}
+	public function index()
+	{
+		
 		$this->getList();
 	}
 
@@ -24,7 +27,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 
 	public function update()
 	{
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		$this->data['haspass'] = false;
 		$this->data['readonly'] = 'readonly="readonly"';
 			
@@ -37,7 +40,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 	{
 		$listid=$this->request->post['delete'];
 		//$listmadonvi=$_POST['delete'];
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		if(count($listid))
 		{
 			$this->model_quanlykho_phieunhanhang->deletedatas($listid);
@@ -50,7 +53,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 
 	private function getList()
 	{
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		$this->load->model("quanlykho/nhanvien");
 		$this->load->model("quanlykho/nhacungung");
 
@@ -137,7 +140,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 
 	private function getForm()
 	{
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		$this->load->model("quanlykho/nhacungung");
 		$this->load->model("quanlykho/nhanvien");
 
@@ -179,7 +182,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 
 		if($this->validateForm($data))
 		{
-			$this->load->model("quanlykho/phieunhanhang");
+			
 			$item = $this->model_quanlykho_phieunhanhang->getItem($data['id']);
 				
 			$data['ngaylap'] = $this->date->formatViewDate($data['ngaylap']);
@@ -305,7 +308,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 		$operator = $this->request->get['operator'];
 		if($operator == "")
 		$operator = "equal";
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		$where = "";
 		switch($operator)
 		{
@@ -335,7 +338,7 @@ class ControllerQuanlykhoPhieunhanhang extends Controller
 	public function getChiTietPhieuNhanHang()
 	{
 		$maphieunhanhang = $this->request->get['maphieunhanhang'];
-		$this->load->model("quanlykho/phieunhanhang");
+		
 		$where = " AND maphieunhanhang = '".$maphieunhanhang."'";
 		$datas = $this->model_quanlykho_phieunhanhang->getChiTietPhieuNhanHangs($where);
 		$this->data['output'] = json_encode(array('chitietphieunhanhangs' => $datas));
