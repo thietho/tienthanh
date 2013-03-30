@@ -4,8 +4,9 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	private $error = array();
 	private $loaikehoach = 'kehoachnam';
 	private $setup = array(
-						'quy' => 4,
-						'thang' => 3
+						'quy' => 4
+						
+						
 	);
 	function __construct()
 	{
@@ -171,9 +172,14 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->layout="layout/center";
 		$this->render();
 	}
-
+	
 	public function loadKehoachSanPham()
 	{
+		$this->load->model("quanlykho/nhom");
+		$this->data['nhomsanpham'] = array();
+		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
+		unset($this->data['nhomsanpham'][0]);
+		
 		$makehoach = $this->request->get['id'];
 		$where = "AND makehoach = '".$makehoach."'";
 		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
@@ -276,12 +282,6 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$data['thang'] = 0;
 			$data['kehoachcha'] = $data['id'];
 			$id = $this->model_quanlykho_kehoach->insert($data);
-			for($j=1;$j<=$this->setup['thang'];$j++)
-			{
-				$data['thang'] = $j;
-				$data['kehoachcha'] = $id;
-				$this->model_quanlykho_kehoach->insert($data);
-			}
 		}
 
 	}
