@@ -21,14 +21,14 @@
     <tbody>
     	<?php foreach($nhomsanpham as $nhom){ ?>
        	<tr>
-        	<td colspan="11"><?php echo $nhom['tennhom']?></td>
+        	<td colspan="11"><strong><?php echo $nhom['tennhom']?></strong></td>
         </tr>
         <?php foreach($khsp as $item){ ?>
         <?php if($item['manhom'] == $nhom['manhom']){ ?>
         
     	<tr>
         	<td></td>
-            <td><?php echo $this->document->getSanPham($item['masanpham'],'masanpham')?></td>
+            <td><?php echo $item['masanpham']?></td>
             <td><?php echo $item['tensanpham']?></td>
         </tr>
         <?php } ?>
