@@ -191,7 +191,9 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			foreach($rows as $item)
 			{
 				$data['makehoach'] = $makehoach;
-				$data['masanpham'] = $item['id'];
+				$data['sanphamid'] = $item['id'];
+				$data['masanpham'] = $item['masanpham'];
+				$data['manhom'] = $item['manhom'];
 				$data['tensanpham'] = $item['tensanpham'];
 				$data['soluongtonhientai'] = $item['soluongton'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
@@ -228,6 +230,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			
 			$arr = $this->string->array_Filter($khspnamtruoc,'masanpham',$item['masanpham']);
 			$this->data['khsp'][$key]['slkehoachnamttruoc'] = $arr[0]['soluong'];
+			
 		}
 		
 		$this->id='content';
