@@ -17,18 +17,7 @@
 <div class="clearer">^&nbsp;</div>
 
 <div class="sitemap treeindex">
-<link href="<?php echo DIR_VIEW?>css/jquery.treeTable.css"
-	rel="stylesheet" type="text/css" />
-<script type="text/javascript"
-	src="<?php echo DIR_VIEW?>js/jquery.treeTable.js"></script> <script
-	type="text/javascript">
-                  $(document).ready(function() {
-                    // TODO Fix issue with multiple treeTables on one page, each with different options
-                    // Moving the #example3 treeeTable call down will break other treeTables that are expandable...
-                    $(".example").treeTable();
-                  });
-                  
-                  </script>
+
 <table class="example data-table" width="100%">
 	<thead>
 		<tr class="tr-head">

@@ -42,7 +42,9 @@
 	</script>
 <![endif]-->
 
-
+<script language="javascript">
+var loading = '<center><img src="<?php echo DIR_IMAGE?>loading.gif"></center>';
+</script>
 <body>
 <div id="header"><?php echo $header?></div>
 <div id="site-wrapper">

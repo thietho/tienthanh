@@ -79,6 +79,10 @@
             	</p>
                 <?php if($this->user->getUserTypeId()=='admin'){ ?>
                 <p>
+            		<label>Giá cố định</label><br />
+					<input type="text" id="giacodinh" name="giacodinh" value="<?php echo $item['giacodinh']?>" class="text number" size=60 />
+            	</p>
+                <p>
             		<label>Đơn giá bán theo cái</label><br />
 					<input type="text" id="dongiabancai" name="dongiabancai" value="<?php echo $item['dongiabancai']?>" class="text number" size=60 />
             	</p>

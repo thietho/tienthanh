@@ -279,7 +279,6 @@ table.data-table th {
 	background: #F0F0F0;
 	border: 1px solid #DDD;
 	color: #555;
-	text-align: left;
 }
 
 table.data-table tr {
@@ -288,7 +287,7 @@ table.data-table tr {
 }
 
 table.data-table td,table th { /*padding: 10px;*/
-	
+	padding:4px;
 }
 
 table.data-table td {
@@ -440,7 +439,10 @@ input.text,textarea,select {
 	margin: 0.5em 0;
 	padding: 4px 5px;
 }
-
+input.short
+{
+	width:50px;	
+}
 input.text:focus,textarea:focus,select:focus {
 	background: #FFFFF5;
 }

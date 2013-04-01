@@ -11,7 +11,7 @@
 <div class="button right"><input type="button" value="Save"
 	class="button" onClick="save()" /> <input type="button" value="Cancel"
 	class="button" onclick="linkto('?route=quanlykho/kehoachnam')" /> <input
-	type="hidden" name="makehoach" value="<?php echo $item['id']?>"></div>
+	type="hidden" name="kehoachid" value="<?php echo $item['id']?>"></div>
 <div class="clearer">^&nbsp;</div>
 <div id="error" class="error" style="display: none"></div>
 <div>
@@ -44,22 +44,49 @@ $('#listkehoachsanpham').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&id
 	});
 function save()
 {
-	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	$.blockUI({ message: "<h1 id=warningstatus>Please wait...</h1>"}); 
+	//alert(count);
 	
-	$.post("?route=quanlykho/kehoachnam/savechitietkehoach", $("#frm").serialize(),
+	saveitem(0)
+	
+	/*$.post("?route=quanlykho/kehoachnam/savechitietkehoach", $("#frm").serialize(),
 		function(data){
 			var arr = data.split('-');
 			if(arr[0] == "true")
 			{
-				window.location = "?route=quanlykho/kehoachnam";
+				//window.location = "?route=quanlykho/kehoachnam";
 			}
 			else
 			{
 			
 				$('#error').html(data).show('slow');
-				$.unblockUI();
+				
 				
 			}
+			$.unblockUI();
+			
+		}
+	);*/
+}
+function saveitem(pos)
+{
+	$('#warningstatus').html( Math.round(pos/count*100)+"%");
+	$.post("?route=quanlykho/kehoachnam/savechitietkehoach", $("#frm_kehoachsanpham_"+pos).serialize(),
+		function(data){
+			var arr = data.split('-');
+			if(arr[0] == "true")
+			{
+				//window.location = "?route=quanlykho/kehoachnam";
+				saveitem(pos+1)
+			}
+			else
+			{
+				$.unblockUI();
+				$('#error').html(data).show('slow');
+				
+				
+			}
+			//$.unblockUI();
 			
 		}
 	);

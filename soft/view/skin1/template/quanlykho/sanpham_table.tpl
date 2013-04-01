@@ -15,6 +15,7 @@
                         <th>Kho</th>
                         <th>Đơn vị tính</th>
                         <?php if($this->user->getUserTypeId()=='admin'){ ?>
+                        <th>Giá cố định</th>
                         <th>Đơn giá bán theo cái</th>
                         <th>Đơn giá bán theo hộp</th>
                         <th>Đơn giá bán theo thùng</th>
@@ -50,6 +51,7 @@
                         <td><?php echo $item['tenkho']?></td>
                         <td><?php echo $item['madonvi']?></td>
                         <?php if($this->user->getUserTypeId()=='admin'){ ?>
+                        <td class="number"><?php echo $this->string->numberFormate($item['giacodinh'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabancai'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanhop'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabanthung'])?></td>
