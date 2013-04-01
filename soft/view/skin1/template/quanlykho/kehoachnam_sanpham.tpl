@@ -38,7 +38,7 @@
     </thead>
     <tbody>
     	<?php $index = 1;?>
-        <?php $count=0?>
+        <?php $count = 0;?>
     	<?php foreach($nhomsanpham as $nhom){ ?>
        	<tr>
         	<td colspan="19"><strong><?php echo $nhom['tennhom']?></strong></td>
@@ -46,39 +46,38 @@
         <?php foreach($khsp as $item){ ?>
         <?php if($item['manhom'] == $nhom['manhom']){ ?>
         
-    	<tr>
+    	<tr id="row_khoachnam_sanpham<?php echo $count++?>">
+        	
         	<td><center><?php echo $index++?></center></td>
             <td><?php echo $item['masanpham']?></td>
-            <td><?php echo $item['tensanpham']?></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <?php foreach($data_kehoachquy as $quy){ ?>
             <td>
-            	<form id="frm_kehoachsanpham_<?php echo $count++; ?>" class="frmkehoachsanpham">
-                    <input type="text" class="text short number soluong" id="soluong_<?php echo $quy[id]?>_<?php echo $item['sanphamid']?>" name="soluong"/>
-                    <input type="hidden" id="dongia" name="dongia" value="<?php echo $item['dongia']?>"/>
-                    <input type="hidden" name="id" value="<?php echo $item['id']?>"/>
-                    <input type="hidden" name="kehoachid" value="<?php echo $quy['id']?>"/>
-                    <input type="hidden" name="sanphamid" value="<?php echo $item['sanphamid']?>"/>
-                    <input type="hidden" name="masanpham" value="<?php echo $item['masanpham']?>"/>
-                    <input type="hidden" name="manhom" value="<?php echo $item['tensanpham']?>"/>
-                    <input type="hidden" name="tensanpham" value="<?php echo $item['tensanpham']?>"/>
-                    <input type="hidden" name="soluongtonhientai" value="<?php echo $item['soluongtonhientai']?>"/>
-                    <input type="hidden" name="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>"/>
-                    
-                </form>
+            	<?php echo $item['tensanpham']?>
+                <input type="hidden" id="id" value="<?php echo $item['id']?>" />
+                <input type="hidden" id="sanphamid" value="<?php echo $item['sanphamid']?>" />
+                <input type="hidden" id="masanpham" value="<?php echo $item['masanpham']?>" />
+                <input type="hidden" id="tensanpham" value="<?php echo $item['tensanpham']?>" />
+                <input type="hidden" id="manhom" value="<?php echo $item['manhom']?>" />
+                <input type="hidden" id="giacodinh" value="<?php echo $item['giacodinh']?>" />
+                <input type="hidden" id="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>" />
             </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <?php for($i=1;$i<=4;$i++){ ?>
             <td>
-            	<div id="thanhtien_<?php echo $quy[id]?>"></div>
-            </td>
-            <?php } ?>
+            	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'+i]?>"/>
+                
+             </td>
+            <td></td>
+ 			<?php } ?>           
+            
         </tr>
+        
         <?php } ?>
         <?php } ?>
         <?php } ?>
