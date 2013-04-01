@@ -5,49 +5,66 @@
 
 <div class="section-content padding1">
 
-<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
+
 
 <div class="button right">
 	<input type="button" id="btnSave" value="Save" class="button" />
     <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/kehoachnam')" />
-    <input type="hidden" name="id" value="<?php echo $item['id']?>">
+   
 </div>
 <div class="clearer">^&nbsp;</div>
 <div id="error" class="error" style="display: none"></div>
-<div>
-	<p>
-    	<label>Năm</label><br />
-		
-        <select id="nam" name="nam">
-        	<?php for($i=$this->date->now['year']-5;$i <= $this->date->now['year']+5;$i++){ ?>
-            <option value="<?php echo $i?>"><?php echo $i?></option>
-            <?php } ?>
-        </select>
-    </p>
-<p><label>Ghi chú</label><br />
-<textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
-</p>
-
-
-
+<div id="container">
+    <ul class="tabs-nav">
+        <li class="tabs-selected"><a href="#fragment-thongtin"><span>Thông tin kế hoạch</span></a></li>
+        <li class="tabs"><a href="#fragment-chitiet"><span>Chi tiết</span></a></li>
+    </ul>
+    <div id="fragment-thongtin">
+    <form id="frm">
+        <p>
+            <label>Năm</label><br />
+            
+            <select id="nam" name="nam">
+                <?php for($i=$this->date->now['year']-5;$i <= $this->date->now['year']+5;$i++){ ?>
+                <option value="<?php echo $i?>"><?php echo $i?></option>
+                <?php } ?>
+            </select>
+        </p>
+        <p><label>Ghi chú</label><br />
+        <textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
+        </p>
+    </form>
+    </div>
+    <div id="fragment-chitiet">
+    </div>
 </div>
 
-</form>
 
 </div>
 
 </div>
 <script language="javascript">
-$('#nam').val("<?php echo $this->date->now['year']?>");
+$(document).ready(function(e) {
+    $('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
+	
+	$('#fragment-chitiet').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&nam=<?php echo $item['nam']?>",function(){
+		
+		$.unblockUI();
+		numberReady();
+	});
+});
+$('#nam').val("<?php echo $item['nam']?>");
 $('#btnSave').click(function(e) {
-    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+    $.blockUI({ message: "<h1 id=warningstatus>Please wait...</h1>"}); 
 	
 	$.post("?route=quanlykho/kehoachnam/save", $("#frm").serialize(),
 		function(data){
 			var arr = data.split('-');
 			if(arr[0] == "true")
 			{
-				window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
+				//Luu chi tiet ke hoach
+				//window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
+				saveitem(0)
 			}
 			else
 			{
@@ -61,6 +78,56 @@ $('#btnSave').click(function(e) {
 	);
 });
 
-
-
+function saveitem(pos)
+{
+	
+	$('#warningstatus').html( Math.round(pos/count*100)+"%");
+	
+	var sanphamid = $('#row_khoachnam_sanpham'+pos+' #sanphamid').val();
+	var masanpham = $('#row_khoachnam_sanpham'+pos+' #masanpham').val();
+	var tensanpham = $('#row_khoachnam_sanpham'+pos+' #tensanpham').val();
+	var manhom = $('#row_khoachnam_sanpham'+pos+' #manhom').val();
+	var giacodinh = $('#row_khoachnam_sanpham'+pos+' #giacodinh').val();
+	var sosanphamtrenlot = $('#row_khoachnam_sanpham'+pos+' #sosanphamtrenlot').val();
+	var qui1 = $('#row_khoachnam_sanpham'+pos+' #qui1').val();
+	var qui2 = $('#row_khoachnam_sanpham'+pos+' #qui2').val();
+	var qui3 = $('#row_khoachnam_sanpham'+pos+' #qui3').val();
+	var qui4 = $('#row_khoachnam_sanpham'+pos+' #qui4').val();
+	
+	
+	
+	$.post("?route=quanlykho/kehoachnam/savechitietkehoach",
+		{
+			nam:$('#nam').val(),
+			sanphamid:sanphamid,
+			masanpham:masanpham,
+			tensanpham:tensanpham,
+			manhom:manhom,
+			giacodinh:giacodinh,
+			sosanphamtrenlot:sosanphamtrenlot,
+			qui1:qui1,
+			qui2:qui2,
+			qui3:qui3,
+			qui4:qui4
+		}
+		,
+		function(data){
+			var arr = data.split('-');
+			if(arr[0] == "true")
+			{
+				//window.location = "?route=quanlykho/kehoachnam";
+				saveitem(pos+1)
+			}
+			else
+			{
+				$.unblockUI();
+				$('#error').html(data).show('slow');
+				
+				
+			}
+			//$.unblockUI();
+			
+		}
+	);
+}
 </script>

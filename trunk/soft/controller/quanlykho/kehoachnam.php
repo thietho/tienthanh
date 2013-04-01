@@ -18,7 +18,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$this->response->redirect('?route=page/home');
 		}
 		
-		$this->load->model("quanlykho/kehoach");
+		$this->load->model("quanlykho/kehoachnam");
 		$this->load->helper('image');
 	}
 	public function index()
@@ -33,15 +33,13 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 	public function update()
 	{			
-		$this->load->model("quanlykho/taisan");
-		$this->data['haspass'] = false;
-		$this->data['readonly'] = 'readonly="readonly"';
-		$this->setup();
+		
+		$this->getForm();
 	}
 
 	public function  danhgia()
 	{
-		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
+		$this->data['item'] = $this->model_quanlykho_kehoachnam->getItem($this->request->get['id']);
 
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_danhgia.tpl';
@@ -56,7 +54,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->load->model("quanlykho/taisan");
 		if(count($listid))
 		{
-			$this->model_quanlykho_kehoach->deletedatas($listid);
+			$this->model_quanlykho_kehoachnam->deletedatas($listid);
 			$this->data['output'] = "Xóa thành công";
 		}
 		$this->id="content";
@@ -74,33 +72,20 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 		$this->data['datas'] = array();
 		$rows = array();
-		$where = " AND kehoachcha = 0 AND loai = '".$this->loaikehoach."'";
-		$rows = $this->model_quanlykho_kehoach->getList($where);
-		$eid="ex0-node";
-		$eclass="child-of-ex0-node";
+		$where = "";
+		$rows = $this->model_quanlykho_kehoachnam->getList($where);
+		
 		
 		foreach($rows as $item)
 		{
 				
-			$deep = $item['level'];
-			$link_edit = $this->url->http('quanlykho/kehoachnam/update&id='.$item['id']);
+			
+			$link_edit = $this->url->http('quanlykho/kehoachnam/update&nam='.$item['nam']);
 			$text_edit = "Edit";
 			
-			$makehoach = $item['id'];
-			$where = "AND kehoachid = '".$kehoachid."'";
-			$khsp = array();
-			$khsp = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
 			
-			if(count($khsp)>0)
-			{
-				$link_danhgia = $this->url->http('quanlykho/kehoachnam/danhgia&id='.$item['id']);
-				$text_danhgia = "Đánh giá kết quả";
-			}
-			else
-			{
-				$link_danhgia = '';
-				$text_danhgia = '';
-			}
+			
+			
 			$tab="";
 			if(count($item['countchild'])==0)
 			$tab="<span class='tab'></span>";
@@ -142,36 +127,19 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 	private function getForm()
 	{
-		if ((isset($this->request->get['id'])) )
+		if ((isset($this->request->get['nam'])) )
 		{
-			$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
+			$this->data['item'] = $this->model_quanlykho_kehoachnam->getItem($this->request->get['nam']);
 				
+		}
+		else
+		{
+			$this->data['item']['nam'] = $this->date->now['year'];
 		}
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_form.tpl';
 		$this->layout="layout/center";
 
-		$this->render();
-	}
-	
-	private function chonsanpham()
-	{
-		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
-
-		$this->id='content';
-		$this->template='quanlykho/kehoachnam_chonsanpham.tpl';
-		$this->layout="layout/center";
-		$this->render();
-	}
-	
-	private function setup()
-	{
-		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
-		
-		
-		$this->id='content';
-		$this->template='quanlykho/kehoachnam_setup.tpl';
-		$this->layout="layout/center";
 		$this->render();
 	}
 	
@@ -182,13 +150,10 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
 		unset($this->data['nhomsanpham'][0]);
 		
-		$kehoachid = $this->request->get['id'];
-		$where = "AND kehoachid = '".$kehoachid."'";
-		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		$this->data['kehoach'] = $this->model_quanlykho_kehoach->getItem($kehoachid);
-		
-		$this->data['data_kehoachquy'] = $this->model_quanlykho_kehoach->getChild($kehoachid);
-		
+		$nam = $this->request->get['nam'];
+		$where = "AND nam = '".$nam."'";
+		$this->data['khsp'] = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
+		$this->data['kehoach'] = $this->model_quanlykho_kehoachnam->getItem($nam);
 		
 		if(count($this->data['khsp'])==0)
 		{
@@ -198,14 +163,17 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$rows = $this->model_quanlykho_sanpham->getList();
 			foreach($rows as $item)
 			{
-				$data['kehoachid'] = $kehoachid;
+				$data['nam'] = $nam;
 				$data['sanphamid'] = $item['id'];
 				$data['masanpham'] = $item['masanpham'];
-				$data['manhom'] = $item['manhom'];
 				$data['tensanpham'] = $item['tensanpham'];
-				$data['soluongtonhientai'] = $item['soluongton'];
+				$data['manhom'] = $item['manhom'];
+				$data['giacodinh'] = $item['giacodinh'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
-				$data['dongia'] = $item['dongiabancai'];//Chi phi de sản xuat san pham
+				$data['qui1'] = 0;
+				$data['qui2'] = 0;
+				$data['qui3'] = 0;
+				$data['qui4'] = 0;
 				$this->data['khsp'][] = $data;
 			}
 		}
@@ -223,8 +191,8 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	public function loadKehoachSanPhamDanhGia()
 	{
 		$makehoach = $this->request->get['id'];
-		$where = "AND kehoachid = '".$makehoach."'";
-		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
+		$where = "AND nam = '".$makehoach."'";
+		$this->data['khsp'] = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
 		
 		$this->id='content';
 		$this->template='quanlykho/kehoach_sanpham_danhgia.tpl';
@@ -235,17 +203,17 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$data = $this->request->post;
 		if($this->validateForm($data))
 		{
-			$data['loai'] = $this->loaikehoach;
-			if($data['id']=="")
+			$item = $this->model_quanlykho_kehoachnam->getItem($data['nam']);
+			
+			if(count($item)==0)
 			{
-				$data['id'] = $this->model_quanlykho_kehoach->insert($data);
-				$this->saveKeHoachNam($data);
+				$this->model_quanlykho_kehoachnam->insert($data);
 			}
 			else
 			{
-				$this->model_quanlykho_kehoach->update($data);
+				$this->model_quanlykho_kehoachnam->update($data);
 			}
-			$this->data['output'] = "true-".$data['id'];
+			$this->data['output'] = "true-".$data['nam'];
 		}
 		else
 		{
@@ -259,82 +227,30 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->render();
 	}
 
-	private function saveKeHoachNam($data)
-	{
-
-		for($i=1;$i<=$this->setup['quy'];$i++)
-		{
-			$data['quy'] = $i;
-			$data['thang'] = 0;
-			$data['kehoachcha'] = $data['id'];
-			$id = $this->model_quanlykho_kehoach->insert($data);
-		}
-
-	}
-
 	public function savechitietkehoach()
 	{
 		$data = $this->request->post;
-		if(count($data))
+		$this->data['output'] = "false";
+		if((int)$data['sanphamid']!=0)
 		{
-			$this->model_quanlykho_kehoach->saveKeHoachSanPham($data);
+			$this->model_quanlykho_kehoachnam->saveKeHoachNamSanPham($data);
 			$this->data['output'] = "true";
 		}
-		/*foreach($data['soluong'] as $key => $val)
-		{
-			$khsp['id'] = $data['id'][$key];
-			$khsp['makehoach'] = $makehoach;
-			$khsp['masanpham'] = $data['masanpham'][$key];
-			$khsp['tensanpham'] = $data['tensanpham'][$key];
-			$khsp['soluongtonhientai'] = $data['soluongtonhientai'][$key];
-			$khsp['sosanphamtrenlot'] = $data['sosanphamtrenlot'][$key];
-			$khsp['soluong'] = $data['soluong'][$key];
-			$khsp['solot'] = $data['solot'][$key];
-			$khsp['dongia'] = $data['dongia'][$key];
-				
-			$khsp['pheduyet'] = $data['pheduyet'][$key];
-			$khsp['phuchu'] = $data['phuchu'][$key];
-			$this->model_quanlykho_kehoach->saveKeHoachSanPham($khsp);
-		}*/
+		
 		
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();
 	}
 
-	public function savedanhgiakehoach()
-	{
-		$data = $this->request->post;
-		$makehoach = $data['makehoach'];
-		foreach($data['masanpham'] as $key => $val)
-		{
-			$id = $data['id'][$key];
-			$ketquathuchien = $data['ketquathuchien'][$key];
-			$ketquakinhdoanh = $data['ketquakinhdoanh'][$key];
-			$this->model_quanlykho_kehoach->updateKeHoachSanPham($id,'ketquathuchien',$ketquathuchien);
-			$this->model_quanlykho_kehoach->updateKeHoachSanPham($id,'ketquakinhdoanh',$ketquakinhdoanh);
-		}
-		$this->data['output'] = "true";
-		$this->id='content';
-		$this->template='common/output.tpl';
-		$this->render();
-	}
+	
 	private function validateForm($data)
 	{
 		if($data['nam'] == "")
 		{
 			$this->error['nam'] = "Bạn chưa nhập năm";
 		}
-		else
-		{
-			if($data['id'] == "")
-			{
-				$where = " AND nam ='".$data['nam']."'" ;
-				$item = $this->model_quanlykho_kehoach->getList($where);
-				if(count($item)>0)
-				$this->error['nam'] = "Kế hoạch năm " . $data ." đã có rồi";
-			}
-		}
+		
 
 
 		if (count($this->error)==0) {
@@ -372,7 +288,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		}
 
 			
-		$datas = $this->model_quanlykho_kehoach->getList($where);
+		$datas = $this->model_quanlykho_kehoachnam->getList($where);
 		$this->data['output'] = json_encode(array('taisans' => $datas));
 		$this->id="taisan";
 		$this->template="common/output.tpl";

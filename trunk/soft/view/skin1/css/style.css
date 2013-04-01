@@ -831,6 +831,7 @@ img.alignright,img.right {
 	width:100%;
 	position: fixed;
 	background:#fff;
+	z-index:100;
 }
 
 /* Top */
