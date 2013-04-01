@@ -147,7 +147,7 @@ class ModelQuanlykhoKehoachnam extends Model
 
 	public function saveKeHoachNamSanPham($data)
 	{
-		$id= (int)@$data['id'];
+		$id = (int)@$data['id'];
 		$nam= $this->db->escape(@$data['nam']);
 		$sanphamid= $this->db->escape(@$data['sanphamid']);
 		$masanpham = $this->db->escape(@$data['masanpham']);
@@ -190,19 +190,20 @@ class ModelQuanlykhoKehoachnam extends Model
 						$qui3,
 						$qui4
 						);
+		$where = " AND nam = '".$nam."' AND sanphamid = '".$sanphamid."'";
+		$data_temp = $this->getHeHoachNamSanPhams($where);
+		if(count($data_temp) == 0 )
+		{
+			//$value[0] = $id;
+			$this->db->insertData("qlkkehoachnam_sanpham",$field,$value);
+		}
+		else
+		{
+			$where = " nam = '".$nam."' AND sanphamid = '".$sanphamid."'";
+			$this->db->updateData("qlkkehoachnam_sanpham",$field,$value,$where);
+		}
 
-						if($id == "" )
-						{
-							//$value[0] = $id;
-							$this->db->insertData("qlkkehoachnam_sanpham",$field,$value);
-						}
-						else
-						{
-							$where="id = '".$id."'";
-							$this->db->updateData("qlkkehoachnam_sanpham",$field,$value,$where);
-						}
-
-						return $id;
+		return $id;
 	}
 	
 	function updateKeHoachSanPham($id,$col,$val)
