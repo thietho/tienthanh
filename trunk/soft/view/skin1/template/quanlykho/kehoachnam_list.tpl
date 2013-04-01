@@ -8,7 +8,7 @@
 
 <div class="button right">
 	<?php if($this->user->checkPermission("quanlykho/kehoachnam/insert")==true){ ?>
-	<input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+	<input class="button" value="Thêm" type="button" onclick="themkehoachnam()">
     <?php } ?>
     <?php if($this->user->checkPermission("quanlykho/kehoachnam/delete")==true){ ?>
     <input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()" />
@@ -98,57 +98,51 @@ function deleteitem()
 	}
 }
 
-function searchForm()
+function themkehoachnam()
 {
-	var url =  "?route=quanlykho/taisan";
-	if($("#mataisan").val() != "")
-		url += "&mataisan=" + $("#mataisan").val();
-	
-	if($("#tentaisan").val() != "")
-		url += "&tentaisan="+ $("#tentaisan").val();
-	if($("#manhom").val() != "")
-		url += "&manhom=" + $("#manhom").val();
-	if($("#loai").val() != "")
-		url += "&loai="+ $("#loai").val();
-	if($("#makho").val() != "")
-		url += "&makho=" + $("#makho").val();
-	
-	if("<?php echo $_GET['opendialog']?>" == "true")
-	{
-		url += "&opendialog=true";
-	}
-	
-	window.location = url;
-	
-}
-
-$("#mataisan").val("<?php echo $_GET['mataisan']?>");
-$("#tentaisan").val("<?php echo $_GET['tentaisan']?>");
-$("#manhom").val("<?php echo $_GET['manhom']?>");
-$("#loai").val("<?php echo $_GET['loai']?>");
-$("#makho").val("<?php echo $_GET['makho']?>");
-
-function selectTaiSan()
-{
-	window.opener.document.getElementById('selecttaisan').value = $("#selecttaisan").val();
-	window.close();
-}
-
-<?php if($dialog==true){ ?>
-	$(".inputchk").click(function(){
-		$("#selecttaisan").val('');
-		$(".inputchk").each(function(){
-			if(this.checked == true)
-			{
-				$("#selecttaisan").val($("#selecttaisan").val()+","+$(this).val());
+	$("#popup").attr('title','Kế hoạch năm');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Lưu': function() 
+				{
+					$.post("?route=quanlykho/kehoachnam/save", $("#frm").serialize(),
+						function(data){
+							var arr = data.split('-');
+							if(arr[0] == "true")
+							{
+								//Luu chi tiet ke hoach
+								window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
+								
+							}
+							else
+							{
+							
+								$('#error').html(data).show('slow');
+								
+								
+							}
+							
+						}
+					);
+					
+				},
 				
 			}
-			
-			
-		})
+		});
+	
 		
-	})
+		$("#popup-content").load("?route=quanlykho/kehoachnam/insertForm&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});	
+}
 
-<?php } ?>
 
 </script>

@@ -43,17 +43,17 @@
        	<tr>
         	<td colspan="19"><strong><?php echo $nhom['tennhom']?></strong></td>
         </tr>
-        <?php foreach($khsp as $item){ ?>
+        <?php foreach($data_sanpham as $item){ ?>
         <?php if($item['manhom'] == $nhom['manhom']){ ?>
         
-    	<tr id="row_khoachnam_sanpham<?php echo $count++?>">
+    	<tr id="row_khoachnam_sanpham<?php echo $count?>">
         	
         	<td><center><?php echo $index++?></center></td>
             <td><?php echo $item['masanpham']?></td>
             <td>
             	<?php echo $item['tensanpham']?>
-                <input type="hidden" id="id" value="<?php echo $item['id']?>" />
-                <input type="hidden" id="sanphamid" value="<?php echo $item['sanphamid']?>" />
+                
+                <input type="hidden" id="sanphamid" value="<?php echo $item['id']?>" />
                 <input type="hidden" id="masanpham" value="<?php echo $item['masanpham']?>" />
                 <input type="hidden" id="tensanpham" value="<?php echo $item['tensanpham']?>" />
                 <input type="hidden" id="manhom" value="<?php echo $item['manhom']?>" />
@@ -70,12 +70,12 @@
             <td></td>
             <?php for($i=1;$i<=4;$i++){ ?>
             <td>
-            	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'+i]?>"/>
+            	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'.$i]?>" ref="<?php echo $count?>"/>
                 
              </td>
             <td></td>
  			<?php } ?>           
-            
+            <?php $count++?>
         </tr>
         
         <?php } ?>
@@ -85,5 +85,11 @@
     </tbody>
 </table>
 <script language="javascript">
-var count = <?php echo $count?>
+var count = <?php echo $count?>;
+$('.soluong').keyup(function(e) {
+    var pos = $(this).attr('ref');
+	
+	saveitem(pos);
+});
+
 </script>

@@ -23,12 +23,17 @@
     <form id="frm">
         <p>
             <label>Năm</label><br />
-            
+            <?php if(!$isUpdate){?>
             <select id="nam" name="nam">
                 <?php for($i=$this->date->now['year']-5;$i <= $this->date->now['year']+5;$i++){ ?>
                 <option value="<?php echo $i?>"><?php echo $i?></option>
                 <?php } ?>
             </select>
+            <?php }else{ ?>
+            <?php echo $item['nam']?>
+            <input type="hidden" id="nam" name="nam" value="<?php echo $item['nam']?>" />
+            <input type="hidden" id="id" name="id" value="<?php echo $item['nam']?>" />
+            <?php }?>
         </p>
         <p><label>Ghi chú</label><br />
         <textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
@@ -63,8 +68,8 @@ $('#btnSave').click(function(e) {
 			if(arr[0] == "true")
 			{
 				//Luu chi tiet ke hoach
-				//window.location = "?route=quanlykho/kehoachnam/update&id="+ arr[1];
-				saveitem(0)
+				window.location = "?route=quanlykho/kehoachnam";
+				//saveitem(0)
 			}
 			else
 			{
@@ -80,9 +85,7 @@ $('#btnSave').click(function(e) {
 
 function saveitem(pos)
 {
-	
-	$('#warningstatus').html( Math.round(pos/count*100)+"%");
-	
+	//$('#warningstatus').html( Math.round(pos/count*100)+"%");
 	var sanphamid = $('#row_khoachnam_sanpham'+pos+' #sanphamid').val();
 	var masanpham = $('#row_khoachnam_sanpham'+pos+' #masanpham').val();
 	var tensanpham = $('#row_khoachnam_sanpham'+pos+' #tensanpham').val();
@@ -98,6 +101,7 @@ function saveitem(pos)
 	
 	$.post("?route=quanlykho/kehoachnam/savechitietkehoach",
 		{
+			
 			nam:$('#nam').val(),
 			sanphamid:sanphamid,
 			masanpham:masanpham,
@@ -116,16 +120,18 @@ function saveitem(pos)
 			if(arr[0] == "true")
 			{
 				//window.location = "?route=quanlykho/kehoachnam";
-				saveitem(pos+1)
+				//saveitem(pos+1);
 			}
 			else
 			{
-				$.unblockUI();
-				$('#error').html(data).show('slow');
+				//$('#warningstatus').html("Completed...");
+				//setTimeout("$.unblockUI();window.location = '?route=quanlykho/kehoachnam'",2000);
+				
+				
 				
 				
 			}
-			//$.unblockUI();
+			$.unblockUI();
 			
 		}
 	);

@@ -30,10 +30,18 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	{
 		$this->getForm();
 	}
-
+	
+	public function insertForm()
+	{
+		$this->data['item']['nam'] = $this->date->now['year'];
+		$this->id="content";
+		$this->template="quanlykho/kehoachnam_form_insert.tpl";
+		$this->render();
+	}
+	
 	public function update()
 	{			
-		
+		$this->data['isUpdate'] = true;
 		$this->getForm();
 	}
 
@@ -149,40 +157,43 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->data['nhomsanpham'] = array();
 		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
 		unset($this->data['nhomsanpham'][0]);
-		
 		$nam = $this->request->get['nam'];
-		$where = "AND nam = '".$nam."'";
-		$this->data['khsp'] = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
+		$data = array();
+		$this->load->model('quanlykho/sanpham');
+		$this->data['data_sanpham'] = $this->model_quanlykho_sanpham->getList();
+		foreach($this->data['data_sanpham'] as $key => $item)
+		{
+			//Lay so luong cua nam hien tai
+			$where = " AND nam = '".$nam."' AND sanphamid = '".$item['id']."'";
+			$data_khsp = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
+			$this->data['data_sanpham'][$key]['qui1'] = $data_khsp[0]['qui1'];
+			$this->data['data_sanpham'][$key]['qui2'] = $data_khsp[0]['qui2'];
+			$this->data['data_sanpham'][$key]['qui3'] = $data_khsp[0]['qui3'];
+			$this->data['data_sanpham'][$key]['qui4'] = $data_khsp[0]['qui4'];
+		}
 		$this->data['kehoach'] = $this->model_quanlykho_kehoachnam->getItem($nam);
-		
-		if(count($this->data['khsp'])==0)
+		/*foreach($rows as $item)
 		{
-			//Chua lam ke hoach
-			$data = array();
-			$this->load->model('quanlykho/sanpham');
-			$rows = $this->model_quanlykho_sanpham->getList();
-			foreach($rows as $item)
-			{
-				$data['nam'] = $nam;
-				$data['sanphamid'] = $item['id'];
-				$data['masanpham'] = $item['masanpham'];
-				$data['tensanpham'] = $item['tensanpham'];
-				$data['manhom'] = $item['manhom'];
-				$data['giacodinh'] = $item['giacodinh'];
-				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
-				$data['qui1'] = 0;
-				$data['qui2'] = 0;
-				$data['qui3'] = 0;
-				$data['qui4'] = 0;
-				$this->data['khsp'][] = $data;
-			}
-		}
-		else
-		{
-			
-		}
-		//
+			$data['nam'] = $nam;
+			$data['sanphamid'] = $item['id'];
+			$data['masanpham'] = $item['masanpham'];
+			$data['tensanpham'] = $item['tensanpham'];
+			$data['manhom'] = $item['manhom'];
+			$data['giacodinh'] = $item['giacodinh'];
+			$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
+			$data['qui1'] = 0;
+			$data['qui2'] = 0;
+			$data['qui3'] = 0;
+			$data['qui4'] = 0;
+			$this->data['khsp'][] = $data;
+		}*/
 		
+		/*$where = "AND nam = '".$nam."'";
+		$this->data['khsp'] = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
+		
+		//Ke hoach nam truoc
+		$where = "AND nam = '". $nam-- ."'";
+		$this->data['khspnamtruoc'] = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);*/
 		
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_sanpham.tpl';
@@ -250,7 +261,17 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		{
 			$this->error['nam'] = "Bạn chưa nhập năm";
 		}
-		
+		else
+		{
+			if($data['id']=="")
+			{
+				$item = $this->model_quanlykho_kehoachnam->getItem($data['nam']);
+				if(count($item))
+				{
+					$this->error['nam'] = "Năm ".$data['nam']." đã làm kế hoạch rồi";
+				}
+			}
+		}
 
 
 		if (count($this->error)==0) {
