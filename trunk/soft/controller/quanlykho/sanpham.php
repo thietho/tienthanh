@@ -521,6 +521,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->load->model("quanlykho/linhkien");
 		$this->data['item'] = $this->model_quanlykho_sanpham->getItem($this->request->get['id']);
 		$this->data['dinhluong'] = $this->model_quanlykho_sanpham->getDinhLuong($this->request->get['id']);
+		//Chi phi tong hop tu san xuat linh kien
 		foreach($this->data['dinhluong'] as $key =>$item)
 		{
 			$linhkien = $this->model_quanlykho_linhkien->getItem($item['malinhkien']);
@@ -528,6 +529,8 @@ class ControllerQuanlykhoSanpham extends Controller
 			$tiencong = $this->loadModule("quanlykho/linhkien","tinhTienCong", $arr);
 			$this->data['dinhluong'][$key]['tiencong'] = $tiencong;
 		}
+		//Chi phi san xuat san pham
+		$this->data['chiphis'] = $this->model_quanlykho_sanpham->getChiPhi($this->request->get['id']);
 		$this->id='content';
 		$this->template='quanlykho/sanpham_tinhtiencongtonghop.tpl';
 		$this->layout="layout/center";

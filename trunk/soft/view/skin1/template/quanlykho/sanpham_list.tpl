@@ -94,6 +94,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
+	$('#listsanpham').html(loading);
 	$('#listsanpham').load(url);
 }
 
@@ -117,12 +118,17 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	
+	$('#listsanpham').html(loading);
 	$('#listsanpham').load("?route=quanlykho/sanpham/getList"+url);
 }
 function viewSanPham(masanpham)
 {
-	
 	openDialog("?route=quanlykho/sanpham/lichsu&masanpham="+masanpham,1000,800);
+}
+
+function moveto(url,eid)
+{
+	$(eid).html(loading);
+	$(eid).load(url);	
 }
 </script>

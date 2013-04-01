@@ -43,6 +43,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$masanpham=$this->db->escape(@$data['masanpham']);
 		$tensanpham=$this->db->escape(@$data['tensanpham']);
 		$mavach=$this->db->escape(@$data['mavach']);
+		$giacodinh= $this->string->toNumber($this->db->escape(@$data['giacodinh']));
 		$sosanphamtrenlot= $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
 		$dongiabancai= $this->string->toNumber($this->db->escape(@$data['dongiabancai']));
 		$dongiabanhop= $this->string->toNumber($this->db->escape(@$data['dongiabanhop']));
@@ -66,6 +67,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'masanpham',
 						'tensanpham',
 						'mavach',
+						'giacodinh',
 						'sosanphamtrenlot',
 						'dongiabancai',
 						'dongiabanhop',
@@ -91,6 +93,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$masanpham,
 						$tensanpham,
 						$mavach,
+						$giacodinh,
 						$sosanphamtrenlot,
 						$dongiabancai,
 						$dongiabanhop,
@@ -126,6 +129,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 		$masanpham=$this->db->escape(@$data['masanpham']);
 		$tensanpham=$this->db->escape(@$data['tensanpham']);
 		$mavach=$this->db->escape(@$data['mavach']);
+		$giacodinh= $this->string->toNumber($this->db->escape(@$data['giacodinh']));
 		$sosanphamtrenlot= $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
 		$dongiabancai= $this->string->toNumber($this->db->escape(@$data['dongiabancai']));
 		$dongiabanhop= $this->string->toNumber($this->db->escape(@$data['dongiabanhop']));
@@ -149,6 +153,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						'masanpham',
 						'tensanpham',
 						'mavach',
+						'giacodinh',
 						'sosanphamtrenlot',
 						'dongiabancai',
 						'dongiabanhop',
@@ -174,6 +179,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 						$masanpham,
 						$tensanpham,
 						$mavach,
+						$giacodinh,
 						$sosanphamtrenlot,
 						$dongiabancai,
 						$dongiabanhop,

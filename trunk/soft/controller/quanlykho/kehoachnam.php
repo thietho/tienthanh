@@ -74,7 +74,8 @@ class ControllerQuanlykhoKehoachnam extends Controller
 
 		$this->data['datas'] = array();
 		$rows = array();
-		$this->model_quanlykho_kehoach->getTree(0,$rows,$this->loaikehoach);
+		$where = " AND kehoachcha = 0 AND loai = '".$this->loaikehoach."'";
+		$rows = $this->model_quanlykho_kehoach->getList($where);
 		$eid="ex0-node";
 		$eclass="child-of-ex0-node";
 		
@@ -86,7 +87,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$text_edit = "Edit";
 			
 			$makehoach = $item['id'];
-			$where = "AND makehoach = '".$makehoach."'";
+			$where = "AND kehoachid = '".$kehoachid."'";
 			$khsp = array();
 			$khsp = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
 			
@@ -166,7 +167,8 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	private function setup()
 	{
 		$this->data['item'] = $this->model_quanlykho_kehoach->getItem($this->request->get['id']);
-
+		
+		
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_setup.tpl';
 		$this->layout="layout/center";
@@ -180,58 +182,39 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
 		unset($this->data['nhomsanpham'][0]);
 		
-		$makehoach = $this->request->get['id'];
-		$where = "AND makehoach = '".$makehoach."'";
+		$kehoachid = $this->request->get['id'];
+		$where = "AND kehoachid = '".$kehoachid."'";
 		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
+		$this->data['kehoach'] = $this->model_quanlykho_kehoach->getItem($kehoachid);
+		
+		$this->data['data_kehoachquy'] = $this->model_quanlykho_kehoach->getChild($kehoachid);
+		
+		
 		if(count($this->data['khsp'])==0)
 		{
+			//Chua lam ke hoach
 			$data = array();
 			$this->load->model('quanlykho/sanpham');
 			$rows = $this->model_quanlykho_sanpham->getList();
 			foreach($rows as $item)
 			{
-				$data['makehoach'] = $makehoach;
+				$data['kehoachid'] = $kehoachid;
 				$data['sanphamid'] = $item['id'];
 				$data['masanpham'] = $item['masanpham'];
 				$data['manhom'] = $item['manhom'];
 				$data['tensanpham'] = $item['tensanpham'];
 				$data['soluongtonhientai'] = $item['soluongton'];
 				$data['sosanphamtrenlot'] = $item['sosanphamtrenlot'];
-				$data['dongia'] = $item['dongiaban'];
-
-
-
+				$data['dongia'] = $item['dongiabancai'];//Chi phi de sản xuat san pham
 				$this->data['khsp'][] = $data;
 			}
 		}
-		//
-		$kehoachtruoc = $this->model_quanlykho_kehoach->kehoachkytruoc($makehoach);
-		$where = "AND makehoach = '".$kehoachtruoc['id']."'";
-		$khsptruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		$kehoachnamqua = $this->model_quanlykho_kehoach->kehoacnamtruoc($makehoach);
-		$where = "AND makehoach = '".$kehoachnamqua['id']."'";
-		$khspnamqua = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		$kehoachnamtruoc = $this->model_quanlykho_kehoach->kehoacnamtruoc($kehoachnamqua['id']);
-		$where = "AND makehoach = '".$kehoachnamtruoc['id']."'";
-		$khspnamtruoc = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
-		
-		foreach($this->data['khsp'] as $key => $item)
+		else
 		{
-			$arr = $this->string->array_Filter($khsptruoc,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['ketquathuchientruoc'] = $arr[0]['ketquathuchien'];
-			$this->data['khsp'][$key]['ketquakinhdoanhtruoc'] = $arr[0]['ketquakinhdoanh'];
-			$this->data['khsp'][$key]['slkehoachtruoc'] = $arr[0]['soluong'];
-			$this->data['khsp'][$key]['thanhtienkehoachtruoc'] = $arr[0]['thanhtien'];
-			
-			$arr = $this->string->array_Filter($khspnamqua,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['slkehoachnamtqua'] = $arr[0]['soluong'];
-			
-			$arr = $this->string->array_Filter($khspnamtruoc,'masanpham',$item['masanpham']);
-			$this->data['khsp'][$key]['slkehoachnamttruoc'] = $arr[0]['soluong'];
 			
 		}
+		//
+		
 		
 		$this->id='content';
 		$this->template='quanlykho/kehoachnam_sanpham.tpl';
@@ -240,7 +223,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	public function loadKehoachSanPhamDanhGia()
 	{
 		$makehoach = $this->request->get['id'];
-		$where = "AND makehoach = '".$makehoach."'";
+		$where = "AND kehoachid = '".$makehoach."'";
 		$this->data['khsp'] = $this->model_quanlykho_kehoach->getKeKhoachSanPhams($where);
 		
 		$this->id='content';
@@ -292,8 +275,12 @@ class ControllerQuanlykhoKehoachnam extends Controller
 	public function savechitietkehoach()
 	{
 		$data = $this->request->post;
-		$makehoach = $data['makehoach'];
-		foreach($data['soluong'] as $key => $val)
+		if(count($data))
+		{
+			$this->model_quanlykho_kehoach->saveKeHoachSanPham($data);
+			$this->data['output'] = "true";
+		}
+		/*foreach($data['soluong'] as $key => $val)
 		{
 			$khsp['id'] = $data['id'][$key];
 			$khsp['makehoach'] = $makehoach;
@@ -308,8 +295,8 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$khsp['pheduyet'] = $data['pheduyet'][$key];
 			$khsp['phuchu'] = $data['phuchu'][$key];
 			$this->model_quanlykho_kehoach->saveKeHoachSanPham($khsp);
-		}
-		$this->data['output'] = "true";
+		}*/
+		
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();

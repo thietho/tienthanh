@@ -10,12 +10,14 @@ class ModelQuanlykhoKehoach extends Model
 		return $query->row;
 	}
 
-	public function getList($where="", $from=0, $to=0)
+	public function getList($where="", $from=0, $to=0,$order = "Order by id")
 	{
 
 		$sql = "Select `qlkkehoach`.*
 									from `qlkkehoach` 
-									where trangthai <> 'deleted' " . $where . " Order by id";
+									where trangthai <> 'deleted' " . $where;
+		if($order == "")
+			$sql .=$order;
 		if($to > 0)
 		{
 			$sql .= " Limit ".$from.",".$to;
@@ -27,7 +29,7 @@ class ModelQuanlykhoKehoach extends Model
 
 	public function getChild($kehoachcha,$order = " Order by nam,quy,thang ")
 	{
-		$where = " AND kehoachcha = '".$kehoachcha."'";
+		$where = " AND kehoachcha = '".$kehoachcha."' ". $order;
 		return $this->getList($where);
 	}
 
@@ -253,13 +255,17 @@ class ModelQuanlykhoKehoach extends Model
 	public function saveKeHoachSanPham($data)
 	{
 		$id= (int)@$data['id'];
-		$makehoach= $this->db->escape(@$data['makehoach']);
-		$masanpham= $this->db->escape(@$data['masanpham']);
+		$kehoachid= $this->db->escape(@$data['kehoachid']);
+		$sanphamid= $this->db->escape(@$data['sanphamid']);
+		$masanpham = $this->db->escape(@$data['masanpham']);
 		$tensanpham = $this->db->escape(@$data['tensanpham']);
 		$soluongtonhientai = $this->string->toNumber($this->db->escape(@$data['soluongtonhientai']));
 		$sosanphamtrenlot = $this->string->toNumber($this->db->escape(@$data['sosanphamtrenlot']));
 		$soluong = $this->string->toNumber($this->db->escape(@$data['soluong']));
-		$solot=$soluong / $sosanphamtrenlot;
+		if($sosanphamtrenlot)
+			$solot=$soluong / $sosanphamtrenlot;
+		else
+			$solot = $soluong; 
 		$dongia=$this->string->toNumber($this->db->escape(@$data['dongia']));
 		$thanhtien = $soluong * $dongia;
 		$pheduyet= @(int)$data['pheduyet'];
@@ -267,7 +273,8 @@ class ModelQuanlykhoKehoach extends Model
 		
 		$field=array(
 
-						'makehoach',
+						'kehoachid',
+						'sanphamid',
 						'masanpham',
 						'tensanpham',
 						'soluongtonhientai',
@@ -282,7 +289,8 @@ class ModelQuanlykhoKehoach extends Model
 						);
 		$value=array(
 
-						$makehoach,
+						$kehoachid,
+						$sanphamid,
 						$masanpham,
 						$tensanpham,
 						$soluongtonhientai,

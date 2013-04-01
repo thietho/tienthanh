@@ -15,8 +15,15 @@
 <div class="clearer">^&nbsp;</div>
 <div id="error" class="error" style="display: none"></div>
 <div>
-<p><label>Năm</label><br />
-	<input type="text" id="nam" name="nam" value="<?php echo $item['nam']?>" class="text" /></p>
+	<p>
+    	<label>Năm</label><br />
+		
+        <select id="nam" name="nam">
+        	<?php for($i=$this->date->now['year']-5;$i <= $this->date->now['year']+5;$i++){ ?>
+            <option value="<?php echo $i?>"><?php echo $i?></option>
+            <?php } ?>
+        </select>
+    </p>
 <p><label>Ghi chú</label><br />
 <textarea id="ghichu" name="ghichu"><?php echo $item['ghichu']?></textarea>
 </p>
@@ -31,6 +38,7 @@
 
 </div>
 <script language="javascript">
+$('#nam').val("<?php echo $this->date->now['year']?>");
 $('#btnSave').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
