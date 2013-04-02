@@ -158,11 +158,20 @@ class ControllerQuanlykhoKehoachnam extends Controller
 		$this->model_quanlykho_nhom->getTree("nhomsanpham",$this->data['nhomsanpham']);
 		unset($this->data['nhomsanpham'][0]);
 		$nam = $this->request->get['nam'];
+		$namtruoc = $nam -1;
 		$data = array();
 		$this->load->model('quanlykho/sanpham');
 		$this->data['data_sanpham'] = $this->model_quanlykho_sanpham->getList();
 		foreach($this->data['data_sanpham'] as $key => $item)
 		{
+			//Lay so luong nam truoc
+			$where = " AND nam = '". $namtruoc ."' AND sanphamid = '".$item['id']."'";
+			$data_khsp = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
+			$this->data['data_sanpham'][$key]['quitruoc1'] = $data_khsp[0]['qui1'];
+			$this->data['data_sanpham'][$key]['quitruoc2'] = $data_khsp[0]['qui2'];
+			$this->data['data_sanpham'][$key]['quitruoc3'] = $data_khsp[0]['qui3'];
+			$this->data['data_sanpham'][$key]['quitruoc4'] = $data_khsp[0]['qui4'];
+			$this->data['data_sanpham'][$key]['giacodinhtruoc'] = $data_khsp[0]['giacodinh'];
 			//Lay so luong cua nam hien tai
 			$where = " AND nam = '".$nam."' AND sanphamid = '".$item['id']."'";
 			$data_khsp = $this->model_quanlykho_kehoachnam->getHeHoachNamSanPhams($where);
@@ -170,6 +179,7 @@ class ControllerQuanlykhoKehoachnam extends Controller
 			$this->data['data_sanpham'][$key]['qui2'] = $data_khsp[0]['qui2'];
 			$this->data['data_sanpham'][$key]['qui3'] = $data_khsp[0]['qui3'];
 			$this->data['data_sanpham'][$key]['qui4'] = $data_khsp[0]['qui4'];
+			$this->data['data_sanpham'][$key]['giacodinhhientai'] = $data_khsp[0]['giacodinh'];
 		}
 		$this->data['kehoach'] = $this->model_quanlykho_kehoachnam->getItem($nam);
 		/*foreach($rows as $item)
