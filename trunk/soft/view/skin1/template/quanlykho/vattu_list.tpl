@@ -92,6 +92,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
+	$('#listnguyenlieu').html(loading);
 	$('#listnguyenlieu').load(url);
 }
 
@@ -113,7 +114,7 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	
+	$('#listnguyenlieu').html(loading);
 	$('#listnguyenlieu').load("?route=quanlykho/vattu/getList"+url);
 }
 
@@ -161,6 +162,7 @@ function viewTonKho(id)
 
 function moveto(url,eid)
 {
+	$(eid).html(loading);
 	$(eid).load(url);	
 }
 </script>

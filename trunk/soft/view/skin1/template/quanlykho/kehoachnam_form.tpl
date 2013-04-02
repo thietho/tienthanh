@@ -51,7 +51,7 @@
 <script language="javascript">
 $(document).ready(function(e) {
     $('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
-	
+	$.blockUI({ message: "<h1 id=warningstatus>Please wait...</h1>"}); 
 	$('#fragment-chitiet').load("?route=quanlykho/kehoachnam/loadKehoachSanPham&nam=<?php echo $item['nam']?>",function(){
 		
 		$.unblockUI();
