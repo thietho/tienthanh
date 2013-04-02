@@ -66,10 +66,10 @@
             <?php } ?>
             <?php for($i=1;$i<=4;$i++){ ?>
             <td>
-            	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'.$i]?>" ref="<?php echo $count?>"/>
+            	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'.$i]?>" ref="<?php echo $count?>" qui="<?php echo $i?>"/>
                 
              </td>
-            <td></td>
+            <td id="thanhtien_<?php echo $count?>_<?php echo $i?>" class="number"><?php echo $this->string->numberFormate($item['qui'.$i]*$item['giacodinh'])?></td>
  			<?php } ?>           
             <?php $count++?>
         </tr>
@@ -84,8 +84,11 @@
 var count = <?php echo $count?>;
 $('.soluong').keyup(function(e) {
     var pos = $(this).attr('ref');
-	
 	saveitem(pos);
+	var giacodinh = $('#row_khoachnam_sanpham'+pos+' #giacodinh').val();
+	var qui = $(this).attr('qui');
+	$('#thanhtien_'+pos+'_'+qui).html(formateNumber(Number(giacodinh) * Number(stringtoNumber(this.value))) );
+	//alert(qui)
 });
 
 </script>
