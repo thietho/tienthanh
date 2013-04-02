@@ -97,7 +97,12 @@ function viewAll()
 	$('#listsanpham').html(loading);
 	$('#listsanpham').load(url);
 }
-
+$('.text').keyup(function(e) {
+    searchForm();
+});
+$('select').change(function(e) {
+    searchForm();
+});
 function searchForm()
 {
 	var url =  "";
