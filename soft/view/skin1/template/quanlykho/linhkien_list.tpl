@@ -61,6 +61,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
+	$('#listlinhkien').html(loading);
 	$('#listlinhkien').load(url);
 }
 
@@ -81,7 +82,7 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	
+	$('#listlinhkien').html(loading);
 	$('#listlinhkien').load("?route=quanlykho/linhkien/getList"+url);
 }
 
@@ -125,6 +126,7 @@ function selectLinhKien()
 <?php } ?>
 function moveto(url,eid)
 {
+	$(eid).html(loading);
 	$(eid).load(url);	
 }
 </script>
