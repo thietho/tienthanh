@@ -64,7 +64,12 @@ function viewAll()
 	$('#listlinhkien').html(loading);
 	$('#listlinhkien').load(url);
 }
-
+$('.text').keyup(function(e) {
+    searchForm();
+});
+$('select').change(function(e) {
+    searchForm();
+});
 function searchForm()
 {
 	var url =  "";

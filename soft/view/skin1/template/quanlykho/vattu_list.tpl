@@ -95,7 +95,12 @@ function viewAll()
 	$('#listnguyenlieu').html(loading);
 	$('#listnguyenlieu').load(url);
 }
-
+$('.text').keyup(function(e) {
+    searchForm();
+});
+$('select').change(function(e) {
+    searchForm();
+});
 function searchForm()
 {
 	var url =  "";

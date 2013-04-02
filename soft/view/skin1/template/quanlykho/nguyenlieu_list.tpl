@@ -27,7 +27,7 @@
                 </select>
                 <br />
                 <input type="button" class="button" name="btnSearch" value="Tìm" onclick="searchForm()"/>
-                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="window.location = '?route=quanlykho/nguyenlieu'"/>
+                <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="viewAll()"/>
             </div>
         	<div class="button right">
             	<?php if($dialog==true){ ?>
@@ -84,6 +84,13 @@ function deleteitem()
 }
 $(document).ready(function(e) {
     viewAll();
+});
+
+$('.text').keyup(function(e) {
+    searchForm();
+});
+$('select').change(function(e) {
+    searchForm();
 });
 function viewAll()
 {
