@@ -60,14 +60,10 @@
                 <input type="hidden" id="giacodinh" value="<?php echo $item['giacodinh']?>" />
                 <input type="hidden" id="sosanphamtrenlot" value="<?php echo $item['sosanphamtrenlot']?>" />
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <?php for($i=1;$i<=4;$i++){ ?>
+            <td class="number"><?php echo $this->string->numberFormate($item['quitruoc'.$i])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($item['quitruoc'.$i]*$item['giacodinhtruoc'])?></td>
+            <?php } ?>
             <?php for($i=1;$i<=4;$i++){ ?>
             <td>
             	<input type="text" class="text short number soluong" id="qui<?php echo $i?>" name="qui<?php echo $i?>" value="<?php echo $item['qui'.$i]?>" ref="<?php echo $count?>"/>
