@@ -103,11 +103,11 @@ function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/nguyenlieu/save", $("#frm").serialize(),
+	$.post("?route=quanlykho/vattu/save", $("#frm").serialize(),
 		function(data){
 			if(data == "true")
 			{
-				window.location = "?route=quanlykho/nguyenlieu";
+				window.location = "?route=quanlykho/vattu";
 			}
 			else
 			{

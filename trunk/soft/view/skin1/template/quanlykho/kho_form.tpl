@@ -37,7 +37,13 @@
                     <input type="text" name="dienthoai" value="<?php echo $item['dienthoai']?>" class="text" size=60 />
                     
                 </p>
-               	
+               	<p>
+                    <label>Chức năng sử dụng</label><br />
+                    <?php foreach($modules as $moduleid){ ?>
+                    <input type="checkbox" name="modules[]" value="<?php echo $moduleid?>" <?php echo in_array($moduleid,$item['modules'])?'checked="checked"':""?>/>
+                    <?php echo $this->document->getModuleId($moduleid)?><br />
+                    <?php }?>
+                </p>
                 <p>
                     <label>Ghi chú</label><br />
                     <textarea name="ghichu"><?php echo $item['ghichu']?></textarea>

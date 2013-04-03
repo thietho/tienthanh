@@ -181,7 +181,14 @@ class ModelQuanlykhoNhom extends Model
 		$info = $query->row;
 		return $info['value'];
 	}
-
+	
+	public function getInforData($where)
+	{
+		$sql = "Select * from qlknhominfo where 1=1 ".$where;
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+	
 	public function saveInfo($manhom, $fieldname, $fieldvalue)
 	{
 		$sql = "Select * from qlknhominfo where manhom = '".$manhom."' and `col` = '".$fieldname."'";

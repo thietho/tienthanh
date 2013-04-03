@@ -20,7 +20,7 @@ class ControllerQuanlykhoVattu extends Controller
 		$this->data['loainguyenlieu'] = array();
 		$this->model_quanlykho_nhom->getTree("dmvtccnl",$this->data['loainguyenlieu']);
 		//unset($this->data['loainguyenlieu'][0]);
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhosByModuel($this->getRoute());
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
    	}
 	public function index()
