@@ -277,9 +277,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 				$arr[] = " AND " . $key ." = '".$item."'";
 		}
 		$arrnhom = $this->string->matrixToArray($this->data['loainguyenlieu'],'manhom');
-		$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
+		
 		
 		$where = implode("",$arr);
+		$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
 		
 		$rows = $this->model_quanlykho_nguyenlieu->getList($where);
 		//Page
