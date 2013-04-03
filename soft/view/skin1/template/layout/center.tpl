@@ -61,7 +61,15 @@ var loading = '<center><img src="<?php echo DIR_IMAGE?>loading.gif"></center>';
 <div id="autocomplete" style="display: none; position: absolute; background: #FFF;"></div>
 </body>
 	<div id="popup" style="display:none">
-        <div id="popup-content" class="left"></div>
-        <div id="popup-seletetion" class="right"></div>
+    	<div id="popup-selete">
+        	<a class="button right closeselect">X</a>
+            <div class="clearer">^&nbsp;</div>
+            <div id="popup-seletetion">
+                
+                
+            </div>
+        </div>
+        <div id="popup-content"></div>
+        
     </div>
 </html>
