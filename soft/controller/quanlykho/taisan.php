@@ -14,6 +14,15 @@ class ControllerQuanlykhoTaisan extends Controller
 		
 		$this->load->model("quanlykho/taisan");
 		$this->load->helper('image');
+		
+		$this->load->model("quanlykho/nhom");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("quanlykho/nhanvien");
+		$this->data['nhomtaisan'] = $this->model_quanlykho_nhom->getChild("nhomtaisan");
+		$this->data['loaitaisan'] = $this->model_quanlykho_nhom->getChild("loaitaisan");
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhosByModuel($this->getRoute());
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
    	}
 	public function index()
 	{
@@ -56,15 +65,7 @@ class ControllerQuanlykhoTaisan extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/taisan/insert');
 		$this->data['delete'] = $this->url->http('quanlykho/taisan/delete');		
 		$this->data['list'] = $this->url->http('quanlykho/taisan');
-		$this->load->model("quanlykho/taisan");
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->load->model("quanlykho/nhanvien");
-		$this->data['nhomtaisan'] = $this->model_quanlykho_nhom->getChild("nhomtaisan");
-		$this->data['loaitaisan'] = $this->model_quanlykho_nhom->getChild("loaitaisan");
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
 		
 		$this->data['datas'] = array();
 		$where = "";
@@ -144,13 +145,7 @@ class ControllerQuanlykhoTaisan extends Controller
 	private function getForm()
 	{
 		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomtaisan'] = $this->model_quanlykho_nhom->getChild("nhomtaisan");
-		$this->data['loaitaisan'] = $this->model_quanlykho_nhom->getChild("loaitaisan");
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
 		
 		if ((isset($this->request->get['id'])) ) 
 		{

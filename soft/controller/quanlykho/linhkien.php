@@ -22,9 +22,17 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
 		$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList();
 		$this->data['cbphongban'] = $this->model_common_control->getDataCombobox($data_phongban, 'tenphongban', 'maphongban');
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhosByModuel($this->getRoute());
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		$this->load->helper('image');
+		
+		$this->load->model("quanlykho/nhom");
+		$this->load->model("quanlykho/kho");
+		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("quanlykho/sanpham");
+		$this->data['nhomlinhkien'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
+		$this->data['loailinhkien'] = $this->model_quanlykho_nhom->getChild("loailinhkien");
+		
 	}
 	
 	public function index()
@@ -182,14 +190,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 	private function getForm()
 	{
 		$this->data['DIR_UPLOADPHOTO'] = HTTP_SERVER."index.php?route=common/uploadpreview";
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->load->model("quanlykho/sanpham");
-		$this->data['nhomlinhkien'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
-		$this->data['loailinhkien'] = $this->model_quanlykho_nhom->getChild("loailinhkien");
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
 		
 		if ((isset($this->request->get['id'])) ) 
 		{

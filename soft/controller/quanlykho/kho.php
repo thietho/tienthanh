@@ -11,6 +11,14 @@ class ControllerQuanlykhoKho extends Controller
 		{
 			$this->response->redirect('?route=page/home');
 		}
+		$this->data['modules'] = array(
+									'quanlykho/nguyenlieu',
+									'quanlykho/vattu',
+									'quanlykho/linhkien',
+									'quanlykho/sanpham',
+									'quanlykho/taisan'
+										);
+		
 	}
 	public function index()
 	{
@@ -66,24 +74,19 @@ class ControllerQuanlykhoKho extends Controller
 		$this->data['delete'] = $this->url->http('quanlykho/kho/delete');
 
 		$this->data['datas'] = array();
-		$rows = $this->model_quanlykho_kho->getKhos();
+		$this->data['datas'] = $this->model_quanlykho_kho->getKhos();
 
-		//Page
-		$page = $this->request->get['page'];
-		$x=$page;
-		$limit = 20;
-		$total = count($rows);
-		// work out the pager values
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page);
-
-		$pager  = $this->pager->getPagerData($total, $limit, $page);
-		$offset = $pager->offset;
-		$limit  = $pager->limit;
-		$page   = $pager->page;
-		for($i=$offset;$i < $offset + $limit && count($rows[$i])>0;$i++)
-		//for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
+		
+		for($i=0; $i <= count($this->data['datas'])-1 ; $i++)
 		{
-			$this->data['datas'][$i] = $rows[$i];
+			//$this->data['datas'][$i] = $rows[$i];
+			$arr = $this->string->referSiteMapToArray($this->data['datas'][$i]['modules']);
+			$arrname = array();
+			foreach($arr as $moduleid)
+			{
+				$arrname[] = $this->document->getModuleId($moduleid);
+			}
+			$this->data['datas'][$i]['modules'] = implode(", ",$arrname);
 			$this->data['datas'][$i]['link_edit'] = $this->url->http('quanlykho/kho/update&makho='.$this->data['datas'][$i]['makho']);
 			$this->data['datas'][$i]['text_edit'] = "Sửa";
 			$this->data['datas'][$i]['link_active'] = $this->url->http('quanlykho/kho/active&makho='.$this->data['datas'][$i]['makho']);
@@ -115,7 +118,7 @@ class ControllerQuanlykhoKho extends Controller
 		if ((isset($this->request->get['makho'])) )
 		{
 			$this->data['item'] = $this->model_quanlykho_kho->getKho($this->request->get['makho']);
-				
+			$this->data['item']['modules'] =  $this->string->referSiteMapToArray($this->data['item']['modules']);
 		}
 
 		$this->id='content';
@@ -128,6 +131,8 @@ class ControllerQuanlykhoKho extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
+		$data['modules'] = $this->string->arrayToString($data['modules']);
+		
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/kho");

@@ -36,6 +36,7 @@
                         <th>Tên kho</th>
                         <th>Địa chỉ</th>
                         <th>Điện thoại</th>
+                        <th>Chức năng sử dụng</th>
                         <th>Ghi chú</th>                    
                         <th width="10%">Control</th>                                  
                     </tr>
@@ -52,6 +53,7 @@
                         <td><?php echo $item['tenkho']?></td>
                         <td><?php echo $item['diachi']?></td>
                         <td><?php echo $item['dienthoai']?></td>
+                        <td><?php echo $item['modules']?></td>
                 		<td><?php echo $item['ghichu']?></td>
                         <td class="link-control">
                         	<?php if($this->user->checkPermission("quanlykho/kho/viewTonKho")==true){ ?>

@@ -107,7 +107,13 @@ final class Document {
 									where id ='".$id."' ");
 		return $query->row[$name];	
 	}
-	
+	public function getModuleId($moduleid,$name = 'modulename')
+	{
+		$query = $this->db->query("Select `module`.* 
+									from `module` 
+									where moduleid ='".$moduleid."' ");
+		return $query->row[$name];	
+	}
 	public function getTenDonVi($madonvi)
 	{
 		$query = $this->db->query("Select `qlkdonvitinh`.* 

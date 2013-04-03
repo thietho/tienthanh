@@ -24,7 +24,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->data['loaisanpham'] = array();
 		$this->model_quanlykho_nhom->getTree("loaisanpham",$this->data['loaisanpham']);
 		unset($this->data['loaisanpham'][0]);
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
+		$this->data['kho'] = $this->model_quanlykho_kho->getKhosByModuel($this->getRoute());
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		$this->load->helper('image');
    	}
@@ -82,16 +82,6 @@ class ControllerQuanlykhoSanpham extends Controller
 	
 	public function getList() 
 	{
-		
-		
-		
-		$this->load->model("quanlykho/nhom");
-		$this->load->model("quanlykho/kho");
-		$this->load->model("quanlykho/donvitinh");
-		$this->data['nhomsanpham'] = $this->model_quanlykho_nhom->getChild("nhomsanpham");
-		$this->data['loaisanpham'] = $this->model_quanlykho_nhom->getChild("loaisanpham");
-		$this->data['kho'] = $this->model_quanlykho_kho->getKhos();
-		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
 		
 		$this->data['datas'] = array();
 		$where = "";
