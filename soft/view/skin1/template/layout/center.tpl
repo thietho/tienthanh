@@ -61,7 +61,7 @@ var loading = '<center><img src="<?php echo DIR_IMAGE?>loading.gif"></center>';
 <div id="autocomplete" style="display: none; position: absolute; background: #FFF;"></div>
 </body>
 	<div id="popup" style="display:none">
-        <div id="popup-content"></div>
-        
+        <div id="popup-content" class="left"></div>
+        <div id="popup-seletetion" class="right"></div>
     </div>
 </html>

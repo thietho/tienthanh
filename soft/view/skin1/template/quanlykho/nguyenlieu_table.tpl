@@ -2,17 +2,19 @@
                 <table class="data-table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr class="tr-head">
+                    	<?php if($dialog!=true){ ?>
                         <th width="1%">
                         	
                         	<input id="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
                            
                         </th>
+                        <?php } ?>
                         <th>STT</th>
                         <th>Mã nguyên vật liệu</th>
                         <th>
                         	Tên nguyên vật liệu
                         </th>
-                        
+                        <?php if($dialog!=true){ ?>
                         <th>Loại</th>
                         <th>Kho</th>
                         
@@ -20,6 +22,7 @@
                         <th>Tồn tối thiểu</th>
                         <th>Tồn tối đa</th>
                         <th>Số lượng 1 lần đặt hàng</th>
+                        <?php } ?>
                         <th>Đơn vị tính</th>
                         
                         <th>Mục đích sử dụng</th>
@@ -37,12 +40,14 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr>
+                    <tr class="item" id="<?php echo $item['id']?>" manguyenlieu="<?php echo $item['manguyenlieu']?>" tennguyenlieu="<?php echo $item['tennguyenlieu']?>">
+                    	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
+                        <?php } ?>
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['manguyenlieu']?></td>
                         <td><?php echo $item['tennguyenlieu']?></td>
-                        
+                        <?php if($dialog!=true){ ?>
                         <td><?php echo $item['tenloai']?></td>
                         <td><?php echo $item['tenkho']?></td>
                         
@@ -56,6 +61,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoithieu'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoida'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['soluongmoilandathang'],0)?></td>
+                        <?php } ?>
                         <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
                         
                         <td><?php echo $item['mucdichsudung']?></td>
@@ -90,3 +96,16 @@ $('#inputchk').click(function(e) {
     });
 });
 </script>
+<?php if($dialog){ ?>
+<script language="javascript">
+$('.item').click(function(e) {
+	var html = "<div class='selectitem' id='"+ $(this).attr('id') +"'>"+ $(this).attr('tennguyenlieu') +"   <a class='removeitem'>X</a></div>";
+    $('#popup-seletetion').append(html);
+	
+	$('.removeitem').click(function(e) {
+		$(this).parent().remove();
+	});
+});
+
+</script>
+<?php } ?>
