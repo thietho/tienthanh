@@ -203,13 +203,11 @@ function selectNguyenLieu()
 				
 				'Chọn': function() 
 				{
-					$('#frm_nguyenlieu .inputchk').each(function(index, element) {
-                        if(this.checked)
-						{
-							//alert(this.value)
-							createRow(0,this.value, 0, 0, "", 0);
-						}
+					$('.selectitem').each(function(index, element) {
+						createRow(0,this.id, 0, 0, "", 0);
+						
                     });
+					$('#popup-seletetion').html("");
 					$( this ).dialog( "close" );
 				},
 				
@@ -224,9 +222,9 @@ function selectNguyenLieu()
 }
 
 var index = 0;
-function createRow(id, manguyenlieu,   dongia)
+function createRow(id, nguyenlieuid, dongia)
 {
-	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=id&val="+manguyenlieu, 
+	$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu&col=id&val="+nguyenlieuid, 
 	function(data) 
 	{
 		var row = "";
