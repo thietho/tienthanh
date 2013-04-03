@@ -201,22 +201,38 @@ function selectNguyenLieu()
 			buttons: {
 				
 				
+				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						createRow(0,this.id, 0, 0, "", 0);
+						var nguyenlieuid = this.id;
+						createRow(0,nguyenlieuid, 0, 0, "", 0);
 						
                     });
 					$('#popup-seletetion').html("");
 					$( this ).dialog( "close" );
 				},
-				
 			}
 		});
 	
 		
 		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
-			$("#popup").dialog("open");	
+			$("#popup").dialog("open");
+			
 		});
 	
 }
@@ -231,7 +247,7 @@ function createRow(id, nguyenlieuid, dongia)
 		for( i in data.nguyenlieus)
 		{
 			var cellid = '<input type="hidden" name="chitiet['+index+']" value="' +id+ '">';
-			var cellitemid = '<input type="hidden" name="itemid['+index+']" value="' +data.nguyenlieus[i].id + '">' + data.nguyenlieus[i].manguyenlieu;
+			var cellitemid = '<input type="hidden" class="itemid" name="itemid['+index+']" value="' +data.nguyenlieus[i].id + '">' + data.nguyenlieus[i].manguyenlieu;
 			var celltennguyenlieu = '<input type="hidden" name="tennguyenlieu['+index+']" value="' +data.nguyenlieus[i].tennguyenlieu+ '">' + data.nguyenlieus[i].tennguyenlieu +" ("+data.nguyenlieus[i].tendonvitinh +")";
 			
 			

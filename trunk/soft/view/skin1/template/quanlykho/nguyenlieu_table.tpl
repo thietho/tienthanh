@@ -99,12 +99,17 @@ $('#inputchk').click(function(e) {
 <?php if($dialog){ ?>
 <script language="javascript">
 $('.item').click(function(e) {
-	var html = "<div class='selectitem' id='"+ $(this).attr('id') +"'>"+ $(this).attr('tennguyenlieu') +"   <a class='removeitem'>X</a></div>";
-    $('#popup-seletetion').append(html);
 	
-	$('.removeitem').click(function(e) {
-		$(this).parent().remove();
-	});
+	if($('#popup-seletetion #'+this.id).html() == undefined)
+	{
+		var html = "<div class='selectitem' id='"+ this.id +"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   <a class='removeitem button'>X</a></div>";
+		$('#popup-seletetion').append(html);
+		
+		$('.removeitem').click(function(e) {
+			$(this).parent().remove();
+		});
+	}
+	
 });
 
 </script>

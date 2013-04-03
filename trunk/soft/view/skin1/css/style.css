@@ -284,6 +284,7 @@ table.data-table th {
 table.data-table tr {
 	border-bottom: 1px solid #DDD;
 	background: #FFF;
+	cursor:pointer;
 }
 table.data-table .item:hover {
 	background:#0F0;
@@ -1257,9 +1258,17 @@ ul.autocomplete {
 }
 #popup-content
 {
-	width:80%;	
+	
 }
-#popup-seletetion
+#popup-selete
 {
-	width:20%;	
+	position:absolute ;
+	background:#fff;
+	width:250px;
+	display:none;
+	border:thin solid #999;
+}
+.selectitem
+{
+	padding:10px;	
 }
