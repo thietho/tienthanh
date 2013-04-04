@@ -96,7 +96,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		foreach($datasearchlike as $key => $item)
 		{
 			if($item !="")
-				$arr[] = " AND " . $key ." like '%".$item."%'";
+				$arr[] = " AND " . $key ." like '".$item."%'";
 		}
 		
 		foreach($datasearch as $key => $item)
@@ -495,7 +495,7 @@ class ControllerQuanlykhoSanpham extends Controller
 				$logchiphi[] = $datachiphi;
 			}
 		}
-		$log['tablename'] = "sanpham_chiphi";
+		$log['tablename'] = "qlksanpham_chiphi";
 		$log['data'] = $logchiphi;
 		$this->user->writeLog(json_encode($log));
 		
