@@ -313,8 +313,8 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 	//Chi phi san pham
 	public function getChiPhi($masanpham)
 	{
-		$sql = "Select `sanpham_chiphi`.*
-									from `sanpham_chiphi` 
+		$sql = "Select `qlksanpham_chiphi`.*
+									from `qlksanpham_chiphi` 
 									where masanpham = '".$masanpham."' Order by id";
 
 		$query = $this->db->query($sql);
@@ -323,8 +323,8 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 
 	public function getSanPhamChiPhi($id)
 	{
-		$sql = "Select `sanpham_chiphi`.*
-									from `sanpham_chiphi` 
+		$sql = "Select `qlksanpham_chiphi`.*
+									from `qlksanpham_chiphi` 
 									where id ='".$id."' ";
 		$query = $this->db->query($sql);
 		return $query->row;
@@ -354,12 +354,12 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 
 						if($id == 0 )
 						{
-							$this->db->insertData("sanpham_chiphi",$field,$value);
+							$this->db->insertData("qlksanpham_chiphi",$field,$value);
 						}
 						else
 						{
 							$where="id = '".$id."'";
-							$this->db->updateData("sanpham_chiphi",$field,$value,$where);
+							$this->db->updateData("qlksanpham_chiphi",$field,$value,$where);
 						}
 
 
@@ -368,7 +368,7 @@ class ModelQuanlykhoSanpham extends ModelCoreFile
 	public function deletedSanPhamChiPhi($id)
 	{
 		$where="id = '".$id."'";
-		$this->db->deleteData("sanpham_chiphi",$where);
+		$this->db->deleteData("qlksanpham_chiphi",$where);
 	}
 }
 ?>
