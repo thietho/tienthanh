@@ -2,11 +2,13 @@
                 <table class="data-table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr class="tr-head">
+                    	<?php if($dialog!=true){ ?>
                         <th width="1%">
                         	<?php if($dialog!=true){ ?>
                         	<input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
                             <?php } ?>
                         </th>
+                        <?php } ?>
                         <th>STT</th>
                         <th>Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
@@ -41,8 +43,10 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr>
+                    <tr class="item" id="<?php echo $item['id']?>" masanpham="<?php echo $item['masanpham']?>" tensanpham="<?php echo $item['tensanpham']?>">
+                    	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
+                        <?php } ?>
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['masanpham']?></td>
                         <td><?php echo $item['tensanpham']?></td>
@@ -97,3 +101,8 @@
                 </tbody>
                 </table>
                 <?php echo $pager?>
+<?php if($dialog){ ?>
+<script language="javascript">
+	intSelectNguyenLieu()
+</script>
+<?php } ?>

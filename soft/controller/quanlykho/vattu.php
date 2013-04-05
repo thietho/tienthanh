@@ -92,7 +92,7 @@ class ControllerQuanlykhoVattu extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/vattu/insertbangbaogia');
 		$this->data['delete'] = $this->url->http('quanlykho/vattu/deletebangbaogia');
 		
-		
+		$where = " AND loai = 'vattu'";
 		$rows = $this->model_quanlykho_nguyenlieu->getBangBaoGias($where);
 		//Page
 		$page = $this->request->get['page'];		
@@ -401,6 +401,7 @@ class ControllerQuanlykhoVattu extends Controller
 		
 		if($this->validateBangBaoGia($data))
 		{
+			$data['loai'] = "vattu";
 			$data['ngay'] = $this->date->formatViewDate($data['ngay']);
 			
 			//Luu thong tin bang bao gia

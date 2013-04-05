@@ -124,16 +124,11 @@ function searchForm()
 	$('#listnhacungcap').load("?route=quanlykho/nhacungung/getList"+url);
 }
 
-
-
-$("#manhacungung").val("<?php echo $_GET['manhacungung']?>");
-$("#tennhacungung").val("<?php echo $_GET['tennhacungung']?>");
-$("#manhom").val("<?php echo $_GET['manhom']?>");
-$("#diachi").val("<?php echo $_GET['diachi']?>");
-$("#khuvuc").val("<?php echo $_GET['khuvuc']?>");
-$("#dienthoai").val("<?php echo $_GET['dienthoai']?>");
-$("#fax").val("<?php echo $_GET['fax']?>");
-$("#tennguoidungdau").val("<?php echo $_GET['tennguoidungdau']?>");
+function moveto(url,eid)
+{
+	$(eid).html(loading);
+	$(eid).load(url);	
+}
 
 <?php if($dialog==true){ ?>
 	$(".inputchk").click(function()

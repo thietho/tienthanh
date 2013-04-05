@@ -33,8 +33,8 @@
                 
                 <p>
                 	<label>Nhà cung cấp</label><br>
-                    <input type="hidden" id="manhacungung" name="manhacungung" value="">
-                    <span id="tennhacungcap"></span>
+                    <input type="hidden" id="manhacungung" name="manhacungung" value="<?php echo $item['manhacungung']?>">
+                    <span id="tennhacungcap"><?php echo $this->document->getNhaCungUng($item['manhacungung'])?></span>
                     <input type="button" class="button" name="btnChonNhaCungCap" value="Chọn nhà cung cấp" onClick="selcetNhaCungCap()">
                     <input type="button" class="button" name="btnChonNhaCungCap" value="Bỏ chọn" onClick="unSelcetNhaCungCap()">
                 </p>
@@ -98,26 +98,6 @@ function save()
 	);
 }
 
-
-
-getNhaCungCap("id","<?php echo $item['manhacungung']?>","")
-
-function getNhaCungCap(col,val,operator)
-{
-	$.getJSON("?route=quanlykho/nhacungung/getNhaCungUng&col="+col+"&val="+val+"&operator="+operator, 
-			function(data) 
-			{
-				//var str = '<option value=""></option>';
-				for( i in data.nhacungungs)
-				{
-					
-					$("#manhacungung").val(data.nhacungungs[i].id);
-					$("#tennhacungcap").html(data.nhacungungs[i].tennhacungung);
-				}
-				
-			});
-}
-
 function selcetNhaCungCap()
 {
 	/*openDialog("?route=quanlykho/nhacungung&opendialog=true",1000,800);
@@ -134,22 +114,6 @@ function selcetNhaCungCap()
 			width: 800,
 			height: 600,
 			modal: true,
-			buttons: {
-				
-				
-				'Chọn': function() 
-				{
-					$('#frm_nhacungung .inputchk').each(function(index, element) {
-                        if(this.checked)
-						{
-							//alert(this.value)
-							getNhaCungCap("id",this.value,'');
-						}
-                    });
-					$( this ).dialog( "close" );
-				},
-				
-			}
 		});
 	
 		
@@ -157,7 +121,14 @@ function selcetNhaCungCap()
 			$("#popup").dialog("open");	
 		});
 }
-
+function intSelectNhaCungCap()
+{
+	$('.item').click(function(e) {
+        $("#manhacungung").val($(this).attr('id'));
+		$("#tennhacungcap").html($(this).attr('tennhacungung'));
+		$("#popup").dialog( "close" );
+    });
+}
 function unSelcetNhaCungCap()
 {
 	$("#manhacungung").val("");
@@ -201,15 +172,28 @@ function selectNguyenLieu()
 			buttons: {
 				
 				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
 				'Chọn': function() 
 				{
-					$('#frm_nguyenlieu .inputchk').each(function(index, element) {
-                        if(this.checked)
-						{
-							//alert(this.value)
-							createRow(0,this.value, 0, 0, "", 0);
-						}
+					$('.selectitem').each(function(index, element) {
+						var nguyenlieuid = this.id;
+						createRow(0,nguyenlieuid, 0, 0, "", 0);
+						
                     });
+					$('#popup-seletetion').html("");
 					$( this ).dialog( "close" );
 				},
 				
@@ -222,7 +206,22 @@ function selectNguyenLieu()
 		});
 	
 }
-
+function intSelectVatTu()
+{
+	$('.item').click(function(e) {
+	
+		if($('#popup-seletetion #'+this.id).html() == undefined)
+		{
+			var html = "<div><div class='selectitem left' id='"+ this.id +"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			$('#popup-seletetion').append(html);
+			
+			$('.removeitem').click(function(e) {
+				$(this).parent().remove();
+			});
+		}
+		
+	});	
+}
 var index = 0;
 function createRow(id, manguyenlieu,   dongia)
 {
