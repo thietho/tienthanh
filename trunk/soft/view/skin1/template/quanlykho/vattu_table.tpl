@@ -2,11 +2,13 @@
                 <table class="data-table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr class="tr-head">
+                    	<?php if($dialog!=true){ ?>
                         <th width="1%">
                         	
                         	<input id="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
-                           
+                           	
                         </th>
+                        <?php } ?>
                         <th>STT</th>
                         <th>Mã nguyên vật liệu</th>
                         <th>
@@ -37,8 +39,10 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr>
+                    <tr class="item" id="<?php echo $item['id']?>" manguyenlieu="<?php echo $item['manguyenlieu']?>" tennguyenlieu="<?php echo $item['tennguyenlieu']?>">
+                    	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
+                        <?php } ?>
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['manguyenlieu']?></td>
                         <td><?php echo $item['tennguyenlieu']?></td>
@@ -119,3 +123,9 @@ function viewPrice(id)
 
 }
 </script>
+<?php if($dialog){ ?>
+<script language="javascript">
+intSelectVatTu();
+
+</script>
+<?php } ?>

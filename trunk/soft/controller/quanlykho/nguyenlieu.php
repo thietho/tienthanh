@@ -95,7 +95,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$this->data['insert'] = $this->url->http('quanlykho/nguyenlieu/insertbangbaogia');
 		$this->data['delete'] = $this->url->http('quanlykho/nguyenlieu/deletebangbaogia');
 		
-		
+		$where = " AND loai = 'nguyenlieu'";
 		$rows = $this->model_quanlykho_nguyenlieu->getBangBaoGias($where);
 		//Page
 		$page = $this->request->get['page'];		
@@ -289,7 +289,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listnguyenlieu"); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listnguyenlieu");
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -410,6 +410,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
 		if($this->validateBangBaoGia($data))
 		{
+			$data['loai'] = "nguyenlieu";
 			$data['ngay'] = $this->date->formatViewDate($data['ngay']);
 			
 			//Luu thong tin bang bao gia

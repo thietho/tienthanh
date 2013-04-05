@@ -139,118 +139,6 @@
 </div>
 
 <script language="javascript">
-var auto = new AutoComplete();
-$('#btnAddrow').click(function(){
-	sp.newRow();
-});
-function SanPham()
-{
-	this.index = 0;
-	this.refresh = function()
-	{
-		/*$('input').change(function(e) {
-			ar = this.id.split('-');
-			var row= ar[1];
-			$("#status-"+row).val('update');
-			$('#row-'+row).css('background-color',"#F0F");
-		});*/
-		numberReady();
-		auto.autocomplete();
-	}
-	this.getSanPham = function(col,val,operator)
-	{
-		$.getJSON("?route=quanlykho/sanpham/getSanPham&col="+col+"&val="+val+"&operator="+operator, 
-			function(data) 
-			{
-				str = "";
-				for( i in data.sanphams)
-				{
-					str+= '<li id=rowauto-'+i+' class=autocompleterow>'+ data.sanphams[i].masanpham + ':' +data.sanphams[i].tensanpham+'</li><input type="hidden" id="idsanpham-'+i+'" value="'+ data.sanphams[i].id +'" />';
-				}
-				$("#autocomplete").html("<ul class='autocomplete'>"+str+"</ul>");
-				auto.selectRow();
-			});
-				/*function(data) 
-				{
-					//var str = '<option value=""></option>';
-					for( i in data.congdoans)
-					{
-						
-						$("#dinhluongsanpham").append(cd.createRowSanPham(data.sanphams[i]));
-						
-					}
-					sp.refresh()
-				});*/
-				
-	}
-	
-	this.newRow =function()
-	{
-		var id = "";
-		var obj = new Object()
-		obj.id='';
-		obj.masanpham='';
-		obj.tensanpham='';
-		
-		$("#dinhluongsanpham").append(sp.createRowSanPhamDinhLuong(id,obj,0));
-		sp.refresh()
-	}
-	
-	this.createRowSanPhamDinhLuong = function(id,obj,soluong)
-	{
-		var id = '<input type="hidden" id="dinhluong-'+ this.index +'" name="dinhluong['+ this.index +']" value="'+id+'" />';
-		id += '<input type="hidden" id="status-'+ this.index +'" name="status['+ this.index +']" />';
-		var btnXoa = '<input type="button" value="Xóa" class="button" onClick="sp.delRow('+this.index+')"/>';
-		var btnXemQuaTrinh = '<input type="button" value="Xem quá trình biến đổi" class="button" onClick="cd.viewCongDoan(\''+obj.masanpham+'\')"/>';
-		var row = '';
-		row+='					<tr id="row-'+ this.index +'">';
-		row+='                    	<td><input type="hidden" id="masanpham-'+ this.index +'" name="masanpham['+ this.index +']" value="'+obj.id+'" /><input type="text" id="masanphamtext-'+ this.index +'" name="masanphamtext['+ this.index +']" class="text gridautocomplete" value="'+obj.masanpham+'" /></td>';
-		row+='                      <td id="tensanpham-'+ this.index +'">'+obj.tensanpham+'</td>';
-		row+='                      <td class="number"><input type="text" id="soluong-'+ this.index +'" name="soluong['+ this.index +']" class="text number" value="'+soluong+'" /></td>';
-		
-		row+='                      <td>'+id+btnXoa+'</td>';
-		row+='                  </tr>';
-		
-		this.index++;
-		return row
-	}
-	
-	this.delRow = function(pos)
-	{
-		$('#deldinhluong').val($('#deldinhluong').val()+ $('#dinhluong-'+pos).val()+",");
-		$('#row-'+pos).remove();
-	}
-}
-
-function callBackAutoComplete(val)
-{
-	sp.getSanPham("masanpham",val.value,"like");
-	
-}
-
-function selectValue(eid)
-{
-	str = auto.getValue();
-	arr = str.split(":");
-	
-	$.getJSON("?route=quanlykho/sanpham/getSanPham&col=masanpham&val="+arr[0]+"&operator=", 
-		function(data) 
-		{
-			ar = eid.split("-");
-			pos = ar[1];
-			for( i in data.sanphams)
-			{
-				
-				$("#masanpham-"+pos).val(data.sanphams[i].id);
-				$("#masanphamtext-"+pos).val(data.sanphams[i].masanpham);
-				$("#tensanpham-"+pos).html(data.sanphams[i].tensanpham);
-				
-			}
-		});
-	auto.closeAutocomplete()
-	
-}
-var sp = new SanPham();
 $(document).ready(function() {
 	$('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
 	
@@ -325,15 +213,32 @@ function getNguyenLieu(col,val,operator)
 }
 
 function selcetNguyenLieu()
-{
-	openDialog("?route=quanlykho/nguyenlieu&opendialog=true",800,500);
+{	
+	$("#popup").attr('title','Chọn nguyên liệu');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			
+		});
 	
-	list = trim($("#manguyenlieu").val(), ',');
-	arr = list.split(",");
-	manguyenlieu = arr[0];
-	getNguyenLieu("id",manguyenlieu,'');
+		
+		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
+			$("#popup").dialog("open");
+			
+		});
 }
-
+function intSelectNguyenLieu()
+{
+	$('.item').click(function(e) {
+		$("#nguyenlieusudung").val(this.id);			
+		$("#tennguyenlieu").html($(this).attr('tennguyenlieu'));
+		$("#popup").dialog( "close" );
+	});	
+}
 function unSelcetNguyenLieu()
 {
 	$("#manguyenlieu").val("");
@@ -343,52 +248,110 @@ function unSelcetNguyenLieu()
 
 //Su ly chi tiet
 
-//function selcetSanPham()
-//{
-//	openDialog("?route=quanlykho/sanpham&opendialog=true",800,500);
-//	
-//	list = trim($("#selectsanpham").val(), ',');
-//	arr = list.split(",");
-//	/*malinhkien = arr[0];
-//	getLinhKien("id",malinhkien,'');*/
-//	for(i in arr)
-//	{
-//		
-//		createRow(0,arr[i],0);
-//	}
-//	
-//}
-//var index = 0;
-//function createRow(id,masanpham,soluong)
-//{
-//	$.getJSON("?route=quanlykho/sanpham/getSanPham&col=id&val="+masanpham, 
-//	function(data) 
-//	{
-//		//var str = '<option value=""></option>';
-//		var row = "";
-//		for( i in data.sanphams)
-//		{
-//			
-//			var cellid = '<input type="hidden" name="dinhluong['+index+']" value="' +id+ '">';
-//			var cellmasanpham = '<input type="hidden" name="masanpham['+index+']" value="' +data.sanphams[i].id+ '">';
-//			var cellsoluong = '<input type="text" name="soluong['+index+']" value="'+soluong+'" class="text number" size=5 />';
-//			row+='						<tr id="row'+index+'">';
-//			row+='                      	<td>'+cellid + data.sanphams[i].tensanpham+' ('+data.sanphams[i].madonvi+')</td>';
-//			row+='                          <td>'+cellmasanpham+cellsoluong+'</td>';
-//			row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
-//			row+='                      </tr>';
-//		}
-//		$("#dinhluongsanpham").append(row);
-//		index++;
-//		numberReady();
-//	});	
-//}
-//
-//function removeRow(pos,dlid)
-//{
-//	$("#deldinhluong").val($("#deldinhluong").val()+","+dlid);
-//	$("#row"+pos).remove();
-//}
+function selcetSanPham()
+{
+	/*openDialog("?route=quanlykho/sanpham&opendialog=true",800,500);
+	
+	list = trim($("#selectsanpham").val(), ',');
+	arr = list.split(",");
+	malinhkien = arr[0];
+//	getLinhKien("id",malinhkien,'');
+	for(i in arr)
+	{
+		
+		createRow(0,arr[i],0);
+	}*/
+	$("#popup").attr('title','Chọn sản phẩm');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
+				'Chọn': function() 
+				{
+					$('.selectitem').each(function(index, element) {
+						var nguyenlieuid = this.id;
+						createRow(0,nguyenlieuid, 0, 0, "", 0);
+						
+                    });
+					$('#popup-seletetion').html("");
+					$( this ).dialog( "close" );
+				},
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/sanpham&opendialog=true",function(){
+			$("#popup").dialog("open");
+		});
+}
+function intSelectSanPham()
+{
+	$('.item').click(function(e) {
+	
+		if($('#popup-seletetion #'+this.id).html() == undefined)
+		{
+			var html = "<div><div class='selectitem left' id='"+ this.id +"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			$('#popup-seletetion').append(html);
+			
+			$('.removeitem').click(function(e) {
+				$(this).parent().remove();
+			});
+		}
+		
+	});	
+}
+var index = 0;
+function createRow(id,masanpham,soluong)
+{
+	$.getJSON("?route=quanlykho/sanpham/getSanPham&col=id&val="+masanpham, 
+	function(data) 
+	{
+		//var str = '<option value=""></option>';
+		var row = "";
+		for( i in data.sanphams)
+		{
+			
+			var cellid = '<input type="hidden" name="dinhluong['+index+']" value="' +id+ '">';
+			var cellmasanpham = '<input type="hidden" name="masanpham['+index+']" value="' +data.sanphams[i].id+ '">';
+			var cellsoluong = '<input type="text" name="soluong['+index+']" value="'+soluong+'" class="text number" size=5 />';
+			row+='						<tr id="row'+index+'">';
+			row+='                      	<td>'+cellid + data.sanphams[i].tensanpham+' ('+data.sanphams[i].madonvi+')</td>';
+			row+='                          <td>'+cellmasanpham+cellsoluong+'</td>';
+			row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
+			row+='                      </tr>';
+		}
+		$("#dinhluongsanpham").append(row);
+		index++;
+		numberReady();
+	});	
+}
+
+function removeRow(pos,dlid)
+{
+	$("#deldinhluong").val($("#deldinhluong").val()+","+dlid);
+	$("#row"+pos).remove();
+}
 
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 

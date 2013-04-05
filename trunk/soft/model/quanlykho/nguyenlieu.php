@@ -354,7 +354,7 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 						}
 						else
 						{
-							$where="id = '".$manguyenlieu."'";
+							$where="id = '".$id."'";
 							$this->db->updateData("qlknguyenlieugia",$field,$value,$where);
 						}
 	}
@@ -417,16 +417,19 @@ class ModelQuanlykhoNguyenlieu extends ModelCoreFile
 		{
 			$id = $this->nextBangBaoGiaID();
 		}
+		$loai=$this->db->escape(@$data['loai']);
 		$ngay=$this->db->escape(@$data['ngay']);
 		$manhacungung=$this->db->escape(@$data['manhacungung']);
 
 		$field=array(
 					 	'id',
+						'loai',
 						'ngay',
 						'manhacungung'
 						);
-						$value=array(
+		$value=array(
 						$id,
+						$loai,
 						$ngay,
 						$manhacungung
 
