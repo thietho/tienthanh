@@ -88,14 +88,7 @@
                 </tbody>
                 </table>
                 <?php echo $pager?>
-<script language="javascript">
-$('#inputchk').click(function(e) {
-	var chk=this.checked;
-    $('.inputchk').each(function(index, element) {
-        this.checked = chk;
-    });
-});
-</script>
+
 <?php if($dialog){ ?>
 <script language="javascript">
 	intSelectSanPham()
