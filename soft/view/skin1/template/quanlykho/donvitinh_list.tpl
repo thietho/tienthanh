@@ -74,7 +74,7 @@ function deleteitem()
 	var answer = confirm("Bạn có muốn xóa không?")
 	if (answer)
 	{
-		$.post("?route='<?php echo $delete?>'", 
+		$.post("?route=quanlykho/donvitinh/delete", 
 				$("#listitem").serialize(), 
 				function(data)
 				{
