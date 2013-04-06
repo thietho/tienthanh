@@ -2,11 +2,13 @@
                 <table class="data-table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr class="tr-head">
+                    	<?php if($dialog!=true){ ?>
                         <th width="1%">
                         	<?php if($dialog!=true){ ?>
                         	<input class="inputchk" type="checkbox" onclick="$('input[name*=\'delete\']').attr('checked', this.checked);">
                             <?php } ?>
-                            </th>
+                        </th>
+                        <?php } ?>
                         <th>STT</th>
                         <th>Mã linh kiện</th>
                         <th>Tên linh kiện</th>
@@ -29,8 +31,10 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr>
+                    <tr class="item" id="<?php echo $item['id']?>" malinhkien="<?php echo $item['malinhkien']?>" tenlinhkien="<?php echo $item['tenlinhkien']?>">
+                    	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
+                        <?php } ?>
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['malinhkien']?></td>
                         <td><?php echo $item['tenlinhkien']?></td>
@@ -63,3 +67,8 @@
                 </tbody>
                 </table>
                 <?php echo $pager?>
+<?php if($dialog){ ?>
+<script language="javascript">
+	intSelectLinhKien()
+</script>
+<?php } ?>

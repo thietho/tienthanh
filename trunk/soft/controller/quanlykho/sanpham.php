@@ -39,7 +39,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->layout="layout/center";
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			$this->layout="";
 			$this->data['dialog'] = true;
 			
 		}
@@ -148,6 +148,11 @@ class ControllerQuanlykhoSanpham extends Controller
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
 		$this->template="quanlykho/sanpham_table.tpl";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->data['dialog'] = true;
+			
+		}
 		$this->render();
 	}
 	

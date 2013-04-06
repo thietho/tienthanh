@@ -146,11 +146,8 @@ $(document).ready(function() {
 if(count($dinhluong))
 	foreach($dinhluong as $val){ ?>
 		var obj = new Object()
-		obj.id="<?php echo $val['masanpham']?>";
-		obj.masanpham="<?php echo $this->document->getSanPham($val['masanpham'],'masanpham')?>";
-		obj.tensanpham="<?php echo $this->document->getSanPham($val['masanpham'])?>";
 		
-		$("#dinhluongsanpham").append(sp.createRowSanPhamDinhLuong("<?php echo $val['id']?>",obj,"<?php echo $val['soluong']?>"));
+		createRow('<?php echo $val[id]?>',"<?php echo $val['masanpham']?>","<?php echo $this->document->getSanPham($val['masanpham'])?>","<?php echo $val['soluong']?>");
 		
 <?php } ?>
 });
@@ -247,7 +244,9 @@ function unSelcetNguyenLieu()
 }
 
 //Su ly chi tiet
-
+$('#btnAddrow').click(function(e) {
+    selcetSanPham();
+});
 function selcetSanPham()
 {
 	/*openDialog("?route=quanlykho/sanpham&opendialog=true",800,500);
@@ -290,8 +289,8 @@ function selcetSanPham()
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						var nguyenlieuid = this.id;
-						createRow(0,nguyenlieuid, 0, 0, "", 0);
+						
+						createRow(0,this.id,$(this).attr('tensanpham'),1)
 						
                     });
 					$('#popup-seletetion').html("");
@@ -311,7 +310,7 @@ function intSelectSanPham()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			var html = "<div><div class='selectitem left' id='"+ this.id +"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' masanpham='"+$(this).attr('masanpham')+"' tensanpham='"+$(this).attr('tensanpham')+"'>"+$(this).attr('masanpham')+":"+ $(this).attr('tensanpham') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {
@@ -322,29 +321,24 @@ function intSelectSanPham()
 	});	
 }
 var index = 0;
-function createRow(id,masanpham,soluong)
+function createRow(id,masanphamm,tensanpham,soluong)
 {
-	$.getJSON("?route=quanlykho/sanpham/getSanPham&col=id&val="+masanpham, 
-	function(data) 
-	{
-		//var str = '<option value=""></option>';
-		var row = "";
-		for( i in data.sanphams)
-		{
+	
 			
-			var cellid = '<input type="hidden" name="dinhluong['+index+']" value="' +id+ '">';
-			var cellmasanpham = '<input type="hidden" name="masanpham['+index+']" value="' +data.sanphams[i].id+ '">';
-			var cellsoluong = '<input type="text" name="soluong['+index+']" value="'+soluong+'" class="text number" size=5 />';
-			row+='						<tr id="row'+index+'">';
-			row+='                      	<td>'+cellid + data.sanphams[i].tensanpham+' ('+data.sanphams[i].madonvi+')</td>';
-			row+='                          <td>'+cellmasanpham+cellsoluong+'</td>';
-			row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
-			row+='                      </tr>';
-		}
-		$("#dinhluongsanpham").append(row);
-		index++;
-		numberReady();
-	});	
+		var cellid = '<input type="hidden" name="dinhluong['+index+']" value="' +id+ '">';
+		var cellmasanpham = '<input type="hidden" name="masanpham['+index+']" value="' +masanphamm+ '">';
+		var cellsoluong = '<input type="text" name="soluong['+index+']" value="'+soluong+'" class="text number" size=5 />';
+		var row ='';
+		row+='						<tr id="row'+index+'">';
+		row+='                      	<td>'+cellid + tensanpham+'</td>';
+		row+='                          <td>'+cellmasanpham+cellsoluong+'</td>';
+		row+='                          <td><input type="button" class="button" value="Xóa" onclick="removeRow('+index+','+id+')"></td>';
+		row+='                      </tr>';
+	
+	$("#dinhluongsanpham").append(row);
+	index++;
+	numberReady();
+	
 }
 
 function removeRow(pos,dlid)

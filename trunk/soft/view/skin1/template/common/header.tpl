@@ -2,22 +2,18 @@
 <div id="top">
 
 <div class="left text-center" id="weblogo"><a href="?route=page/home"> <img
-	class="png" src="<?php echo DIR_IMAGE?>ben_logo.gif" alt="" /><br />
+	class="png" src="<?php echo DIR_IMAGE?>logotienthanh.png" height="70px" alt="" /><br />
 </a></div>
 
-<div class="left"><?php if($sitename) {?>
-<p>Content Management System</p>
-<h2><?php echo $sitename?></h2>
-<?php } else { ?>
-<h2>Content Management System</h2>
-<?php } ?>
+<div class="left">
+<h2>Quản lý kho</h2>
 
 <div class="clearer">&nbsp;</div>
 
 </div>
 
 <div class="right text-center" id="logo"><a href="?route=page/home"> 
-	<img class="png" src="<?php echo DIR_IMAGE?>ben_logo.gif" alt="" /><br />
+	<img class="png" src="<?php echo DIR_IMAGE?>logotienthanh.png" height="70px" alt="" /><br />
 </a></div>
 
 <div class="right">

@@ -91,6 +91,6 @@
 
 <?php if($dialog){ ?>
 <script language="javascript">
-	intSelectSanPham()
+	intSelectNguyenLieu()
 </script>
 <?php } ?>
