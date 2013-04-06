@@ -16,6 +16,7 @@
                         <th>Loại</th>
                         <th>Kho</th>
                         <th>Đơn vị tính</th>
+                        <?php if($dialog!=true){ ?>
                         <?php if($this->user->getUserTypeId()=='admin'){ ?>
                         <th>Giá cố định</th>
                         <th>Đơn giá bán theo cái</th>
@@ -28,6 +29,7 @@
                         <th>Số sản phẩm /Lot</th>
                         <th>Khu vực</th>
                         <th>Phân cấp</th>
+                        <?php } ?>
                         <th>Hiện hành</th>
                         <th>Ghi chú</th>
                         <th>Hình</th>
@@ -54,6 +56,7 @@
                         <td><?php echo $item['tenloai']?></td>
                         <td><?php echo $item['tenkho']?></td>
                         <td><?php echo $item['madonvi']?></td>
+                        <?php if($dialog!=true){ ?>
                         <?php if($this->user->getUserTypeId()=='admin'){ ?>
                         <td class="number"><?php echo $this->string->numberFormate($item['giacodinh'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dongiabancai'])?></td>
@@ -66,6 +69,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['sosanphamtrenlot'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['khuvuc'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['phancap'])?></td>
+                        <?php } ?>
                         <td><?php echo $this->document->hienhanh[$item['hienhanh']]?></td>
                         <td><?php echo $item['ghichu']?></td>
                         <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
@@ -103,6 +107,6 @@
                 <?php echo $pager?>
 <?php if($dialog){ ?>
 <script language="javascript">
-	intSelectNguyenLieu()
+	intSelectSanPham()
 </script>
 <?php } ?>

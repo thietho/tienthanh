@@ -89,7 +89,20 @@ function selcetLinhKien()
 			modal: true,
 			buttons: {
 				
-				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
 				'Chọn': function() 
 				{
 					$('#frm_linhkien .inputchk').each(function(index, element) {
@@ -99,7 +112,14 @@ function selcetLinhKien()
 							dl.createRow("id",this.value,1);
 						}
                     });
+					$('.selectitem').each(function(index, element) {
+						dl.createRow("id",this.id,1);
+						
+						
+                    });
+					$('#popup-seletetion').html("");
 					$( this ).dialog( "close" );
+					
 				},
 				
 			}
@@ -110,6 +130,24 @@ function selcetLinhKien()
 			$("#popup").dialog("open");	
 		});
 }
+
+function intSelectLinhKien()
+{
+	$('.item').click(function(e) {
+	
+		if($('#popup-seletetion #'+this.id).html() == undefined)
+		{
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' malinhkien='"+$(this).attr('malinhkien')+"' tenlinhkien='"+$(this).attr('tenlinhkien')+"'>"+$(this).attr('malinhkien')+":"+ $(this).attr('tenlinhkien') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			$('#popup-seletetion').append(html);
+			
+			$('.removeitem').click(function(e) {
+				$(this).parent().remove();
+			});
+		}
+		
+	});	
+}
+
 function DinhLuong()
 {
 	this.index = 0;
