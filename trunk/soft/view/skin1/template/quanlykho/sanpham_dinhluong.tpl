@@ -79,18 +79,7 @@ var dl = new DinhLuong();
 <?php } ?>
 function selcetLinhKien()
 {
-	/*openDialog("?route=quanlykho/linhkien&opendialog=true",1000,800);
-	
-	list = trim($("#selectmalinhkien").val(), ',');
-	arr = list.split(",");*/
-	/*malinhkien = arr[0];
-	getLinhKien("id",malinhkien,'');*/
-	/*for(i in arr)
-	{
-		if(arr[i] != "<?php echo $item['id']?>")
-			dl.createRow(0,arr[i],0);
-	}*/
-	
+
 	$("#popup").attr('title','Chọn linh kiện');
 		$( "#popup" ).dialog({
 			autoOpen: false,
@@ -101,15 +90,26 @@ function selcetLinhKien()
 			modal: true,
 			buttons: {
 				
-				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
 				'Chọn': function() 
 				{
-					$('#frm_linhkien .inputchk').each(function(index, element) {
-                        if(this.checked)
-						{
-							//alert(this.value)
-							dl.createRow("id",this.value,1);
-						}
+					$('.selectitem').each(function(index, element) {
+						dl.createRow("id",this.id,1);
+						
+						
                     });
 					$( this ).dialog( "close" );
 				},
@@ -121,6 +121,22 @@ function selcetLinhKien()
 		$("#popup-content").load("?route=quanlykho/linhkien&opendialog=true",function(){
 			$("#popup").dialog("open");	
 		});
+}
+function intSelectLinhKien()
+{
+	$('.item').click(function(e) {
+	
+		if($('#popup-seletetion #'+this.id).html() == undefined)
+		{
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' malinhkien='"+$(this).attr('malinhkien')+"' tenlinhkien='"+$(this).attr('tenlinhkien')+"'>"+$(this).attr('malinhkien')+":"+ $(this).attr('tenlinhkien') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			$('#popup-seletetion').append(html);
+			
+			$('.removeitem').click(function(e) {
+				$(this).parent().remove();
+			});
+		}
+		
+	});	
 }
 function DinhLuong()
 {
