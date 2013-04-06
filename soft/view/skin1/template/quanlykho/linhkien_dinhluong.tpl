@@ -105,13 +105,7 @@ function selcetLinhKien()
 				},
 				'Chọn': function() 
 				{
-					$('#frm_linhkien .inputchk').each(function(index, element) {
-                        if(this.checked)
-						{
-							//alert(this.value)
-							dl.createRow("id",this.value,1);
-						}
-                    });
+					
 					$('.selectitem').each(function(index, element) {
 						dl.createRow("id",this.id,1);
 						

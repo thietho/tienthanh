@@ -30,7 +30,7 @@
                         	<th>Mã công đoạn</th>
                             <th>Tên công đoạn</th>
                             <th>Thứ tự công đoạn</th>
-                            <th>Nguyên liệu sản xuất</th>
+                            
                             <th>Thiết bị sản xuất</th>
                             <th>Phòng ban sản xuất</th>
                             <th>Định mức chỉ tiêu</th>
@@ -141,8 +141,8 @@ function CongDoan()
 		obj.macongdoan="<?php echo $item['malinhkien']?>-"+ (cd.index + 1);
 		obj.tencongdoan="<?php echo $item['tenlinhkien']?>-"+ (cd.index + 1);
 		obj.thututhuchien=this.index + 1;
-		obj.nguyenlieusanxuat="<?php echo $item['nguyenlieusudung']?>";
-		obj.tennguyenlieusanxuat="<?php echo $this->document->getNguyenLieu($item['nguyenlieusudung'])?>";
+		//obj.nguyenlieusanxuat="<?php echo $item['nguyenlieusudung']?>";
+		//obj.tennguyenlieusanxuat="<?php echo $this->document->getNguyenLieu($item['nguyenlieusudung'])?>";
 		obj.thietbisanxuatchinh='';
 		obj.tenthietbisanxuatchinh='';
 		obj.phongbansanxuat='';
@@ -171,17 +171,17 @@ function CongDoan()
 		row+='                    	<td><input type="text" id="macongdoan-'+ this.index +'" name="macongdoan['+ this.index +']" class="text" value="'+obj.macongdoan+'" /></td>';
 		row+='                      <td><input type="text" id="tencongdoan-'+ this.index +'" name="tencongdoan['+ this.index +']" class="text" value="'+obj.tencongdoan+'" /></td>';
 		row+='                      <td class="number"><input type="text" id="thututhuchien-'+ this.index +'" name="thututhuchien['+ this.index +']" class="text number" value="'+obj.thututhuchien+'" /></td>';
-		row+='                      <td><input type="hidden" id="nguyenlieusanxuat-'+ this.index +'" name="nguyenlieusanxuat['+ this.index +']" value="'+obj.nguyenlieusanxuat+'"><input type="text" id="tennguyenlieusanxuat-'+ this.index +'" name="tennguyenlieusanxuat['+ this.index +']" class="text gridautocomplete" value="'+obj.tennguyenlieusanxuat+'" /></td>';
+		//row+='                      <td><input type="hidden" id="nguyenlieusanxuat-'+ this.index +'" name="nguyenlieusanxuat['+ this.index +']" value="'+obj.nguyenlieusanxuat+'"><input type="text" id="tennguyenlieusanxuat-'+ this.index +'" name="tennguyenlieusanxuat['+ this.index +']" class="text gridautocomplete" value="'+obj.tennguyenlieusanxuat+'" /></td>';
 		row+='                      <td><input type="hidden" id="thietbisanxuatchinh-'+ this.index +'" name="thietbisanxuatchinh['+ this.index +']" value="'+obj.thietbisanxuatchinh+'"><input type="text" id="tenthietbisanxuatchinh-'+ this.index +'" name="tenthietbisanxuatchinh['+ this.index +']" class="text gridautocomplete" value="'+obj.tenthietbisanxuatchinh+'" /></td>';
 		row+='                      <td><select class="phongbansanxuat" ref="'+ obj.phongbansanxuat +'" id="phongbansanxuat-'+ this.index +'" name="phongbansanxuat['+ this.index +']">'+ cd.cbphongban +'</select>';
-		row+='                      <td class="number"><input type="text" id="dinhmucchitieu-'+ this.index +'" name="dinhmucchitieu['+ this.index +']" class="text number" value="'+obj.dinhmucchitieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text number" value="'+obj.giagiacong+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text number grid" value="'+obj.dinhmucphelieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphepham-'+ this.index +'" name="dinhmucphepham['+ this.index +']" class="text number" value="'+obj.dinhmucphepham+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmuchaohut-'+ this.index +'" name="dinhmuchaohut['+ this.index +']" class="text number" value="'+obj.dinhmuchaohut+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text number" value="'+obj.dinhmucnangxuat+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="dinhmucphulieu-'+ this.index +'" name="dinhmucphulieu['+ this.index +']" class="text number" value="'+obj.dinhmucphulieu+'" /></td>';
-		row+='                      <td class="number"><input type="text" id="soluongtrenkg-'+ this.index +'" name="soluongtrenkg['+ this.index +']" class="text number" value="'+obj.soluongtrenkg+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucchitieu-'+ this.index +'" name="dinhmucchitieu['+ this.index +']" class="text short number" value="'+obj.dinhmucchitieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="giagiacong-'+ this.index +'" name="giagiacong['+ this.index +']" class="text short number" value="'+obj.giagiacong+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphelieu-'+ this.index +'" name="dinhmucphelieu['+ this.index +']" class="text short number grid" value="'+obj.dinhmucphelieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphepham-'+ this.index +'" name="dinhmucphepham['+ this.index +']" class="text short number" value="'+obj.dinhmucphepham+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmuchaohut-'+ this.index +'" name="dinhmuchaohut['+ this.index +']" class="text short number" value="'+obj.dinhmuchaohut+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucnangxuat-'+ this.index +'" name="dinhmucnangxuat['+ this.index +']" class="text short number" value="'+obj.dinhmucnangxuat+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="dinhmucphulieu-'+ this.index +'" name="dinhmucphulieu['+ this.index +']" class="text short number" value="'+obj.dinhmucphulieu+'" /></td>';
+		row+='                      <td class="number"><input type="text" id="soluongtrenkg-'+ this.index +'" name="soluongtrenkg['+ this.index +']" class="text short number" value="'+obj.soluongtrenkg+'" /></td>';
 		
 		row+='                      <td><textarea class="text" id="ghichu-'+ this.index +'" name="ghichu['+ this.index +']">'+obj.ghichu+'</textarea></td>';
 		row+='                      <td>'+id+btnXoa+btnXemQuaTrinh+'</td>';
