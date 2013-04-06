@@ -9,7 +9,7 @@
         
         	<div class="button right">
             	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/nguyenlieu/bangbaogia')"/>   
+     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/vattu/bangbaogia')"/>   
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
