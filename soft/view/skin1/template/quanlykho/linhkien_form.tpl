@@ -8,7 +8,7 @@
         
         	<div class="button right">
             	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/linhkien')"/>   
+     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/linhkien#page='+control.getParam('page'))"/>   
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -159,7 +159,7 @@ function save()
 		function(data){
 			if(data == "true")
 			{
-				window.location = "?route=quanlykho/linhkien";
+				window.location = "?route=quanlykho/linhkien#page="+control.getParam('page');
 			}
 			else
 			{

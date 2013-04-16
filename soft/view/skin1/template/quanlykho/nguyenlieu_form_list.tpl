@@ -8,7 +8,7 @@
         
         	<div class="button right">
             	<input type="button" value="Lưu" class="button" onClick="save(0)"/>
-     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/nguyenlieu')"/>   
+     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/nguyenlieu#page='+control.getParam('page'))"/>   
      	        
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -90,7 +90,7 @@ function save(i)
 			else
 			{
 			
-				window.location = "?route=quanlykho/nguyenlieu";
+				window.location = "?route=quanlykho/nguyenlieu#page="+control.getParam('page');
 				
 			}
 			

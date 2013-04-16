@@ -40,10 +40,10 @@
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -85,6 +85,14 @@ function deleteitem()
 $(document).ready(function(e) {
     viewAll();
 });
+function loadData(url)
+{
+	var page = control.getParam('page');
+	if(page!="")
+		url+="&page="+page;
+	$('#listnguyenlieu').html(loading);
+	$('#listnguyenlieu').load(url);
+}
 function viewAll()
 {
 	url = "?route=quanlykho/vattu/getList";
@@ -92,8 +100,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listnguyenlieu').html(loading);
-	$('#listnguyenlieu').load(url);
+	loadData(url);
 }
 $('.text').keyup(function(e) {
     searchForm();
@@ -119,8 +126,7 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listnguyenlieu').html(loading);
-	$('#listnguyenlieu').load("?route=quanlykho/vattu/getList"+url);
+	loadData("?route=quanlykho/vattu/getList"+url);
 }
 
 <?php if($dialog==true){ ?>
