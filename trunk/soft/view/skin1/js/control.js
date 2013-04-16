@@ -20,9 +20,9 @@ function Control()
 		return arr[1];
 	}
 	
-	this.getParam = function(field,url)
+	this.getParam = function(field)
 	{
-		var strurl = url;
+		var strurl = this.getUrl();
 		arr = (""+strurl).split('&');
 		for(i in arr)
 		{
