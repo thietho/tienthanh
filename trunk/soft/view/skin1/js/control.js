@@ -33,6 +33,7 @@ function Control()
 				return ar[1];
 			}
 		}
+		return "";
 	}
 	
 	this.fload = function(eid,url)

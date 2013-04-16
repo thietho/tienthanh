@@ -40,10 +40,10 @@
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều nguyên liệu" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm nhiều nguyên liệu" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -96,7 +96,7 @@ $('select').change(function(e) {
 function loadData(url)
 {
 	var page = control.getParam('page');
-	if(page!=undefined)
+	if(page!="")
 		url+="&page="+page;
 	$('#listnguyenlieu').html(loading);
 	$('#listnguyenlieu').load(url);

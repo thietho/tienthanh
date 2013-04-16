@@ -28,10 +28,10 @@
             	
                 <?php }else{ ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>')">
+                <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>')">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -54,6 +54,14 @@
 $(document).ready(function(e) {
     viewAll();
 });
+function loadData(url)
+{
+	var page = control.getParam('page');
+	if(page!="")
+		url+="&page="+page;
+	$('#listlinhkien').html(loading);
+	$('#listlinhkien').load(url);
+}
 function viewAll()
 {
 	url = "?route=quanlykho/linhkien/getList";
@@ -61,8 +69,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listlinhkien').html(loading);
-	$('#listlinhkien').load(url);
+	loadData(url);
 }
 $('.text').keyup(function(e) {
     searchForm();
@@ -87,8 +94,7 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listlinhkien').html(loading);
-	$('#listlinhkien').load("?route=quanlykho/linhkien/getList"+url);
+	loadData("?route=quanlykho/linhkien/getList"+url);
 }
 
 function deleteitem()

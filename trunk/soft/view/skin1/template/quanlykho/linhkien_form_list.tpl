@@ -8,7 +8,7 @@
         
         	<div class="button right">
             	<input type="button" value="Lưu" class="button" onClick="save(0)"/>
-     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/linhkien')"/>   
+     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/linhkien#page='+control.getParam('page'))"/>   
      	        
             </div>
             <div class="clearer">^&nbsp;</div>
