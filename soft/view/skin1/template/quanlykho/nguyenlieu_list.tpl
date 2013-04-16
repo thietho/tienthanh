@@ -84,6 +84,7 @@ function deleteitem()
 }
 $(document).ready(function(e) {
     viewAll();
+	
 });
 
 $('.text').keyup(function(e) {
@@ -92,6 +93,14 @@ $('.text').keyup(function(e) {
 $('select').change(function(e) {
     searchForm();
 });
+function loadData(url)
+{
+	var page = control.getParam('page');
+	if(page!=undefined)
+		url+="&page="+page;
+	$('#listnguyenlieu').html(loading);
+	$('#listnguyenlieu').load(url);
+}
 function viewAll()
 {
 	url = "?route=quanlykho/nguyenlieu/getList";
@@ -99,8 +108,7 @@ function viewAll()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listnguyenlieu').html(loading);
-	$('#listnguyenlieu').load(url);
+	loadData(url);
 }
 
 function searchForm()
@@ -121,8 +129,7 @@ function searchForm()
 	{
 		url += "&opendialog=true";
 	}
-	$('#listnguyenlieu').html(loading);
-	$('#listnguyenlieu').load("?route=quanlykho/nguyenlieu/getList"+url);
+	loadData("?route=quanlykho/nguyenlieu/getList"+url);
 }
 
 <?php if($dialog==true){ ?>
