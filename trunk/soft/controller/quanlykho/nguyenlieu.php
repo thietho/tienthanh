@@ -280,7 +280,7 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 		
 		
 		$where = implode("",$arr);
-		$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
+		//$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
 		
 		$rows = $this->model_quanlykho_nguyenlieu->getList($where);
 		//Page
