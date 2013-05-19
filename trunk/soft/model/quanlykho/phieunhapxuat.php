@@ -37,8 +37,8 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 
 	public function getChiTiet($id)
 	{
-		$sql = "Select `qlkchitietphieunhapxuat`.*
-								from `qlkchitietphieunhapxuat` 
+		$sql = "Select `qlkphieunhapxuat_chitiet`.*
+								from `qlkphieunhapxuat_chitiet` 
 								where  id='". $id ."' ORDER BY `vitri` ASC" ;
 
 		$query = $this->db->query($sql);
@@ -47,8 +47,8 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 
 	public function getChiTiets($maphieu, $where="")
 	{
-		$sql = "Select `qlkchitietphieunhapxuat`.*
-								from `qlkchitietphieunhapxuat` 
+		$sql = "Select `qlkphieunhapxuat_chitiet`.*
+								from `qlkphieunhapxuat_chitiet` 
 								where  maphieu=". $maphieu . $where;
 
 		$query = $this->db->query($sql);
@@ -57,8 +57,8 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 
 	public function getChiTietPhieuXuatNhap( $where="")
 	{
-		$sql = "Select `qlkchitietphieunhapxuat`.*
-								from `qlkchitietphieunhapxuat` 
+		$sql = "Select `qlkphieunhapxuat_chitiet`.*
+								from `qlkphieunhapxuat_chitiet` 
 								where 1=1 ". $where;
 
 		$query = $this->db->query($sql);
@@ -338,7 +338,7 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 		 $this->db->updateData("qlkphieunhapxuat",$field,$value,$where);*/
 
 		$where="maphieu = '".$id. "'";
-		$this->db->deleteData("qlkchitietphieunhapxuat",$where);
+		$this->db->deleteData("qlkphieunhapxuat_chitiet",$where);
 
 		$where="id = '".$id. "'";
 		$this->db->deleteData("qlkphieunhapxuat",$where);
@@ -388,7 +388,7 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 
 	private function createTemID($prefix)
 	{
-		$stt = $this->db->getNextIdVarCharNumber("qlkchitietphieunhapxuat","id",$prefix);
+		$stt = $this->db->getNextIdVarCharNumber("qlkphieunhapxuat_chitiet","id",$prefix);
 		return $prefix.$stt;
 	}
 
@@ -457,12 +457,12 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 						{
 							$id = $this->createTemID($prefix."-".$this->document->getNguyenLieu($itemid,'manguyenlieu')."-");
 							$value[0] = $id;
-							$this->db->insertData("qlkchitietphieunhapxuat",$field,$value);
+							$this->db->insertData("qlkphieunhapxuat_chitiet",$field,$value);
 						}
 						else
 						{
 							$where="id = '".$id."'";
-							$this->db->updateData("qlkchitietphieunhapxuat",$field,$value,$where);
+							$this->db->updateData("qlkphieunhapxuat_chitiet",$field,$value,$where);
 						}
 
 						return $id;
@@ -480,7 +480,7 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 						);
 
 						$where="id = '".$id. "'";
-						$this->db->updateData("qlkchitietphieunhapxuat",$field,$value,$where);
+						$this->db->updateData("qlkphieunhapxuat_chitiet",$field,$value,$where);
 	}
 
 	public function updateChitietTrangThai($id,$trangthai)
@@ -495,7 +495,7 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 						);
 
 						$where="id = '".$id. "'";
-						$this->db->updateData("qlkchitietphieunhapxuat",$field,$value,$where);
+						$this->db->updateData("qlkphieunhapxuat_chitiet",$field,$value,$where);
 	}
 
 	public function updateChitiet($id,$col,$val)
@@ -510,13 +510,13 @@ class ModelQuanlykhoPhieunhapxuat extends Model
 		);
 
 		$where="id = '".$id. "'";
-		$this->db->updateData("qlkchitietphieunhapxuat",$field,$value,$where);
+		$this->db->updateData("qlkphieunhapxuat_chitiet",$field,$value,$where);
 	}
 
 	public function deletechitiet($id)
 	{
 		$where="id = '".$id. "'";
-		$this->db->deleteData("qlkchitietphieunhapxuat",$where);
+		$this->db->deleteData("qlkphieunhapxuat_chitiet",$where);
 	}
 
 	public function tinhSoLuongTon($manguyenlieu)

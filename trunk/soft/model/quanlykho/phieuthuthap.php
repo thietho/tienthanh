@@ -177,7 +177,7 @@ class ModelQuanlykhoPhieuthuthap extends Model
 		}
 	}
 
-	//qlkchitietphieuthuthap
+	//qlkphieuthuthap_chitiet
 	/*
 		id,
 		maphieu,
@@ -191,8 +191,8 @@ class ModelQuanlykhoPhieuthuthap extends Model
 
 	public function getChiTiet($id)
 	{
-		$sql = "Select `qlkchitietphieuthuthap`.*
-									from `qlkchitietphieuthuthap` 
+		$sql = "Select `qlkphieuthuthap_chitiet`.*
+									from `qlkphieuthuthap_chitiet` 
 									where id ='".$id."' ";
 		$query = $this->db->query($sql);
 		return $query->row;
@@ -200,8 +200,8 @@ class ModelQuanlykhoPhieuthuthap extends Model
 
 	public function getChiTiets($where = "")
 	{
-		$sql = "Select `qlkchitietphieuthuthap`.*
-									from `qlkchitietphieuthuthap` 
+		$sql = "Select `qlkphieuthuthap_chitiet`.*
+									from `qlkphieuthuthap_chitiet` 
 									where 1=1 ".$where;
 		$query = $this->db->query($sql);
 		return $query->rows;
@@ -245,12 +245,12 @@ class ModelQuanlykhoPhieuthuthap extends Model
 						if($id == 0 )
 						{
 								
-							$this->db->insertData("qlkchitietphieuthuthap",$field,$value);
+							$this->db->insertData("qlkphieuthuthap_chitiet",$field,$value);
 						}
 						else
 						{
 							$where="id = '".$id."'";
-							$this->db->updateData("qlkchitietphieuthuthap",$field,$value,$where);
+							$this->db->updateData("qlkphieuthuthap_chitiet",$field,$value,$where);
 						}
 
 						return $id;
@@ -259,7 +259,7 @@ class ModelQuanlykhoPhieuthuthap extends Model
 	public function deletechitiet($id)
 	{
 		$where="id = '".$id. "'";
-		$this->db->deleteData("qlkchitietphieuthuthap",$where);
+		$this->db->deleteData("qlkphieuthuthap_chitiet",$where);
 	}
 }
 ?>

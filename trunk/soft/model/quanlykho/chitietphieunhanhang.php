@@ -3,16 +3,16 @@ class ModelQuanlykhoPhieunhanhang extends Model
 {
 	public function getItem($id, $where="")
 	{
-		$query = $this->db->query("Select `qlkchitietphieunhanhang`.*
-									from `qlkchitietphieunhanhang` 
+		$query = $this->db->query("Select `qlkphieunhanhang_chitiet`.*
+									from `qlkphieunhanhang_chitiet` 
 									where id ='".$id."' ".$where);
 		return $query->row;
 	}
 
 	public function getList($where="", $from=0, $to=0, $order="")
 	{
-		$sql = "Select `qlkchitietphieunhanhang`.*
-									from `qlkchitietphieunhanhang` 
+		$sql = "Select `qlkphieunhanhang_chitiet`.*
+									from `qlkphieunhanhang_chitiet` 
 									where 1=1" . $where . $order;
 		if($to > 0)
 		{
@@ -25,7 +25,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 
 	public function nextID()
 	{
-		return $this->db->getNextId('qlkchitietphieunhanhang','id');
+		return $this->db->getNextId('qlkphieunhanhang_chitiet','id');
 	}
 
 	public function insert($data)
@@ -62,7 +62,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						$soluongnhan,
 						$soluongtralai
 						);
-						$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
+						$this->db->insertData("qlkphieunhanhang_chitiet",$field,$value);
 
 						return $id;
 	}
@@ -103,7 +103,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 						);
 
 						$where="id = " .$id;
-						$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
+						$this->db->updateData("qlkphieunhanhang_chitiet",$field,$value,$where);
 
 						return true;
 	}
@@ -129,7 +129,7 @@ class ModelQuanlykhoPhieunhanhang extends Model
 		if(count($data)==0)
 		{
 			$where="id= ".$id;
-			$this->db->deleteData("qlkchitietphieunhanhang",$where);
+			$this->db->deleteData("qlkphieunhanhang_chitiet",$where);
 		}
 	}
 
