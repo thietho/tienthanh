@@ -398,8 +398,8 @@ class ModelQuanlykhoNhacungung extends Model
 	//Chi tiet phieu nhan hang
 	public function getChiTietPhieuNhanHang($id)
 	{
-		$sql = "Select `qlkchitietphieunhanhang`.*
-									from `qlkchitietphieunhanhang` 
+		$sql = "Select `qlkphieunhanhang_chitiet`.*
+									from `qlkphieunhanhang_chitiet` 
 									where id ='".$id."' ".$where;
 		$query = $this->db->query($sql);
 		return $query->row;
@@ -408,8 +408,8 @@ class ModelQuanlykhoNhacungung extends Model
 	public function getChiTietPhieuNhanHangList($where="", $from=0, $to=0)
 	{
 
-		$sql = "Select `qlkchitietphieunhanhang`.*
-									from `qlkchitietphieunhanhang` 
+		$sql = "Select `qlkphieunhanhang_chitiet`.*
+									from `qlkphieunhanhang_chitiet` 
 									where 1=1 " . $where . " Order by id";
 		if($to > 0)
 		{
@@ -467,19 +467,19 @@ class ModelQuanlykhoNhacungung extends Model
 
 						if($id == 0 )
 						{
-							$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
+							$this->db->insertData("qlkphieunhanhang_chitiet",$field,$value);
 						}
 						else
 						{
 							$where="id = '".$id."'";
-							$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
+							$this->db->updateData("qlkphieunhanhang_chitiet",$field,$value,$where);
 						}
 	}
 
 	public function deleteChiTietPhieuNhanHang($id)
 	{
 		$where="id = '".$id."'";
-		$this->db->deleteData("qlkchitietphieunhanhang",$where);
+		$this->db->deleteData("qlkphieunhanhang_chitiet",$where);
 
 	}
 

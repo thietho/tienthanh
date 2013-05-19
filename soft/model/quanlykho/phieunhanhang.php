@@ -21,8 +21,8 @@ class ModelQuanlykhoPhieunhanhang extends Model
 
 	public function getChiTietPhieuNhanHangs($where="")
 	{
-		$sql = "Select `qlkchitietphieunhanhang`.*
-								from `qlkchitietphieunhanhang` 
+		$sql = "Select `qlkphieunhanhang_chitiet`.*
+								from `qlkphieunhanhang_chitiet` 
 								where 1=1 " . $where;
 
 		$query = $this->db->query($sql);
@@ -268,19 +268,19 @@ class ModelQuanlykhoPhieunhanhang extends Model
 
 						if($id == 0 )
 						{
-							$this->db->insertData("qlkchitietphieunhanhang",$field,$value);
+							$this->db->insertData("qlkphieunhanhang_chitiet",$field,$value);
 						}
 						else
 						{
 							$where="id = '".$id."'";
-							$this->db->updateData("qlkchitietphieunhanhang",$field,$value,$where);
+							$this->db->updateData("qlkphieunhanhang_chitiet",$field,$value,$where);
 						}
 	}
 
 	public function deletechitiet($id)
 	{
 		$where="id = '".$id."'";
-		$this->db->deleteData("qlkchitietphieunhanhang",$where);
+		$this->db->deleteData("qlkphieunhanhang_chitiet",$where);
 	}
 
 
