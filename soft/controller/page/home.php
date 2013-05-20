@@ -3,6 +3,7 @@ class ControllerPageHome extends Controller
 {
 	public function index()
 	{
+		echo "aa".$this->date->getToday();
 		$this->load->model("core/module");
 		$this->user->getUserTypeId();
 		//Lay cac module thuot usertype do ngoai admin
