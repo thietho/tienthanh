@@ -2,11 +2,10 @@
 final class Date{
 	//Kieu ngay chuan: yyyy-mm-dd 00:00:00 - MySQLDate
 	//Kieu ngay view: dd-mm-yyyy 00:00:00 - ViewDate
-	public $now;
+	
 	
 	function __construct() 
 	{
-		$this->now = getdate();	
 		
 	}
 	
@@ -63,8 +62,8 @@ final class Date{
 	function getToday()
 	{
 		$today = getdate();
-		
-		$time = $today['year'].'-'.$this->numberFormate($today['mon']).'-'.$this->numberFormate($today['mday']).' '.$this->numberFormate($today['hours']).":".$this->numberFormate($today['minutes']).":".$this->numberFormate($today['seconds']);
+		print_r($today);
+		$time = $today['year'].'-'.$this->numberFormate($today['mon']).'-'.$this->numberFormate($today['mday']).' '.$this->numberFormate($today['hours'] + TIMEZONE).":".$this->numberFormate($today['minutes']).":".$this->numberFormate($today['seconds']);
 		return $time;
 	}
 	
