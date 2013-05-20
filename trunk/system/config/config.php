@@ -10,5 +10,5 @@ define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'db_tienthanh');
 define('DB_PREFIX', '');
 //Time
-define('TIMEZONE', 0);
+define('TIMEZONE', 7);
 ?>
