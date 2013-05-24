@@ -26,7 +26,22 @@ class ControllerQuanlykhoTaisan extends Controller
    	}
 	public function index()
 	{
-		$this->getList();
+		$this->data['sotaisan'] = $this->url->http('quanlykho/taisan/sotaisan');
+		$this->data['insert'] = $this->url->http('quanlykho/taisan/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/taisan/delete');		
+		$this->data['list'] = $this->url->http('quanlykho/taisan');
+		
+		$this->data['refres']=$_SERVER['QUERY_STRING'];
+		$this->id='content';
+		$this->template="quanlykho/taisan_list.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -58,13 +73,10 @@ class ControllerQuanlykhoTaisan extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
 		
-		$this->data['sotaisan'] = $this->url->http('quanlykho/taisan/sotaisan');
-		$this->data['insert'] = $this->url->http('quanlykho/taisan/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/taisan/delete');		
-		$this->data['list'] = $this->url->http('quanlykho/taisan');
+		
 		
 		
 		$this->data['datas'] = array();
@@ -130,16 +142,16 @@ class ControllerQuanlykhoTaisan extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/taisan_list.tpl";
-		$this->layout="layout/center";
+		$this->template="quanlykho/taisan_table.tpl";
+		
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			$this->layout="";
 			$this->data['dialog'] = true;
 			
 		}
 		$this->render();
-		$this->render();
+		
 	}
 	
 	private function getForm()

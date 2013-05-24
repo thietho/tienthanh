@@ -68,6 +68,12 @@ final class Document {
 								  "nhapdoingoai" => "Nhập đối ngoại",
 								  "tamnhaptaixuat" => "Tạm nhập tái xuất"
 								  );
+	public $dauvao = array(
+							"nguyenlieu" => "Nguyên liệu",
+							"vattu" => "Vật tư",
+							"linhkien" => "Linh kiện",
+							"taisan" => "Tài sản"
+						);
 	
 	public $text = array();
 	public $setting = array();
