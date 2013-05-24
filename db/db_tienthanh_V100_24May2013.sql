@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 20, 2013 at 07:31 PM
+-- Generation Time: May 24, 2013 at 08:29 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -70,6 +70,54 @@ CREATE TABLE IF NOT EXISTS `bmtn13_chitiet` (
 
 --
 -- Dumping data for table `bmtn13_chitiet`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bmtn14`
+--
+
+CREATE TABLE IF NOT EXISTS `bmtn14` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sophieu` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `ngaylapphieu` datetime NOT NULL,
+  `nhanvienlap` bigint(20) NOT NULL,
+  `tenmau` text COLLATE utf8_unicode_ci NOT NULL,
+  `tinhtrangmau` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `moitruongthunghiem` text COLLATE utf8_unicode_ci NOT NULL,
+  `ngayycrakqcheptay` date NOT NULL,
+  `ngayycgiaokqcheptay` date NOT NULL,
+  `nhanvienthuchien` bigint(20) NOT NULL,
+  `ngaythuchien` date NOT NULL,
+  `danhgiakq` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `bmtn14`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bmtn14_chitiet`
+--
+
+CREATE TABLE IF NOT EXISTS `bmtn14_chitiet` (
+  `id` bigint(20) NOT NULL,
+  `bmtn14id` bigint(20) NOT NULL,
+  `tieuchikiemtraid` bigint(20) NOT NULL,
+  `madonvi` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `ketqua` text COLLATE utf8_unicode_ci NOT NULL,
+  `mucchatluong` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `bmtn14_chitiet`
 --
 
 
@@ -790,7 +838,7 @@ CREATE TABLE IF NOT EXISTS `module` (
   `moduleparent` bigint(50) DEFAULT NULL,
   `permission` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=111 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=115 ;
 
 --
 -- Dumping data for table `module`
@@ -902,7 +950,11 @@ INSERT INTO `module` (`id`, `moduleid`, `modulename`, `moduleparent`, `permissio
 (107, 'quanlykho/kehoach/danhgia', 'Đánh giá kế hoạch', 16, NULL),
 (108, 'quanlykho/nhanvien/phanquyen', 'Phân quyên nhân viên', 20, NULL),
 (109, 'quanlykho/kehoachnam/delete', 'Xóa kế hoạch năm', 15, NULL),
-(110, 'quanlykho/kehoach/delete', 'Xóa kế hoạch', 16, NULL);
+(110, 'quanlykho/kehoach/delete', 'Xóa kế hoạch', 16, NULL),
+(111, 'quanlykho/tieuchikiemtra', 'Tiêu chí kiểm tra', 1, NULL),
+(112, 'quanlykho/tieuchikiemtra/insert', 'Thêm', 111, NULL),
+(113, 'quanlykho/kho/update', 'Cập nhật tiêu chí kiểm tra', 111, NULL),
+(114, 'quanlykho/kho/delete', 'Xóa tiêu chí kiểm tra', 111, NULL);
 
 -- --------------------------------------------------------
 
@@ -21629,6 +21681,28 @@ INSERT INTO `qlktaisan_phongban` (`id`, `mataisan`, `phongbannhan`, `nguoidexuat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `qlktieuchikiemtra`
+--
+
+CREATE TABLE IF NOT EXISTS `qlktieuchikiemtra` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `itemtype` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `itemid` bigint(20) NOT NULL,
+  `itemcode` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `itemname` text COLLATE utf8_unicode_ci NOT NULL,
+  `tieuchikiemtra` text COLLATE utf8_unicode_ci NOT NULL,
+  `madonvi` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `qlktieuchikiemtra`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `site`
 --
 
@@ -21804,16 +21878,14 @@ CREATE TABLE IF NOT EXISTS `user_stats` (
   `username` varchar(50) NOT NULL,
   `ip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31193 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31306 ;
 
 --
 -- Dumping data for table `user_stats`
 --
 
 INSERT INTO `user_stats` (`id`, `starttime`, `sessionid`, `username`, `ip`) VALUES
-(31189, '2013-05-21 08:43:19', 'jai5rd4u6r3m6hegp02buqn946', '', '::1'),
-(31190, '2013-05-21 08:43:19', 'lcse7nl5bvjqht0qb0pddm0i16', '', '::1'),
-(31192, '2013-05-20 23:59:11', '35kkja7n62gn24sg946gkongr1', '', '::1');
+(31305, '0000-00-00 00:00:00', 'hg5n7eho0tkidt41movor1lc67', '', '::1');
 
 -- --------------------------------------------------------
 

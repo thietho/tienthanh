@@ -80,7 +80,7 @@
                         <input type="hidden" id="nguyenlieusudung" name="nguyenlieusudung" value="">
                         <span id="tennguyenlieu"></span>
                         <input type="button" class="button" name="btnChonNguyenLieu" value="Chọn nguyên vật liệu" onClick="selcetNguyenLieu()">
-                        <input type="button" class="button" name="btnChonNguyenLieu" value="Bỏ chọn" onClick="unSelcetNguyenLieu()">
+                        <input type="button" class="button" name="btnBoChonNguyenLieu" value="Bỏ chọn" onClick="unSelcetNguyenLieu()">
                     </p>
                     <p>
                         <label>Số lượng sử dụng cho 1 linh kiện</label>
