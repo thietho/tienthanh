@@ -4,12 +4,12 @@
     
     <div class="section-content padding1">
     
-    	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
+    	<form id="frm_tieuchikiemtra" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
             	<input type="button" value="Lưu" class="button" onClick="save()"/>
      	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/tieuchikiemtra#page='+control.getParam('page'))"/>   
-     	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
+     	        
             </div>
             <div class="clearer">^&nbsp;</div>
         	<div id="error" class="error" style="display:none"></div>
@@ -35,6 +35,7 @@
                     	<tr>
                         	<th>Tiêu chí kiểm tra</th>
                             <th>Đơn vị</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="listtieuchi">
@@ -42,6 +43,7 @@
                     </tbody>
                 </table>
                 <input type="button" class="button" value="Thêm dòng" onclick="tieuchi.addRow(0,'','')"/>
+                <input type="hidden" id="deltieuchi" name="deltieuchi" />
             </div>
         </form>
     
@@ -49,6 +51,17 @@
     
 </div>
 <script language="javascript">
+$(document).ready(function(e) {
+    if($('#itemid').val()!="")
+	{
+		$('#hanghoa').html("<?php echo $item['itemtypename']?>: "+$("#itemcode").val() +" - "+ $("#itemname").val());
+		<?php 
+		if(count($tieuchikt))
+		foreach($tieuchikt as $kt){ ?>
+		tieuchi.addRow("<?php echo $kt['id']?>","<?php echo $kt['tieuchikiemtra']?>","<?php echo $kt['madonvi']?>");
+		<?php } ?>
+	}
+});
 $('#btnSelectNguyenLieu').click(function(e) {
     $("#popup").attr('title','Chọn nguyên liệu');
 		$( "#popup" ).dialog({
@@ -170,11 +183,20 @@ function TieuChi()
 	this.index = 0;
 	this.addRow = function(id,tieuchikiemtra,madonvi)
 	{
-		var row = '<tr id=row'+ this.index +'>';
-		row += '<td><input type="text" class="text" value="'+tieuchikiemtra+'"></td>';
-		row += '<td></td>';
+		var row = '<tr id=row-'+ this.index +'>';
+		row += '<td><input type="hidden" id="id-'+ this.index +'" name="id['+ this.index +']" value="'+id+'"><input type="text" class="text" id="tieuchikiemtra-'+ this.index +'" name="tieuchikiemtra['+ this.index +']" value="'+tieuchikiemtra+'"></td>';
+		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbdonvitinh?></select></td>';
+		row += '<td><input type="button" class="button" value="Xóa" onclick="tieuchi.remove('+ this.index +')"></td>';
 		row += '</tr>'
 		$('#listtieuchi').append(row);
+		$('#madonvi-'+ this.index).val(madonvi);
+		this.index++;
+	}
+	this.remove = function(pos)
+	{
+		alert($('#id-'+pos).val());
+		$('#deltieuchi').val($('#id-'+pos).val()+","+ $('#deltieuchi').val());
+		$('#row-'+pos).remove();
 	}
 }
 var tieuchi = new TieuChi();
@@ -182,7 +204,7 @@ function save()
 {
 	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=quanlykho/tieuchikiemtra/save", $("#frm").serialize(),
+	$.post("?route=quanlykho/tieuchikiemtra/save", $("#frm_tieuchikiemtra").serialize(),
 		function(data){
 			if(data == "true")
 			{

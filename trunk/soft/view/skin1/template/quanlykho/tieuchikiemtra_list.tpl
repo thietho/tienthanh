@@ -4,27 +4,20 @@
     
     <div class="section-content">
     	
-        <form action="" method="post" id="frm_nguyenlieu">
+        <form action="" method="post" id="frm_tieuchikiemtra">
         	<div id="ben-search">
+            	<label>Loại</label>
+                <select id="itemtype" name="itemtype">
+                    <option value=""></option>
+                    <?php foreach($this->document->dauvao as $key => $val){ ?>
+                    <option value="<?php echo $key?>"><?php echo $val?></option>
+                    <?php } ?>
+                </select>
             	<label>Mã số</label>
-                <input type="text" id="manguyenlieu" name="manguyenlieu" class="text" value="" />
+                <input type="text" id="itemcode" name="itemcode" class="text" value="" />
                 <label>Tên</label>
-                <input type="text" id="tennguyenlieu" name="tennguyenlieu" class="text" value="" />
+                <input type="text" id="itemname" name="itemname" class="text" value="" />
                 
-                <label>Loại</label>
-                <select id="loai" name="loai">
-                    <option value=""></option>
-                    <?php foreach($loainguyenlieu as $val){ ?>
-                    <option value="<?php echo $val['manhom']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;",$val['level']-1)?><?php echo $val['tennhom']?></option>
-                    <?php } ?>
-                </select>
-                <label>Kho</label>
-                <select id="makho" name="makho">
-                    <option value=""></option>
-                    <?php foreach($kho as $val){ ?>
-                    <option value="<?php echo $val['makho']?>"><?php echo $val['tenkho']?></option>
-                    <?php } ?>
-                </select>
                 <br />
                 <input type="button" class="button" name="btnSearch" value="Tìm" onclick="searchForm()"/>
                 <input type="button" class="button" name="btnSearch" value="Xem tất cả" onclick="viewAll()"/>
@@ -64,7 +57,7 @@ function deleteitem()
 	if (answer)
 	{
 		$.post("?route=quanlykho/tieuchikiemtra/delete", 
-				$("#listitem").serialize(), 
+				$("#frm_tieuchikiemtra").serialize(), 
 				function(data)
 				{
 					if(data!="")
@@ -81,10 +74,10 @@ $(document).ready(function(e) {
 	
 });
 
-$('.text').keyup(function(e) {
+$('#frm_tieuchikiemtra .text').keyup(function(e) {
     searchForm();
 });
-$('select').change(function(e) {
+$('#frm_tieuchikiemtra select').change(function(e) {
     searchForm();
 });
 function loadData(url)
@@ -108,16 +101,15 @@ function viewAll()
 function searchForm()
 {
 	var url =  "";
-	if($("#frm_nguyenlieu #manguyenlieu").val() != "")
-		url += "&manguyenlieu=" + $("#frm_nguyenlieu #manguyenlieu").val();
+	if($("#frm_tieuchikiemtra #itemtype").val() != "")
+		url += "&itemtype=" + $("#frm_tieuchikiemtra #itemtype").val();
 	
-	if($("#frm_nguyenlieu #tennguyenlieu").val() != "")
-		url += "&tennguyenlieu="+ encodeURI($("#frm_nguyenlieu #tennguyenlieu").val());
+	if($("#frm_tieuchikiemtra #itemcode").val() != "")
+		url += "&itemcode="+ encodeURI($("#frm_tieuchikiemtra #itemcode").val());
 	
-	if($("#frm_nguyenlieu #loai").val() != "")
-		url += "&loai="+ encodeURI($("#frm_nguyenlieu #loai").val());
-	if($("#frm_nguyenlieu #makho").val() != "")
-		url += "&makho=" + encodeURI($("#frm_nguyenlieu #makho").val());
+	if($("#frm_tieuchikiemtra #itemname").val() != "")
+		url += "&itemname="+ encodeURI($("#frm_tieuchikiemtra #itemname").val());
+	
 	
 	if("<?php echo $_GET['opendialog']?>" == "true")
 	{
@@ -125,49 +117,6 @@ function searchForm()
 	}
 	loadData("?route=quanlykho/tieuchikiemtra/getList"+url);
 }
-
-<?php if($dialog==true){ ?>
-	$(".inputchk").click(function()
-	{
-		$("#selectnguyenlieu").val('');
-		$(".inputchk").each(function(){
-			if(this.checked == true)
-			{
-				$("#selectnguyenlieu").val($("#selectnguyenlieu").val()+","+$(this).val());
-			}
-		})
-		
-	});
-<?php } ?>
-
-function viewTonKho(id)
-{
-	$("#popup").attr('title','Tồn kho');
-				$( "#popup" ).dialog({
-					autoOpen: false,
-					show: "blind",
-					hide: "explode",
-					width: 800,
-					height: 500,
-					modal: true,
-					buttons: {
-						
-						
-						'Đóng': function() {
-							$( this ).dialog( "close" );
-						},
-						
-						
-					}
-				});
-			
-				
-	$("#popup-content").load("?route=quanlykho/tieuchikiemtra/viewTonKho&id="+id,function(){
-		$("#popup").dialog("open");	
-	});
-	//openDialog("?route=quanlykho/tieuchikiemtra/viewTonKho&id="+id,1000,800);
-}
-
 function moveto(url,eid)
 {
 	$(eid).html(loading);
