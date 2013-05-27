@@ -71,7 +71,7 @@ function deleteitem()
 	if (answer)
 	{
 		$.post("?route=quanlykho/sanpham/delete", 
-				$("#listitem").serialize(), 
+				$("#frm_sanpham").serialize(), 
 				function(data)
 				{
 					if(data!="")

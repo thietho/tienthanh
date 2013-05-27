@@ -103,7 +103,7 @@ function deleteitem()
 	if (answer)
 	{
 		$.post("?route=quanlykho/linhkien/delete", 
-				$("#listitem").serialize(), 
+				$("#frm_linhkien").serialize(), 
 				function(data)
 				{
 					if(data!="")

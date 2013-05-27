@@ -18,6 +18,12 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		$this->load->model("quanlykho/linhkien");
 		$this->load->model("quanlykho/taisan");
 		$this->load->model("quanlykho/donvitinh");
+		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		$this->data['cbdonvitinh'] = "";
+		foreach($this->data['donvitinh'] as $donvi)
+		{
+			$this->data['cbdonvitinh'].='<option value="'.$donvi['madonvi'].'">'.$donvi['tendonvitinh'].'</option>';
+		}
 		
    	}
 	public function index()
@@ -65,7 +71,15 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		
 		if(count($listid))
 		{
-			$this->model_quanlykho_nguyenlieu->deletedatas($listid);
+			foreach($listid as $id)
+			{
+				$item = $this->model_quanlykho_tieuchikiemtra->getItem($id);
+				$where = " AND itemid = '".$item['itemid']."'";
+				$data_tieuchi = $this->model_quanlykho_tieuchikiemtra->getList($where);
+				foreach($data_tieuchi as $tieuchi)
+					$this->model_quanlykho_tieuchikiemtra->delete($tieuchi['id']);
+			}
+			
 			$this->data['output'] = "Xóa thành công";
 		}
 		$this->id="content";
@@ -86,11 +100,9 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		$this->data['datas'] = array();
 		$where = "";
 		
-		$datasearchlike['manguyenlieu'] = urldecode($this->request->get['manguyenlieu']);
-		$datasearchlike['tennguyenlieu'] = urldecode($this->request->get['tennguyenlieu']);
-		$datasearch['manhom'] = $this->request->get['manhom'];
-		$datasearch['loai'] = $this->request->get['loai'];
-		$datasearch['makho'] = $this->request->get['makho'];
+		$datasearchlike['itemcode'] = urldecode($this->request->get['itemcode']);
+		$datasearchlike['itemname'] = urldecode($this->request->get['itemname']);
+		$datasearch['itemtype'] = $this->request->get['itemtype'];
 		
 		$arr = array();
 		foreach($datasearchlike as $key => $item)
@@ -111,7 +123,7 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		$where = implode("",$arr);
 		//$where .= " AND loai IN ('".implode("','",$arrnhom)."')";
 		
-		$rows = $this->model_quanlykho_tieuchikiemtra->getList($where);
+		$rows = $this->model_quanlykho_tieuchikiemtra->getList($where." Group by itemid");
 		//Page
 		$page = $this->request->get['page'];		
 		$x=$page;		
@@ -156,8 +168,10 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		
 		if ((isset($this->request->get['id'])) ) 
 		{
-      		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($this->request->get['id']);
-			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
+      		$this->data['item'] = $this->model_quanlykho_tieuchikiemtra->getItem($this->request->get['id']);
+			$this->data['item']['itemtypename'] = $this->document->dauvao[$this->data['item']['itemtype']];
+			$where = " AND itemid = '".$this->data['item']['itemid']."'";
+			$this->data['tieuchikt'] = $this->model_quanlykho_tieuchikiemtra->getList($where);
 			
     	}
 		
@@ -171,93 +185,40 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
+		
 		if($this->validateForm($data))
 		{
-			
-			$item = $this->model_quanlykho_nguyenlieu->getItem($data['id']);
-			if(count($item)==0)
+			$arr_id = $data['id'];
+			$arr_tieuchikiemtra = $data['tieuchikiemtra'];
+			$arr_madonvi = $data['madonvi'];
+			if($data['deltieuchi'])
 			{
-				$this->model_quanlykho_nguyenlieu->insert($data);
-			}
-			else
-			{
-				$this->model_quanlykho_nguyenlieu->update($data);
-			}
-			$this->data['output'] = "true";
-		}
-		else
-		{
-			foreach($this->error as $item)
-			{
-				$this->data['output'] .= $item."<br>";
-			}
-		}
-		$this->id='content';
-		$this->template='common/output.tpl';
-		$this->render();
-	}
-	
-	public function savedinhluong()
-	{
-		$data = $this->request->post;
-		
-		if($this->validateDinhLuong($data))
-		{
-			
-			//$this->model_quanlykho_nguyenlieu->saveNguyenLieuTrungGian($data);
-			$this->model_quanlykho_nguyenlieu->updateNguyenLieuGoc($data);
-			$this->data['output'] = "true";
-		}
-
-		else
-		{
-			foreach($this->error as $item)
-			{
-				$this->data['output'] .= $item."<br>";
-			}
-		}
-		$this->id='content';
-		$this->template='common/output.tpl';
-		$this->render();
-	}
-	
-	public function savebangbaogia()
-	{
-		$data = $this->request->post;
-		
-		if($this->validateBangBaoGia($data))
-		{
-			$data['loai'] = "nguyenlieu";
-			$data['ngay'] = $this->date->formatViewDate($data['ngay']);
-			
-			//Luu thong tin bang bao gia
-			$mabangbaogia = $this->model_quanlykho_nguyenlieu->saveBangBaoGia($data);
-			
-			//Luu chi tiet bang bao gia
-			$arrid = $data['chitiet'];
-			$arrmanguyenlieu = $data['itemid'];
-			$arrdongia = $data['dongia'];
-			foreach($arrmanguyenlieu as $key => $item)
-			{
-				$datagia['id'] = $arrid[$key] ;
-				$datagia['mabangbaogia'] = $mabangbaogia;
-				$datagia['manguyenlieu'] = $arrmanguyenlieu[$key];
-				$datagia['manhacungung'] = $data['manhacungung'];
-				$datagia['gia'] = $arrdongia[$key];
-				$datagia['ngay'] = $data['ngay'];
-				$this->model_quanlykho_nguyenlieu->saveCapNhatGia($datagia);
-			}
-			
-			$list = trim( $data['delchitiet'],",");
-			$arrdel = split(",", $list);
-			
-			if(count($arrdel))
-			{
-				foreach($arrdel as $val)
+				$arr_delid = split(",",$data['deltieuchi']);
+				foreach($arr_delid as $id)
 				{
-					$this->model_quanlykho_nguyenlieu->deletedCapNhatGia($val)	;
+					$this->model_quanlykho_tieuchikiemtra->delete($id);	
 				}
 			}
+			if($arr_tieuchikiemtra)
+			foreach($arr_tieuchikiemtra as $key => $tieuchikiemtra)
+			{
+				$data_tieuchi['id']	= $arr_id[$key];
+				$data_tieuchi['itemtype'] = $data['itemtype'];
+				$data_tieuchi['itemid']	=  $data['itemid'];
+				$data_tieuchi['itemcode'] = $data['itemcode'];
+				$data_tieuchi['itemname'] = $data['itemname'];
+				$data_tieuchi['tieuchikiemtra']	= $arr_tieuchikiemtra[$key];
+				$data_tieuchi['madonvi'] = $arr_madonvi[$key];
+				if((int)$data_tieuchi['id']==0)
+				{
+					$this->model_quanlykho_tieuchikiemtra->insert($data_tieuchi);
+				}
+				else
+				{
+					$this->model_quanlykho_tieuchikiemtra->update($data_tieuchi);
+				}
+				
+			}
 			
 			$this->data['output'] = "true";
 		}
@@ -272,78 +233,16 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
+	
 	
 	private function validateForm($data)
 	{
 		
 		
-    	if($data['manguyenlieu'] == "")
+    	if($data['itemid'] == "")
 		{
-      		$this->error['manguyenlieu'] = "Mã nguyên liệu không được rỗng";
+      		$this->error['itemid'] = "Bạn chưa chọn hàng hóa";
     	}
-		else
-		{
-			if($data['id'] == "")
-			{
-				
-				$where = " AND manguyenlieu ='".$data['manguyenlieu']."'" ;
-				$item = $this->model_quanlykho_nguyenlieu->getList($where);
-				if(count($item)>0)
-					$this->error['manguyenlieu'] = "Mã nguyên liệu đã được sử dụng";
-			}
-		}
-		if(strlen($data['manguyenlieu']) > 50)
-		{
-      		$this->error['manguyenlieu'] = "Mã nguyên liệu không được vượt quá 50 ký tự";
-    	}
-		
-		if ($data['tennguyenlieu'] == "") 
-		{
-      		$this->error['tennguyenlieu'] = "Bạn chưa nhập tên nguyên liệu";
-    	}
-		
-		
-		
-		if ($data['loai'] == "") 
-		{
-      		$this->error['loai'] = "Bạn chưa chọn loại";
-    	}
-		
-		if ($data['makho'] == "") 
-		{
-      		$this->error['makho'] = "Bạn chưa chọn kho";
-    	}
-		
-		if ($data['madonvi'] == "") 
-		{
-      		$this->error['madonvi'] = "Bạn chưa nhập đơn vị tính";
-    	}
-
-		if (count($this->error)==0) {
-	  		return TRUE;
-		} else {
-	  		return FALSE;
-		}
-	}
-	
-	private function validateDinhLuong($data)
-	{
-		if ($data['loai'] == "") 
-		{
-      		$this->error['loai'] = "Bạn chưa chọn nhóm";
-    	}
-		
-		if ($data['nguyenlieugoc'] == "") 
-		{
-      		$this->error['nguyenlieugoc'] = "Bạn chưa chọn nguyên liệu gốc";
-    	}
-		
-		if ($data['nguyenlieugoc'] == $data['manguyenlieu']) 
-		{
-      		$this->error['nguyenlieugoc'] = "Bạn chọn nguyên liệu gốc phải khác với nguyên liêu hiện hành";
-    	}
-		
-		
 		
 
 		if (count($this->error)==0) {
@@ -352,83 +251,5 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 	  		return FALSE;
 		}
 	}
-	
-	private function validateBangBaoGia($data)
-	{
-		if ($data['ngay'] == "") 
-		{
-      		$this->error['ngay'] = "Bạn chưa chọn ngày";
-    	}
-		
-		if ($data['manhacungung'] == "") 
-		{
-      		$this->error['manhacungung'] = "Bạn chưa chọn nhà cung cấp";
-    	}
-		
-		if (count($this->error)==0) {
-	  		return TRUE;
-		} else {
-	  		return FALSE;
-		}
-	}
-	
-	public function viewTonKho()
-	{
-		$id = $this->request->get['id'];
-		
-		
-		$this->load->model("quanlykho/phieunhapvattuhanghoa");
-		$this->data['item'] = $this->model_quanlykho_nguyenlieu->getItem($id);
-		$this->data['item']['soluongton'] = $this->model_quanlykho_nguyenlieu->getTonKho($id);
-		$where = " AND 	nguyenlieuid = '".$id."'";
-		$this->data['datact'] = $this->model_quanlykho_phieunhapvattuhanghoa->getPhieuNhanVatTuHangHoaChiTietList($where);
-		
-		$this->id='content';
-		$this->template="quanlykho/tieuchikiemtra_tonkho.tpl";
-		//$this->layout="layout/dialog";
-		$this->data['dialog'] = true;
-		$this->render();
-	}
-	
-	//Cac ham xu ly tren form
-	public function getNguyenLieu()
-	{
-		$col = $this->request->get['col'];
-		$val = $this->request->get['val'];
-		$operator = $this->request->get['operator'];
-		if($operator == "")
-			$operator = "equal";
-		
-		$where = "";
-		switch($operator)
-		{
-			case "equal":
-				$where = " AND ".$col." = '".$val."'";
-				break;
-			case "like":
-				$where = " AND ".$col." like '%".$val."%'";
-				break;
-			case "other":
-				$where = " AND ".$col." <> '".$val."'";
-				break;
-			case "in":
-				$where = " AND ".$col." in  (".$val.")";
-				break;
-			
-		}
-			
-			
-		$datas = $this->model_quanlykho_nguyenlieu->getList($where);
-		foreach($datas as $key => $item)
-		{
-			$datas[$key]['tendonvitinh'] = $this->document->getDonViTinh($item['madonvi']);
-		}
-		
-		$this->data['output'] = json_encode(array('nguyenlieus' => $datas));
-		$this->id="nguyenlieu";
-		$this->template="common/output.tpl";
-		$this->render();
-	}
-	
 }
 ?>

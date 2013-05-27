@@ -79,7 +79,7 @@ function deleteitem()
 	if (answer)
 	{
 		$.post("?route=quanlykho/taisan/delete", 
-				$("#listitem").serialize(), 
+				$("#frm_taisan").serialize(), 
 				function(data)
 				{
 					if(data!="")

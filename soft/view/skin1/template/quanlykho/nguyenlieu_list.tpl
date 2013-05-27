@@ -70,7 +70,7 @@ function deleteitem()
 	if (answer)
 	{
 		$.post("?route=quanlykho/nguyenlieu/delete", 
-				$("#listitem").serialize(), 
+				$("#frm_nguyenlieu").serialize(), 
 				function(data)
 				{
 					if(data!="")
