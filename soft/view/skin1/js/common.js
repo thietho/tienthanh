@@ -319,7 +319,11 @@ function numberReady()
 		
 	});	
 	
-		
+	$(".date").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'dd-mm-yy'
+		});
 	
 }
 
