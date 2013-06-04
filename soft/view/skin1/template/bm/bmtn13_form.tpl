@@ -1,5 +1,8 @@
 <h2>Phiếu yêu cầu kiểm kết quả nghiệm thu</h2>
 <form id="frm_bmtn13">
+	<p>
+    	<input type="button" class="button" id="btnCreateBMTN13" value="Tạo phiếu" />
+    </p>
     <p>
         Phòng kiểm nghiệm đo lường chất lượng đồng ý:
         <select id="nghiemthu" name="nghiemthu">
@@ -17,7 +20,11 @@
     </p>
     <p>
     	Công ty:
-        <input type="button" class="button" value="Chọn nhà cung cấp">
+        <input type="button" class="button" id="btnSelectNhaCungCap" value="Chọn nhà cung cấp">
+        <input type="hidden" id="nhacungungid" name="nhacungungid"/>
+        <input type="hidden" id="manhacungung" name="manhacungung"/>
+        <input type="hidden" id="tennhacungcung" name="tennhacungcung"/>
+        <span id="tennhacungcapview"></span>
         Theo kế hoạch đặt hàng số
         <input type="text" class="text date" id="ngaykehoachdathang" name="ngaykehoachdathang">
     </p>
@@ -39,10 +46,38 @@
     <input type="hidden" id="itemtype" name="itemtype" value="<?php echo $item['itemtype']?>">
     <input type="hidden" id="itemid" name="itemid" value="<?php echo $item['itemid']?>">
     <input type="hidden" id="itemcode" name="itemcode" value="<?php echo $item['itemcode']?>">
-     <input type="hidden" id="itemname" name="itemname" value="<?php echo $item['itemname']?>">
+    <input type="hidden" id="itemname" name="itemname" value="<?php echo $item['itemname']?>">
+    
 </form>
 <script language="javascript">
 numberReady();
+$('#btnSelectNhaCungCap').click(function(e) {
+    $("#popup").attr('title','Chọn nhà cung cấp');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 800,
+			height: 600,
+			modal: true,
+			
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/nhacungung&opendialog=true",function(){
+			$("#popup").dialog("open");	
+		});
+});
+function intSelectNhaCungCap()
+{
+	$('.item').click(function(e) {
+		$("#nhacungungid").val($(this).attr('id'));
+        $("#manhacungung").val($(this).attr('manhacungung'));
+		$("#tennhacungcap").val($(this).attr('tennhacungung'));
+		$('#tennhacungcapview').html("<strong>"+$(this).attr('tennhacungung')+"</strong>");
+		$("#popup").dialog( "close" );
+    });
+}
 $('#btnSelectNguyenLieu').click(function(e) {
     $("#popup").attr('title','Chọn nguyên liệu');
 		$( "#popup" ).dialog({
@@ -278,5 +313,27 @@ function intSelectTaiSan()
 		}
 		
 	});	
+}
+function BMTN13()
+{
+	this.index = 0;
+	this.itemtype = "";
+	this.itemid = "";
+	this.itemcode = "";
+	this.itemname = "";
+	this.trongluong = 0;
+	this.soluong = 0;
+	this.chatluong = "";
+	this.lothang = "";
+	this.createRow = function()
+	{
+		var row = "<tr>";
+		//Ma so - Qui cach
+		row += '<td>'+ this.itemname +'</td>';
+		//Trong luong
+		//So luong
+		//Chat luong
+		//Lot hang hoa
+	}
 }
 </script>
