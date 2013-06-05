@@ -1,9 +1,11 @@
 <h2>Phiếu yêu cầu kiểm kết quả nghiệm thu</h2>
+<div id="error" class="error hidden"></div>
 <form id="frm_bmtn13">
 	<p>
     	<input type="button" class="button" id="btnCreateBMTN13" value="Tạo phiếu" />
     </p>
     <p>
+    	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         Phòng kiểm nghiệm đo lường chất lượng đồng ý:
         <select id="nghiemthu" name="nghiemthu">
             <option value=""></option>
@@ -13,7 +15,7 @@
     </p>
 	<p>
     	Lô hàng theo phiếu giao hàng số:
-        <input type="text" class="text" name="sophieugiaohang">
+        <input type="text" class="text" id="sophieugiaohang" name="sophieugiaohang">
         Ngày:
         <input type="text" class="text date" id="ngayphieugiaohang" name="ngayphieugiaohang">
         
@@ -23,15 +25,18 @@
         <input type="button" class="button" id="btnSelectNhaCungCap" value="Chọn nhà cung cấp">
         <input type="hidden" id="nhacungungid" name="nhacungungid"/>
         <input type="hidden" id="manhacungung" name="manhacungung"/>
-        <input type="hidden" id="tennhacungcung" name="tennhacungcung"/>
+        <input type="hidden" id="tennhacungung" name="tennhacungung"/>
         <span id="tennhacungcapview"></span>
         Theo kế hoạch đặt hàng số
+        <input type="text" class="text" id="sokehoachdathang" name="sokehoachdathang">
+        Ngày:
         <input type="text" class="text date" id="ngaykehoachdathang" name="ngaykehoachdathang">
     </p>
     <table>
     	<thead>
         	<tr>
             	<th>Mã số - qui cách</th>
+                <th>Đơn vị</th>
                 <th>Trọng lượng</th>
                 <th>Số Lượng</th>
                 <th>Chất lượng</th>
@@ -53,6 +58,27 @@
 </form>
 <script language="javascript">
 numberReady();
+$('#btnCreateBMTN13').click(function(e) {
+    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
+		function(data){
+			if(data == "true")
+			{
+				alert("Tạo phiếu thành công");
+			}
+			else
+			{
+			
+				$('#error').html(data).show('slow');
+				
+				
+			}
+			$.unblockUI();
+		}
+	);
+});
+
 $('#btnSelectNhaCungCap').click(function(e) {
     $("#popup").attr('title','Chọn nhà cung cấp');
 		$( "#popup" ).dialog({
@@ -75,7 +101,7 @@ function intSelectNhaCungCap()
 	$('.item').click(function(e) {
 		$("#nhacungungid").val($(this).attr('id'));
         $("#manhacungung").val($(this).attr('manhacungung'));
-		$("#tennhacungcap").val($(this).attr('tennhacungung'));
+		$("#tennhacungung").val($(this).attr('tennhacungung'));
 		$('#tennhacungcapview').html("<strong>"+$(this).attr('tennhacungung')+"</strong>");
 		$("#popup").dialog( "close" );
     });
@@ -113,6 +139,8 @@ $('#btnSelectNguyenLieu').click(function(e) {
 						bm.itemid = $(this).attr('id');
 						bm.itemcode = $(this).attr('manguyenlieu');
 						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
 						bm.trongluong = 0;
 						bm.soluong = 0;
 						bm.chatluong = "";
@@ -129,7 +157,7 @@ $('#btnSelectNguyenLieu').click(function(e) {
 		
 		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
 			$("#popup").dialog("open");
-			
+			$('#popup-seletetion').html('');
 		});
 });
 function intSelectNguyenLieu()
@@ -138,7 +166,7 @@ function intSelectNguyenLieu()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {
@@ -177,14 +205,17 @@ $('#btnSelectVatTu').click(function(e) {
 				{
 					$('.selectitem').each(function(index, element) {
 						bm.id = 0;
-						bm.itemtype = "nguyenlieu";
+						bm.itemtype = "vattu";
 						bm.itemid = $(this).attr('id');
 						bm.itemcode = $(this).attr('manguyenlieu');
 						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
 						bm.trongluong = 0;
 						bm.soluong = 0;
 						bm.chatluong = "";
 						bm.lothang = "";
+						
 						bm.createRow();
 						
                     });
@@ -196,6 +227,7 @@ $('#btnSelectVatTu').click(function(e) {
 		
 		$("#popup-content").load("?route=quanlykho/vattu&opendialog=true",function(){
 			$("#popup").dialog("open");
+			$('#popup-seletetion').html('');
 			
 		});
 });
@@ -205,7 +237,7 @@ function intSelectVatTu()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {
@@ -243,7 +275,19 @@ $('#btnSelectLinhKien').click(function(e) {
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						alert($(this).html())
+						bm.id = 0;
+						bm.itemtype = "linhkien";
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('malinhkien');
+						bm.itemname = $(this).attr('tenlinhkien');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
+						bm.trongluong = 0;
+						bm.soluong = 0;
+						bm.chatluong = "";
+						bm.lothang = "";
+						
+						bm.createRow();
 						
 						
                     });
@@ -255,7 +299,7 @@ $('#btnSelectLinhKien').click(function(e) {
 		
 		$("#popup-content").load("?route=quanlykho/linhkien&opendialog=true",function(){
 			$("#popup").dialog("open");
-			
+			$('#popup-seletetion').html('');
 		});
 });
 function intSelectLinhKien()
@@ -264,7 +308,7 @@ function intSelectLinhKien()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			var html = "<div><div class='selectitem left' id='"+ this.id +"' malinhkien='"+$(this).attr('malinhkien')+"' tenlinhkien='"+$(this).attr('tenlinhkien')+"'>"+$(this).attr('malinhkien')+":"+ $(this).attr('tenlinhkien') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' malinhkien='"+$(this).attr('malinhkien')+"' tenlinhkien='"+$(this).attr('tenlinhkien')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('malinhkien')+":"+ $(this).attr('tenlinhkien') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {
@@ -302,7 +346,19 @@ $('#btnSelectTaiSan').click(function(e) {
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						alert($(this).html())
+						bm.id = 0;
+						bm.itemtype = "taisan";
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('mataisan');
+						bm.itemname = $(this).attr('tentaisan');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
+						bm.trongluong = 0;
+						bm.soluong = 0;
+						bm.chatluong = "";
+						bm.lothang = "";
+						
+						bm.createRow();
 						
 						
                     });
@@ -314,7 +370,7 @@ $('#btnSelectTaiSan').click(function(e) {
 		
 		$("#popup-content").load("?route=quanlykho/taisan&opendialog=true",function(){
 			$("#popup").dialog("open");
-			
+			$('#popup-seletetion').html('');
 		});
 });
 function intSelectTaiSan()
@@ -323,7 +379,7 @@ function intSelectTaiSan()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			var html = "<div><div class='selectitem left' id='"+ this.id +"' mataisan='"+$(this).attr('mataisan')+"' tentaisan='"+$(this).attr('tentaisan')+"'>"+$(this).attr('mataisan')+":"+ $(this).attr('tentaisan') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' mataisan='"+$(this).attr('mataisan')+"' tentaisan='"+$(this).attr('tentaisan')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('mataisan')+":"+ $(this).attr('tentaisan') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {
@@ -341,6 +397,8 @@ function BMTN13()
 	this.itemid = "";
 	this.itemcode = "";
 	this.itemname = "";
+	this.madonvi = "";
+	this.tendonvi = "";
 	this.trongluong = 0;
 	this.soluong = 0;
 	this.chatluong = "";
@@ -351,7 +409,9 @@ function BMTN13()
 	{
 		var row = '<tr id="row'+ this.index +'">';
 		//Ma so - Qui cach
-		row += '<td><input type="hidden" id="bmtn13id-'+ this.index +'" name="bmtn13id['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
+		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
+		//Don vi
+		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
 		//Trong luong
 		row += '<td><input type="text" name="trongluong['+this.index+']" value="'+ this.trongluong +'" class="text number"/></td>';
 		//So luong
@@ -360,16 +420,18 @@ function BMTN13()
 		row += '<td><select id="chatluong-'+ this.index +'" name="chatluong['+this.index+']">'+ this.cbChatLuong +'</select></td>';
 		//Lot hang hoa
 		row += '<td><input type="text" name="lothang['+this.index+']" value="'+ this.lothang +'" class="text"/></td>';
+		//Control
+		row += '<td><input type="button" class="button" value="Xóa" onclick="bm.remove('+this.index+')"></td>';
 		row += '</tr>';
-		this.index++;
 		$('#listhanghoa').append(row);
-		
+		$('#madonvi-'+ this.index).val(this.madonvi);
+		this.index++;
 		numberReady();
 	}
 	
 	this.remove = function(pos)
 	{
-		$("#delid").val($("#delid").val()+","+dlid);
+		$("#delid").val($("#delid").val()+","+ $('#ctid-'+pos).val());
 		$("#row"+pos).remove();
 	}
 }

@@ -31,7 +31,7 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr class="item" id="<?php echo $item['id']?>" malinhkien="<?php echo $item['malinhkien']?>" tenlinhkien="<?php echo $item['tenlinhkien']?>">
+                    <tr class="item" id="<?php echo $item['id']?>" malinhkien="<?php echo $item['malinhkien']?>" tenlinhkien="<?php echo $item['tenlinhkien']?>"  madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
                     	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
                         <?php } ?>
@@ -40,7 +40,7 @@
                         <td><?php echo $item['tenlinhkien']?></td>
                         <td class="number"><?php echo $item['solinhkientrenlot']?></td>
                         <td class="number"><?php echo $item['soluongton']?></td>
-                        <td><?php echo $item['madonvi']?></td>
+                        <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tiencong'])?></td>
                 		<td><?php echo $item['tenkho']?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['dinhmuc'])?></td>

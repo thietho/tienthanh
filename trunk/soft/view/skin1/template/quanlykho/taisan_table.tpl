@@ -36,7 +36,7 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr class="item" id="<?php echo $item['id']?>" mataisan="<?php echo $item['mataisan']?>" tentaisan="<?php echo $item['tentaisan']?>" <?php echo ($item["dachomuon"]==true)?"":'style="background:#CCC"' ;?>>
+                    <tr class="item" id="<?php echo $item['id']?>" mataisan="<?php echo $item['mataisan']?>" tentaisan="<?php echo $item['tentaisan']?>" <?php echo ($item["dachomuon"]==true)?"":'style="background:#CCC"' ;?> madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
                         <td class="check-column">
                         	
                             <input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" <?php echo ($item["dachomuon"]==true)?"":'disabled="disabled"' ;?>>		

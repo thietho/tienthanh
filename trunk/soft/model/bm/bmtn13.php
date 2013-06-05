@@ -1,5 +1,5 @@
 <?php
-class ModelBmTn13 extends Model 
+class ModelBmBmTn13 extends Model 
 {
 	private $columns = array(
 								'sophieu',
@@ -9,7 +9,7 @@ class ModelBmTn13 extends Model
 								'tenvattu',
 								'nhacungungid',
 								'manhacungung',
-								'tennhacungcung',
+								'tennhacungung',
 								'sokehoachdathang',
 								'ngaykehoachdathang',
 								'ngaylapphieu',
@@ -127,6 +127,7 @@ class ModelBmTn13 extends Model
 		$data['itemid'] = $this->db->escape(@$data['itemid']);
 		$data['itemcode'] = $this->db->escape(@$data['itemcode']);
 		$data['itemname'] = $this->db->escape(@$data['itemname']);
+		$data['madonvi'] = $this->db->escape(@$data['madonvi']);
 		$data['trongluong']=$this->db->escape(@$this->string->toNumber($data['trongluong']));
 		$data['soluong']=$this->db->escape(@$this->string->toNumber($data['soluong']));
 		$data['chatluong'] = $this->db->escape(@$data['chatluong']);
