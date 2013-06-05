@@ -63,14 +63,17 @@ final class Date{
 	{
 		$today = getdate();
 		
-		$time = $today['year'].'-'.$this->numberFormate($today['mon']).'-'.$this->numberFormate($today['mday']).' '.$this->numberFormate($today['hours'] + TIMEZONE).":".$this->numberFormate($today['minutes']).":".$this->numberFormate($today['seconds']);
-		return $time;
+		$time = mktime(intval($this->numberFormate($today['hours'] + TIMEZONE)),intval($today['minutes']),intval($today['seconds']),intval($today['mon']),intval($today['mday']),intval($today['year']));
+		return date("Y-m-d H:i:s",$time);
+		
 	}
 	
 	function getTodayNoTime()
 	{
-		$today = $this->getToday();
-		return $this->getDate($today);
+		
+		
+		$time = $this->getToday();
+		return $this->getDate($time);
 	}
 	
 	function addday($stringdate,$days) //fomate yy-mm-dd

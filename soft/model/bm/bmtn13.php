@@ -42,6 +42,7 @@ class ModelBmBmTn13 extends Model
 		
 		$data['ngayphieugiaohang']=$this->db->escape(@$this->date->formatViewDate($data['ngayphieugiaohang']));
 		$data['ngaykehoachdathang']=$this->db->escape(@$this->date->formatViewDate($data['ngaykehoachdathang']));
+		
 		$data['ngaylapphieu'] = $this->date->getToday();
 		$nhanvien = $this->user->getNhanVien();
 		$data['nhanvienlap'] = $nhanvien['id'];

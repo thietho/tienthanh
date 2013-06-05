@@ -26,6 +26,17 @@ class ControllerBmBMtn13 extends Controller
 		$this->render();
 	}
 	
+	public function getList()
+	{
+		
+		$where = " Order by id desc";
+		$this->data['data_bttn13']=$this->model_bm_bmtn13->getList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmtn13_list.tpl';
+		$this->render();
+	}
+	
 	public function save()
 	{
 		$data = $this->request->post;
