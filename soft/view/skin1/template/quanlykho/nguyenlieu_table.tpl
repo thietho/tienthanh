@@ -40,7 +40,7 @@
             foreach($datas as $key => $item)
             {
         ?>
-                    <tr class="item" id="<?php echo $item['id']?>" manguyenlieu="<?php echo $item['manguyenlieu']?>" tennguyenlieu="<?php echo $item['tennguyenlieu']?>">
+                    <tr class="item" id="<?php echo $item['id']?>" manguyenlieu="<?php echo $item['manguyenlieu']?>" tennguyenlieu="<?php echo $item['tennguyenlieu']?>" madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
                     	<?php if($dialog!=true){ ?>
                         <td class="check-column"><input class="inputchk" type="checkbox" name="delete[<?php echo $item['id']?>]" value="<?php echo $item['id']?>" ></td>
                         <?php } ?>
