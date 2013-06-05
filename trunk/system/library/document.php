@@ -33,6 +33,11 @@ final class Document {
 						   '2' => "Yếu",
 						   '1' => "Kém"
 						   );
+	public $chatluong = array(
+							'A' => "A - Đạt",
+							'B' => "B - Xem xét lại",
+							'C' => "C - Loại"
+							);
 	
 	public $gioitinh = array(
 							'male' => "Nam",

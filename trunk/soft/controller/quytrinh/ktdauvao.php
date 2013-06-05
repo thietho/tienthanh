@@ -26,6 +26,7 @@ class ControllerQuytrinhKtdauvao extends Controller
 		//unset($this->data['loainguyenlieu'][0]);
 		
 		$this->data['donvitinh'] = $this->model_quanlykho_donvitinh->getList();
+		
    	}
 	public function index()
 	{

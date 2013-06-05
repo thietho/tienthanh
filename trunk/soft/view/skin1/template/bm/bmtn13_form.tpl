@@ -38,15 +38,17 @@
                 <th>Lot hàng hóa</th>
             </tr>
         </thead>
+        <tbody id="listhanghoa">
+        	
+        </tbody>
     </table>
     <input type="button" class="button" id="btnSelectNguyenLieu" value="Chọn nguyên liệu">
     <input type="button" class="button" id="btnSelectVatTu" value="Chọn vật tư">
     <input type="button" class="button" id="btnSelectLinhKien" value="Chọn linh kiện">
     <input type="button" class="button" id="btnSelectTaiSan" value="Chọn tài sản">
-    <input type="hidden" id="itemtype" name="itemtype" value="<?php echo $item['itemtype']?>">
-    <input type="hidden" id="itemid" name="itemid" value="<?php echo $item['itemid']?>">
-    <input type="hidden" id="itemcode" name="itemcode" value="<?php echo $item['itemcode']?>">
-    <input type="hidden" id="itemname" name="itemname" value="<?php echo $item['itemname']?>">
+    <input type="hidden" id="delid" name="delid">
+    
+    
     
 </form>
 <script language="javascript">
@@ -106,7 +108,16 @@ $('#btnSelectNguyenLieu').click(function(e) {
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						//dl.createRow("id",this.id,1);
+						bm.id = 0;
+						bm.itemtype = "nguyenlieu";
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('manguyenlieu');
+						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.trongluong = 0;
+						bm.soluong = 0;
+						bm.chatluong = "";
+						bm.lothang = "";
+						bm.createRow();
 						
 						
                     });
@@ -165,8 +176,16 @@ $('#btnSelectVatTu').click(function(e) {
 				'Chọn': function() 
 				{
 					$('.selectitem').each(function(index, element) {
-						//dl.createRow("id",this.id,1);
-						
+						bm.id = 0;
+						bm.itemtype = "nguyenlieu";
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('manguyenlieu');
+						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.trongluong = 0;
+						bm.soluong = 0;
+						bm.chatluong = "";
+						bm.lothang = "";
+						bm.createRow();
 						
                     });
 					$( this ).dialog( "close" );
@@ -317,6 +336,7 @@ function intSelectTaiSan()
 function BMTN13()
 {
 	this.index = 0;
+	this.id = 0;
 	this.itemtype = "";
 	this.itemid = "";
 	this.itemcode = "";
@@ -325,15 +345,33 @@ function BMTN13()
 	this.soluong = 0;
 	this.chatluong = "";
 	this.lothang = "";
+	this.cbChatLuong = '<?php echo $cbChatLuong?>';
+	
 	this.createRow = function()
 	{
-		var row = "<tr>";
+		var row = '<tr id="row'+ this.index +'">';
 		//Ma so - Qui cach
-		row += '<td>'+ this.itemname +'</td>';
+		row += '<td><input type="hidden" id="bmtn13id-'+ this.index +'" name="bmtn13id['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
 		//Trong luong
+		row += '<td><input type="text" name="trongluong['+this.index+']" value="'+ this.trongluong +'" class="text number"/></td>';
 		//So luong
+		row += '<td><input type="text" name="soluong['+this.index+']" value="'+ this.soluong +'" class="text number"/></td>';
 		//Chat luong
+		row += '<td><select id="chatluong-'+ this.index +'" name="chatluong['+this.index+']">'+ this.cbChatLuong +'</select></td>';
 		//Lot hang hoa
+		row += '<td><input type="text" name="lothang['+this.index+']" value="'+ this.lothang +'" class="text"/></td>';
+		row += '</tr>';
+		this.index++;
+		$('#listhanghoa').append(row);
+		
+		numberReady();
+	}
+	
+	this.remove = function(pos)
+	{
+		$("#delid").val($("#delid").val()+","+dlid);
+		$("#row"+pos).remove();
 	}
 }
+var bm = new BMTN13();
 </script>
