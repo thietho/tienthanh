@@ -8,9 +8,10 @@
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         Phòng kiểm nghiệm đo lường chất lượng đồng ý:
         <select id="nghiemthu" name="nghiemthu">
-            <option value=""></option>
-            <option value="nghieuthu">Nghiệm thu</option>
-            <option value="khongdongy">Không đồng ý</option>
+        	<?php foreach($this->document->nghiemthu as $key => $val){ ?>
+            <option value="<?php echo $key?>"><?php echo $val?></option>
+            <?php } ?>
+            
         </select>
     </p>
 	<p>

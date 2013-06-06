@@ -7,6 +7,8 @@
             <th>Nhân viên lập</th>
             <th>Ngày lập</th>
             <th>Số phiếu giao hàng</th>
+            <th>Số kế hoạch đạt hàng</th>
+            <th>Nghiệm thu</th>
             <th></th>
         </tr>
     </thead>
@@ -14,8 +16,14 @@
     	<?php foreach($data_bttn13 as $item){ ?>
         <tr>
         	<td><?php echo $item['sophieu']?></td>
-            <td><?php echo $item['nhanvienlap']?></td>
-            <td><?php echo $item['ngaylapphieu']?></td>
+            <td><?php echo $this->document->getNhanVien($item['nhanvienlap'])?></td>
+            <td><?php echo $this->date->formatMySQLDate($item['ngaylapphieu'])?></td>
+            <td><?php echo $item['sophieugiaohang']?></td>
+            <td><?php echo $item['sokehoachdathang']?></td>
+            <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
+            <td>
+            	<input type="button" class="button" value="Chỉnh sửa">
+            </td>
         </tr>
         <?php } ?>
     </tbody>
