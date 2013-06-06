@@ -28,11 +28,19 @@
         <input type="hidden" id="nhacungungid" name="nhacungungid" value="<?php echo $item['nhacungungid']?>"/>
         <input type="hidden" id="manhacungung" name="manhacungung" value="<?php echo $item['manhacungung']?>"/>
         <input type="hidden" id="tennhacungung" name="tennhacungung" value="<?php echo $item['tennhacungung']?>"/>
-        <span id="tennhacungcapview"><?php echo $item['tennhacungung']?></span>
+        <span id="tennhacungcapview"><strong><?php echo $item['tennhacungung']?></strong></span>
         Theo kế hoạch đặt hàng số
         <input type="text" class="text" id="sokehoachdathang" name="sokehoachdathang" value="<?php echo $item['sokehoachdathang']?>">
         Ngày:
         <input type="text" class="text date" id="ngaykehoachdathang" name="ngaykehoachdathang" value="<?php echo $this->date->formatMySQLDate($item['ngaykehoachdathang'])?>">
+    </p>
+    <p>
+    	Tình trạng:
+        <select id="tinhtrang" name="tinhtrang">
+        	<?php foreach($this->document->tinhtrangnghiemthu as $key => $val){ ?>
+            <option value="<?php echo $key?>"><?php echo $val?></option>
+            <?php } ?>
+        </select>
     </p>
     <table>
     	<thead>
@@ -60,6 +68,7 @@
 </form>
 
 <script language="javascript">
+$('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 numberReady();
 $('#btnSaveBMTN13').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
@@ -97,6 +106,7 @@ $('#btnSavePrintBMTN13').click(function(e) {
 				alert("Lưu phiếu thành công");
 				
 				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
+				loadData('?route=bm/bmtn13/getList');
 			}
 			else
 			{

@@ -43,6 +43,12 @@ final class Document {
 							'nghieuthu' => "Nghiệm thu",
 							'khongdongy' => 'Không đồng ý'
 							);
+	public $tinhtrangnghiemthu = array(
+										''=>'',
+										'toanbo' => 'Toàn bộ',
+										'motphan' => 'Một phần'
+										);
+	
 	public $gioitinh = array(
 							'male' => "Nam",
 							'female' => "Nữ"
