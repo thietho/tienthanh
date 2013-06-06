@@ -1,10 +1,7 @@
 <h2>Phiếu cân hàng</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_bmvt17">
-	<p>
-    	<input type="button" class="button" id="btnSaveBMTN13" value="Lưu phiếu" />
-        <input type="button" class="button" id="btnSavePrintBMTN13" value="Lưu & in phiếu" />
-    </p>
+	
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         Đơn vị giao hàng: <?php echo $item['tennhacungung']?>
@@ -49,4 +46,5 @@
 </form>
 <script language="javascript">
 numberReady();
+
 </script>
