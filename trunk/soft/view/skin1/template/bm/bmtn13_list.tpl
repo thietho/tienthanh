@@ -22,7 +22,9 @@
             <td><?php echo $item['sokehoachdathang']?></td>
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
             <td>
+            	<?php if($item['nghiemthu'] == ""){ ?>
             	<input type="button" class="button" value="Chỉnh sửa">
+                <?php } ?>
             </td>
         </tr>
         <?php } ?>
