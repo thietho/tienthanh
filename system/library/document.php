@@ -38,7 +38,11 @@ final class Document {
 							'B' => "B - Xem xét lại",
 							'C' => "C - Loại"
 							);
-	
+	public $nghiemthu = array(
+							'' => "Chưa nghiệm thu",
+							'nghieuthu' => "Nghiệm thu",
+							'khongdongy' => 'Không đồng ý'
+							);
 	public $gioitinh = array(
 							'male' => "Nam",
 							'female' => "Nữ"
