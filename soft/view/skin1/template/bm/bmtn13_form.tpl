@@ -2,7 +2,8 @@
 <div id="error" class="error hidden"></div>
 <form id="frm_bmtn13">
 	<p>
-    	<input type="button" class="button" id="btnCreateBMTN13" value="Tạo phiếu" />
+    	<input type="button" class="button" id="btnSaveBMTN13" value="Lưu phiếu" />
+        <input type="button" class="button" id="btnSavePrintBMTN13" value="Lưu & in phiếu" />
     </p>
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
@@ -16,22 +17,22 @@
     </p>
 	<p>
     	Lô hàng theo phiếu giao hàng số:
-        <input type="text" class="text" id="sophieugiaohang" name="sophieugiaohang">
+        <input type="text" class="text" id="sophieugiaohang" name="sophieugiaohang" value="<?php echo $item['sophieugiaohang']?>">
         Ngày:
-        <input type="text" class="text date" id="ngayphieugiaohang" name="ngayphieugiaohang">
+        <input type="text" class="text date" id="ngayphieugiaohang" name="ngayphieugiaohang" value="<?php echo $this->date->formatMySQLDate($item['ngayphieugiaohang'])?>">
         
     </p>
     <p>
     	Công ty:
         <input type="button" class="button" id="btnSelectNhaCungCap" value="Chọn nhà cung cấp">
-        <input type="hidden" id="nhacungungid" name="nhacungungid"/>
-        <input type="hidden" id="manhacungung" name="manhacungung"/>
-        <input type="hidden" id="tennhacungung" name="tennhacungung"/>
-        <span id="tennhacungcapview"></span>
+        <input type="hidden" id="nhacungungid" name="nhacungungid" value="<?php echo $item['nhacungungid']?>"/>
+        <input type="hidden" id="manhacungung" name="manhacungung" value="<?php echo $item['manhacungung']?>"/>
+        <input type="hidden" id="tennhacungung" name="tennhacungung" value="<?php echo $item['tennhacungung']?>"/>
+        <span id="tennhacungcapview"><?php echo $item['tennhacungung']?></span>
         Theo kế hoạch đặt hàng số
-        <input type="text" class="text" id="sokehoachdathang" name="sokehoachdathang">
+        <input type="text" class="text" id="sokehoachdathang" name="sokehoachdathang" value="<?php echo $item['sokehoachdathang']?>">
         Ngày:
-        <input type="text" class="text date" id="ngaykehoachdathang" name="ngaykehoachdathang">
+        <input type="text" class="text date" id="ngaykehoachdathang" name="ngaykehoachdathang" value="<?php echo $this->date->formatMySQLDate($item['ngaykehoachdathang'])?>">
     </p>
     <table>
     	<thead>
@@ -57,16 +58,45 @@
     
     
 </form>
+
 <script language="javascript">
 numberReady();
-$('#btnCreateBMTN13').click(function(e) {
+$('#btnSaveBMTN13').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
 	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
 		function(data){
-			if(data == "true")
+			
+			var obj = $.parseJSON(data);
+			
+			if(obj.error == "")
 			{
-				alert("Tạo phiếu thành công");
+				alert("Lưu phiếu thành công");
+				loadData('?route=bm/bmtn13/getList');
+			}
+			else
+			{
+			
+				$('#error').html(data).show('slow');
+				
+				
+			}
+			$.unblockUI();
+		}
+	);
+});
+
+$('#btnSavePrintBMTN13').click(function(e) {
+    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
+		function(data){
+			var obj = $.parseJSON(data);
+			if(obj.error == "")
+			{
+				alert("Lưu phiếu thành công");
+				
+				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
 			}
 			else
 			{
@@ -426,6 +456,7 @@ function BMTN13()
 		row += '</tr>';
 		$('#listhanghoa').append(row);
 		$('#madonvi-'+ this.index).val(this.madonvi);
+		$('#chatluong-'+ this.index).val(this.chatluong);
 		this.index++;
 		numberReady();
 	}
@@ -438,3 +469,23 @@ function BMTN13()
 }
 var bm = new BMTN13();
 </script>
+<?php if(count($data_ct)){ ?>
+	<?php foreach($data_ct as $ct){ ?>
+<script language="javascript">
+$(document).ready(function(e) {
+	bm.id = "<?php echo $ct[id]?>";
+	bm.itemtype = "<?php echo $ct['itemtype']?>";
+	bm.itemid = "<?php echo $ct['itemid']?>";
+	bm.itemcode = "<?php echo $ct['itemcode']?>";
+	bm.itemname = "<?php echo $ct['itemname']?>";
+	bm.madonvi = "<?php echo $ct['madonvi']?>";
+	bm.trongluong = "<?php echo $ct['trongluong']?>";
+	bm.soluong = "<?php echo $ct['soluong']?>";
+	bm.chatluong = "<?php echo $ct['chatluong']?>";
+	bm.lothang = "<?php echo $ct['lothang']?>";
+	
+    bm.createRow();
+});
+</script>
+	<?php } ?>
+<?php } ?>
