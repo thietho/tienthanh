@@ -13,7 +13,8 @@ class ModelBmBmTn13 extends Model
 								'sokehoachdathang',
 								'ngaykehoachdathang',
 								'ngaylapphieu',
-								'nhanvienlap'
+								'nhanvienlap',
+								'tinhtrang'
 							);
 	public function getList($where = "")
 	{

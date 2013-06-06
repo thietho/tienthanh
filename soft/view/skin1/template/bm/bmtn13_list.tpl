@@ -22,12 +22,41 @@
             <td><?php echo $item['sokehoachdathang']?></td>
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
             <td>
-            	<?php if($item['nghiemthu'] == ""){ ?>
             	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
-                <?php } ?>
+     			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="createPhieuCanHang('<?php echo $item['id']?>')">           
+                
             </td>
         </tr>
         <?php } ?>
     </tbody>
 </table>
 </form>
+<script language="javascript">
+function createPhieuCanHang(bmtn13id)
+{
+	 $("#popup").attr('title','Phiếu cân hàng');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Lưu': function() 
+				{
+					
+					$( this ).dialog( "close" );
+				},
+			}
+		});
+		
+		
+		$("#popup-content").load("?route=bm/bmvt17&bmtn13id="+bmtn13id,function(){
+			$("#popup").dialog("open");
+			$('#popup-seletetion').html('');
+		});
+}
+</script>
