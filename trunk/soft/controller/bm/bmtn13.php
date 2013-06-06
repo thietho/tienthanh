@@ -120,15 +120,16 @@ class ControllerBmBMtn13 extends Controller
 			}
 			
 			$data['error'] = "";
-			$this->data['output'] = json_encode($data);
+			
 		}
 		else
 		{
 			foreach($this->error as $item)
 			{
-				$this->data['output'] .= $item."<br>";
+				$data['error'] .= $item."<br>";
 			}
 		}
+		$this->data['output'] = json_encode($data);
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();

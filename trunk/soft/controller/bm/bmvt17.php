@@ -113,43 +113,29 @@ class ControllerBmBmvt17 extends Controller
 			}
 			
 			$data['error'] = "";
-			$this->data['output'] = json_encode($data);
+			
 		}
 		else
 		{
 			foreach($this->error as $item)
 			{
-				$this->data['output'] .= $item."<br>";
+				$data['error'] .= $item."<br>";
 			}
 		}
+		$this->data['output'] = json_encode($data);
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();
 	}
 	private function validateForm($data)
 	{
-		
-		
-    	if($data['sophieugiaohang'] == "")
+		$arr_soluongcan = $data['soluongcan'];
+		foreach($arr_soluongcan as $soluong)
 		{
-      		$this->error['sophieugiaohang'] = "Bạn chưa nhập số phiếu giao hàng";
-    	}
-		if($data['ngayphieugiaohang'] == "")
-		{
-      		$this->error['ngayphieugiaohang'] = "Bạn chưa nhập ngày phiếu giao hàng";
-    	}
-		if($data['nhacungungid'] == "")
-		{
-      		$this->error['nhacungungid'] = "Bạn chưa chọn nhà cung cấp";
-    	}
-		if($data['sokehoachdathang'] == "")
-		{
-      		$this->error['sokehoachdathang'] = "Bạn chưa nhập số kế hoạch đặt hàng";
-    	}
-		if($data['ngaykehoachdathang'] == "")
-		{
-      		$this->error['ngaykehoachdathang'] = "Bạn chưa nhập ngày kế hoạch đặt hàng";
-    	}
+			if($soluong == 0)
+				$this->error['soluongcan'] = "Bạn chưa nhập đủ số lượng cân";
+		}
+    	
 
 		if (count($this->error)==0) {
 	  		return TRUE;

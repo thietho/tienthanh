@@ -47,8 +47,30 @@ function createPhieuCanHang(bmtn13id)
 				
 				'Lưu': function() 
 				{
+					//$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=bm/bmvt17/save", $("#frm_bmvt17").serialize(),
+						function(data){
+							
+							var obj = $.parseJSON(data);
+							
+							if(obj.error == "")
+							{
+								alert("Lưu phiếu thành công");
+								//loadData('?route=bm/bmtn13/getList');
+								$( this ).dialog( "close" );
+							}
+							else
+							{
+							
+								$('#error').html(obj.error).show('slow');
+								
+								
+							}
+							//$.unblockUI();
+						}
+					);
 					
-					$( this ).dialog( "close" );
 				},
 			}
 		});

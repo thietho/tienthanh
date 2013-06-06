@@ -86,7 +86,7 @@ $('#btnSaveBMTN13').click(function(e) {
 			else
 			{
 			
-				$('#error').html(data).show('slow');
+				$('#error').html(obj.error).show('slow');
 				
 				
 			}
@@ -111,7 +111,7 @@ $('#btnSavePrintBMTN13').click(function(e) {
 			else
 			{
 			
-				$('#error').html(data).show('slow');
+				$('#error').html(obj.error).show('slow');
 				
 				
 			}
