@@ -38,31 +38,27 @@
 <table class="table-data">
 	<thead>
         <tr>
-            <th rowspan="2">STT</th>
-            <th rowspan="2">Tên hàng - qui cách</th>
-            <th rowspan="2">Lot hàng</th>
-            <th rowspan="2">Đ/V<br />tính</th>
-            <th colspan="2">Số lượng</th>
-            <th rowspan="2">Đơn giá</th>
-            <th rowspan="2">Thành tiền</th>
+            <th>STT</th>
+            <th>Tên hàng - qui cách</th>
+            <th>T/Lượng</th>
+            <th>S.Lượng</th>
+            <th>Chất lượng</th>
+            <th>Lot hàng hóa</th>
         </tr>
-        <tr>
-            <th>Chứng từ</th>
-            <th>Thực nhập</th>
-        </tr>
+        
     </thead>
     <tbody>
-    	<?php foreach($data_chitiet as $key => $ct){ ?>
+    	<?php if(count($data_ct)){ ?>
+			<?php foreach($data_ct as $key => $ct){ ?>
     	<tr>
         	<td><?php echo $key + 1 ?></td>
-            <td><?php echo $ct['tennguyenlieu']?></td>
-            <td><?php echo $ct['lotnguyenlieu']?></td>
-            <td align="center"><?php echo $this->document->getDonViTinh($ct['donvi'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['chungtu'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['thucnhap'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['dongia'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['thanhtien'])?></td>
+            <td><?php echo $ct['itemname']?></td>
+            <td class="number"><?php echo $this->string->numberFormate($ct['trongluong'])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($ct['soluong'])?></td>
+            <td class="number"><?php echo $ct['chatluong']?></td>
+            <td class="number"><?php echo $ct['lothang']?></td>
         </tr>
+        	<?php } ?>
         <?php } ?>
     </tbody>
     <tfoot>
