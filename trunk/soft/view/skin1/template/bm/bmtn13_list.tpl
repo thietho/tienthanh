@@ -23,7 +23,7 @@
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
             <td>
             	<?php if($item['nghiemthu'] == ""){ ?>
-            	<input type="button" class="button" value="Chỉnh sửa">
+            	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
                 <?php } ?>
             </td>
         </tr>

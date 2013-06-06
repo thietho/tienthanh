@@ -25,7 +25,37 @@ class ControllerBmBMtn13 extends Controller
 		$this->template='bm/bmtn13_form.tpl';
 		$this->render();
 	}
-	
+	public function edit()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmtn13->getItem($id);
+		
+		$where = " AND bmtn13id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmtn13_form.tpl';
+		$this->render();
+	}
+	public function view()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmtn13->getItem($id);
+		
+		$where = " AND bmtn13id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt13.tpl';
+		
+		if($this->request->get['dialog']=='print')
+		{
+			
+			$this->layout="layout/print";
+			$this->data['dialog'] = "print";
+		}
+		$this->render();
+	}
 	public function getList()
 	{
 		
@@ -40,7 +70,7 @@ class ControllerBmBMtn13 extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
-		print_r($data);
+		
 		if($this->validateForm($data))
 		{
 			//Luu vao bang bmtn13
@@ -89,8 +119,8 @@ class ControllerBmBMtn13 extends Controller
 				$this->model_bm_bmtn13->saveBMTN13ChiTiet($ct);
 			}
 			
-			
-			$this->data['output'] = "true";
+			$data['error'] = "";
+			$this->data['output'] = json_encode($data);
 		}
 		else
 		{
