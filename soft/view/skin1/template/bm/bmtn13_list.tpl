@@ -22,10 +22,14 @@
             <td><?php echo $item['sophieugiaohang']?></td>
             <td><?php echo $item['sokehoachdathang']?></td>
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
-            <td><?php echo $item['bmvt17code']?></td>
+            <td><a onclick="fromPhieuCanHang('<?php echo $item['id']?>','<?php echo $item['bmvt17id']?>')"><?php echo $item['bmvt17code']?></a></td>
             <td>
             	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
-     			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="createPhieuCanHang('<?php echo $item['id']?>')">           
+                <?php if($item['bmvt17code'] == ""){ ?>
+     			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
+                <?php }else{ ?>
+                <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa">
+                <?php ?>
                 
             </td>
         </tr>
@@ -34,7 +38,8 @@
 </table>
 </form>
 <script language="javascript">
-function createPhieuCanHang(bmtn13id)
+
+function fromPhieuCanHang(bmtn13id,bmvt17id)
 {
 	 $("#popup").attr('title','Phiếu cân hàng');
 		$( "#popup" ).dialog({
@@ -58,10 +63,10 @@ function createPhieuCanHang(bmtn13id)
 							
 							if(obj.error == "")
 							{
-								//alert("Lưu phiếu thành công");
-								//loadData('?route=bm/bmtn13/getList');
-								$(this).dialog( "close" );
 								alert("Lưu phiếu thành công");
+								loadData('?route=bm/bmtn13/getList');
+								$("#popup").dialog( "close" );
+								
 							}
 							else
 							{
@@ -70,16 +75,19 @@ function createPhieuCanHang(bmtn13id)
 								
 								
 							}
-							//$.unblockUI();
+							
 						}
 					);
 					
 				},
 			}
 		});
-		
-		
-		$("#popup-content").load("?route=bm/bmvt17&bmtn13id="+bmtn13id,function(){
+		var para = "";
+		if(bmvt17id != "")
+		{
+			para = "&bmvt17id="+ bmvt17id;
+		}
+		$("#popup-content").load("?route=bm/bmvt17&bmtn13id="+bmtn13id+para,function(){
 			$("#popup").dialog("open");
 			$('#popup-seletetion').html('');
 		});
