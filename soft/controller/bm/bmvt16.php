@@ -1,5 +1,5 @@
 <?php
-class ControllerBmBmvt17 extends Controller
+class ControllerBmBmvt16 extends Controller
 {
 	private $error = array();
 	function __construct() 
@@ -7,7 +7,7 @@ class ControllerBmBmvt17 extends Controller
 		
 		$this->load->model("quanlykho/donvitinh");
 		$this->load->model("bm/bmtn13");
-		$this->load->model("bm/bmvt17");
+		$this->load->model("bm/bmvt16");
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
 		$this->data['cbDonViTinh'] = '<option value=""></option>';
 		foreach($data_donvitinh as $val)
@@ -17,7 +17,7 @@ class ControllerBmBmvt17 extends Controller
 	}
 	public function index()
 	{
-		$id = $this->request->get['bmvt17id'];
+		$id = $this->request->get['bmvt16id'];
 		
 		if($id == "")
 		{		
@@ -34,9 +34,9 @@ class ControllerBmBmvt17 extends Controller
 		}
 		else
 		{
-			$this->data['item'] = $this->model_bm_bmvt17->getItem($id);
-			$where = " AND bmvt17id = '".$id."'";
-			$this->data['data_ct'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+			$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
+			$where = " AND bmvt16id = '".$id."'";
+			$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT17ChiTietList($where);
 		}
 		$this->id='content';
 		$this->template='bm/bmvt17_form.tpl';
@@ -46,13 +46,13 @@ class ControllerBmBmvt17 extends Controller
 	public function view()
 	{
 		$id = $this->request->get['id'];
-		$this->data['item'] = $this->model_bm_bmvt17->getItem($id);
+		$this->data['item'] = $this->model_bm_bmtn13->getItem($id);
 		
-		$where = " AND bmvt17id = '".$id."'";
-		$this->data['data_ct'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+		$where = " AND bmtn13id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
 		
 		$this->id='content';
-		$this->template='bm/bmvt17.tpl';
+		$this->template='bm/bmvt13.tpl';
 		
 		if($this->request->get['dialog']=='print')
 		{
@@ -82,12 +82,12 @@ class ControllerBmBmvt17 extends Controller
 			//Luu vao bang bmvt17
 			if((int)$data['id']==0)
 			{
-				$data['id'] = $this->model_bm_bmvt17->insert($data);
+				$data['id'] = $this->model_bm_bmvt16->insert($data);
 				$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
 			}
 			else
 			{
-				$this->model_bm_bmvt17->update($data);
+				$this->model_bm_bmvt16->update($data);
 			}
 			
 			//Luu vao bang bnvt17_chitiet
@@ -115,7 +115,7 @@ class ControllerBmBmvt17 extends Controller
 				$ct['soluongcan'] = $arr_soluongcan[$key];
 				$ct['madonvi'] = $arr_madonvi[$key];
 				$ct['ghichu'] = $arr_ghichu[$key];
-				$this->model_bm_bmvt17->saveBMVT17ChiTiet($ct);
+				$this->model_bm_bmvt16->saveBMVT17ChiTiet($ct);
 			}
 			
 			$data['error'] = "";
