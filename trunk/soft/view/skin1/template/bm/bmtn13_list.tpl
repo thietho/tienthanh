@@ -29,7 +29,7 @@
      			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
                 <?php }else{ ?>
                 <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa">
-                <?php ?>
+                <?php } ?>
                 
             </td>
         </tr>
