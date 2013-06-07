@@ -56,9 +56,9 @@ function createPhieuCanHang(bmtn13id)
 							
 							if(obj.error == "")
 							{
-								alert("Lưu phiếu thành công");
+								//alert("Lưu phiếu thành công");
 								//loadData('?route=bm/bmtn13/getList');
-								$( this ).dialog( "close" );
+								//$(this).dialog( "close" );
 							}
 							else
 							{

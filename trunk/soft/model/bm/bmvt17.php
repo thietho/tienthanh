@@ -3,9 +3,9 @@ class ModelBmBmVt17 extends Model
 {
 	private $columns = array(
 								'sophieu',
-								'ngaylapphieu',
+								'ngaylap',
 								'nhanvienlap',
-								'bmvt17id',
+								'bmtn13id',
 								'nhacungungid',
 								'manhacungung',
 								'tennhacungung'
@@ -34,11 +34,9 @@ class ModelBmBmVt17 extends Model
 	public function insert($data)
 	{
 		
-		$data['sophieu']=$this->creatsophieu('-KN');
+		$data['sophieu']=$this->creatsophieu('');
 		
-		$data['ngayphieugiaohang']=$this->db->escape(@$this->date->formatViewDate($data['ngayphieugiaohang']));
-		$data['ngaykehoachdathang']=$this->db->escape(@$this->date->formatViewDate($data['ngaykehoachdathang']));
-		$data['ngaylapphieu'] = $this->date->getToday();
+		$data['ngaylap'] = $this->date->getToday();
 		$nhanvien = $this->user->getNhanVien();
 		$data['nhanvienlap'] = $nhanvien['id'];
 		foreach($this->columns as $val)
