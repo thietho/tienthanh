@@ -17,7 +17,7 @@ class ControllerBmBmvt17 extends Controller
 	}
 	public function index()
 	{
-		$id = $this->request->get['id'];
+		$id = $this->request->get['bmvt17id'];
 		
 		if($id == "")
 		{		
