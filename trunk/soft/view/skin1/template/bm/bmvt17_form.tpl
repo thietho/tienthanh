@@ -34,6 +34,7 @@
                     <input type="hidden" name="itemid[<?php echo $key?>]" value="<?php echo $ct['itemid']?>">
                     <input type="hidden" name="itemcode[<?php echo $key?>]" value="<?php echo $ct['itemcode']?>">
                     <input type="hidden" name="itemname[<?php echo $key?>]" value="<?php echo $ct['itemname']?>">
+                    <input type="hidden" name="madonvi[<?php echo $key?>]" value="<?php echo $ct['madonvi']?>">
                 	<?php echo $ct['itemname']?>
                 </td>
                 <td><input type="text" class="text" id="baobi-<?php echo $key?>" name="baobi[<?php echo $key?>]" value="<?php echo $ct['baobi']?>"></td>

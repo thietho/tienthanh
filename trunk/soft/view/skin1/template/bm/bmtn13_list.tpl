@@ -9,6 +9,7 @@
             <th>Số phiếu giao hàng</th>
             <th>Số kế hoạch đạt hàng</th>
             <th>Nghiệm thu</th>
+            <th>Số phiếu cân hàng</th>
             <th></th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td><?php echo $item['sophieugiaohang']?></td>
             <td><?php echo $item['sokehoachdathang']?></td>
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
+            <td><?php echo $item['bmvt17code']?></td>
             <td>
             	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
      			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="createPhieuCanHang('<?php echo $item['id']?>')">           
@@ -58,7 +60,8 @@ function createPhieuCanHang(bmtn13id)
 							{
 								//alert("Lưu phiếu thành công");
 								//loadData('?route=bm/bmtn13/getList');
-								//$(this).dialog( "close" );
+								$(this).dialog( "close" );
+								alert("Lưu phiếu thành công");
 							}
 							else
 							{

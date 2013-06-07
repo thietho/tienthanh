@@ -12,6 +12,7 @@ class ControllerBmBMtn13 extends Controller
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
 		$this->load->model("bm/bmtn13");
+		$this->load->model("bm/bmvt17");
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
 		$this->data['cbDonViTinh'] = '<option value=""></option>';
 		foreach($data_donvitinh as $val)
@@ -61,6 +62,11 @@ class ControllerBmBMtn13 extends Controller
 		
 		$where = " Order by id desc";
 		$this->data['data_bttn13']=$this->model_bm_bmtn13->getList($where);
+		foreach($this->data['data_bttn13'] as $key => $item)
+		{
+			$bmvt17 = $this->model_bm_bmvt17->getItem($item['bmvt17id']);
+			$this->data['data_bttn13'][$key]['bmvt17code'] = $bmvt17['sophieu'];
+		}
 		
 		$this->id='content';
 		$this->template='bm/bmtn13_list.tpl';
