@@ -27,6 +27,10 @@ class ControllerBmBmvt17 extends Controller
 			$this->data['item']['id'] = "";
 			$where = " AND bmtn13id = '".$bmtn13id."'";
 			$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
+			foreach($this->data['data_ct'] as $key => $ct)
+			{
+				$this->data['data_ct'][$key]['id'] = "";
+			}
 		}
 		else
 		{
@@ -79,6 +83,7 @@ class ControllerBmBmvt17 extends Controller
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmvt17->insert($data);
+				$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
 			}
 			else
 			{
