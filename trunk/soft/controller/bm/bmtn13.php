@@ -47,7 +47,7 @@ class ControllerBmBMtn13 extends Controller
 		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
 		
 		$this->id='content';
-		$this->template='bm/bmvt13.tpl';
+		$this->template='bm/bmtn13.tpl';
 		
 		if($this->request->get['dialog']=='print')
 		{

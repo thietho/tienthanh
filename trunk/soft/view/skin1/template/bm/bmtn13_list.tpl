@@ -64,6 +64,7 @@ function fromPhieuCanHang(bmtn13id,bmvt17id)
 							if(obj.error == "")
 							{
 								alert("Lưu phiếu thành công");
+								openDialog("?route=bm/bmvt17/view&id="+ obj.id +"&dialog=print",800,500);
 								loadData('?route=bm/bmtn13/getList');
 								$("#popup").dialog( "close" );
 								
@@ -88,6 +89,60 @@ function fromPhieuCanHang(bmtn13id,bmvt17id)
 			para = "&bmvt17id="+ bmvt17id;
 		}
 		$("#popup-content").load("?route=bm/bmvt17&bmtn13id="+bmtn13id+para,function(){
+			$("#popup").dialog("open");
+			$('#popup-seletetion').html('');
+		});
+}
+function fromPhieuNhanVTHH(bmtn13id,bmvt16id)
+{
+	 $("#popup").attr('title','Phiếu nhập vật tư hàng hóa');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Lưu': function() 
+				{
+					//$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=bm/bmvt17/save", $("#frm_bmvt17").serialize(),
+						function(data){
+							
+							var obj = $.parseJSON(data);
+							
+							if(obj.error == "")
+							{
+								alert("Lưu phiếu thành công");
+								
+								//loadData('?route=bm/bmtn13/getList');
+								//$("#popup").dialog( "close" );
+								
+							}
+							else
+							{
+							
+								$('#error').html(obj.error).show('slow');
+								
+								
+							}
+							
+						}
+					);
+					
+				},
+			}
+		});
+		var para = "";
+		if(bmvt16id != "")
+		{
+			para = "&bmvt16id="+ bmvt16id;
+		}
+		$("#popup-content").load("?route=bm/bmvt16&bmtn13id="+bmtn13id+para,function(){
 			$("#popup").dialog("open");
 			$('#popup-seletetion').html('');
 		});
