@@ -127,7 +127,7 @@ final class MySQL {
 			$sql .= ") VALUES('";
 			is_array($values) ? $sql .= implode("','",$values) : $sql .= "'".$values."'";
 			$sql .= "')";
-			echo $sql;
+			
 			$this->query($sql);
 			return mysql_insert_id();
 		}

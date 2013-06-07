@@ -19,14 +19,23 @@ class ControllerBmBmvt17 extends Controller
 	{
 		$id = $this->request->get['id'];
 		
-		$bmtn13id = $this->request->get['bmtn13id'];
-		$this->data['item'] = $this->model_bm_bmtn13->getItem($bmtn13id);
-		
-		$where = " AND bmtn13id = '".$bmtn13id."'";
-		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
-		
+		if($id == "")
+		{		
+			$bmtn13id = $this->request->get['bmtn13id'];
+			$this->data['item'] = $this->model_bm_bmtn13->getItem($bmtn13id);
+			$this->data['item']['bmtn13id'] = $this->data['item']['id'];
+			$this->data['item']['id'] = "";
+			$where = " AND bmtn13id = '".$bmtn13id."'";
+			$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
+		}
+		else
+		{
+			$this->data['item'] = $this->model_bm_bmvt17->getItem($id);
+			$where = " AND bmvt17id = '".$id."'";
+			$this->data['data_ct'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+		}
 		$this->id='content';
-		$this->template='bm/bmtn17_form.tpl';
+		$this->template='bm/bmvt17_form.tpl';
 		$this->render();
 	}
 	
@@ -66,50 +75,42 @@ class ControllerBmBmvt17 extends Controller
 		
 		if($this->validateForm($data))
 		{
-			//Luu vao bang bmtn13
+			//Luu vao bang bmvt17
 			if((int)$data['id']==0)
 			{
-				$data['id'] = $this->model_bm_bmtn13->insert($data);
+				$data['id'] = $this->model_bm_bmvt17->insert($data);
 			}
 			else
 			{
-				$this->model_bm_bmtn13->update($data);
+				$this->model_bm_bmvt17->update($data);
 			}
-			//Xóa chi tiet
-			$arr_delid = split(",",$data['delid']);
-			foreach($arr_delid as $id)
-			{
-				if($id)
-				{
-					$this->model_bm_bmtn13->deleteBMTN13ChiTiet($id);	
-				}
-			}
-			//Luu vao bang bntn13_chitiet
-			$bmtn13id = $data['id'];
+			
+			//Luu vao bang bnvt17_chitiet
+			$bmvt17id = $data['id'];
 			$arr_id = $data['ctid'];
 			$arr_itemtype = $data['itemtype'];
 			$arr_itemid = $data['itemid'];
 			$arr_itemcode = $data['itemcode'];
 			$arr_itemname = $data['itemname'];
+			$arr_baobi = $data['baobi'];
+			$arr_loaibao = $data['loaibao'];
+			$arr_soluongcan = $data['soluongcan'];
 			$arr_madonvi = $data['madonvi'];
-			$arr_trongluong = $data['trongluong'];
-			$arr_soluong = $data['soluong'];
-			$arr_chatluong = $data['chatluong'];
-			$arr_lothang = $data['lothang'];
+			$arr_ghichu = $data['ghichu'];
 			foreach($arr_id as $key=>$id)
 			{
 				$ct['id'] = $id;
-				$ct['bmtn13id'] = $bmtn13id;
+				$ct['bmvt17id'] = $bmvt17id;
 				$ct['itemtype'] = $arr_itemtype[$key];
 				$ct['itemid'] = $arr_itemid[$key];
 				$ct['itemcode'] = $arr_itemcode[$key];
 				$ct['itemname'] = $arr_itemname[$key];
+				$ct['baobi'] = $arr_baobi[$key];
+				$ct['loaibao'] = $arr_loaibao[$key];
+				$ct['soluongcan'] = $arr_soluongcan[$key];
 				$ct['madonvi'] = $arr_madonvi[$key];
-				$ct['trongluong'] = $arr_trongluong[$key];
-				$ct['soluong'] = $arr_soluong[$key];
-				$ct['chatluong'] = $arr_chatluong[$key];
-				$ct['lothang'] = $arr_lothang[$key];
-				$this->model_bm_bmtn13->saveBMTN13ChiTiet($ct);
+				$ct['ghichu'] = $arr_ghichu[$key];
+				$this->model_bm_bmvt17->saveBMVT17ChiTiet($ct);
 			}
 			
 			$data['error'] = "";
