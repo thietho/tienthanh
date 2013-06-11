@@ -28,7 +28,7 @@
                 <?php if($item['bmvt17code'] == ""){ ?>
      			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
                 <?php }else{ ?>
-                <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa">
+                <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa" onclick="fromPhieuNhanVTHH('<?php echo $item['id']?>','')"/>
                 <?php } ?>
                 
             </td>
@@ -110,7 +110,7 @@ function fromPhieuNhanVTHH(bmtn13id,bmvt16id)
 				{
 					//$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-					$.post("?route=bm/bmvt17/save", $("#frm_bmvt17").serialize(),
+					$.post("?route=bm/bmvt16/save", $("#frm_bmvt16").serialize(),
 						function(data){
 							
 							var obj = $.parseJSON(data);

@@ -1,5 +1,5 @@
 <?php
-class ModelBmVt16 extends Model 
+class ModelBmBmVt16 extends Model 
 {
 	private $columns = array(
 								'sophieu',
@@ -7,8 +7,8 @@ class ModelBmVt16 extends Model
 								'nhanvienlap',
 								'bmtn13id',
 								'bmvt17id',
-								'sokhdathang',
-								'ngaydathang',
+								'sokehoachdathang',
+								'ngaykehoachdathang',
 								'mathang',
 								'soluong'
 								
@@ -124,10 +124,12 @@ class ModelBmVt16 extends Model
 		$data['itemid'] = $this->db->escape(@$data['itemid']);
 		$data['itemcode'] = $this->db->escape(@$data['itemcode']);
 		$data['itemname'] = $this->db->escape(@$data['itemname']);
-		$data['trongluong']=$this->db->escape(@$this->string->toNumber($data['trongluong']));
-		$data['soluong']=$this->db->escape(@$this->string->toNumber($data['soluong']));
-		$data['chatluong'] = $this->db->escape(@$data['chatluong']);
 		$data['lothang'] = $this->db->escape(@$data['lothang']);
+		$data['madonvi'] = $this->db->escape(@$data['madonvi']);
+		$data['chungtu']=$this->db->escape(@$this->string->toNumber($data['chungtu']));
+		$data['thucnhap']=$this->db->escape(@$this->string->toNumber($data['thucnhap']));
+		$data['dongia']=$this->db->escape(@$this->string->toNumber($data['dongia']));
+		$data['thanhtien'] = $data['thucnhap'] * $data['dongia'];
 		
 		foreach($data as $key => $val)
 		{

@@ -35,11 +35,11 @@ class ControllerBmBmvt16 extends Controller
 		else
 		{
 			$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
-			$where = " AND bmvt16id = '".$id."'";
-			$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT17ChiTietList($where);
+			$where = " AND bmvt13id = '".$id."'";
+			$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
 		}
 		$this->id='content';
-		$this->template='bm/bmvt17_form.tpl';
+		$this->template='bm/bmvt16_form.tpl';
 		$this->render();
 	}
 	
@@ -83,38 +83,40 @@ class ControllerBmBmvt16 extends Controller
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmvt16->insert($data);
-				$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
+				//$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
 			}
 			else
 			{
 				$this->model_bm_bmvt16->update($data);
 			}
 			
-			//Luu vao bang bnvt17_chitiet
-			$bmvt17id = $data['id'];
+			//Luu vao bang bnvt16_chitiet
+			$bmvt16id = $data['id'];
 			$arr_id = $data['ctid'];
 			$arr_itemtype = $data['itemtype'];
 			$arr_itemid = $data['itemid'];
 			$arr_itemcode = $data['itemcode'];
 			$arr_itemname = $data['itemname'];
-			$arr_baobi = $data['baobi'];
-			$arr_loaibao = $data['loaibao'];
-			$arr_soluongcan = $data['soluongcan'];
+			$arr_lothang = $data['lothang'];
 			$arr_madonvi = $data['madonvi'];
-			$arr_ghichu = $data['ghichu'];
+			$arr_chungtu = $data['chungtu'];
+			$arr_thucnhap = $data['thucnhap'];
+			$arr_dongia = $data['dongia'];
+			
 			foreach($arr_id as $key=>$id)
 			{
 				$ct['id'] = $id;
-				$ct['bmvt17id'] = $bmvt17id;
+				$ct['bmvt16id'] = $bmvt16id;
 				$ct['itemtype'] = $arr_itemtype[$key];
 				$ct['itemid'] = $arr_itemid[$key];
 				$ct['itemcode'] = $arr_itemcode[$key];
 				$ct['itemname'] = $arr_itemname[$key];
-				$ct['baobi'] = $arr_baobi[$key];
-				$ct['loaibao'] = $arr_loaibao[$key];
-				$ct['soluongcan'] = $arr_soluongcan[$key];
+				$ct['lothang'] = $arr_lothang[$key];
 				$ct['madonvi'] = $arr_madonvi[$key];
-				$ct['ghichu'] = $arr_ghichu[$key];
+				$ct['chungtu'] = $arr_chungtu[$key];
+				$ct['thucnhap'] = $arr_thucnhap[$key];
+				$ct['dongia'] = $arr_dongia[$key];
+				
 				$this->model_bm_bmvt16->saveBMVT17ChiTiet($ct);
 			}
 			
