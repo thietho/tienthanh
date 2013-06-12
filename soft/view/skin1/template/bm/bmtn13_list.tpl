@@ -9,7 +9,7 @@
             <th>Số phiếu giao hàng</th>
             <th>Số kế hoạch đạt hàng</th>
             <th>Nghiệm thu</th>
-            <th>Số phiếu cân hàng</th>
+            <th>Các phiếu liên quan</th>
             <th></th>
         </tr>
     </thead>
@@ -22,13 +22,27 @@
             <td><?php echo $item['sophieugiaohang']?></td>
             <td><?php echo $item['sokehoachdathang']?></td>
             <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
-            <td><a onclick="fromPhieuCanHang('<?php echo $item['id']?>','<?php echo $item['bmvt17id']?>')"><?php echo $item['bmvt17code']?></a></td>
+            <td>
+            	<?php if($item['bmvt17id']){ ?>
+            	<label>Phiếu cân hàng:</label>
+            	<a onclick="fromPhieuCanHang('<?php echo $item['id']?>','<?php echo $item['bmvt17id']?>')"><?php echo $item['bmvt17code']?></a>
+                <?php } ?>
+                <?php if(count($item['data_bmvt16'])){ ?>
+                <label>Phiếu nhập vật tư hàng hóa:</label>
+                <?php foreach($item['data_bmvt16'] as $key => $bmvt16){ ?>
+                	<?php if($key > 0) echo ","?>
+                	<a onclick="fromPhieuNhanVTHH('<?php echo $item['id']?>','<?php echo $bmvt16['id']?>')"><?php echo $bmvt16['sophieu']?></a>
+                <?php }?>
+                <?php }?>
+                </td>
             <td>
             	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
                 <?php if($item['bmvt17code'] == ""){ ?>
      			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
                 <?php }else{ ?>
+                <?php if(count($item['data_bmvt16'])== 0){ ?>
                 <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa" onclick="fromPhieuNhanVTHH('<?php echo $item['id']?>','')"/>
+                <?php }?>
                 <?php } ?>
                 
             </td>
@@ -118,9 +132,9 @@ function fromPhieuNhanVTHH(bmtn13id,bmvt16id)
 							if(obj.error == "")
 							{
 								alert("Lưu phiếu thành công");
-								
-								//loadData('?route=bm/bmtn13/getList');
-								//$("#popup").dialog( "close" );
+								openDialog("?route=bm/bmvt16/view&id="+ obj.id +"&dialog=print",800,500);
+								loadData('?route=bm/bmtn13/getList');
+								$("#popup").dialog( "close" );
 								
 							}
 							else

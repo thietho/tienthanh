@@ -35,7 +35,7 @@ class ControllerBmBmvt16 extends Controller
 		else
 		{
 			$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
-			$where = " AND bmvt13id = '".$id."'";
+			$where = " AND bmvt16id = '".$id."'";
 			$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
 		}
 		$this->id='content';
@@ -46,13 +46,13 @@ class ControllerBmBmvt16 extends Controller
 	public function view()
 	{
 		$id = $this->request->get['id'];
-		$this->data['item'] = $this->model_bm_bmtn13->getItem($id);
+		$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
 		
-		$where = " AND bmtn13id = '".$id."'";
-		$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
+		$where = " AND bmvt16id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
 		
 		$this->id='content';
-		$this->template='bm/bmvt13.tpl';
+		$this->template='bm/bmvt16.tpl';
 		
 		if($this->request->get['dialog']=='print')
 		{
@@ -117,7 +117,7 @@ class ControllerBmBmvt16 extends Controller
 				$ct['thucnhap'] = $arr_thucnhap[$key];
 				$ct['dongia'] = $arr_dongia[$key];
 				
-				$this->model_bm_bmvt16->saveBMVT17ChiTiet($ct);
+				$this->model_bm_bmvt16->saveBMVT16ChiTiet($ct);
 			}
 			
 			$data['error'] = "";
@@ -137,11 +137,11 @@ class ControllerBmBmvt16 extends Controller
 	}
 	private function validateForm($data)
 	{
-		$arr_soluongcan = $data['soluongcan'];
-		foreach($arr_soluongcan as $soluong)
+		$arr_thucnhap = $data['thucnhap'];
+		foreach($arr_thucnhap as $soluong)
 		{
 			if($soluong == 0)
-				$this->error['soluongcan'] = "Bạn chưa nhập đủ số lượng cân";
+				$this->error['thucnhap'] = "Bạn chưa nhập đủ số lượng cân";
 		}
     	
 

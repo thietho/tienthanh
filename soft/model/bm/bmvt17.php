@@ -58,7 +58,7 @@ class ModelBmBmVt17 extends Model
 		foreach($this->columns as $val)
 		{
 	
-			if($data[$val]!="")
+			//if($data[$val]!="")
 			{
 				$field[] = $val;
 				$value[] = $this->db->escape($data[$val]);	

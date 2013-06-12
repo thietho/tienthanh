@@ -68,6 +68,7 @@
 </form>
 
 <script language="javascript">
+$('#nghiemthu').val("<?php echo $item['nghiemthu']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 numberReady();
 $('#btnSaveBMTN13').click(function(e) {

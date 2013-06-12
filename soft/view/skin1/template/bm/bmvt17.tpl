@@ -1,6 +1,6 @@
 <table class="table-data">
 	<tr>
-    	<td width="118"><img src="<?php echo DIR_IMAGE?>logotienthanh.png"></td>
+    	<td width="80px"><img src="<?php echo DIR_IMAGE?>logotienthanh.png" width="80px"></td>
       	<td align="center">
         	<h2>PHIẾU CÂN HÀNG</h2>
 	        <p>Ngày <?php echo $this->date->getDay($item['ngaylap'])?> tháng <?php echo $this->date->getMonth($item['ngaylap'])?> năm <?php echo $this->date->getYear($item['ngaylap'])?></p>
