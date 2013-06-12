@@ -5,6 +5,7 @@
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         <input type="hidden" id="bmtn13id" name="bmtn13id" value="<?php echo $item['bmtn13id']?>"/>
+        <input type="hidden" id="bmvt17id" name="bmvt17id" value="<?php echo $item['bmvt17id']?>"/>
         Theo kế hoạch đặt hàng: <?php echo $item['sokehoachdathang']?>
         Ngày: <?php echo $this->date->formatMySQLDate($item['ngaykehoachdathang'])?>
         <input type="hidden" id="sokehoachdathang" name="sokehoachdathang" value="<?php echo $item['sokehoachdathang']?>"/>

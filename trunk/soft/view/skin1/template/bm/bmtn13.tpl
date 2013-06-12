@@ -1,6 +1,6 @@
 <table class="table-data">
 	<tr>
-    	<td width="118"><img src="<?php echo DIR_IMAGE?>logotienthanh.png"></td>
+    	<td width="80px"><img src="<?php echo DIR_IMAGE?>logotienthanh.png" width="80px"></td>
       	<td align="center">
         	<h2>Phiếu yêu cầu kiểm kết quả nghiệm thu</h2>
 	        
