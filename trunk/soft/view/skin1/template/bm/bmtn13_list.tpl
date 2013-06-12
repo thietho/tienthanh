@@ -36,8 +36,9 @@
                 <?php }?>
                 </td>
             <td>
-            	<input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
+            	
                 <?php if($item['bmvt17code'] == ""){ ?>
+                <input type="button" class="button" value="Chỉnh sửa" onclick="loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
      			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
                 <?php }else{ ?>
                 <?php if(count($item['data_bmvt16'])== 0){ ?>

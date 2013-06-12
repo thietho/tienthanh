@@ -60,7 +60,7 @@ class ModelBmtn14 extends Model
 		foreach($this->columns as $val)
 		{
 	
-			if($data[$val]!="")
+			if(isset($data[$val]))
 			{
 				$field[] = $val;
 				$value[] = $this->db->escape($data[$val]);	
