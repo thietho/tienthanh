@@ -105,10 +105,10 @@ $('#btnSaveBMTN14').click(function(e) {
 	);
 });
 
-$('#btnSavePrintBMTN13').click(function(e) {
+$('#btnSavePrintBMTN14').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
+	$.post("?route=bm/bmtn14/save", $("#frm_bmtn13").serialize(),
 		function(data){
 			var obj = $.parseJSON(data);
 			if(obj.error == "")
@@ -262,7 +262,14 @@ function getTieuChiKiemTra(itemtype,itemid)
 		{
 			for(i in data)
 			{
-				alert(data[i].tieuchikiemtra)	
+				alert(data[i].tieuchikiemtra)
+				bmtn14.id = 0;
+				bmtn14.tieuchikiemtraid = data[i].id;
+				bmtn14.tieuchikiemtra = data[i].tieuchikiemtra;
+				bmtn14.madonvi = data[i].madonvi;
+				bmtn14.ketqua = "";
+				bmtn14.mucchatluong = "";
+				bmtn14.createRow();
 			}
 		}
 	);
@@ -285,24 +292,18 @@ function BMTN14()
 		//Tieu chi kiem tra
 		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="tieuchikiemtraid-'+ this.index +'" name="tieuchikiemtraid['+ this.index +']" value="'+ this.tieuchikiemtraid +'">'+ this.tieuchikiemtra +'</td>';
 		//Don vi
-		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
+		row += '<td><input type="text" name="madonvi['+this.index+']" value="'+ this.madonvi +'" class="text"/></td>';
 		//Ket qua
-		row += '<td><input type="text" name="trongluong['+this.index+']" value="'+ this.trongluong +'" class="text number"/></td>';
+		row += '<td><input type="text" name="ketqua['+this.index+']" value="'+ this.ketqua +'" class="text"/></td>';
 		//Muc chat luong
-		row += '<td><input type="text" name="soluong['+this.index+']" value="'+ this.soluong +'" class="text number"/></td>';
+		row += '<td><input type="text" name="mucchatluong['+this.index+']" value="'+ this.mucchatluong +'" class="text"/></td>';
 		
 		row += '</tr>';
 		$('#listtieuchikiemtra').append(row);
-		$('#madonvi-'+ this.index).val(this.madonvi);
-		$('#chatluong-'+ this.index).val(this.chatluong);
+		
 		this.index++;
 		numberReady();
 	}
-	
-	this.remove = function(pos)
-	{
-		$("#delid").val($("#delid").val()+","+ $('#ctid-'+pos).val());
-		$("#row"+pos).remove();
-	}
 }
+var bmtn14 = new BMTN14();
 </script>
