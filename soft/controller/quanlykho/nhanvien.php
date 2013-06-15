@@ -13,11 +13,37 @@ class ControllerQuanlykhoNhanVien extends Controller
 		}
 			
 		$this->load->model("quanlykho/nhanvien");
+		$this->load->model("quanlykho/phongban");
+		$this->load->model("core/user");
+		$this->load->model("quanlykho/nhom");
+		
+		$this->load->helper('image');
+		$this->data['phongbans'] = $this->model_quanlykho_phongban->getTreePhongBan($this->model_quanlykho_phongban->root);
+		unset($this->data['phongbans'][0]);
+		//$this->data['chucvus'] = $this->document->chucvu;
+		$this->data['chucvus'] = array();
+		$this->model_quanlykho_nhom->getTree("chucvu",$this->data['chucvus']);
+		unset($this->data['chucvus'][0]);
 	}
 	public function index()
 	{
+		$this->data['insert'] = $this->url->http('quanlykho/nhanvien/insert');
+		$this->data['delete'] = $this->url->http('quanlykho/nhanvien/delete');
 		
-		$this->getList();
+		
+		
+		
+		$this->id='content';
+		$this->template="quanlykho/nhanvien_list.tpl";
+		$this->layout="layout/center";
+		
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
 	}
 	
 	public function insert()
@@ -50,20 +76,8 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$this->render();
   	}
 	
-	private function getList() 
+	public function getList() 
 	{
-		$this->load->model("quanlykho/phongban");
-		$this->load->model("core/user");
-		
-		$this->data['phongban'] = array();
-		$this->data['phongban']=$this->model_quanlykho_phongban->getTreePhongBan($this->model_quanlykho_phongban->root);
-		unset($this->data['phongban'][0]);
-		
-		$this->data['chucvu'] = $this->document->chucvu;
-		
-		$this->data['insert'] = $this->url->http('quanlykho/nhanvien/insert');
-		$this->data['delete'] = $this->url->http('quanlykho/nhanvien/delete');		
-		
 		$this->data['datas'] = array();
 		$where = "";
 		
@@ -94,7 +108,7 @@ class ControllerQuanlykhoNhanVien extends Controller
 		$limit = 20;
 		$total = count($rows); 
 		// work out the pager values 
-		$this->data['pager']  = $this->pager->pageLayout($total, $limit, $page); 
+		$this->data['pager']  = $this->pager->pageLayoutAjax($total, $limit, $page,"#listnhanvien");
 		
 		$pager  = $this->pager->getPagerData($total, $limit, $page); 
 		$offset = $pager->offset; 
@@ -147,15 +161,13 @@ class ControllerQuanlykhoNhanVien extends Controller
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		$this->id='content';
-		$this->template="quanlykho/nhanvien_list.tpl";
-		$this->layout="layout/center";
-		
+		$this->template="quanlykho/nhanvien_table.tpl";
 		
 		if($this->request->get['opendialog']=='true')
 		{
-			$this->layout="layout/dialog";
+			$this->layout="";
 			$this->data['dialog'] = true;
-			//$this->data['list'] = $this->url->http('quanlykho/nhacungung&opendialog=true');
+			
 		}
 		$this->render();
 	}
@@ -163,14 +175,8 @@ class ControllerQuanlykhoNhanVien extends Controller
 	private function getForm()
 	{
 		
-		$this->load->model("quanlykho/phongban");
-		$this->load->helper('image');
-		$this->data['phongbans'] = $this->model_quanlykho_phongban->getTreePhongBan($this->model_quanlykho_phongban->root);
-		unset($this->data['phongbans'][0]);
-		//$this->data['chucvus'] = $this->document->chucvu;
-		$this->data['chucvus'] = array();
-		$this->model_quanlykho_nhom->getTree("chucvu",$this->data['chucvus']);
-		unset($this->data['chucvus'][0]);
+		
+		
 		
 		$this->data['nhomnhanvien'] = $this->model_quanlykho_nhom->getChild("nhomnhanvien");
 		$this->data['loainhanvien'] = $this->model_quanlykho_nhom->getChild("loainhanvien");

@@ -134,7 +134,7 @@ class ModelBmBmtn14 extends Model
 		
 		foreach($data as $key => $val)
 		{
-			if($val!="")
+			if($val)
 			{
 				$field[] = $key;
 				$value[] = $this->db->escape($val);	

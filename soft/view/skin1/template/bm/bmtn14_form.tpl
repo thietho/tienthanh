@@ -46,6 +46,7 @@
     	Người thực hiện:
         <input type="hidden" id="nhanvienthuchien" name="nhanvienthuchien" value="<?php echo $item['nhanvienthuchien']?>"/>
         <span id="tennhanvien"></span>
+        <input type="button" class="button" id="btnSelectNhanVien" value="Chọn nhân viên"/>
     </p>
     <p>
         Ngày ngày thực:
@@ -262,7 +263,7 @@ function getTieuChiKiemTra(itemtype,itemid)
 		{
 			for(i in data)
 			{
-				alert(data[i].tieuchikiemtra)
+				
 				bmtn14.id = 0;
 				bmtn14.tieuchikiemtraid = data[i].id;
 				bmtn14.tieuchikiemtra = data[i].tieuchikiemtra;
