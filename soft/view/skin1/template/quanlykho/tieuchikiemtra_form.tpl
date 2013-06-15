@@ -34,7 +34,7 @@
                 	<thead>
                     	<tr>
                         	<th>Tiêu chí kiểm tra</th>
-                            <th>Đơn vị</th>
+                            <th>Đơn vị kiểm tra</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -185,7 +185,7 @@ function TieuChi()
 	{
 		var row = '<tr id=row-'+ this.index +'>';
 		row += '<td><input type="hidden" id="id-'+ this.index +'" name="id['+ this.index +']" value="'+id+'"><input type="text" class="text" id="tieuchikiemtra-'+ this.index +'" name="tieuchikiemtra['+ this.index +']" value="'+tieuchikiemtra+'"></td>';
-		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbdonvitinh?></select></td>';
+		row += '<td><input type="text" class="text" id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']" value="'+madonvi+'"></td>';
 		row += '<td><input type="button" class="button" value="Xóa" onclick="tieuchi.remove('+ this.index +')"></td>';
 		row += '</tr>'
 		$('#listtieuchi').append(row);
