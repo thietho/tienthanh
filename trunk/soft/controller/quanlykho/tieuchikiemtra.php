@@ -234,7 +234,6 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		$this->render();
 	}
 	
-	
 	private function validateForm($data)
 	{
 		
@@ -250,6 +249,20 @@ class ControllerQuanlykhoTieuchikiemtra extends Controller
 		} else {
 	  		return FALSE;
 		}
+	}
+	
+//Json
+	public function getTieuChiKiemTra()
+	{
+		$itemtype = $this->request->get['itemtype'];
+		$itemid = $this->request->get['itemid'];
+		$where = " AND itemtype = '".$itemtype."' AND itemid = '".$itemid."'";
+		$rows = $this->model_quanlykho_tieuchikiemtra->getList($where);
+		$this->data['output'] = json_encode($rows);
+		
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
 	}
 }
 ?>
