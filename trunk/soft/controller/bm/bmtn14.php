@@ -88,6 +88,9 @@ class ControllerBmBMtn14 extends Controller
 		if($this->validateForm($data))
 		{
 			//Luu vao bang bmtn14
+			$data['ngayycrakqcheptay'] = $this->date->formatViewDate($data['ngayycrakqcheptay']);
+			$data['ngayycgiaokqcheptay'] = $this->date->formatViewDate($data['ngayycgiaokqcheptay']);
+			$data['ngaythuchien'] = $this->date->formatViewDate($data['ngaythuchien']);
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmtn14->insert($data);
@@ -101,10 +104,7 @@ class ControllerBmBMtn14 extends Controller
 			//Luu vao bang bntn14_chitiet
 			$bmtn14id = $data['id'];
 			$arr_id = $data['ctid'];
-			$arr_itemtype = $data['itemtype'];
-			$arr_itemid = $data['itemid'];
-			$arr_itemcode = $data['itemcode'];
-			$arr_itemname = $data['itemname'];
+			$arr_tieuchikiemtraid = $data['tieuchikiemtraid'];
 			$arr_madonvi = $data['madonvi'];
 			$arr_ketqua = $data['ketqua'];
 			$arr_mucchatluong = $data['mucchatluong'];
@@ -113,10 +113,8 @@ class ControllerBmBMtn14 extends Controller
 			{
 				$ct['id'] = $id;
 				$ct['bmtn14id'] = $bmtn14id;
-				$ct['itemtype'] = $arr_itemtype[$key];
-				$ct['itemid'] = $arr_itemid[$key];
-				$ct['itemcode'] = $arr_itemcode[$key];
-				$ct['itemname'] = $arr_itemname[$key];
+				
+				$ct['tieuchikiemtraid'] = $arr_tieuchikiemtraid[$key];
 				$ct['madonvi'] = $arr_madonvi[$key];
 				$ct['ketqua'] = $arr_ketqua[$key];
 				$ct['mucchatluong'] = $arr_mucchatluong[$key];
