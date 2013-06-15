@@ -1,14 +1,22 @@
 <?php
-class ModelBmtn14 extends Model 
+class ModelBmBmtn14 extends Model 
 {
 	private $columns = array(
 								'sophieu',
 								'ngaylapphieu',
 								'nhanvienlap',
-								'bmtn14id',
-								'nhacungungid',
-								'manhacungung',
-								'tennhacungung'
+								'itemtype',
+								'itemid',
+								'itemcode',
+								'itemname',
+								'kyhieu',
+								'tinhtrangmau',
+								'moitruongthunghiem',
+								'ngayycrakqcheptay',
+								'ngayycgiaokqcheptay',
+								'nhanvienthuchien',
+								'ngaythuchien',
+								'danhgiakq'
 								
 							);
 	public function getList($where = "")

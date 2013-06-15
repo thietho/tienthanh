@@ -19,18 +19,22 @@
     
 </div>
 <script language="javascript">
-function loadData(url)
+function KTDauVao()
 {
-	$('#formshow').html(loading);
-	$('#formshow').load(url);
+	this.loadData = function(url)
+	{
+		$('#formshow').html(loading);
+		$('#formshow').load(url);
+	}
 }
+var ktdv = new KTDauVao();
 $('#btnListBMTN13').click(function(e) {
-    loadData('?route=bm/bmtn13/getList');
+    ktdv.loadData('?route=bm/bmtn13/getList');
 });
 $('#btnLapBMTN13').click(function(e) {
-    loadData('?route=bm/bmtn13/create');
+    ktdv.loadData('?route=bm/bmtn13/create');
 });
 $('#btnLapBMTN14').click(function(e) {
-    loadData('?route=bm/bmtn14/create');
+    ktdv.loadData('?route=bm/bmtn14/create');
 });
 </script>

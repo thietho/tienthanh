@@ -23,6 +23,7 @@ class ControllerBmBMtn14 extends Controller
 	}
 	public function create()
 	{
+		
 		$this->id='content';
 		$this->template='bm/bmtn14_form.tpl';
 		$this->render();
