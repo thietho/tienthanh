@@ -79,3 +79,8 @@
                 </tbody>
                 </table>
                 <?php echo $pager?>
+<?php if($dialog){ ?>
+<script language="javascript">
+	intSelectNhanVien()
+</script>
+<?php } ?>

@@ -1,4 +1,4 @@
-<h2>Phiếu yêu cầu kiểm kết quả nghiệm thu</h2>
+<h2>Phiếu kết quả nghiệm thu</h2>
 <form id="frm_bmtn13_list">
 <table>
 	<thead>
@@ -6,45 +6,26 @@
         	<th>Số phiếu</th>
             <th>Nhân viên lập</th>
             <th>Ngày lập</th>
-            <th>Số phiếu giao hàng</th>
-            <th>Số kế hoạch đạt hàng</th>
-            <th>Nghiệm thu</th>
-            <th>Các phiếu liên quan</th>
+            <th>Loại</th>
+            <th>Tên mẫu</th>
+            <th>Tình trạng</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-    	<?php foreach($data_bttn13 as $item){ ?>
+    	<?php foreach($data_bttn14 as $item){ ?>
         <tr>
         	<td><?php echo $item['sophieu']?></td>
             <td><?php echo $this->document->getNhanVien($item['nhanvienlap'])?></td>
             <td><?php echo $this->date->formatMySQLDate($item['ngaylapphieu'])?></td>
-            <td><?php echo $item['sophieugiaohang']?></td>
-            <td><?php echo $item['sokehoachdathang']?></td>
-            <td><?php echo $this->document->nghiemthu[$item['nghiemthu']]?></td>
-            <td>
-            	<?php if($item['bmvt17id']){ ?>
-            	<label>Phiếu cân hàng:</label>
-            	<a onclick="fromPhieuCanHang('<?php echo $item['id']?>','<?php echo $item['bmvt17id']?>')"><?php echo $item['bmvt17code']?></a>
-                <?php } ?>
-                <?php if(count($item['data_bmvt16'])){ ?>
-                <label>Phiếu nhập vật tư hàng hóa:</label>
-                <?php foreach($item['data_bmvt16'] as $key => $bmvt16){ ?>
-                	<?php if($key > 0) echo ","?>
-                	<a onclick="fromPhieuNhanVTHH('<?php echo $item['id']?>','<?php echo $bmvt16['id']?>')"><?php echo $bmvt16['sophieu']?></a>
-                <?php }?>
-                <?php }?>
-                </td>
+            <td><?php echo $this->document->dauvao[$item['itemtype']]?></td>
+            <td><?php echo $item['itemname']?></td>
+            <td><?php echo $item['tinhtrangmau']?></td>
+            
             <td>
             	
-                <?php if($item['bmvt17code'] == ""){ ?>
-                <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmtn13/edit&id=<?php echo $item['id']?>');">
-     			<input type="button" class="button" value="Xuất phiếu cân hàng" onclick="fromPhieuCanHang('<?php echo $item['id']?>','')">
-                <?php }else{ ?>
-                <?php if(count($item['data_bmvt16'])== 0){ ?>
-                <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa" onclick="fromPhieuNhanVTHH('<?php echo $item['id']?>','')"/>
-                <?php }?>
-                <?php } ?>
+                <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmtn14/edit&id=<?php echo $item['id']?>');">
+     			
                 
             </td>
         </tr>
@@ -80,7 +61,7 @@ function fromPhieuCanHang(bmtn13id,bmvt17id)
 							{
 								alert("Lưu phiếu thành công");
 								openDialog("?route=bm/bmvt17/view&id="+ obj.id +"&dialog=print",800,500);
-								ktdv.loadData('?route=bm/bmtn13/getList');
+								loadData('?route=bm/bmtn13/getList');
 								$("#popup").dialog( "close" );
 								
 							}
@@ -134,7 +115,7 @@ function fromPhieuNhanVTHH(bmtn13id,bmvt16id)
 							{
 								alert("Lưu phiếu thành công");
 								openDialog("?route=bm/bmvt16/view&id="+ obj.id +"&dialog=print",800,500);
-								ktdv.loadData('?route=bm/bmtn13/getList');
+								loadData('?route=bm/bmtn13/getList');
 								$("#popup").dialog( "close" );
 								
 							}

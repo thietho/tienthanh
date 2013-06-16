@@ -82,7 +82,7 @@ $('#btnSaveBMTN13').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				loadData('?route=bm/bmtn13/getList');
+				ktdv.loadData('?route=bm/bmtn13/getList');
 			}
 			else
 			{
@@ -107,7 +107,7 @@ $('#btnSavePrintBMTN13').click(function(e) {
 				alert("Lưu phiếu thành công");
 				
 				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
-				loadData('?route=bm/bmtn13/getList');
+				ktdv.loadData('?route=bm/bmtn13/getList');
 			}
 			else
 			{
