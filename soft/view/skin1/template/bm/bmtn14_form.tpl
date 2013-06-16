@@ -10,7 +10,7 @@
     </p>
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
-        Tên mẫu: <span id="itemnameview"></span>
+        Tên mẫu: <span id="itemnameview"><?php echo $item['itemname']?></span>
         <input type="hidden" id="itemtype" name="itemtype" value="<?php echo $item['itemtype']?>">
         <input type="hidden" id="itemid" name="itemid" value="<?php echo $item['itemid']?>">
         <input type="hidden" id="itemcode" name="itemcode" value="<?php echo $item['itemcode']?>">
@@ -27,6 +27,10 @@
 	<p>
     	Tình trạng mẫu:
         <input type="text" class="text" id="tinhtrangmau" name="tinhtrangmau" value="<?php echo $item['tinhtrangmau']?>">
+    </p>
+    <p>
+    	Điều kiện thủ nghiệm:
+        <input type="text" class="text" id="dkthunghiem" name="dkthunghiem" value="<?php echo $item['dkthunghiem']?>">
     </p>
     <p>
     	Môi trường thử nghiệm:
@@ -55,7 +59,7 @@
     </p>
     <p>
     	Đánh giá kết quả:
-        <textarea id="danhgiakq" name="danhgiakq"></textarea>
+        <textarea id="danhgiakq" name="danhgiakq"><?php echo $item['danhgiakq']?></textarea>
     </p>
     <table>
     	<thead>
@@ -81,6 +85,33 @@
 $('#nghiemthu').val("<?php echo $item['nghiemthu']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 numberReady();
+$('#btnSelectNhanVien').click(function(e) {
+    $("#popup").attr('title','Chọn nhân viên');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			
+		});
+		
+		
+		$("#popup-content").load("?route=quanlykho/nhanvien&opendialog=true",function(){
+			$("#popup").dialog("open");
+			$('#popup-seletetion').html('');
+		});
+});
+function intSelectNhanVien()
+{
+	$('.item').click(function(e) {
+		$('#nhanvienthuchien').val($(this).attr('id'));
+		$('#tennhanvien').html($(this).attr('hoten'));
+		$("#popup").dialog( "close" );
+	
+	});	
+}
 $('#btnSaveBMTN14').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
@@ -92,7 +123,7 @@ $('#btnSaveBMTN14').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				loadData('?route=bm/bmtn13/getList');
+				ktdv.loadData('?route=bm/bmtn14/getList');
 			}
 			else
 			{
@@ -109,15 +140,15 @@ $('#btnSaveBMTN14').click(function(e) {
 $('#btnSavePrintBMTN14').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmtn14/save", $("#frm_bmtn13").serialize(),
+	$.post("?route=bm/bmtn14/save", $("#frm_bmtn14").serialize(),
 		function(data){
 			var obj = $.parseJSON(data);
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
 				
-				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
-				loadData('?route=bm/bmtn13/getList');
+				openDialog("?route=bm/bmtn14/view&id="+ obj.id +"&dialog=print",800,500);
+				ktdv.loadData('?route=bm/bmtn14/getList');
 			}
 			else
 			{
@@ -308,3 +339,16 @@ function BMTN14()
 }
 var bmtn14 = new BMTN14();
 </script>
+<?php if(count($data_ct)){ ?>
+	<?php foreach($data_ct as $ct){ ?>
+<script language="javascript">
+	bmtn14.id = "<?php echo $ct[id]?>";
+	bmtn14.tieuchikiemtraid = "<?php echo $ct[tieuchikiemtraid]?>";
+	bmtn14.tieuchikiemtra = "<?php echo $ct[tieuchikiemtra]?>";
+	bmtn14.madonvi = "<?php echo $ct[madonvi]?>";
+	bmtn14.ketqua = "<?php echo $ct[ketqua]?>";
+	bmtn14.mucchatluong = "<?php echo $ct[mucchatluong]?>";
+	bmtn14.createRow();
+</script>
+	<?php } ?>
+<?php } ?>

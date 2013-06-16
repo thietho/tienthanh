@@ -11,6 +11,7 @@ class ControllerBmBMtn14 extends Controller
 		}
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("quanlykho/tieuchikiemtra");
 		$this->load->model("bm/bmtn14");
 		$this->load->model("bm/bmvt17");
 		$this->load->model("bm/bmvt16");
@@ -35,7 +36,11 @@ class ControllerBmBMtn14 extends Controller
 		
 		$where = " AND bmtn14id = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmtn14->getBMTN14ChiTietList($where);
-		
+		foreach($this->data['data_ct'] as $key => $ct)
+		{
+			$tieuchikiemtra = $this->model_quanlykho_tieuchikiemtra->getItem($ct['tieuchikiemtraid']);
+			$this->data['data_ct'][$key]['tieuchikiemtra'] = $tieuchikiemtra['tieuchikiemtra'];
+		}
 		$this->id='content';
 		$this->template='bm/bmtn14_form.tpl';
 		$this->render();
@@ -47,6 +52,11 @@ class ControllerBmBMtn14 extends Controller
 		
 		$where = " AND bmtn14id = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmtn14->getBMTN14ChiTietList($where);
+		foreach($this->data['data_ct'] as $key => $ct)
+		{
+			$tieuchikiemtra = $this->model_quanlykho_tieuchikiemtra->getItem($ct['tieuchikiemtraid']);
+			$this->data['data_ct'][$key]['tieuchikiemtra'] = $tieuchikiemtra['tieuchikiemtra'];
+		}
 		
 		$this->id='content';
 		$this->template='bm/bmtn14.tpl';
@@ -63,18 +73,7 @@ class ControllerBmBMtn14 extends Controller
 	{
 		
 		$where = " Order by id desc";
-		$this->data['data_bttn13']=$this->model_bm_bmtn14->getList($where);
-		foreach($this->data['data_bttn13'] as $key => $item)
-		{
-			$bmvt17 = $this->model_bm_bmvt17->getItem($item['bmvt17id']);
-			$this->data['data_bttn13'][$key]['bmvt17code'] = $bmvt17['sophieu'];
-			
-			//Lay du lieu bmvt16
-			$where = " AND bmtn14id = '".$item['id']."'";
-			$this->data['data_bttn13'][$key]['data_bmvt16'] = $this->model_bm_bmvt16->getList($where);
-		}
-		
-		
+		$this->data['data_bttn14']=$this->model_bm_bmtn14->getList($where);
 		
 		$this->id='content';
 		$this->template='bm/bmtn14_list.tpl';

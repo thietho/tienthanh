@@ -11,6 +11,7 @@ class ModelBmBmtn14 extends Model
 								'itemname',
 								'kyhieu',
 								'tinhtrangmau',
+								'dkthunghiem',
 								'moitruongthunghiem',
 								'ngayycrakqcheptay',
 								'ngayycgiaokqcheptay',
