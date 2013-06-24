@@ -4,10 +4,12 @@
     
     <div class="section-content">        	
         <div class="button right">
-        	<input class="button" id="btnListBMTN13" value="Phiếu yêu cầu kết quả nghiệm thu (BM-TN-13)" type="button">
+        	<input class="button" id="btnListBMTN13" value="Phiếu đề xuất mua vật tư, nguyên liệu (BM-VT-03)" type="button">
+        	<input class="button" id="btnLapBMVT03" value="Lập phiếu đề xuất mua vật tư, nguyên liệu (BM-VT-03)" type="button">
+            <!--<input class="button" id="btnListBMTN13" value="Phiếu yêu cầu kết quả nghiệm thu (BM-TN-13)" type="button">
             <input class="button" id="btnLapBMTN13" value="Lập phiếu yêu cầu kết quả nghiệm thu (BM-TN-13)" type="button">
             <input class="button" id="btnListBMTN14" value="Phiếu kết quả thử nghiệm (BM-TN-14)" type="button">
-            <input class="button" id="btnLapBMTN14" value="Lập phiếu kết quả thử nghiệm (BM-TN-14)" type="button">
+            <input class="button" id="btnLapBMTN14" value="Lập phiếu kết quả thử nghiệm (BM-TN-14)" type="button">-->
         </div>
         <div class="clearer">^&nbsp;</div>
         <div id="formshow">
@@ -29,7 +31,10 @@ function KTDauVao()
 	}
 }
 var ktdv = new KTDauVao();
-$('#btnListBMTN13').click(function(e) {
+$('#btnLapBMVT03').click(function(e) {
+    ktdv.loadData('?route=bm/bmvt03/create');
+});
+/*$('#btnListBMTN13').click(function(e) {
     ktdv.loadData('?route=bm/bmtn13/getList');
 });
 $('#btnLapBMTN13').click(function(e) {
@@ -40,5 +45,5 @@ $('#btnListBMTN14').click(function(e) {
 });
 $('#btnLapBMTN14').click(function(e) {
     ktdv.loadData('?route=bm/bmtn14/create');
-});
+});*/
 </script>
