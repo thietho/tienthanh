@@ -2,8 +2,10 @@
 <div id="error" class="error hidden"></div>
 <form id="frm_bmv03">
   <p>
-    	<input type="button" class="button" id="btnSaveBMTN13" value="Lưu phiếu" />
-        <input type="button" class="button" id="btnSavePrintBMTN13" value="Lưu & in phiếu" />
+    	<input type="button" class="button" id="btnSaveBMVT03" value="Lưu phiếu" />
+        <input type="button" class="button" id="btnSavePrintBMVT03" value="Lưu & in phiếu" />
+        
+        <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
     </p>
     <table>
     	<thead>
@@ -41,12 +43,12 @@
 $('#nghiemthu').val("<?php echo $item['nghiemthu']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 numberReady();
-$('#btnSaveBMTN13').click(function(e) {
+$('#btnSaveBMVT03').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmvt03/save", $("#frm_bmvt03").serialize(),
+	$.post("?route=bm/bmvt03/save", $("#frm_bmv03").serialize(),
 		function(data){
-			
+			$.unblockUI();
 			var obj = $.parseJSON(data);
 			
 			if(obj.error == "")
@@ -61,21 +63,22 @@ $('#btnSaveBMTN13').click(function(e) {
 				
 				
 			}
-			$.unblockUI();
+			
 		}
 	);
 });
 
-$('#btnSavePrintBMTN13').click(function(e) {
-    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+$('#btnSavePrintBMVT03').click(function(e) {
+	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmvt03/save", $("#frm_bmvt03").serialize(),
+	$.post("?route=bm/bmvt03/save", $("#frm_bmv03").serialize(),
 		function(data){
+			$.unblockUI();
 			var obj = $.parseJSON(data);
+			
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				
 				openDialog("?route=bm/bmvt03/view&id="+ obj.id +"&dialog=print",800,500);
 				ktdv.loadData('?route=bm/bmvt03/getList');
 			}
@@ -86,9 +89,12 @@ $('#btnSavePrintBMTN13').click(function(e) {
 				
 				
 			}
-			$.unblockUI();
+			
 		}
 	);
+	
+	
+   
 });
 
 
@@ -306,7 +312,7 @@ function intSelectLinhKien()
 	});	
 }
 
-function BMTN13()
+function BMVT03()
 {
 	this.index = 0;
 	this.id = 0;
@@ -360,7 +366,7 @@ function BMTN13()
 		$("#row"+pos).remove();
 	}
 }
-var bm = new BMTN13();
+var bm = new BMVT03();
 </script>
 <?php if(count($data_ct)){ ?>
 	<?php foreach($data_ct as $ct){ ?>
@@ -372,10 +378,12 @@ $(document).ready(function(e) {
 	bm.itemcode = "<?php echo $ct['itemcode']?>";
 	bm.itemname = "<?php echo $ct['itemname']?>";
 	bm.madonvi = "<?php echo $ct['madonvi']?>";
-	bm.trongluong = "<?php echo $ct['trongluong']?>";
-	bm.soluong = "<?php echo $ct['soluong']?>";
-	bm.chatluong = "<?php echo $ct['chatluong']?>";
-	bm.lothang = "<?php echo $ct['lothang']?>";
+	bm.tonhientai = "<?php echo $ct['tonhientai']?>";
+	bm.tontonthieu = "<?php echo $ct['tontonthieu']?>";
+	bm.muatoithieu = "<?php echo $ct['muatoithieu']?>";
+	bm.thoigiayeucau = "<?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?>";
+	bm.ketquathuchien = "<?php echo $ct['ketquathuchien']?>";
+	bm.mucdichsudung = "<?php echo $ct['mucdichsudung']?>";
 	
     bm.createRow();
 });
