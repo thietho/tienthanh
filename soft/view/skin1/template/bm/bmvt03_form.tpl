@@ -204,10 +204,12 @@ $('#btnSelectVatTu').click(function(e) {
 						bm.itemname = $(this).attr('tennguyenlieu');
 						bm.madonvi = $(this).attr('madonvi');
 						bm.tendonvi = $(this).attr('tendonvi');
-						bm.trongluong = 0;
-						bm.soluong = 0;
-						bm.chatluong = "";
-						bm.lothang = "";
+						bm.tonhientai = 0;
+						bm.tontonthieu = 0;
+						bm.muatoithieu = 0;
+						bm.thoigiayeucau = "";
+						bm.ketquathuchien = "";
+						bm.mucdichsudung = "";
 						
 						bm.createRow();
 						
@@ -275,10 +277,12 @@ $('#btnSelectLinhKien').click(function(e) {
 						bm.itemname = $(this).attr('tenlinhkien');
 						bm.madonvi = $(this).attr('madonvi');
 						bm.tendonvi = $(this).attr('tendonvi');
-						bm.trongluong = 0;
-						bm.soluong = 0;
-						bm.chatluong = "";
-						bm.lothang = "";
+						bm.tonhientai = 0;
+						bm.tontonthieu = 0;
+						bm.muatoithieu = 0;
+						bm.thoigiayeucau = "";
+						bm.ketquathuchien = "";
+						bm.mucdichsudung = "";
 						
 						bm.createRow();
 						
