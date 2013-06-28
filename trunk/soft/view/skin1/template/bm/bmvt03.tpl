@@ -49,8 +49,8 @@
             <td class="number"><?php echo $this->string->numberFormate($ct['tontonthieu'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['muatoithieu'])?></td>
             <td><?php echo $ct['pheduyet']?></td>
-            <td><?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?></td>
-            <td><?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?></td>
+            <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?></td>
+            <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?></td>
             <td><?php echo $ct['ketquathuchien']?></td>
             <td><?php echo $ct['mucdichsudung']?></td>
         </tr>
