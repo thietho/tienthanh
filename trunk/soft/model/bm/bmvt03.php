@@ -58,9 +58,11 @@ class ModelBmBmvt03 extends Model
 				$value[] = $this->db->escape($data[$val]);	
 			}
 		}
-					
-		$where="id = '".$data['id']."'";
-		$this->db->updateData("bmvt03",$field,$value,$where);
+		if(count($field))
+		{		
+			$where="id = '".$data['id']."'";
+			$this->db->updateData("bmvt03",$field,$value,$where);
+		}
 	}	
 		
 	public function updateCol($id,$col,$val)

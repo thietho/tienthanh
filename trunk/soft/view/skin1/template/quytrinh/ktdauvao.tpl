@@ -31,6 +31,9 @@ function KTDauVao()
 	}
 }
 var ktdv = new KTDauVao();
+$('#btnListBMTN13').click(function(e) {
+    ktdv.loadData('?route=bm/bmvt03/getList');
+});
 $('#btnLapBMVT03').click(function(e) {
     ktdv.loadData('?route=bm/bmvt03/create');
 });

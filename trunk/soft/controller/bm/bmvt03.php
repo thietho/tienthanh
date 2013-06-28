@@ -32,7 +32,7 @@ class ControllerBmBMvt03 extends Controller
 		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
 		
 		$where = " AND bmvt03id = '".$id."'";
-		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMTN13ChiTietList($where);
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
 		
 		$this->id='content';
 		$this->template='bm/bmvt03_form.tpl';
@@ -44,7 +44,7 @@ class ControllerBmBMvt03 extends Controller
 		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
 		
 		$where = " AND bmvt03id = '".$id."'";
-		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMTN13ChiTietList($where);
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
 		
 		$this->id='content';
 		$this->template='bm/bmvt03.tpl';
@@ -61,19 +61,8 @@ class ControllerBmBMvt03 extends Controller
 	{
 		
 		$where = " Order by id desc";
-		$this->data['data_bttn13']=$this->model_bm_bmvt03->getList($where);
-		foreach($this->data['data_bttn13'] as $key => $item)
-		{
-			$bmvt17 = $this->model_bm_bmvt17->getItem($item['bmvt17id']);
-			$this->data['data_bttn13'][$key]['bmvt17code'] = $bmvt17['sophieu'];
-			
-			//Lay du lieu bmvt16
-			$where = " AND bmvt03id = '".$item['id']."'";
-			$this->data['data_bttn13'][$key]['data_bmvt16'] = $this->model_bm_bmvt16->getList($where);
-		}
-		
-		
-		
+		$this->data['data_btvt03']=$this->model_bm_bmvt03->getList($where);
+				
 		$this->id='content';
 		$this->template='bm/bmvt03_list.tpl';
 		$this->render();
@@ -100,7 +89,7 @@ class ControllerBmBMvt03 extends Controller
 			{
 				if($id)
 				{
-					$this->model_bm_bmvt03->deleteBMTN13ChiTiet($id);	
+					$this->model_bm_bmvt03->deleteBMVT03ChiTiet($id);	
 				}
 			}
 			//Luu vao bang bntn13_chitiet
