@@ -111,10 +111,15 @@ class ControllerBmBMvt03 extends Controller
 			$arr_itemcode = $data['itemcode'];
 			$arr_itemname = $data['itemname'];
 			$arr_madonvi = $data['madonvi'];
-			$arr_trongluong = $data['trongluong'];
-			$arr_soluong = $data['soluong'];
-			$arr_chatluong = $data['chatluong'];
-			$arr_lothang = $data['lothang'];
+			$arr_tonhientai = $data['tonhientai'];
+			$arr_tontonthieu = $data['tontonthieu'];
+			$arr_muatoithieu = $data['muatoithieu'];
+			$arr_pheduyet = $data['pheduyet'];
+			$arr_thoigiayeucau = $data['thoigiayeucau'];
+			$arr_thoigianphanhoi = $data['thoigianphanhoi'];
+			$arr_ketquathuchien = $data['ketquathuchien'];
+			$arr_mucdichsudung = $data['mucdichsudung'];
+			
 			foreach($arr_id as $key=>$id)
 			{
 				$ct['id'] = $id;
@@ -124,11 +129,15 @@ class ControllerBmBMvt03 extends Controller
 				$ct['itemcode'] = $arr_itemcode[$key];
 				$ct['itemname'] = $arr_itemname[$key];
 				$ct['madonvi'] = $arr_madonvi[$key];
-				$ct['trongluong'] = $arr_trongluong[$key];
-				$ct['soluong'] = $arr_soluong[$key];
-				$ct['chatluong'] = $arr_chatluong[$key];
-				$ct['lothang'] = $arr_lothang[$key];
-				$this->model_bm_bmvt03->saveBMTN13ChiTiet($ct);
+				$ct['tonhientai'] = $arr_tonhientai[$key];
+				$ct['tontonthieu'] = $arr_tontonthieu[$key];
+				$ct['muatoithieu'] = $arr_muatoithieu[$key];
+				$ct['pheduyet'] = $arr_pheduyet[$key];
+				$ct['thoigiayeucau'] = $arr_thoigiayeucau[$key];
+				$ct['thoigianphanhoi'] = $arr_thoigianphanhoi[$key];
+				$ct['ketquathuchien'] = $arr_ketquathuchien[$key];
+				$ct['mucdichsudung'] = $arr_mucdichsudung[$key];
+				$this->model_bm_bmvt03->saveBMVT03ChiTiet($ct);
 			}
 			
 			$data['error'] = "";
@@ -149,28 +158,6 @@ class ControllerBmBMvt03 extends Controller
 	private function validateForm($data)
 	{
 		
-		
-    	if($data['sophieugiaohang'] == "")
-		{
-      		$this->error['sophieugiaohang'] = "Bạn chưa nhập số phiếu giao hàng";
-    	}
-		if($data['ngayphieugiaohang'] == "")
-		{
-      		$this->error['ngayphieugiaohang'] = "Bạn chưa nhập ngày phiếu giao hàng";
-    	}
-		if($data['nhacungungid'] == "")
-		{
-      		$this->error['nhacungungid'] = "Bạn chưa chọn nhà cung cấp";
-    	}
-		if($data['sokehoachdathang'] == "")
-		{
-      		$this->error['sokehoachdathang'] = "Bạn chưa nhập số kế hoạch đặt hàng";
-    	}
-		if($data['ngaykehoachdathang'] == "")
-		{
-      		$this->error['ngaykehoachdathang'] = "Bạn chưa nhập ngày kế hoạch đặt hàng";
-    	}
-
 		if (count($this->error)==0) {
 	  		return TRUE;
 		} else {

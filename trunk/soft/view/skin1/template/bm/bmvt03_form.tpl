@@ -1,6 +1,6 @@
 <h2>Phiếu đề xuất mua vật tư, nguyên liệu</h2>
 <div id="error" class="error hidden"></div>
-<form id="frm_bmtn13">
+<form id="frm_bmv03">
   <p>
     	<input type="button" class="button" id="btnSaveBMTN13" value="Lưu phiếu" />
         <input type="button" class="button" id="btnSavePrintBMTN13" value="Lưu & in phiếu" />
@@ -44,7 +44,7 @@ numberReady();
 $('#btnSaveBMTN13').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
+	$.post("?route=bm/bmvt03/save", $("#frm_bmvt03").serialize(),
 		function(data){
 			
 			var obj = $.parseJSON(data);
@@ -52,7 +52,7 @@ $('#btnSaveBMTN13').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				ktdv.loadData('?route=bm/bmtn13/getList');
+				ktdv.loadData('?route=bm/bmvt03/getList');
 			}
 			else
 			{
@@ -69,15 +69,15 @@ $('#btnSaveBMTN13').click(function(e) {
 $('#btnSavePrintBMTN13').click(function(e) {
     $.blockUI({ message: "<h1>Please wait...</h1>" }); 
 	
-	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
+	$.post("?route=bm/bmvt03/save", $("#frm_bmvt03").serialize(),
 		function(data){
 			var obj = $.parseJSON(data);
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
 				
-				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
-				ktdv.loadData('?route=bm/bmtn13/getList');
+				openDialog("?route=bm/bmvt03/view&id="+ obj.id +"&dialog=print",800,500);
+				ktdv.loadData('?route=bm/bmvt03/getList');
 			}
 			else
 			{
