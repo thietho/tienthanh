@@ -68,7 +68,3 @@
         <th width="33%">Thư ký</th>
     </tr>
 </table>
-
-<script language="javascript">
-window.print();
-</script>

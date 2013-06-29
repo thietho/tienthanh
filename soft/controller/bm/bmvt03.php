@@ -153,5 +153,17 @@ class ControllerBmBMvt03 extends Controller
 	  		return FALSE;
 		}
 	}
+	
+	public function delete()
+	{
+		$id = $this->request->get['id'];
+		$this->model_bm_bmvt03->delete($id);		
+		$this->data['output'] = 'true';
+		
+		
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
 }
 ?>

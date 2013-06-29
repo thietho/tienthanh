@@ -21,6 +21,14 @@ class ControllerQuytrinhKtdauvao extends Controller
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
 		
+		$this->load->model("bm/bmvt03");
+		
+		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
+		$this->data['cbDonViTinh'] = '<option value=""></option>';
+		foreach($data_donvitinh as $val)
+		{
+			$this->data['cbDonViTinh'] .= '<option value="'.$val['madonvi'].'">'.$val['tendonvitinh'].'</option>';
+		}
 		$this->data['loainguyenlieu'] = array();
 		$this->model_quanlykho_nhom->getTree("NL",$this->data['loainguyenlieu']);
 		//unset($this->data['loainguyenlieu'][0]);
