@@ -212,6 +212,52 @@ function BMVT03()
 			$("#popup").dialog("open");
 		});
 	}
+	this.phanHoiThoiGianCungUng = function(id)
+	{
+		$("#popup").attr('title','Phiếu đề xuất mua vật tư, nguyên liệu');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							
+							
+							
+						},
+						buttons: {
+							'Lưu': function() {
+								$.post("?route=bm/bmvt03/savePhanHoiThoiGianCungUng",$('#frm_phanhoithoigiancungung').serialize(),
+									function(data)
+									{
+										var obj = $.parseJSON(data);
+			
+										if(obj.error == "")
+										{
+											alert("Lưu phản hồi thời gian cung ứng thành công");
+											ktdv.loadData('?route=bm/bmvt03/getList');
+										}
+									});
+								//$( this ).dialog( "close" );
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								
+							},
+							'In': function(){
+								openDialog("?route=bm/bmvt03/view&id="+id+"&dialog=print",800,500)
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								
+								$( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmvt03/phanHoiThoiGianCungUng&id="+id,function(){
+			$("#popup").dialog("open");
+		});
+	}
 }
 var bm = new BMVT03();
 </script>

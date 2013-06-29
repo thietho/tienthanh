@@ -21,6 +21,7 @@
             <td>
             	<input type="button" class="button" value="Xem" onclick="bm.view(<?php echo $item['id']?>,'')">
                 <input type="button" class="button" value="Phê duyệt" onclick="bm.pheduyet(<?php echo $item['id']?>)">
+                <input type="button" class="button" value="Phản hồi thời gian cung ứng" onclick="bm.phanHoiThoiGianCungUng(<?php echo $item['id']?>)">
                 <?php if($item['tinhtrang'] =="") {?>
                 <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmvt03/edit&id=<?php echo $item['id']?>');">
                 <input type="button" class="button" value="Xóa" onclick="bm.del(<?php echo $item['id']?>)">

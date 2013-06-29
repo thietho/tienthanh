@@ -67,18 +67,6 @@ class ControllerBmBMvt03 extends Controller
 		}
 		$this->render();
 	}
-	public function pheduyet()
-	{
-		$id = $this->request->get['id'];
-		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
-		
-		$where = " AND bmvt03id = '".$id."'";
-		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
-		
-		$this->id='content';
-		$this->template='bm/bmvt03_pheduyet.tpl';
-		$this->render();
-	}
 	
 	public function getList()
 	{
@@ -189,6 +177,19 @@ class ControllerBmBMvt03 extends Controller
 		$this->render();
 	}
 	
+	public function pheduyet()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
+		
+		$where = " AND bmvt03id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt03_pheduyet.tpl';
+		$this->render();
+	}
+	
 	public function savePheDuyet()
 	{
 		$data = $this->request->post;
@@ -204,5 +205,34 @@ class ControllerBmBMvt03 extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
+	//
+	public function phanHoiThoiGianCungUng()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
+		
+		$where = " AND bmvt03id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt03_phanhoithoigiancungung.tpl';
+		$this->render();
+	}
+	public function savePhanHoiThoiGianCungUng()
+	{
+		$data = $this->request->post;
+		//$this->model_bm_bmvt03->updateCol($data['id'],'tinhtrang',$data['tinhtrang']);
+		if(count($data['thoigianphanhoi']))
+			foreach($data['thoigianphanhoi'] as $id => $thoigianphanhoi)
+			{
+				$this->model_bm_bmvt03->updateBMVT03ChiTiet($id,'thoigianphanhoi',$this->date->formatViewDate($thoigianphanhoi));
+			}
+		$data['error'] = "";
+		$this->data['output'] = json_encode($data);
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
+	
 }
 ?>
