@@ -161,7 +161,7 @@ function intSelectNguyenLieu()
 	
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
-			alert($(this).attr('madonvi'));
+			
 			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
