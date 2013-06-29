@@ -79,8 +79,9 @@ $('#btnSavePrintBMVT03').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				openDialog("?route=bm/bmvt03/view&id="+ obj.id +"&dialog=print",800,500);
-				ktdv.loadData('?route=bm/bmvt03/getList');
+				bm.view(obj.id);
+				
+				
 			}
 			else
 			{
@@ -133,10 +134,12 @@ $('#btnSelectNguyenLieu').click(function(e) {
 						bm.itemname = $(this).attr('tennguyenlieu');
 						bm.madonvi = $(this).attr('madonvi');
 						bm.tendonvi = $(this).attr('tendonvi');
-						bm.trongluong = 0;
-						bm.soluong = 0;
-						bm.chatluong = "";
-						bm.lothang = "";
+						bm.tonhientai = 0;
+						bm.tontonthieu = 0;
+						bm.muatoithieu = 0;
+						bm.thoigiayeucau = "";
+						bm.ketquathuchien = "";
+						bm.mucdichsudung = "";
 						bm.createRow();
 						
 						
@@ -316,61 +319,8 @@ function intSelectLinhKien()
 	});	
 }
 
-function BMVT03()
-{
-	this.index = 0;
-	this.id = 0;
-	this.itemtype = "";
-	this.itemid = "";
-	this.itemcode = "";
-	this.itemname = "";
-	this.madonvi = "";
-	this.tendonvi = "";
-	this.tonhientai = 0;
-	this.tontonthieu = 0;
-	this.muatoithieu = 0;
-	this.thoigiayeucau = "";
-	this.mucdichsudung = "";
-	
-	
-	this.createRow = function()
-	{
-		var row = '<tr id="row'+ this.index +'">';
-		//Ten hang hoa va qui cach
-		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
-		//Don vi
-		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
-		//Ton hien tai
-		row += '<td><input type="hidden" id="tonhientai-'+ this.index +'" name="tonhientai['+ this.index +']" value="'+ this.tonhientai +'"><span id="tonhientai_text-'+ this.index +'"></span></td>';
-		
-		//Ton T/thieu
-		row += '<td><input type="hidden" id="tontonthieu-'+ this.index +'" name="tontonthieu['+ this.index +']" value="'+ this.tontonthieu +'"><span id="tontonthieu_text-'+ this.index +'"></span></td>';
-		//Mua T/thieu
-		row += '<td><input type="text" name="muatoithieu['+this.index+']" value="'+ this.muatoithieu +'" class="text number"/></td>';
-		
-		//T/G yeu cau cung ung
-		row += '<td><input type="text" name="thoigiayeucau['+this.index+']" value="'+ this.thoigiayeucau +'" class="text date"/></td>';
-		//Muc dich su dung
-		row += '<td><input type="text" name="mucdichsudung['+this.index+']" value="'+ this.mucdichsudung +'" class="text"/></td>';
-		//Control
-		row += '<td><input type="button" class="button" value="Xóa" onclick="bm.remove('+this.index+')"></td>';
-		row += '</tr>';
-		$('#listhanghoa').append(row);
-		$('#madonvi-'+ this.index).val(this.madonvi);
-		$('#chatluong-'+ this.index).val(this.chatluong);
-		//Get ton hien tai
-		//Get ton toi thieu
-		this.index++;
-		numberReady();
-	}
-	
-	this.remove = function(pos)
-	{
-		$("#delid").val($("#delid").val()+","+ $('#ctid-'+pos).val());
-		$("#row"+pos).remove();
-	}
-}
-var bm = new BMVT03();
+
+
 </script>
 <?php if(count($data_ct)){ ?>
 	<?php foreach($data_ct as $ct){ ?>

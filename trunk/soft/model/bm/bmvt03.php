@@ -87,7 +87,8 @@ class ModelBmBmvt03 extends Model
 		$where="id = '".$id."'";
 		$this->db->deleteData('bmvt03',$where);
 		$where="bmvt03id = '".$id."'";
-		$this->db->updateData('bmvt03_chitiet',$field,$value,$where);
+		$this->db->deleteData('bmvt03_chitiet',$where);
+		
 		
 	}
 	//chi tiet phieu

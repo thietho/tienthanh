@@ -49,4 +49,116 @@ $('#btnListBMTN14').click(function(e) {
 $('#btnLapBMTN14').click(function(e) {
     ktdv.loadData('?route=bm/bmtn14/create');
 });*/
+function BMVT03()
+{
+	this.index = 0;
+	this.id = 0;
+	this.itemtype = "";
+	this.itemid = "";
+	this.itemcode = "";
+	this.itemname = "";
+	this.madonvi = "";
+	this.tendonvi = "";
+	this.tonhientai = 0;
+	this.tontonthieu = 0;
+	this.muatoithieu = 0;
+	this.thoigiayeucau = "";
+	this.mucdichsudung = "";
+	
+	
+	this.createRow = function()
+	{
+		var row = '<tr id="row'+ this.index +'">';
+		//Ten hang hoa va qui cach
+		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
+		//Don vi
+		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
+		//Ton hien tai
+		row += '<td><input type="hidden" id="tonhientai-'+ this.index +'" name="tonhientai['+ this.index +']" value="'+ this.tonhientai +'"><span id="tonhientai_text-'+ this.index +'"></span></td>';
+		
+		//Ton T/thieu
+		row += '<td class="number"><input type="hidden" id="tontonthieu-'+ this.index +'" name="tontonthieu['+ this.index +']" value="'+ this.tontonthieu +'"><span id="tontonthieu_text-'+ this.index +'"></span></td>';
+		//Mua T/thieu
+		row += '<td><input type="text" name="muatoithieu['+this.index+']" value="'+ this.muatoithieu +'" class="text number"/></td>';
+		
+		//T/G yeu cau cung ung
+		row += '<td><input type="text" name="thoigiayeucau['+this.index+']" value="'+ this.thoigiayeucau +'" class="text date"/></td>';
+		//Muc dich su dung
+		row += '<td><input type="text" name="mucdichsudung['+this.index+']" value="'+ this.mucdichsudung +'" class="text"/></td>';
+		//Control
+		row += '<td><input type="button" class="button" value="Xóa" onclick="bm.remove('+this.index+')"></td>';
+		row += '</tr>';
+		$('#listhanghoa').append(row);
+		$('#madonvi-'+ this.index).val(this.madonvi);
+		$('#chatluong-'+ this.index).val(this.chatluong);
+		//Get ton hien tai
+		//Get ton toi thieu
+		itemid = this.itemid;
+		
+		var pos = this.index;
+		$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu",
+			{
+				col:'id',
+				val: itemid
+			},
+			function(data)
+			{
+				tontoithieu = data.nguyenlieus[0].tontoithieu;
+				$('#tontonthieu-'+pos).val(tontoithieu);
+				$('#tontonthieu_text-'+pos).html(formateNumber(tontoithieu));
+			});
+		this.index++;
+		numberReady();
+	}
+	
+	this.remove = function(pos)
+	{
+		$("#delid").val($("#delid").val()+","+ $('#ctid-'+pos).val());
+		$("#row"+pos).remove();
+	}
+	this.del = function(id)
+	{
+		var answer = confirm("Bạn có muốn xóa phiếu này không?")
+		if (answer)
+		{
+			$.get("?route=bm/bmvt03/delete&id="+id,
+				function(data)
+				{
+					ktdv.loadData('?route=bm/bmvt03/getList');
+				});
+		}
+	}
+	this.view = function(id,callback)
+	{
+		$("#popup").attr('title','Phiếu đề xuất mua vật tư, nguyên liệu');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							ktdv.loadData('?route=bm/bmvt03/getList');
+						},
+						buttons: {
+							'Đóng': function() {
+								$( this ).dialog( "close" );
+								ktdv.loadData('?route=bm/bmvt03/getList');
+							},
+							'In': function(){
+								openDialog("?route=bm/bmvt03/view&id="+id+"&dialog=print",800,500)
+								ktdv.loadData('?route=bm/bmvt03/getList');
+								$( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmvt03/view&id="+id,function(){
+			$("#popup").dialog("open");	
+		});
+	}
+}
+var bm = new BMVT03();
 </script>
