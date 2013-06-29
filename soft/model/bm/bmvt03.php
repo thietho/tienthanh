@@ -113,28 +113,26 @@ class ModelBmBmvt03 extends Model
 	
 	public function saveBMVT03ChiTiet($data)
 	{
-		$data['bmvt03id'] = $this->db->escape(@$data['bmvt03id']);
-		$data['itemtype'] = $this->db->escape(@$data['itemtype']);
-		$data['itemid'] = $this->db->escape(@$data['itemid']);
-		$data['itemcode'] = $this->db->escape(@$data['itemcode']);
-		$data['itemname'] = $this->db->escape(@$data['itemname']);
-		$data['madonvi'] = $this->db->escape(@$data['madonvi']);
-		$data['tonhientai']=$this->db->escape(@$this->string->toNumber($data['tonhientai']));
-		$data['tontonthieu']=$this->db->escape(@$this->string->toNumber($data['tontonthieu']));
-		$data['muatoithieu']=$this->db->escape(@$this->string->toNumber($data['muatoithieu']));
-		$data['pheduyet'] = $this->db->escape(@$data['pheduyet']);
-		$data['thoigiayeucau']=$this->db->escape(@$this->date->formatViewDate($data['thoigiayeucau']));
-		$data['thoigianphanhoi']=$this->db->escape(@$this->date->formatViewDate($data['thoigianphanhoi']));
-		$data['ketquathuchien'] = $this->db->escape(@$data['ketquathuchien']);
-		$data['mucdichsudung'] = $this->db->escape(@$data['mucdichsudung']);
+		$obj = array();
+		$obj['bmvt03id'] = $this->db->escape(@$data['bmvt03id']);
+		$obj['itemtype'] = $this->db->escape(@$data['itemtype']);
+		$obj['itemid'] = $this->db->escape(@$data['itemid']);
+		$obj['itemcode'] = $this->db->escape(@$data['itemcode']);
+		$obj['itemname'] = $this->db->escape(@$data['itemname']);
+		$obj['madonvi'] = $this->db->escape(@$data['madonvi']);
+		$obj['tonhientai']=$this->db->escape(@$this->string->toNumber($data['tonhientai']));
+		$obj['tontonthieu']=$this->db->escape(@$this->string->toNumber($data['tontonthieu']));
+		$obj['muatoithieu']=$this->db->escape(@$this->string->toNumber($data['muatoithieu']));
+		$obj['pheduyet'] = $this->db->escape(@$this->string->toNumber($data['pheduyet']));
+		$obj['thoigiayeucau']=$this->db->escape(@$this->date->formatViewDate($data['thoigiayeucau']));
+		$obj['thoigianphanhoi']=$this->db->escape(@$this->date->formatViewDate($data['thoigianphanhoi']));
+		$obj['ketquathuchien'] = $this->db->escape(@$data['ketquathuchien']);
+		$obj['mucdichsudung'] = $this->db->escape(@$data['mucdichsudung']);
 		
-		foreach($data as $key => $val)
-		{
-			if($val!="")
-			{
-				$field[] = $key;
-				$value[] = $this->db->escape($val);	
-			}
+		foreach($obj as $key => $val)
+		{	
+			$field[] = $key;
+			$value[] = $this->db->escape($val);		
 		}		
 		
 		if((int)$data['id']==0)

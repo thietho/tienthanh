@@ -9,6 +9,16 @@ class ControllerBmBMvt03 extends Controller
 		{
 			$this->data['cbChatLuong'] .= '<option value="'.$key.'">'.$val.'</option>';
 		}
+		$this->data['arr_pheduyet'] = array(
+										'' => 'Chưa phê duyệt',
+										'dangxemxet' => 'Đang xem xét',
+										'dapheduyet' => 'Đã phê duyệt'
+										);
+		$this->data['pheduyet_color'] = array(
+										'' => '#fff',
+										'dangxemxet' => '#FFFF00',
+										'dapheduyet' => '#009F6B'
+										);
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
 		$this->load->model("bm/bmvt03");
@@ -57,6 +67,19 @@ class ControllerBmBMvt03 extends Controller
 		}
 		$this->render();
 	}
+	public function pheduyet()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmvt03->getItem($id);
+		
+		$where = " AND bmvt03id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt03_pheduyet.tpl';
+		$this->render();
+	}
+	
 	public function getList()
 	{
 		
@@ -161,6 +184,22 @@ class ControllerBmBMvt03 extends Controller
 		$this->data['output'] = 'true';
 		
 		
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
+	
+	public function savePheDuyet()
+	{
+		$data = $this->request->post;
+		$this->model_bm_bmvt03->updateCol($data['id'],'tinhtrang',$data['tinhtrang']);
+		if(count($data['pheduyet']))
+			foreach($data['pheduyet'] as $id => $pheduyet)
+			{
+				$this->model_bm_bmvt03->updateBMVT03ChiTiet($id,'pheduyet',$this->string->toNumber($pheduyet));
+			}
+		$data['error'] = "";
+		$this->data['output'] = json_encode($data);
 		$this->id='content';
 		$this->template='common/output.tpl';
 		$this->render();
