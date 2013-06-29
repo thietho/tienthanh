@@ -17,12 +17,14 @@
         	<td><?php echo $item['sophieu']?></td>
             <td><?php echo $this->document->getNhanVien($item['nhanvienlap'])?></td>
             <td><?php echo $this->date->formatMySQLDate($item['ngaylapphieu'])?></td>
-            <td><?php echo $item['tinhtrang']?></td>
+            <td bgcolor="<?php echo $pheduyet_color[$item['tinhtrang']]?>" align="center"><?php echo $arr_pheduyet[$item['tinhtrang']]?></td>
             <td>
-            	<input type="button" class="button" value="Xem" onclick="bm.view(<?php echo $item['id']?>)">
+            	<input type="button" class="button" value="Xem" onclick="bm.view(<?php echo $item['id']?>,'')">
+                <input type="button" class="button" value="Phê duyệt" onclick="bm.pheduyet(<?php echo $item['id']?>)">
+                <?php if($item['tinhtrang'] =="") {?>
                 <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmvt03/edit&id=<?php echo $item['id']?>');">
                 <input type="button" class="button" value="Xóa" onclick="bm.del(<?php echo $item['id']?>)">
-                
+                <?php } ?>
             </td>
         </tr>
         <?php } ?>

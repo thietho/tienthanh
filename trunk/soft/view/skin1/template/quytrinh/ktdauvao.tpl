@@ -139,16 +139,23 @@ function BMVT03()
 						height: 500,
 						modal: true,
 						close: function(event, ui) {
-							ktdv.loadData('?route=bm/bmvt03/getList');
+							//executeFunctionByName("ktdv.loadData",'?route=bm/bmvt03/getList');
+							if(callback !="")
+								setTimeout(callback,50);
+							
 						},
 						buttons: {
 							'Đóng': function() {
 								$( this ).dialog( "close" );
-								ktdv.loadData('?route=bm/bmvt03/getList');
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								if(callback !="")
+									setTimeout(callback,50);
 							},
 							'In': function(){
 								openDialog("?route=bm/bmvt03/view&id="+id+"&dialog=print",800,500)
-								ktdv.loadData('?route=bm/bmvt03/getList');
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								if(callback !="")
+									setTimeout(callback,50);
 								$( this ).dialog( "close" );
 							},
 						}
@@ -157,6 +164,52 @@ function BMVT03()
 					
 		$("#popup-content").load("?route=bm/bmvt03/view&id="+id,function(){
 			$("#popup").dialog("open");	
+		});
+	}
+	this.pheduyet = function(id)
+	{
+		$("#popup").attr('title','Phiếu đề xuất mua vật tư, nguyên liệu');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 800,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							
+							
+							
+						},
+						buttons: {
+							'Lưu': function() {
+								$.post("?route=bm/bmvt03/savePheDuyet",$('#frm_pheduyet').serialize(),
+									function(data)
+									{
+										var obj = $.parseJSON(data);
+			
+										if(obj.error == "")
+										{
+											alert("Lưu phê duyệt thành công");
+											ktdv.loadData('?route=bm/bmvt03/getList');
+										}
+									});
+								//$( this ).dialog( "close" );
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								
+							},
+							'In': function(){
+								openDialog("?route=bm/bmvt03/view&id="+id+"&dialog=print",800,500)
+								//ktdv.loadData('?route=bm/bmvt03/getList');
+								
+								$( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmvt03/pheduyet&id="+id,function(){
+			$("#popup").dialog("open");
 		});
 	}
 }

@@ -79,7 +79,7 @@ $('#btnSavePrintBMVT03').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				bm.view(obj.id);
+				bm.view(obj.id,"ktdv.loadData('?route=bm/bmvt03/getList')");
 				
 				
 			}

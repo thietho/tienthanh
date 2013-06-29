@@ -14,7 +14,17 @@
       	</td>
     </tr>
 </table>
+<form id="frm_pheduyet">
 <p>&nbsp;</p>
+<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
+<p>
+	<label>Phê duyệt</label>
+    <select id="tinhtrang" name="tinhtrang">
+    	<?php foreach($arr_pheduyet as $key => $val){ ?>
+        <option value="<?php echo $key?>"><?php echo $val?></option>
+        <?php } ?>
+    </select>
+</p>
 <table class="table-data">
 	<thead>
         <tr>
@@ -23,7 +33,7 @@
             <th rowspan="2">ĐVT</th>
             <th colspan="2">Tồn hiện tại</th>
             <th colspan="2">Qui dịnh</th>
-            <th rowspan="2">Phê duyệt</th>
+            <th rowspan="2"  width="135px">Phê duyệt</th>
             <th rowspan="2">T/G yêu cầu cung ứng</th>
             <th rowspan="2">Phản hồi T/G cung ứng</th>
             <th rowspan="2">Kết quả thực hiện</th>
@@ -48,7 +58,10 @@
             <td class="number"></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['tontonthieu'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['muatoithieu'])?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['pheduyet'])?></td>
+            <td>
+            	<input type="button" class="button" value="Duyệt" onClick="$('#pheduyet-<?php echo $ct['id']?>').val('<?php echo $this->string->numberFormate($ct['muatoithieu'])?>')">
+            	<input type="text" class="text number short" id="pheduyet-<?php echo $ct['id']?>" name="pheduyet[<?php echo $ct['id']?>]" value="<?php echo $ct['pheduyet']?>">
+            </td>
             <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?></td>
             <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?></td>
             <td><?php echo $ct['ketquathuchien']?></td>
@@ -68,3 +81,8 @@
         <th width="33%">Thư ký</th>
     </tr>
 </table>
+</form>
+<script language="javascript">
+	numberReady();
+	$('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
+</script>
