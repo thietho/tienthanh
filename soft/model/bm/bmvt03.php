@@ -173,5 +173,6 @@ class ModelBmBmvt03 extends Model
 		$where="id = '".$id."'";
 		$this->db->deleteData('bmvt03_chitiet',$where);
 	}
+	
 }
 ?>
