@@ -1,9 +1,12 @@
 <h2>Phiếu đề xuất mua vật tư, nguyên liệu</h2>
 <form id="frm_bmtn13_list">
-<p>
-	<label>Số phiếu</label>
-    <input type="text"  />
-</p>
+<div>
+    <p>
+        <label>Số phiếu</label>
+        <input type="text" class="text" id="txt_sophieu" value="<?php echo $_GET['sophieu']?>"/>
+        <input type="button" class="button" id="btn_BMVT03Search" value="Tìm"/>
+    </p>
+</div>
 <table>
 	<thead>
     	<tr>
@@ -38,7 +41,9 @@
 </table>
 </form>
 <script language="javascript">
-
+$('#btn_BMVT03Search').click(function(e) {
+    ktdv.loadData('?route=bm/bmvt03/getList&sophieu=' + encodeURI($('#txt_sophieu').val()));
+});
 function fromPhieuCanHang(bmtn13id,bmvt17id)
 {
 	 $("#popup").attr('title','Phiếu cân hàng');
