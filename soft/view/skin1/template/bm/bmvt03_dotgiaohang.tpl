@@ -1,9 +1,9 @@
-<form id="frm_phanhoithoigiancungung">
+<form id="frm_dotgiaohang">
 <p>&nbsp;</p>
 <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
 <p>
 	<label>Số phiếu</label>
-    <?php echo $arr_pheduyet[$item['tinhtrang']]?>
+    <?php echo $item['sophieu']?>
 </p>
 <table class="table-data">
 	<thead>
@@ -42,9 +42,7 @@
             
             <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?></td>
             <td align="center">
-            	<?php if($ct['pheduyet']>0){ ?>
-            	<input type="text" name="thoigianphanhoi[<?php echo $ct['id']?>]" value="<?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?>" class="text date"/>
-                <?php } ?>
+            	<?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?>
             </td>
             <td><?php echo $ct['ketquathuchien']?></td>
             <td><?php echo $ct['mucdichsudung']?></td>
