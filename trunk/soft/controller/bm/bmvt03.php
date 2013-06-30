@@ -70,8 +70,11 @@ class ControllerBmBMvt03 extends Controller
 	
 	public function getList()
 	{
-		
-		$where = " Order by id desc";
+		$where = "";
+		$sophieu = $this->request->get['sophieu'];
+		if($sophieu!='')
+			$where .= " AND `sophieu` LIKE  '%".$sophieu."%'";
+		$where .= " Order by id desc";
 		$this->data['data_btvt03']=$this->model_bm_bmvt03->getList($where);
 				
 		$this->id='content';
@@ -233,7 +236,7 @@ class ControllerBmBMvt03 extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
-	
+	//Dot giao hang
 	public function dotGiaoHang()
 	{
 		$id = $this->request->get['id'];
@@ -244,6 +247,19 @@ class ControllerBmBMvt03 extends Controller
 		
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang.tpl';
+		$this->render();
+	}
+	public function createDotGiaoHang()
+	{
+		$id = $this->request->get['id'];
+		$bmvt03id = $this->request->get['bmvt03id'];
+		
+		$this->data['item'] = $this->model_bm_bmvt03->getItem($bmvt03id);
+		$where = " AND bmvt03id = '".$bmvt03id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt03_dotgiaohang_form.tpl';
 		$this->render();
 	}
 }

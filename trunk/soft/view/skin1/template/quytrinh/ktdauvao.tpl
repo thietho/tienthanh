@@ -12,6 +12,7 @@
             <input class="button" id="btnLapBMTN14" value="Lập phiếu kết quả thử nghiệm (BM-TN-14)" type="button">-->
         </div>
         <div class="clearer">^&nbsp;</div>
+        
         <div id="formshow">
         </div>
             
@@ -22,6 +23,7 @@
     
 </div>
 <script language="javascript">
+
 function KTDauVao()
 {
 	this.loadData = function(url)
@@ -135,7 +137,7 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 800,
+						width: 1000,
 						height: 500,
 						modal: true,
 						close: function(event, ui) {
@@ -173,7 +175,7 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 800,
+						width: 1000,
 						height: 500,
 						modal: true,
 						close: function(event, ui) {
@@ -219,7 +221,7 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 800,
+						width: 1000,
 						height: 500,
 						modal: true,
 						close: function(event, ui) {
@@ -257,6 +259,10 @@ function BMVT03()
 		$("#popup-content").load("?route=bm/bmvt03/phanHoiThoiGianCungUng&id="+id,function(){
 			$("#popup").dialog("open");
 		});
+	}
+	this.createDotGiaoHang = function()
+	{
+		
 	}
 }
 var bm = new BMVT03();
