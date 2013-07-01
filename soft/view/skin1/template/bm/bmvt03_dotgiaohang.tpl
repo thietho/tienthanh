@@ -13,6 +13,18 @@
 	<label>Tình trạng</label>
     <?php echo $arr_pheduyet[$item['tinhtrang']]?>
 </p>
+<p>
+	<label>Đợt giao hàng</label>
+    <ul>
+    	<?php foreach($data_dotgiaohang as $key => $dotgiaohang){ ?>
+        <li>
+        	<a ref="<?php echo $dotgiaohang['id']?>">Đợt <?php echo $key + 1?></a>
+            <input type="button" class="button" value="Lập phiếu yêu cầu kết quả khiểm nghiệm(BM-TN-13)"/>
+            <input type="button" class="button" value="Lập phiếu cân hàng(BM-VT-17)"/>
+        </li>
+        <?php }?>
+    </ul>
+</p>
 <input type="button" class="button" id="btn_TaoDotGiaHang" value="Tạo đợt giao hàng">
 <table class="table-data">
 	<thead>

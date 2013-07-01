@@ -1,5 +1,5 @@
 <h2>Đợt giao hàng</h2>
-
+<div id="error" class="error hidden"></div>
 <form id="frm_dotgiaohangfrm">
 	<p>
     	<input type="button" class="button" id="btnCreateDotGiaoHang" value="Tạo đợt giao hàng" />
@@ -45,10 +45,17 @@
 			<?php foreach($data_ct as $key => $ct){ ?>
     	<tr>
         	<td><?php echo $key + 1 ?></td>
-            <td><?php echo $ct['itemname']?></td>
+            <td>
+            	<input type="hidden" name="itemtype[<?php echo $ct['id']?>]" value="<?php echo $ct['itemtype']?>" />
+                <input type="hidden" name="itemid[<?php echo $ct['id']?>]" value="<?php echo $ct['itemid']?>" />
+                <input type="hidden" name="itemcode[<?php echo $ct['id']?>]" value="<?php echo $ct['itemcode']?>" />
+                <input type="hidden" name="itemname[<?php echo $ct['id']?>]" value="<?php echo $ct['itemname']?>" />
+                <input type="hidden" name="madonvi[<?php echo $ct['id']?>]" value="<?php echo $ct['madonvi']?>" />
+            	<?php echo $ct['itemname']?>
+            </td>
             <td><?php echo $this->document->getDonViTinh($ct['madonvi'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['pheduyet'])?></td>
-            <td><input type="text" class="text" name="soluong[<?php echo $ct['id']?>]"></td>
+            <td class="number"><input type="text" class="text number" name="soluong[<?php echo $ct['id']?>]"></td>
             <td class="number"></td>
             <td class="number"></td>
             
@@ -88,5 +95,7 @@ function intSelectNhaCungCap()
 		$("#popup").dialog( "close" );
     });
 }
-
+$('#btnCreateDotGiaoHang').click(function(e) {
+    bm.createDotGiaoHang("<?php echo $item['id']?>");
+});
 </script>

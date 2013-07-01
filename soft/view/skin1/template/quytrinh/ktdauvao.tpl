@@ -260,9 +260,27 @@ function BMVT03()
 			$("#popup").dialog("open");
 		});
 	}
-	this.createDotGiaoHang = function()
+	this.createDotGiaoHang = function(id)
 	{
-		
+		$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+		$.post("?route=bm/bmvt03/saveDotGiaoHang", $("#frm_dotgiaohangfrm").serialize(),
+			function(data){
+				var obj = $.parseJSON(data);
+				if(obj.error == "")
+				{
+					ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&id='+id);
+				}
+				else
+				{
+				
+					$('#error').html(obj.error).show('slow');
+					
+					
+				}
+				$.unblockUI();
+			}
+		);
 	}
 }
 var bm = new BMVT03();

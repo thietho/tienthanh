@@ -173,6 +173,93 @@ class ModelBmBmvt03 extends Model
 		$where="id = '".$id."'";
 		$this->db->deleteData('bmvt03_chitiet',$where);
 	}
+	//Dot giao hang
+	public function getDotGiaHangList($where = "")
+	{
+		$sql = "Select `bmvt03_dotgiaohang`.* from `bmvt03_dotgiaohang` where 1=1 ".$where;
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+	public function getDotGiaHang($id)
+	{
+		$sql = "Select `bmvt03_dotgiaohang`.* from `bmvt03_dotgiaohang` where id = '".$id."'";
+		$query = $this->db->query($sql);
+		return $query->row;
+	}
+	public function insertDotGiaoHang($data)
+	{
+		$obj = array();
+		$obj['bmvt03id'] = $this->db->escape(@$data['bmvt03id']);
+		$obj['ngaygiao'] = $this->date->getTodayNoTime($data['ngaygiao']);
+		$obj['sophieugiaohang'] = $this->db->escape(@$data['sophieugiaohang']);
+		$obj['ngayphieugiaohang']=$this->db->escape(@$this->date->formatViewDate($data['ngayphieugiaohang']));
+		$obj['nhacungungid'] = $this->db->escape(@$data['nhacungungid']);
+		$obj['manhacungung'] = $this->db->escape(@$data['manhacungung']);
+		$obj['tennhacungung'] = $this->db->escape(@$data['tennhacungung']);
+		$obj['sokehoachdathang'] = $this->db->escape(@$data['sokehoachdathang']);
+		$obj['ngaykehoachdathang']=$this->db->escape(@$this->date->formatViewDate($data['ngaykehoachdathang']));
+		$obj['tinhtrang'] = $this->db->escape(@$data['tinhtrang']);
+		
+		foreach($obj as $key => $val)
+		{	
+			$field[] = $key;
+			$value[] = $this->db->escape($val);		
+		}
+		$getLastId = $this->db->insertData("bmvt03_dotgiaohang",$field,$value);
+		return $getLastId;
+	}
 	
+	
+	public function deleteDotGiaHang($id)
+	{
+		$id = $this->db->escape(@$id);		
+		$where="id = '".$id."'";
+		$this->db->deleteData('bmvt03_dotgiaohang',$where);
+		$where="dotgiaohangid = '".$id."'";
+		$this->db->deleteData('bmvt03_dotgiaohang_chitiet',$where);
+	}
+	public function getDotGiaHangChiTietList($where = "")
+	{
+		$sql = "Select `bmvt03_dotgiaohang_chitiet`.* from `bmvt03_dotgiaohang_chitiet` where 1=1 ".$where;
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+	public function saveDotGiaoHangChiTiet($data)
+	{
+		$obj = array();
+		$obj['dotgiaohangid'] = $this->db->escape(@$data['dotgiaohangid']);
+		$obj['itemtype'] = $this->db->escape(@$data['itemtype']);
+		$obj['itemid'] = $this->db->escape(@$data['itemid']);
+		$obj['itemcode'] = $this->db->escape(@$data['itemcode']);
+		$obj['itemname'] = $this->db->escape(@$data['itemname']);
+		$obj['madonvi'] = $this->db->escape(@$data['madonvi']);
+		$obj['soluong']=$this->db->escape(@$this->string->toNumber($data['soluong']));
+		
+		foreach($obj as $key => $val)
+		{	
+			$field[] = $key;
+			$value[] = $this->db->escape($val);		
+		}		
+		
+		if((int)$data['id']==0)
+		{
+			
+			$this->db->insertData("bmvt03_dotgiaohang_chitiet",$field,$value);
+			$id = $this->db->getLastId();
+		}
+		else
+		{			
+			$where="id = '".$data['id']."'";
+			$this->db->updateData('bmvt03_dotgiaohang_chitiet',$field,$value,$where);
+		}
+		return $id;
+	}
+	public function deleteDotGiaHangChiTiet($id)
+	{
+		$id = $this->db->escape(@$id);		
+		$where="id = '".$id."'";
+		$this->db->deleteData('bmvt03_dotgiaohang_chitiet',$where);
+		
+	}
 }
 ?>
