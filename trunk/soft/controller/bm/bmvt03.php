@@ -245,6 +245,10 @@ class ControllerBmBMvt03 extends Controller
 		$where = " AND bmvt03id = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
 		
+		//List dot giao hang
+		$where = " AND bmvt03id = '".$id."'";
+		$this->data['data_dotgiaohang'] = $this->model_bm_bmvt03->getDotGiaHangList($where);
+		
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang.tpl';
 		$this->render();
@@ -261,6 +265,80 @@ class ControllerBmBMvt03 extends Controller
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang_form.tpl';
 		$this->render();
+	}
+	public function saveDotGiaoHang()
+	{
+		$data = $this->request->post;
+		if($this->validateFormDotGiaoHang($data))
+		{
+			$data['id'] = $this->model_bm_bmvt03->insertDotGiaoHang($data);	
+			//Luu vao chi tiet dot dat hang
+			$dotgiaohangid = $data['id'];
+			$arr_id = $data['ctid'];
+			$arr_itemtype = $data['itemtype'];
+			$arr_itemid = $data['itemid'];
+			$arr_itemcode = $data['itemcode'];
+			$arr_itemname = $data['itemname'];
+			$arr_madonvi = $data['madonvi'];
+			$arr_soluong = $data['soluong'];
+			foreach($arr_itemid as $key =>$itemid)
+			{
+				$ct['dotgiaohangid'] = $dotgiaohangid;
+				$ct['bmvt03id'] = $data['bmvt03id'];
+				$ct['itemtype'] = $arr_itemtype[$key];
+				$ct['itemid'] = $arr_itemid[$key];
+				$ct['itemcode'] = $arr_itemcode[$key];
+				$ct['itemname'] = $arr_itemname[$key];
+				$ct['madonvi'] = $arr_madonvi[$key];
+				$ct['soluong'] = $arr_soluong[$key];
+				if($ct['soluong']>0)
+					$this->model_bm_bmvt03->saveDotGiaoHangChiTiet($ct);
+			}
+			$data['error'] = "";
+		}
+		else
+		{
+			foreach($this->error as $item)
+			{
+				$data['error'] .= $item."<br>";
+			}			
+		}
+		
+		
+		$this->data['output'] = json_encode($data);
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
+	
+	private function validateFormDotGiaoHang($data)
+	{
+		if($data['sophieugiaohang']=="")
+		{
+			$this->error['sophieugiaohang'] = "Bạn chưa nhập số phiếu giao hàng";
+		}
+		if($data['ngayphieugiaohang']=="")
+		{
+			$this->error['ngayphieugiaohang'] = "Bạn chưa nhập ngày ngày phiếu giao hàng";
+		}
+		if($data['manhacungung']=="")
+		{
+			$this->error['manguyenlieu'] = "Bạn chưa chọn nhà cung ứng";
+		}
+		if($data['sokehoachdathang']=="")
+		{
+			$this->error['sokehoachdathang'] = "Bạn chưa nhập số kế hoạch đặt hàng";
+		}
+		if($data['ngaykehoachdathang']=="")
+		{
+			$this->error['ngaykehoachdathang'] = "Bạn chưa nhập ngày kế hoạch đặt hàng";
+		}
+		
+		if (count($this->error)==0) {
+	  		return TRUE;
+		} else {
+	  		return FALSE;
+		}
 	}
 }
 ?>
