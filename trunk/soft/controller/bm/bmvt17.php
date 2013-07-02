@@ -6,6 +6,7 @@ class ControllerBmBmvt17 extends Controller
 	{
 		
 		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("bm/bmvt03");
 		$this->load->model("bm/bmtn13");
 		$this->load->model("bm/bmvt17");
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
@@ -15,29 +16,19 @@ class ControllerBmBmvt17 extends Controller
 			$this->data['cbDonViTinh'] .= '<option value="'.$val['madonvi'].'">'.$val['tendonvitinh'].'</option>';
 		}
 	}
-	public function index()
+	public function create()
 	{
-		$id = $this->request->get['bmvt17id'];
-		
-		if($id == "")
-		{		
-			$bmtn13id = $this->request->get['bmtn13id'];
-			$this->data['item'] = $this->model_bm_bmtn13->getItem($bmtn13id);
-			$this->data['item']['bmtn13id'] = $this->data['item']['id'];
-			$this->data['item']['id'] = "";
-			$where = " AND bmtn13id = '".$bmtn13id."'";
-			$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
-			foreach($this->data['data_ct'] as $key => $ct)
-			{
-				$this->data['data_ct'][$key]['id'] = "";
-			}
-		}
-		else
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($dotgiaohangid);
+		$this->data['item']['id'] = "";
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
+		$where = " AND dotgiaohangid = '".$dotgiaohangid."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		foreach($this->data['data_ct'] as $key => $ct)
 		{
-			$this->data['item'] = $this->model_bm_bmvt17->getItem($id);
-			$where = " AND bmvt17id = '".$id."'";
-			$this->data['data_ct'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+			$this->data['data_ct'][$key]['id'] = '';
 		}
+		
 		$this->id='content';
 		$this->template='bm/bmvt17_form.tpl';
 		$this->render();
