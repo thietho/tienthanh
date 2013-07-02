@@ -208,8 +208,23 @@ class ModelBmBmvt03 extends Model
 		$getLastId = $this->db->insertData("bmvt03_dotgiaohang",$field,$value);
 		return $getLastId;
 	}
-	
-	
+	public function updateDotGiaoHang($id,$col,$val)
+	{
+		$id = $this->db->escape(@$id);
+		$col=$this->db->escape(@$col);
+		$val=$this->db->escape(@$val);
+		
+		$field=array(
+						$col
+						
+					);
+		$value=array(
+						$val
+					);
+		
+		$where="id = '".$id."'";
+		$this->db->updateData('bmvt03_dotgiaohang',$field,$value,$where);
+	}
 	public function deleteDotGiaHang($id)
 	{
 		$id = $this->db->escape(@$id);		

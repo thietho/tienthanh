@@ -22,6 +22,8 @@ class ControllerBmBMvt03 extends Controller
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
 		$this->load->model("bm/bmvt03");
+		$this->load->model("bm/bmtn13");
+		$this->load->model("bm/bmvt17");
 		
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
 		$this->data['cbDonViTinh'] = '<option value=""></option>';
@@ -249,6 +251,12 @@ class ControllerBmBMvt03 extends Controller
 		$where = " AND bmvt03id = '".$id."'";
 		$this->data['data_dotgiaohang'] = $this->model_bm_bmvt03->getDotGiaHangList($where);
 		
+		foreach($this->data['data_dotgiaohang'] as $key => $ct)
+		{
+			$bmtn13 = $this->model_bm_bmtn13->getItem($ct['bmtn13id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmtn13']= $bmtn13['sophieu'];
+		}
+		
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang.tpl';
 		$this->render();
@@ -272,6 +280,7 @@ class ControllerBmBMvt03 extends Controller
 		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($id);
 		$where = " AND dotgiaohangid = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		
 		
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang_view.tpl';

@@ -7,6 +7,7 @@
     </p>
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
+        <input type="hidden" id="dotgiaohangid" name="dotgiaohangid" value="<?php echo $dotgiaohangid?>"/>
         Phòng kiểm nghiệm đo lường chất lượng đồng ý:
         <select id="nghiemthu" name="nghiemthu">
         	<?php foreach($this->document->nghiemthu as $key => $val){ ?>
@@ -57,11 +58,7 @@
         	
         </tbody>
     </table>
-    <input type="button" class="button" id="btnSelectNguyenLieu" value="Chọn nguyên liệu">
-    <input type="button" class="button" id="btnSelectVatTu" value="Chọn vật tư">
-    <input type="button" class="button" id="btnSelectLinhKien" value="Chọn linh kiện">
     
-    <input type="hidden" id="delid" name="delid">
     
     
     
@@ -82,7 +79,7 @@ $('#btnSaveBMTN13').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				ktdv.loadData('?route=bm/bmtn13/getList');
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
 			}
 			else
 			{
@@ -105,9 +102,36 @@ $('#btnSavePrintBMTN13').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
+				$("#popup").attr('title','Phiếu yêu cầu kiểm kết quả nghiệm thu');
+							$( "#popup" ).dialog({
+								autoOpen: false,
+								show: "blind",
+								hide: "explode",
+								width: 1000,
+								height: 500,
+								modal: true,
+								close: function(event, ui) {
+									ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+									
+									
+								},
+								buttons: {
+									
+									'In': function(){
+										openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
+										ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+										
+										$( this ).dialog( "close" );
+									},
+								}
+							});
+						
+							
+				$("#popup-content").load("?route=bm/bmtn13/view&id="+obj.id,function(){
+					$("#popup").dialog("open");
+				});
 				
-				openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
-				ktdv.loadData('?route=bm/bmtn13/getList');
+				
 			}
 			else
 			{
@@ -153,7 +177,7 @@ function BMTN13()
 		//Lot hang hoa
 		row += '<td><input type="text" name="lothang['+this.index+']" value="'+ this.lothang +'" class="text"/></td>';
 		//Control
-		row += '<td><input type="button" class="button" value="Xóa" onclick="bm.remove('+this.index+')"></td>';
+		//row += '<td><input type="button" class="button" value="Xóa" onclick="bmtn13.remove('+this.index+')"></td>';
 		row += '</tr>';
 		$('#listhanghoa').append(row);
 		$('#madonvi-'+ this.index).val(this.madonvi);
@@ -168,24 +192,24 @@ function BMTN13()
 		$("#row"+pos).remove();
 	}
 }
-var bm = new BMTN13();
+var bmtn13 = new BMTN13();
 </script>
 <?php if(count($data_ct)){ ?>
 	<?php foreach($data_ct as $ct){ ?>
 <script language="javascript">
 $(document).ready(function(e) {
-	bm.id = "<?php echo $ct[id]?>";
-	bm.itemtype = "<?php echo $ct['itemtype']?>";
-	bm.itemid = "<?php echo $ct['itemid']?>";
-	bm.itemcode = "<?php echo $ct['itemcode']?>";
-	bm.itemname = "<?php echo $ct['itemname']?>";
-	bm.madonvi = "<?php echo $ct['madonvi']?>";
-	bm.trongluong = "<?php echo $ct['trongluong']?>";
-	bm.soluong = "<?php echo $ct['soluong']?>";
-	bm.chatluong = "<?php echo $ct['chatluong']?>";
-	bm.lothang = "<?php echo $ct['lothang']?>";
+	bmtn13.id = "<?php echo $ct[id]?>";
+	bmtn13.itemtype = "<?php echo $ct['itemtype']?>";
+	bmtn13.itemid = "<?php echo $ct['itemid']?>";
+	bmtn13.itemcode = "<?php echo $ct['itemcode']?>";
+	bmtn13.itemname = "<?php echo $ct['itemname']?>";
+	bmtn13.madonvi = "<?php echo $ct['madonvi']?>";
+	bmtn13.trongluong = "<?php echo $ct['trongluong']?>";
+	bmtn13.soluong = "<?php echo $ct['soluong']?>";
+	bmtn13.chatluong = "<?php echo $ct['chatluong']?>";
+	bmtn13.lothang = "<?php echo $ct['lothang']?>";
 	
-    bm.createRow();
+    bmtn13.createRow();
 });
 </script>
 	<?php } ?>

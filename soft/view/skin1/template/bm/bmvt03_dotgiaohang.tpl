@@ -20,7 +20,10 @@
         <li>
         	Đợt <?php echo $key + 1?>
             <input type="button" class="button" value="Xem" onclick="bm.viewDotGiaoHang('<?php echo $dotgiaohang['id']?>','Đợt <?php echo $key + 1?>')"/>
-            
+            <?php if($dotgiaohang['bmtn13id']){?>
+            BMTN13: <a onclick="bm.viewBMTN13(<?php echo $dotgiaohang['bmtn13id']?>)"><?php echo $dotgiaohang['sophieubmtn13']?></a>
+            <input type="button" class="button" onclick="ktdv.loadData('?route=bm/bmtn13/edit&id=<?php echo $dotgiaohang['bmtn13id']?>&dotgiaohangid=<?php echo $dotgiaohang['id']?>')" value="Sửa"/>
+            <?php } ?>
         </li>
         <?php }?>
     </ul>
