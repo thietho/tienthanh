@@ -266,6 +266,18 @@ class ControllerBmBMvt03 extends Controller
 		$this->template='bm/bmvt03_dotgiaohang_form.tpl';
 		$this->render();
 	}
+	public function viewDotGiaoHang()
+	{
+		$id = $this->request->get['id'];
+		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($id);
+		$where = " AND dotgiaohangid = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt03_dotgiaohang_view.tpl';
+		$this->render();
+	}
+	
 	public function saveDotGiaoHang()
 	{
 		$data = $this->request->post;

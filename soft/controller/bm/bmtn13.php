@@ -11,6 +11,7 @@ class ControllerBmBMtn13 extends Controller
 		}
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("bm/bmvt03");
 		$this->load->model("bm/bmtn13");
 		$this->load->model("bm/bmvt17");
 		$this->load->model("bm/bmvt16");
@@ -23,6 +24,11 @@ class ControllerBmBMtn13 extends Controller
 	}
 	public function create()
 	{
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($dotgiaohangid);
+		$where = " AND dotgiaohangid = '".$dotgiaohangid."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		
 		$this->id='content';
 		$this->template='bm/bmtn13_form.tpl';
 		$this->render();
