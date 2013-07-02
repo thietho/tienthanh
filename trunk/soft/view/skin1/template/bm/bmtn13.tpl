@@ -85,6 +85,3 @@
     <p>Điều kiện: Phế liệu - hao hụt - màu sắc - kích cở hạt - khấu trừ bao bì - khuyến mãi</p>
     <p>Độ cứng, dẻo - chiều dài - độ bóng sáng  - khó tháo, tuốt - tỷ lệ lấy mẩu kiềm - tiêu chuẩn ...</p>
 </div>
-<script language="javascript">
-window.print();
-</script>

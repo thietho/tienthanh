@@ -315,6 +315,37 @@ function BMVT03()
 			$("#popup").dialog("open");
 		});
 	}
+	this.viewBMTN13 = function(bmtn13id)
+	{
+		$("#popup").attr('title','Phiếu yêu cầu kiểm kết quả nghiệm thu');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 1000,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+							
+							
+						},
+						buttons: {
+							
+							'In': function(){
+								openDialog("?route=bm/bmtn13/view&id="+ bmtn13id +"&dialog=print",800,500);
+								//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+								
+								$( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmtn13/view&id="+bmtn13id,function(){
+			$("#popup").dialog("open");
+		});	
+	}
 }
 var bm = new BMVT03();
 </script>

@@ -26,9 +26,14 @@ class ControllerBmBMtn13 extends Controller
 	{
 		$dotgiaohangid = $this->request->get['dotgiaohangid'];
 		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($dotgiaohangid);
+		$this->data['item']['id'] = "";
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
 		$where = " AND dotgiaohangid = '".$dotgiaohangid."'";
 		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
-		
+		foreach($this->data['data_ct'] as $key => $ct)
+		{
+			$this->data['data_ct'][$key]['id'] = '';
+		}
 		$this->id='content';
 		$this->template='bm/bmtn13_form.tpl';
 		$this->render();
@@ -36,6 +41,8 @@ class ControllerBmBMtn13 extends Controller
 	public function edit()
 	{
 		$id = $this->request->get['id'];
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
 		$this->data['item'] = $this->model_bm_bmtn13->getItem($id);
 		
 		$where = " AND bmtn13id = '".$id."'";
@@ -96,6 +103,7 @@ class ControllerBmBMtn13 extends Controller
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmtn13->insert($data);
+				$this->model_bm_bmvt03->updateDotGiaoHang($data['dotgiaohangid'],'bmtn13id',$data['id']);
 			}
 			else
 			{
