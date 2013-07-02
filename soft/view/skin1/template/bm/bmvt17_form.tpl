@@ -11,44 +11,53 @@
         <input type="hidden" id="tennhacungung" name="tennhacungung" value="<?php echo $item['tennhacungung']?>"/>
         
     </p>
+    <?php if(count($data_ct)){ ?>
+    <?php foreach($data_ct as $key => $ct){ ?>
+    <h3><?php echo $ct['itemname']?> số lượng giao <?php echo $ct['soluong']?> <?php echo $this->document->getDonViTinh($ct['madonvi'])?></h3>
+    <input type="button" class="button" value="Thêm lần cân" onclick="bmvt17.addRow(<?php echo $ct['itemid']?>)"/>
     <table>
     	<thead>
         	<tr>
-            	<th>STT</th>
-                <th>Tên hàng</th>
                 <th>Bao bì</th>
                 <th>Loại bao</th>
                 <th>Số lượng</th>
-                <th>Đơn vị tính</th>
+                
                 <th>Ghi chú</th>
             </tr>
         </thead>
-        <tbody>
-        <?php if(count($data_ct)){ ?>
-        	<?php foreach($data_ct as $key => $ct){ ?>
-            <tr>
-            	<td><?php echo $key + 1 ?></td>
-                <td>
-                	<input type="hidden" name="ctid[<?php echo $key?>]" value="<?php echo $ct['id']?>">
-                	<input type="hidden" name="itemtype[<?php echo $key?>]" value="<?php echo $ct['itemtype']?>">
-                    <input type="hidden" name="itemid[<?php echo $key?>]" value="<?php echo $ct['itemid']?>">
-                    <input type="hidden" name="itemcode[<?php echo $key?>]" value="<?php echo $ct['itemcode']?>">
-                    <input type="hidden" name="itemname[<?php echo $key?>]" value="<?php echo $ct['itemname']?>">
-                    <input type="hidden" name="madonvi[<?php echo $key?>]" value="<?php echo $ct['madonvi']?>">
-                	<?php echo $ct['itemname']?>
-                </td>
-                <td><input type="text" class="text" id="baobi-<?php echo $key?>" name="baobi[<?php echo $key?>]" value="<?php echo $ct['baobi']?>"></td>
-                <td><input type="text" class="text" id="loaibao-<?php echo $key?>" name="loaibao[<?php echo $key?>]" value="<?php echo $ct['loaibao']?>"></td>
-                <td><input type="text" class="text number" id="soluongcan-<?php echo $key?>" name="soluongcan[<?php echo $key?>]" value="<?php echo $ct['soluongcan']?>"></td>
-                <td><?php echo $this->document->getDonViTinh($ct['madonvi'])?></td>
-                <td><input type="text" class="text" id="ghichu-<?php echo $key?>" name="ghichu[<?php echo $key?>]" value="<?php echo $ct['ghichu']?>"></td>
-            </tr>
-            <?php } ?>
-        <?php } ?>
-        </tbody>
+        <tbody id="listcan<?php echo $ct['itemid']?>"></tbody>
     </table>
+    <?php } ?>        
+    <?php }?>
+    
 </form>
 <script language="javascript">
 numberReady();
+function BMVT17()
+{
+	this.index = 0;
+	this.baobi = "";
+	this.loaibao = "";
+	this.soluongcan = 0;
+	
+	this.ghichu = "";
+	this.addRow = function(itemid)
+	{
+		var row = '<tr>';
+		//Bao bi
+		row += '<td><input type="text" class="text" id="baobi-'+ this.index +'" name="baobi['+ itemid +']['+ this.index +']" value="'+ this.baobi +'"></td>';
+		//Loai bao
+		row += '<td><input type="text" class="text " id="loaibao-'+ this.index +'" name="loaibao['+ itemid +']['+ this.index +']" value="'+ this.loaibao +'"></td>';
+		//So luong can
+		row += '<td><input type="text" class="text number" id="soluongcan-'+ this.index +'" name="soluongcan['+ itemid +']['+ this.index +']" value="'+ this.soluongcan +'"></td>';
+		//Ghi chu
+		row += '<td><input type="text" class="text" id="ghichu-'+ this.index +'" name="ghichu['+ itemid +']['+ this.index +']" value="'+ this.ghichu +'"></td>';
+		row += '</tr>';
+		$('#listcan'+itemid).append(row);
+		numberReady();
+	}
+		
+}
+var bmvt17 = new BMVT17();
 
 </script>
