@@ -176,13 +176,13 @@ class ModelBmBmvt03 extends Model
 	//Dot giao hang
 	public function getDotGiaHangList($where = "")
 	{
-		$sql = "Select `bmvt03_dotgiaohang`.* from `bmvt03_dotgiaohang` where 1=1 ".$where;
+		$sql = "Select * from `bmvt03_dotgiaohang` where 1=1 ".$where;
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
 	public function getDotGiaHang($id)
 	{
-		$sql = "Select `bmvt03_dotgiaohang`.* from `bmvt03_dotgiaohang` where id = '".$id."'";
+		$sql = "Select * from `bmvt03_dotgiaohang` where id = '".$id."'";
 		$query = $this->db->query($sql);
 		return $query->row;
 	}

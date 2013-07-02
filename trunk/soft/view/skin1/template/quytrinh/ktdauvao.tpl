@@ -282,6 +282,39 @@ function BMVT03()
 			}
 		);
 	}
+	this.viewDotGiaoHang = function(id,title)
+	{
+		$("#popup").attr('title',title);
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 1000,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							
+							
+							
+						},
+						buttons: {
+							'Lập phiếu yêu cầu kết quả khiểm nghiệm(BM-TN-13)': function() {
+								 ktdv.loadData('?route=bm/bmtn13/create&dotgiaohangid='+id);
+								 $( this ).dialog( "close" );
+								
+							},
+							'Lập phiếu cân hàng(BM-VT-17)': function(){
+								 ktdv.loadData('?route=bm/bmvt17/create&dotgiaohangid='+id);
+								 $( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmvt03/viewDotGiaoHang&id="+id,function(){
+			$("#popup").dialog("open");
+		});
+	}
 }
 var bm = new BMVT03();
 </script>

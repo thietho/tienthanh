@@ -18,9 +18,9 @@
     <ul>
     	<?php foreach($data_dotgiaohang as $key => $dotgiaohang){ ?>
         <li>
-        	<a ref="<?php echo $dotgiaohang['id']?>">Đợt <?php echo $key + 1?></a>
-            <input type="button" class="button" value="Lập phiếu yêu cầu kết quả khiểm nghiệm(BM-TN-13)"/>
-            <input type="button" class="button" value="Lập phiếu cân hàng(BM-VT-17)"/>
+        	Đợt <?php echo $key + 1?>
+            <input type="button" class="button" value="Xem" onclick="bm.viewDotGiaoHang('<?php echo $dotgiaohang['id']?>','Đợt <?php echo $key + 1?>')"/>
+            
         </li>
         <?php }?>
     </ul>
