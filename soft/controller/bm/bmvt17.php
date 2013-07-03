@@ -33,7 +33,23 @@ class ControllerBmBmvt17 extends Controller
 		$this->template='bm/bmvt17_form.tpl';
 		$this->render();
 	}
-	
+	public function edit()
+	{
+		$id = $this->request->get['id'];
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
+		$this->data['item'] = $this->model_bm_bmvt17->getItem($id);
+		
+		$where = " AND dotgiaohangid = '".$dotgiaohangid."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		
+		$where = " AND bmvt17id = '".$id."'";
+		$this->data['data_ctcan'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+		
+		$this->id='content';
+		$this->template='bm/bmvt17_form.tpl';
+		$this->render();
+	}
 	public function view()
 	{
 		$id = $this->request->get['id'];
@@ -41,6 +57,12 @@ class ControllerBmBmvt17 extends Controller
 		
 		$where = " AND bmvt17id = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+		$this->data['groupct'] = array();
+		foreach($this->data['data_ct'] as $ct)
+		{
+			$this->data['groupct'][$ct['itemname']][] = $ct;
+		}
+		
 		
 		$this->id='content';
 		$this->template='bm/bmvt17.tpl';
@@ -74,13 +96,21 @@ class ControllerBmBmvt17 extends Controller
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmvt17->insert($data);
-				$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
+				$this->model_bm_bmvt03->updateDotGiaoHang($data['dotgiaohangid'],'bmvt17id',$data['id']);
 			}
 			else
 			{
 				$this->model_bm_bmvt17->update($data);
 			}
-			
+			//Xóa chi tiet
+			$arr_delid = split(",",$data['delid']);
+			foreach($arr_delid as $id)
+			{
+				if($id)
+				{
+					$this->model_bm_bmvt17->deleteBMVT17ChiTiet($id);	
+				}
+			}
 			//Luu vao bang bnvt17_chitiet
 			$bmvt17id = $data['id'];
 			$arr_id = $data['ctid'];

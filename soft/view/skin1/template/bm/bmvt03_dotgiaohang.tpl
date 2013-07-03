@@ -27,8 +27,12 @@
             <input type="button" class="button" value="Lập phiếu yêu cầu kết quả khiểm nghiệm(BM-TN-13)" onclick="ktdv.loadData('?route=bm/bmtn13/create&dotgiaohangid=<?php echo $dotgiaohang['id']?>');"/>
             <?php } ?>
             
+            <?php if($dotgiaohang['bmvt17id']){?>
+            BMVT17: <a onclick="bm.viewBMVT17(<?php echo $dotgiaohang['bmvt17id']?>)"><?php echo $dotgiaohang['sophieubmvt17']?></a>
+            <input type="button" class="button" onclick="ktdv.loadData('?route=bm/bmvt17/edit&id=<?php echo $dotgiaohang['bmvt17id']?>&dotgiaohangid=<?php echo $dotgiaohang['id']?>')" value="Sửa"/>
+            <?php }else{ ?>
             <input type="button" class="button" value="Lập phiếu cân hàng(BM-VT-17)" onclick="ktdv.loadData('?route=bm/bmvt17/create&dotgiaohangid=<?php echo $dotgiaohang['id']?>');"/>
-            
+            <?php } ?>
         </li>
         <?php }?>
     </ul>
