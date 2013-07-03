@@ -255,6 +255,9 @@ class ControllerBmBMvt03 extends Controller
 		{
 			$bmtn13 = $this->model_bm_bmtn13->getItem($ct['bmtn13id']);
 			$this->data['data_dotgiaohang'][$key]['sophieubmtn13']= $bmtn13['sophieu'];
+			
+			$bmvt17 = $this->model_bm_bmvt17->getItem($ct['bmvt17id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmvt17']= $bmvt17['sophieu'];
 		}
 		
 		$this->id='content';

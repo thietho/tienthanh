@@ -22,7 +22,7 @@
 	<thead>
         <tr>
             <th>STT</th>
-            <th>Tên hàng</th>
+            
             <th>Bao bì</th>
             <th>Loại bao</th>
             <th>Số lượng</th>
@@ -32,17 +32,21 @@
         
     </thead>
     <tbody>
-    	<?php if(count($data_ct)){ ?>
-			<?php foreach($data_ct as $key => $ct){ ?>
+    	<?php if(count($groupct)){ ?>
+			<?php foreach($groupct as $key => $ct){ ?>
     	<tr>
-        	<td><?php echo $key + 1 ?></td>
-            <td><?php echo $ct['itemname']?></td>
-            <td><?php echo $ct['baobi']?></td>
-            <td><?php echo $ct['loaibao']?></td>
-            <td class="number"><?php echo $this->string->numberFormate($ct['soluongcan'])?></td>
-            <td class="number"><?php echo $this->document->getDonViTinh($ct['madonvi'])?></td>
-            <td><?php echo $ct['ghichu']?></td>
+            <td colspan="6"><strong><?php echo $key?></strong></td>
         </tr>
+        		<?php foreach($ct as $i => $can){ ?>
+        <tr>
+        	<td align="center"><?php echo $i + 1?></td>
+            <td><?php echo $can['baobi']?></td>
+            <td><?php echo $can['loaibao']?></td>
+            <td class="number"><?php echo $this->string->numberFormate($can['soluongcan'])?></td>
+            <td><?php echo $this->document->getDonViTinh($can['madonvi'])?></td>
+            <td><?php echo $can['ghichu']?></td>
+        </tr>
+                <?php } ?>
         	<?php } ?>
         <?php } ?>
     </tbody>
@@ -57,6 +61,3 @@
         <th width="33%">Thủ kho</th>
     </tr>
 </table>
-<script language="javascript">
-window.print();
-</script>
