@@ -5,7 +5,7 @@ class ModelBmBmVt17 extends Model
 								'sophieu',
 								'ngaylap',
 								'nhanvienlap',
-								'bmtn13id',
+								
 								'nhacungungid',
 								'manhacungung',
 								'tennhacungung'
