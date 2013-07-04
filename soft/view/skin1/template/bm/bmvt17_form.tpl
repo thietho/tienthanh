@@ -61,7 +61,7 @@ $('#btnSaveBMVT17').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+obj.bmvt03id);
 			}
 			else
 			{
@@ -84,7 +84,7 @@ $('#btnSavePrintBMVT17').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+obj.bmvt03id);
 				bm.viewBMVT17(obj.id);
 							
 				$("#popup-content").load("?route=bm/bmvt17/view&id="+obj.id,function(){

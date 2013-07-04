@@ -138,7 +138,8 @@ class ControllerBmBmvt17 extends Controller
 				$ct['ghichu'] = $arr_ghichu[$key];
 				$this->model_bm_bmvt17->saveBMVT17ChiTiet($ct);
 			}
-			
+			$dotgiaohang = $this->model_bm_bmvt03->getDotGiaHang($data['dotgiaohangid']);
+			$data['bmvt03id'] = $dotgiaohang['bmvt03id'];
 			$data['error'] = "";
 			
 		}

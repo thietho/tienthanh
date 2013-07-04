@@ -21,9 +21,25 @@ class ControllerBmBmvt16 extends Controller
 		$id = $this->request->get['id'];
 		$dotgiaohangid = $this->request->get['dotgiaohangid'];
 		$this->data['dotgiaohangid'] = $dotgiaohangid;
+		$dotgiaohang = $this->model_bm_bmvt03->getDotGiaHang($dotgiaohangid);
 		$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
 		$where = " AND bmvt16id = '".$id."'";
 		$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
+		foreach($this->data['data_ct'] as $key => $ct)
+		{
+			
+			
+			//Lay so luong thuc nhap tu bmvt17
+			$itemid = $ct['itemid'];
+			$where = " AND bmvt17id ='".$dotgiaohang['bmvt17id']."' AND itemid = '".$itemid."'";
+			$data_ctcanhang = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+			$sumcan = 0;
+			foreach($data_ctcanhang as $can)
+			{
+				$sumcan+=$can['soluongcan'];
+			}
+			$this->data['data_ct'][$key]['thucnhap'] = $sumcan;
+		}
 		
 		$this->id='content';
 		$this->template='bm/bmvt16_form.tpl';
@@ -135,7 +151,8 @@ class ControllerBmBmvt16 extends Controller
 				
 				$this->model_bm_bmvt16->saveBMVT16ChiTiet($ct);
 			}
-			
+			$dotgiaohang = $this->model_bm_bmvt03->getDotGiaHang($data['dotgiaohangid']);
+			$data['bmvt03id'] = $dotgiaohang['bmvt03id'];
 			$data['error'] = "";
 			
 		}

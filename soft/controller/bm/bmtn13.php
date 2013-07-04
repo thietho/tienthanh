@@ -145,7 +145,8 @@ class ControllerBmBMtn13 extends Controller
 				$ct['lothang'] = $arr_lothang[$key];
 				$this->model_bm_bmtn13->saveBMTN13ChiTiet($ct);
 			}
-			
+			$dotgiaohang = $this->model_bm_bmvt03->getDotGiaHang($data['dotgiaohangid']);
+			$data['bmvt03id'] = $dotgiaohang['bmvt03id'];
 			$data['error'] = "";
 			
 		}
