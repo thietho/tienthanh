@@ -5,8 +5,7 @@ class ModelBmBmVt16 extends Model
 								'sophieu',
 								'ngaylapphieu',
 								'nhanvienlap',
-								'bmtn13id',
-								'bmvt17id',
+								
 								'sokehoachdathang',
 								'ngaykehoachdathang',
 								'mathang',

@@ -75,6 +75,3 @@
         <th width="25%">Thủ kho</th>
     </tr>
 </table>
-<script language="javascript">
-window.print();
-</script>

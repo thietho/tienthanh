@@ -24,6 +24,7 @@ class ControllerBmBMvt03 extends Controller
 		$this->load->model("bm/bmvt03");
 		$this->load->model("bm/bmtn13");
 		$this->load->model("bm/bmvt17");
+		$this->load->model("bm/bmvt16");
 		
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
 		$this->data['cbDonViTinh'] = '<option value=""></option>';
@@ -258,6 +259,9 @@ class ControllerBmBMvt03 extends Controller
 			
 			$bmvt17 = $this->model_bm_bmvt17->getItem($ct['bmvt17id']);
 			$this->data['data_dotgiaohang'][$key]['sophieubmvt17']= $bmvt17['sophieu'];
+			
+			$bmvt16 = $this->model_bm_bmvt17->getItem($ct['bmvt16id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmvt16']= $bmvt16['sophieu'];
 		}
 		
 		$this->id='content';

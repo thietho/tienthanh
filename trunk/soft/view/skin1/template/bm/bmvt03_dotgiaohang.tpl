@@ -33,6 +33,15 @@
             <?php }else{ ?>
             <input type="button" class="button" value="Lập phiếu cân hàng(BM-VT-17)" onclick="ktdv.loadData('?route=bm/bmvt17/create&dotgiaohangid=<?php echo $dotgiaohang['id']?>');"/>
             <?php } ?>
+            
+            <?php if($dotgiaohang['bmtn13id'] !=0 && $dotgiaohang['bmvt17id']!=0){ ?>
+            	<?php if($dotgiaohang['bmvt16id']){ ?>
+            BMVT17: <a onclick="bm.viewBMVT16(<?php echo $dotgiaohang['bmvt16id']?>)"><?php echo $dotgiaohang['sophieubmvt16']?></a>
+            <input type="button" class="button" onclick="ktdv.loadData('?route=bm/bmvt16/edit&id=<?php echo $dotgiaohang['bmvt16id']?>&dotgiaohangid=<?php echo $dotgiaohang['id']?>')" value="Sửa"/>
+                <?php }else{ ?>
+                <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa(BM-VT-16)" onclick="ktdv.loadData('?route=bm/bmvt16/create&dotgiaohangid=<?php echo $dotgiaohang['id']?>');"/>
+                <?php } ?>
+            <?php } ?>
         </li>
         <?php }?>
     </ul>

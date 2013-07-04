@@ -378,6 +378,37 @@ function BMVT03()
 			$("#popup").dialog("open");
 		});	
 	}
+	this.viewBMVT16 = function(bmvt16id)
+	{
+		$("#popup").attr('title','Phiếu nhập vật tư hàng hóa');
+					$( "#popup" ).dialog({
+						autoOpen: false,
+						show: "blind",
+						hide: "explode",
+						width: 1000,
+						height: 500,
+						modal: true,
+						close: function(event, ui) {
+							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+							
+							
+						},
+						buttons: {
+							
+							'In': function(){
+								openDialog("?route=bm/bmvt16/view&id="+ bmvt16id +"&dialog=print",1000,500);
+								//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+								
+								$( this ).dialog( "close" );
+							},
+						}
+					});
+				
+					
+		$("#popup-content").load("?route=bm/bmvt16/view&id="+bmvt16id,function(){
+			$("#popup").dialog("open");
+		});	
+	}
 }
 var bm = new BMVT03();
 </script>
