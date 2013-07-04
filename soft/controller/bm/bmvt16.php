@@ -6,7 +6,8 @@ class ControllerBmBmvt16 extends Controller
 	{
 		
 		$this->load->model("quanlykho/donvitinh");
-		$this->load->model("bm/bmtn13");
+		$this->load->model("bm/bmvt03");
+		$this->load->model("bm/bmvt17");
 		$this->load->model("bm/bmvt16");
 		$data_donvitinh = $this->model_quanlykho_donvitinh->getList();
 		$this->data['cbDonViTinh'] = '<option value=""></option>';
@@ -15,29 +16,44 @@ class ControllerBmBmvt16 extends Controller
 			$this->data['cbDonViTinh'] .= '<option value="'.$val['madonvi'].'">'.$val['tendonvitinh'].'</option>';
 		}
 	}
-	public function index()
+	public function edit()
 	{
-		$id = $this->request->get['bmvt16id'];
+		$id = $this->request->get['id'];
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
+		$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
+		$where = " AND bmvt16id = '".$id."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
 		
-		if($id == "")
-		{		
-			$bmtn13id = $this->request->get['bmtn13id'];
-			$this->data['item'] = $this->model_bm_bmtn13->getItem($bmtn13id);
-			$this->data['item']['bmtn13id'] = $this->data['item']['id'];
-			$this->data['item']['id'] = "";
-			$where = " AND bmtn13id = '".$bmtn13id."'";
-			$this->data['data_ct'] = $this->model_bm_bmtn13->getBMTN13ChiTietList($where);
-			foreach($this->data['data_ct'] as $key => $ct)
-			{
-				$this->data['data_ct'][$key]['id'] = "";
-			}
-		}
-		else
+		$this->id='content';
+		$this->template='bm/bmvt16_form.tpl';
+		$this->render();
+	}
+	
+	public function create()
+	{
+		$dotgiaohangid = $this->request->get['dotgiaohangid'];
+		$this->data['item'] = $this->model_bm_bmvt03->getDotGiaHang($dotgiaohangid);
+		$this->data['item']['id'] = "";
+		$this->data['dotgiaohangid'] = $dotgiaohangid;
+		$where = " AND dotgiaohangid = '".$dotgiaohangid."'";
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getDotGiaHangChiTietList($where);
+		foreach($this->data['data_ct'] as $key => $ct)
 		{
-			$this->data['item'] = $this->model_bm_bmvt16->getItem($id);
-			$where = " AND bmvt16id = '".$id."'";
-			$this->data['data_ct'] = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
+			$this->data['data_ct'][$key]['id'] = '';
+			$this->data['data_ct'][$key]['chungtu'] = $ct['soluong'];
+			//Lay so luong thuc nhap tu bmvt17
+			$itemid = $ct['itemid'];
+			$where = " AND bmvt17id ='".$this->data['item']['bmvt17id']."' AND itemid = '".$itemid."'";
+			$data_ctcanhang = $this->model_bm_bmvt17->getBMVT17ChiTietList($where);
+			$sumcan = 0;
+			foreach($data_ctcanhang as $can)
+			{
+				$sumcan+=$can['soluongcan'];
+			}
+			$this->data['data_ct'][$key]['thucnhap'] = $sumcan;
 		}
+		
 		$this->id='content';
 		$this->template='bm/bmvt16_form.tpl';
 		$this->render();
@@ -83,7 +99,7 @@ class ControllerBmBmvt16 extends Controller
 			if((int)$data['id']==0)
 			{
 				$data['id'] = $this->model_bm_bmvt16->insert($data);
-				//$this->model_bm_bmtn13->updateCol($data['bmtn13id'],'bmvt17id',$data['id']);
+				$this->model_bm_bmvt03->updateDotGiaoHang($data['dotgiaohangid'],'bmvt16id',$data['id']);
 			}
 			else
 			{

@@ -1,13 +1,15 @@
 <h2>Phiếu nhập vật tư hàng hóa</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_bmvt16">
-	
+	<p>
+    	<input type="button" class="button" id="btnSaveBMVT16" value="Lưu phiếu" />
+        <input type="button" class="button" id="btnSavePrintBMVT16" value="Lưu & in phiếu" />
+    </p>
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
-        <input type="hidden" id="bmtn13id" name="bmtn13id" value="<?php echo $item['bmtn13id']?>"/>
-        <input type="hidden" id="bmvt17id" name="bmvt17id" value="<?php echo $item['bmvt17id']?>"/>
-        Theo kế hoạch đặt hàng: <?php echo $item['sokehoachdathang']?>
-        Ngày: <?php echo $this->date->formatMySQLDate($item['ngaykehoachdathang'])?>
+        <input type="hidden" id="dotgiaohangid" name="dotgiaohangid" value="<?php echo $dotgiaohangid?>"/>
+        <label>Theo kế hoạch đặt hàng:</label> <?php echo $item['sokehoachdathang']?>
+        <label>Ngày:</label> <?php echo $this->date->formatMySQLDate($item['ngaykehoachdathang'])?>
         <input type="hidden" id="sokehoachdathang" name="sokehoachdathang" value="<?php echo $item['sokehoachdathang']?>"/>
         <input type="hidden" id="ngaykehoachdathang" name="ngaykehoachdathang" value="<?php echo $item['ngaykehoachdathang']?>"/>
         
@@ -57,5 +59,53 @@
 </form>
 <script language="javascript">
 numberReady();
-
+$('#btnSaveBMVT16').click(function(e) {
+    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+	$.post("?route=bm/bmvt16/save", $("#frm_bmvt16").serialize(),
+		function(data){
+			
+			var obj = $.parseJSON(data);
+			
+			if(obj.error == "")
+			{
+				alert("Lưu phiếu thành công");
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+			}
+			else
+			{
+			
+				$('#error').html(obj.error).show('slow');
+				
+				
+			}
+			$.unblockUI();
+		}
+	);
+});
+$('#btnSavePrintBMVT16').click(function(e) {
+    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+	$.post("?route=bm/bmvt16/save", $("#frm_bmvt16").serialize(),
+		function(data){
+			
+			var obj = $.parseJSON(data);
+			
+			if(obj.error == "")
+			{
+				alert("Lưu phiếu thành công");
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+				bm.viewBMVT16(obj.id);
+			}
+			else
+			{
+			
+				$('#error').html(obj.error).show('slow');
+				
+				
+			}
+			$.unblockUI();
+		}
+	);
+});
 </script>

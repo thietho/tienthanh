@@ -102,30 +102,8 @@ $('#btnSavePrintBMTN13').click(function(e) {
 			if(obj.error == "")
 			{
 				alert("Lưu phiếu thành công");
-				$("#popup").attr('title','Phiếu yêu cầu kiểm kết quả nghiệm thu');
-							$( "#popup" ).dialog({
-								autoOpen: false,
-								show: "blind",
-								hide: "explode",
-								width: 1000,
-								height: 500,
-								modal: true,
-								close: function(event, ui) {
-									ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
-									
-									
-								},
-								buttons: {
-									
-									'In': function(){
-										openDialog("?route=bm/bmtn13/view&id="+ obj.id +"&dialog=print",800,500);
-										ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
-										
-										$( this ).dialog( "close" );
-									},
-								}
-							});
-						
+				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
+				bm.viewBMTN13(obj.id);
 							
 				$("#popup-content").load("?route=bm/bmtn13/view&id="+obj.id,function(){
 					$("#popup").dialog("open");
