@@ -36,7 +36,7 @@
             
             <?php if($dotgiaohang['bmtn13id'] !=0 && $dotgiaohang['bmvt17id']!=0){ ?>
             	<?php if($dotgiaohang['bmvt16id']){ ?>
-            BMVT17: <a onclick="bm.viewBMVT16(<?php echo $dotgiaohang['bmvt16id']?>)"><?php echo $dotgiaohang['sophieubmvt16']?></a>
+            BMVT16: <a onclick="bm.viewBMVT16(<?php echo $dotgiaohang['bmvt16id']?>)"><?php echo $dotgiaohang['sophieubmvt16']?></a>
             <input type="button" class="button" onclick="ktdv.loadData('?route=bm/bmvt16/edit&id=<?php echo $dotgiaohang['bmvt16id']?>&dotgiaohangid=<?php echo $dotgiaohang['id']?>')" value="Sửa"/>
                 <?php }else{ ?>
                 <input type="button" class="button" value="Lập phiếu nhập vật tư hàng hóa(BM-VT-16)" onclick="ktdv.loadData('?route=bm/bmvt16/create&dotgiaohangid=<?php echo $dotgiaohang['id']?>');"/>
@@ -83,8 +83,8 @@
             <td class="number"><?php echo $this->string->numberFormate($ct['tontonthieu'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['muatoithieu'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['pheduyet'])?></td>
-            <td class="number"></td>
-            <td class="number"></td>
+            <td class="number"><?php echo $this->string->numberFormate($ct['dagiao'])?></td>
+            <td class="number"><?php echo $this->string->numberFormate($ct['conlai'])?></td>
             <td align="center"><?php echo $this->date->formatMySQLDate($ct['thoigiayeucau'])?></td>
             <td align="center">
             	<?php echo $this->date->formatMySQLDate($ct['thoigianphanhoi'])?>
