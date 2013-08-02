@@ -47,6 +47,9 @@
             <td><?php echo $can['ghichu']?></td>
         </tr>
                 <?php } ?>
+        <tr>
+        	<td></td>
+        </tr>
         	<?php } ?>
         <?php } ?>
     </tbody>

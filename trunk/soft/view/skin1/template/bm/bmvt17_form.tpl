@@ -38,6 +38,8 @@
 <script language="javascript">
 $('.btnAddCan').click(function(e) {
 	//alert($(this).attr('ref'));
+	
+	bmvt17.id = 0;
     bmvt17.itemtype = $(this).attr('itemtype');
 	bmvt17.itemid = $(this).attr('itemid');
 	bmvt17.itemcode = $(this).attr('itemcode');

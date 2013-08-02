@@ -269,7 +269,7 @@ function BMVT03()
 				var obj = $.parseJSON(data);
 				if(obj.error == "")
 				{
-					ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&id='+id);
+					ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id='+id);
 				}
 				else
 				{
