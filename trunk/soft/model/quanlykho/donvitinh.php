@@ -92,5 +92,105 @@ class ModelQuanlykhoDonvitinh extends Model
 			$this->delete($item);
 		}
 	}
+	
+	//
+	public function getDonViQuyDoi($madonvi)
+	{
+		$data = array();
+		$donvi = $this->getItem($madonvi);
+		$data[] = $donvi;
+		while($donvi['madonviquydoi']!='')
+		{
+			$donvi = $this->getItem($donvi['madonviquydoi']);
+			$data[] = $donvi;
+		}
+		return $data;
+	}
+	
+	
+	public function toDonViTinh($arr,$madonvi)
+	{
+		
+		$data_donvitinh = $this->getDonViQuyDoi($madonvi);
+		
+		foreach($data_donvitinh as $i => $donvitinh)
+		{
+			foreach($arr as $val)
+			{
+				if($val['madonvi'] == $donvitinh['madonvi'])
+				{
+					$data_donvitinh[$i]['soluong'] = $val['soluong'];
+				}
+			}
+		}
+		
+		$data_donvitinh = $this->string->swapArray($data_donvitinh);
+		
+		foreach($data_donvitinh as $i => $donvitinh)
+		{
+			if($data_donvitinh[$i+1]['quidoi'] !=0)
+			{
+				
+				$phandu = $data_donvitinh[$i]['soluong'] % $data_donvitinh[$i+1]['quidoi'];
+				$phannguyen = floor($data_donvitinh[$i]['soluong'] / $data_donvitinh[$i+1]['quidoi']);
+				
+				$data_donvitinh[$i]['soluong'] = $phandu;
+				$data_donvitinh[$i+1]['soluong'] += $phannguyen;
+			}
+		}
+		return $this->string->swapArray($data_donvitinh);
+	}
+	
+	public function toInt($data_donvi)
+	{
+		$soluong = 0;
+		foreach($data_donvi as $i => $donvi)
+		{
+			//echo $soluong += $donvi['soluong']*$donvi['quidoi'];
+			$hs = 1;
+			for($j = $i;$j<count($data_donvi);$j++)
+			{
+				if($data_donvi[$j]['quidoi']!=0)
+				{
+					$hs *= $data_donvi[$j]['quidoi'];
+				}
+			}
+			$soluong += $donvi['soluong'] * $hs;
+		}
+		return $soluong;
+	}
+	
+	public function toDonVi($int,$madonvi)
+	{
+		
+		$data_donvitinh = $this->getDonViQuyDoi($madonvi);
+		//$data_donvitinh = $this->string->swapArray($data_donvitinh);
+		foreach($data_donvitinh as $i => $donvitinh)
+		{
+			$hs = 1;
+			for($j = $i;$j<count($data_donvitinh);$j++)
+			{
+				if($data_donvitinh[$j]['quidoi']!=0)
+				{
+					$hs *= $data_donvitinh[$j]['quidoi'];
+				}
+			}
+			$data_donvitinh[$i]['soluong'] = floor($int/$hs);
+			$int = $int%$hs;
+		}
+		return $data_donvitinh;
+	}
+	public function toText($data_donvitinh)
+	{
+		$arr = array();
+		
+		foreach($data_donvitinh as $donvitinh)
+		{
+			if($donvitinh['soluong'])
+				$arr[] = $donvitinh['soluong']." ".$donvitinh['tendonvitinh'];
+		}
+		
+		return implode(" - ",$arr);
+	}
 }
 ?>
