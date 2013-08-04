@@ -45,7 +45,7 @@
         	<td><?php echo $key + 1 ?></td>
             <td><?php echo $ct['itemname']?></td>
             <td><?php echo $ct['lothang']?></td>
-            <td align="center"><?php echo $this->document->getDonViTinh($ct['donvi'])?></td>
+            <td align="center"><?php echo $this->document->getDonViTinh($ct['madonvi'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['chungtu'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['thucnhap'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['dongia'])?></td>

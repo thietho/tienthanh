@@ -177,5 +177,14 @@ class ModelBmBmVt16 extends Model
 		$where="id = '".$id."'";
 		$this->db->deleteData('bmvt16_chitiet',$where);
 	}
+	
+	public function getTonKho($itemid)
+	{
+		$sql = "Select sum(`thucnhap`) as tonkho, madonvi from `bmvt16_chitiet` 
+				where itemid = '".$itemid."'
+				Group by itemid,madonvi";
+		$query = $this->db->query($sql);
+		return $query->rows;	
+	}
 }
 ?>

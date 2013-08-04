@@ -11,10 +11,11 @@ class ControllerQuanlykhoDonvitinh extends Controller
 		{
 			$this->response->redirect('?route=page/home');
 		}
+		$this->load->model("quanlykho/donvitinh");
 	}
 	public function index()
 	{
-		$this->load->model("quanlykho/donvitinh");
+		
 		$this->getList();
 	}
 
@@ -25,7 +26,7 @@ class ControllerQuanlykhoDonvitinh extends Controller
 
 	public function update()
 	{
-		$this->load->model("quanlykho/donvitinh");
+		
 		$this->data['readonly'] = 'readonly="readonly"';
 		$this->getForm();
 	}
@@ -35,7 +36,7 @@ class ControllerQuanlykhoDonvitinh extends Controller
 	{
 		$listmadonvi=$this->request->post['delete'];
 		//$listmadonvi=$_POST['delete'];
-		$this->load->model("quanlykho/donvitinh");
+		
 		if(count($listmadonvi))
 		{
 			$this->model_quanlykho_donvitinh->deletedatas($listmadonvi);
@@ -86,7 +87,6 @@ class ControllerQuanlykhoDonvitinh extends Controller
 	private function getForm()
 	{
 		$this->data['error'] = @$this->error;
-		$this->load->model("quanlykho/donvitinh");
 
 		$where = " AND madonvi <> '".$this->request->get['madonvi']."'";
 		$this->data['listdonvitinh'] = $this->model_quanlykho_donvitinh->getList($where);
@@ -94,13 +94,11 @@ class ControllerQuanlykhoDonvitinh extends Controller
 		if ((isset($this->request->get['madonvi'])) )
 		{
 			$this->data['item'] = $this->model_quanlykho_donvitinh->getItem($this->request->get['madonvi']);
-				
 		}
 
 		$this->id='content';
 		$this->template='quanlykho/donvitinh_form.tpl';
 		$this->layout="layout/center";
-
 		$this->render();
 	}
 
@@ -154,6 +152,15 @@ class ControllerQuanlykhoDonvitinh extends Controller
 		}
 	}
 	//Cac ham xu ly tren form
-
+	public function getListDonVi()
+	{
+		$madonvi = $this->request->get['madonvi'];
+		$data_donvi = $this->model_quanlykho_donvitinh->getDonViQuyDoi($madonvi);
+		$this->data['output'] = json_encode($data_donvi);
+		
+		$this->id="donvi";
+		$this->template="common/output.tpl";
+		$this->render();
+	}
 }
 ?>
