@@ -74,7 +74,7 @@ function BMVT03()
 		//Ten hang hoa va qui cach
 		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
 		//Don vi
-		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
+		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']" class="madonvi" ref="'+ this.index +'"></select></td>';
 		//Ton hien tai
 		row += '<td><input type="hidden" id="tonhientai-'+ this.index +'" name="tonhientai['+ this.index +']" value="'+ this.tonhientai +'"><span id="tonhientai_text-'+ this.index +'"></span></td>';
 		
@@ -91,24 +91,68 @@ function BMVT03()
 		row += '<td><input type="button" class="button" value="Xóa" onclick="bm.remove('+this.index+')"></td>';
 		row += '</tr>';
 		$('#listhanghoa').append(row);
-		$('#madonvi-'+ this.index).val(this.madonvi);
+		
 		$('#chatluong-'+ this.index).val(this.chatluong);
 		//Get ton hien tai
 		//Get ton toi thieu
 		itemid = this.itemid;
 		
 		var pos = this.index;
-		$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu",
-			{
-				col:'id',
-				val: itemid
-			},
-			function(data)
-			{
-				tontoithieu = data.nguyenlieus[0].tontoithieu;
-				$('#tontonthieu-'+pos).val(tontoithieu);
-				$('#tontonthieu_text-'+pos).html(formateNumber(tontoithieu));
-			});
+		var madonvi = this.madonvi;
+		switch(this.itemtype)
+		{
+			case "nguyenlieu":
+			case "vattu":
+				$.getJSON("?route=quanlykho/nguyenlieu/getNguyenLieu",
+					{
+						col:'id',
+						val: itemid
+					},
+					function(data)
+					{
+						tontoithieu = data.nguyenlieus[0].tontoithieu;
+						$('#tontonthieu-'+pos).val(tontoithieu);
+						$('#tontonthieu_text-'+pos).html(formateNumber(tontoithieu));
+						
+						$.getJSON('?route=quanlykho/donvitinh/getListDonVi&madonvi='+ data.nguyenlieus[0].madonvi,
+						function(data)
+						{
+							var str = "";
+							for(i in data)
+							{
+								str += '<option value="'+ data[i].madonvi +'">'+ data[i].tendonvitinh +'</option>';
+								
+							}
+							$('#madonvi-'+ pos).html(str);
+							$('#madonvi-'+ pos).val(madonvi);
+						});
+					});
+				break;
+			case "linhkien":
+				$.getJSON("?route=quanlykho/linhkien/getLinhKien",
+					{
+						col:'id',
+						val: itemid
+					},
+					function(data)
+					{
+						
+						
+						$.getJSON('?route=quanlykho/donvitinh/getListDonVi&madonvi='+ data.linhkiens[0].madonvi,
+						function(data)
+						{
+							var str = "";
+							for(i in data)
+							{
+								str += '<option value="'+ data[i].madonvi +'">'+ data[i].tendonvitinh +'</option>';
+								
+							}
+							$('#madonvi-'+ pos).html(str);
+							$('#madonvi-'+ pos).val(madonvi);
+						});
+					});
+				break;
+		}
 		this.index++;
 		numberReady();
 	}

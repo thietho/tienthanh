@@ -47,9 +47,10 @@
                         <input type="text" id="solinhkientrenlot" name="solinhkientrenlot" value="<?php echo $item['solinhkientrenlot']?>" class="text number" size=60 />
                     </p>
                     <p>
-                        <label>Số lượng cong / Kg</label><br />
+                        <label>Số lượng con / Kg</label><br />
                         <input type="text" id="soluongcontrenkg" name="soluongcontrenkg" value="<?php echo $item['soluongcontrenkg']?>" class="text number" size=60 />
                     </p>
+                    
                     <p>
                         <label>Tiền công</label><br />
                         <input type="text" id="tiencong" name="tiencong" value="<?php echo $item['tiencong']?>" class="text number" size=60 />
@@ -60,6 +61,14 @@
                     <p>
                         <label>Định mức</label><br />
                         <input type="text" id="dinhmuc" name="dinhmuc" value="<?php echo $item['dinhmuc']?>" class="text number" size=60 />
+                    </p>
+                    <p>
+                        <label>Tồn tối thiểu</label><br />
+                        <input type="text" id="tontoithieu" name="tontoithieu" value="<?php echo $item['tontoithieu']?>" class="text number" size=60 />
+                    </p>
+                    <p>
+                        <label>Tồn tối đa</label><br />
+                        <input type="text" id="tontoida" name="tontoida" value="<?php echo $item['tontoida']?>" class="text number" size=60 />
                     </p>
                     <p>
                         <label>Đơn vị tính</label><br />

@@ -86,8 +86,8 @@ final class Document {
 	public $dauvao = array(
 							"nguyenlieu" => "Nguyên liệu",
 							"vattu" => "Vật tư",
-							"linhkien" => "Linh kiện",
-							"taisan" => "Tài sản"
+							"linhkien" => "Linh kiện"
+							
 						);
 	
 	public $text = array();
