@@ -33,6 +33,7 @@
     <input type="button" class="button" id="btnSelectVatTu" value="Chọn vật tư">
     <input type="button" class="button" id="btnSelectLinhKien" value="Chọn linh kiện">
     
+    
     <input type="hidden" id="delid" name="delid">
     
     
