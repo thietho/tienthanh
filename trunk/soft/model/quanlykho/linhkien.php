@@ -35,6 +35,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 		$tenlinhkien=$this->db->escape(@$data['tenlinhkien']);
 		$solinhkientrenlot= $this->string->toNumber($this->db->escape(@$data['solinhkientrenlot']));
 		$soluongton=$this->string->toNumber($this->db->escape(@$data['soluongton']));
+		$tontoithieu=$this->string->toNumber($this->db->escape(@$data['tontoithieu']));
+		$tontoida=$this->string->toNumber($this->db->escape(@$data['tontoida']));
 		$soluongcontrenkg= $this->string->toNumber($this->db->escape(@$data['soluongcontrenkg']));
 		$tiencong=$this->string->toNumber($this->db->escape(@$data['tiencong']));
 		$dinhmuc=$this->string->toNumber($this->db->escape(@$data['dinhmuc']));
@@ -53,6 +55,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						'tenlinhkien',
 						'solinhkientrenlot',
 						'soluongton',
+						'tontoithieu',
+						'tontoida',
 						'soluongcontrenkg',
 						'tiencong',
 						'dinhmuc',
@@ -73,6 +77,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						$tenlinhkien,
 						$solinhkientrenlot,
 						$soluongton,
+						$tontoithieu,
+						$tontoida,
 						$soluongcontrenkg,
 						$tiencong,
 						$dinhmuc,
@@ -100,6 +106,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 		$tenlinhkien=$this->db->escape(@$data['tenlinhkien']);
 		$solinhkientrenlot= $this->string->toNumber($this->db->escape(@$data['solinhkientrenlot']));
 		$soluongton=$this->string->toNumber($this->db->escape(@$data['soluongton']));
+		$tontoithieu=$this->string->toNumber($this->db->escape(@$data['tontoithieu']));
+		$tontoida=$this->string->toNumber($this->db->escape(@$data['tontoida']));
 		$soluongcontrenkg= $this->string->toNumber($this->db->escape(@$data['soluongcontrenkg']));
 		$tiencong=$this->string->toNumber($this->db->escape(@$data['tiencong']));
 		$dinhmuc=$this->string->toNumber($this->db->escape(@$data['dinhmuc']));
@@ -118,7 +126,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						'malinhkien',
 						'tenlinhkien',
 						'solinhkientrenlot',
-						
+						'tontoithieu',
+						'tontoida',
 						'soluongcontrenkg',
 						'tiencong',
 						'dinhmuc',
@@ -137,7 +146,8 @@ class ModelQuanlykhoLinhkien extends ModelCoreFile
 						$malinhkien,
 						$tenlinhkien,
 						$solinhkientrenlot,
-						
+						$tontoithieu,
+						$tontoida,
 						$soluongcontrenkg,
 						$tiencong,
 						$dinhmuc,
