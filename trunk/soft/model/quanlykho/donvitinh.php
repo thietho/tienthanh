@@ -115,11 +115,11 @@ class ModelQuanlykhoDonvitinh extends Model
 		
 		foreach($data_donvitinh as $i => $donvitinh)
 		{
-			foreach($arr as $val)
+			foreach($arr as $key => $val)
 			{
-				if($val['madonvi'] == $donvitinh['madonvi'])
+				if($key == $donvitinh['madonvi'])
 				{
-					$data_donvitinh[$i]['soluong'] = $val['soluong'];
+					$data_donvitinh[$i]['soluong'] = $val;
 				}
 			}
 		}
