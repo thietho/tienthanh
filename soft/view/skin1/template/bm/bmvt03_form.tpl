@@ -32,7 +32,7 @@
     <input type="button" class="button" id="btnSelectNguyenLieu" value="Chọn nguyên liệu">
     <input type="button" class="button" id="btnSelectVatTu" value="Chọn vật tư">
     <input type="button" class="button" id="btnSelectLinhKien" value="Chọn linh kiện">
-    
+    <input type="button" class="button" id="btnSelectDuoiTonToiThieu" value="Chọn danh sách dưới tồn tối thiểu">
     
     <input type="hidden" id="delid" name="delid">
     
@@ -99,7 +99,62 @@ $('#btnSavePrintBMVT03').click(function(e) {
    
 });
 
-
+$('#btnSelectDuoiTonToiThieu').click(function(e) {
+    $("#popup").attr('title','Danh sách dưới tồn tối thiểu');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				'Xem danh sach':function()
+				{
+					$( "#popup-selete" ).show('fast',function(){
+						$( "#popup-selete" ).position({
+							my: "center",
+							at: "center",
+							of: "#popup"
+						});
+						$( "#popup-selete" ).draggable();
+					});
+					$('.closeselect').click(function(e) {
+                        $( "#popup-selete" ).hide('fast');
+                    });
+				},
+				'Chọn': function() 
+				{
+					$('.selectitem').each(function(index, element) {
+						bm.id = 0;
+						bm.itemtype = "nguyenlieu";
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('manguyenlieu');
+						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
+						bm.tonhientai = 0;
+						bm.tontonthieu = 0;
+						bm.muatoithieu = 0;
+						bm.thoigiayeucau = "";
+						bm.ketquathuchien = "";
+						bm.mucdichsudung = "";
+						bm.createRow();
+						
+						
+                    });
+					$( this ).dialog( "close" );
+				},
+			}
+		});
+		
+		
+		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
+			$("#popup").dialog("open");
+			$('#popup-seletetion').html('');
+		});
+});
 $('#btnSelectNguyenLieu').click(function(e) {
     $("#popup").attr('title','Chọn nguyên liệu');
 		$( "#popup" ).dialog({

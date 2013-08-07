@@ -148,8 +148,9 @@ class ControllerBmBmvt16 extends Controller
 				$ct['chungtu'] = $arr_chungtu[$key];
 				$ct['thucnhap'] = $arr_thucnhap[$key];
 				$ct['dongia'] = $arr_dongia[$key];
-				
 				$this->model_bm_bmvt16->saveBMVT16ChiTiet($ct);
+				//Cap nhat so luong ton
+				//
 			}
 			$dotgiaohang = $this->model_bm_bmvt03->getDotGiaHang($data['dotgiaohangid']);
 			$data['bmvt03id'] = $dotgiaohang['bmvt03id'];
