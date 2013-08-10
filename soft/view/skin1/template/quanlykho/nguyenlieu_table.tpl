@@ -52,11 +52,9 @@
                         <td><?php echo $item['tenkho']?></td>
                         
                 		<td class="number">
-                        	<?php if($item['soluongton'] >0){?>
-                            <a onclick="viewTonKho(<?php echo $item['id']?>)"><?php echo $this->string->numberFormate($item['soluongton'],0)?></a>
-                            <?php }else{?>
-                        	<?php echo $this->string->numberFormate($item['soluongton'],0)?>
-                            <?php } ?>
+                        	
+                            <a onclick="viewTonKho(<?php echo $item['id']?>)"><?php echo $item['soluongton']?></a>
+                            
                         </td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoithieu'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoida'],0)?></td>
