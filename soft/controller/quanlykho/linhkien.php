@@ -18,6 +18,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		$this->load->model("common/control");
 		$this->load->model("quanlykho/kho");
 		$this->load->model("quanlykho/donvitinh");
+		$this->load->model("quanlykho/item");
 		$data_phongban = $this->model_quanlykho_phongban->getPhongBans();
 		
 		$this->data['data_nguyenlieu'] = $this->model_quanlykho_nguyenlieu->getList();
@@ -174,6 +175,9 @@ class ControllerQuanlykhoLinhkien extends Controller
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
 			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
+			$data_nhapdv = $this->model_quanlykho_item->getTonKho($this->data['datas'][$i]['id'],'linhkien',$this->data['datas'][$i]['madonvi']);
+			
+			$this->data['datas'][$i]['soluongton'] = $this->model_quanlykho_donvitinh->toText($data_nhapdv);
 		}
 		$this->data['refres']=$_SERVER['QUERY_STRING'];
 		if($this->request->get['opendialog']=='true')

@@ -128,10 +128,10 @@ $('#btnSelectDuoiTonToiThieu').click(function(e) {
 				{
 					$('.selectitem').each(function(index, element) {
 						bm.id = 0;
-						bm.itemtype = "nguyenlieu";
+						bm.itemtype = $(this).attr('itemtype');
 						bm.itemid = $(this).attr('id');
-						bm.itemcode = $(this).attr('manguyenlieu');
-						bm.itemname = $(this).attr('tennguyenlieu');
+						bm.itemcode = $(this).attr('itemcode');
+						bm.itemname = $(this).attr('itemname');
 						bm.madonvi = $(this).attr('madonvi');
 						bm.tendonvi = $(this).attr('tendonvi');
 						bm.tonhientai = 0;
@@ -162,7 +162,7 @@ function intSelectDuoiTonToiThieu()
 		if($('#popup-seletetion #'+this.id).html() == undefined)
 		{
 			
-			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' itemtype='"+$(this).attr('itemtype')+"' itemcode='"+$(this).attr('itemcode')+"' itemname='"+$(this).attr('itemname')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('itemcode')+":"+ $(this).attr('itemname') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
 			$('#popup-seletetion').append(html);
 			
 			$('.removeitem').click(function(e) {

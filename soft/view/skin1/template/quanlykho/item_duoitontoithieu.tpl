@@ -22,7 +22,7 @@
             foreach($data_nguyenlieu as $key => $item)
             {
         ?>
-                    <tr class="item" id="<?php echo $item['id']?>" manguyenlieu="<?php echo $item['manguyenlieu']?>" tennguyenlieu="<?php echo $item['tennguyenlieu']?>" madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
+                    <tr class="item" id="<?php echo $item['id']?>" itemcode="<?php echo $item['manguyenlieu']?>" itemname="<?php echo $item['tennguyenlieu']?>" itemtype="nguyenlieu" madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
                     	
                         <td><?php echo $key+1 ?></td>
                         <td><?php echo $item['manguyenlieu']?></td>

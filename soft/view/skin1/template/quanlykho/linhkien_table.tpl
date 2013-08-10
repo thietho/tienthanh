@@ -14,6 +14,8 @@
                         <th>Tên linh kiện</th>
                         <th>Linh kiện /Lot</th>
                         <th>Số lượng tồn</th>
+                        <th>Tồn tối thiểu</th>
+                        <th>Tồn tối đa</th>
                         <th>Đơn vị tính</th>
                         <th>Tiền công</th>
                         <th>Kho</th>
@@ -40,6 +42,8 @@
                         <td><?php echo $item['tenlinhkien']?></td>
                         <td class="number"><?php echo $item['solinhkientrenlot']?></td>
                         <td class="number"><?php echo $item['soluongton']?></td>
+                         <td class="number"><?php echo $this->string->numberFormate($item['tontoithieu'],0)?></td>
+                        <td class="number"><?php echo $this->string->numberFormate($item['tontoida'],0)?></td>
                         <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tiencong'])?></td>
                 		<td><?php echo $item['tenkho']?></td>
