@@ -317,7 +317,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$kho = $this->model_quanlykho_kho->getKho($rows[$i]['makho']);
 			$this->data['datas'][$i]['tenkho'] = $kho['tenkho'];
 			$imagepreview = "";
-			$this->data['datas'][$i]['soluongton'] = $this->model_quanlykho_item->getTonKho($this->data['datas'][$i]['id'],'nguyenlieu',$this->data['datas'][$i]['madonvi']);
+			$data_nhapdv = $this->model_quanlykho_item->getTonKho($this->data['datas'][$i]['id'],'nguyenlieu',$this->data['datas'][$i]['madonvi']);
+			
+			$this->data['datas'][$i]['soluongton'] = $this->model_quanlykho_donvitinh->toText($data_nhapdv);
+			//$this->data['datas'][$i]['soluongton'] = $this->model_quanlykho_donvitinh->toDouble($data_nhapdv);
 			$this->data['datas'][$i]['imagethumbnail'] = HelperImage::resizePNG($this->data['datas'][$i]['imagepath'], 100, 0);
 			
 		}
