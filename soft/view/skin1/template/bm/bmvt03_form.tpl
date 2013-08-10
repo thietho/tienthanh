@@ -150,11 +150,29 @@ $('#btnSelectDuoiTonToiThieu').click(function(e) {
 		});
 		
 		
-		$("#popup-content").load("?route=quanlykho/nguyenlieu&opendialog=true",function(){
+		$("#popup-content").load("?route=quanlykho/item/getListDuoiTonToiThieu&opendialog=true",function(){
 			$("#popup").dialog("open");
 			$('#popup-seletetion').html('');
 		});
 });
+function intSelectDuoiTonToiThieu()
+{
+	$('.item').click(function(e) {
+	
+		if($('#popup-seletetion #'+this.id).html() == undefined)
+		{
+			
+			var html = "<div><div class='selectitem left' id='"+ this.id +"' manguyenlieu='"+$(this).attr('manguyenlieu')+"' tennguyenlieu='"+$(this).attr('tennguyenlieu')+"' madonvi='"+$(this).attr('madonvi')+"' tendonvi='"+$(this).attr('tendonvi')+"'>"+$(this).attr('manguyenlieu')+":"+ $(this).attr('tennguyenlieu') +"   </div><a class='removeitem button right'>X</a><div class='clearer'>^&nbsp;</div></div>";
+			$('#popup-seletetion').append(html);
+			
+			$('.removeitem').click(function(e) {
+				$(this).parent().remove();
+			});
+		}
+		
+	});	
+}
+
 $('#btnSelectNguyenLieu').click(function(e) {
     $("#popup").attr('title','Chọn nguyên liệu');
 		$( "#popup" ).dialog({

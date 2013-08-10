@@ -26,7 +26,7 @@ class ModelQuanlykhoItem extends ModelQuanlykhoDonvitinh
 		$data_nhapdv = $this->model_quanlykho_donvitinh->toDonViTinh($arr,$madonvi);
 		//echo $this->model_quanlykho_donvitinh->toInt($data_nhapdv);
 		//print_r($data_nhapdv);
-		return $this->model_quanlykho_donvitinh->toText($data_nhapdv);
+		return $data_nhapdv;
 		//echo "<br>";
 	}
 }

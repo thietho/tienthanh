@@ -192,5 +192,18 @@ class ModelQuanlykhoDonvitinh extends Model
 		
 		return implode(" - ",$arr);
 	}
+	public function toDouble($data_donvitinh)
+	{
+		$arr = array();
+		$soluong = 0;
+		$quidoi = 1;
+		foreach($data_donvitinh as $donvitinh)
+		{
+			$soluong += $donvitinh['soluong']/$quidoi;
+			$quidoi = $donvitinh['quidoi'];
+		}
+		
+		return $soluong;
+	}
 }
 ?>
