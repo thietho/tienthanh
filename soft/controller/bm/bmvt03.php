@@ -255,16 +255,8 @@ class ControllerBmBMvt03 extends Controller
 			//Lay cac dot giao hang cua bmvt03
 			$data_dotgiaohang = $this->data['data_dotgiaohang'];
 			$itemid = $ct['itemid'];
-			//List bmvt16id
-			$arr_bmvt16id = $this->string->matrixToArray($data_dotgiaohang,'bmvt16id');
-			//Lay so luong da giao
-			$where = " AND itemid='".$itemid."' AND bmvt16id IN ('".implode("','",$arr_bmvt16id)."')";
-			$data_dagiao = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
-			$sumdagiao = 0;
-			foreach($data_dagiao as $dagiao)
-			{
-				$sumdagiao += $dagiao['thucnhap'];
-			}
+			$itemtype = $ct['itemtype'];
+			$sumdagiao = $this->getSoLuongDaGiao($bmvt03id,$itemid,$itemtype);
 			$this->data['data_ct'][$key]['dagiao'] = $sumdagiao;
 			$this->data['data_ct'][$key]['conlai'] = $ct['pheduyet'] - $sumdagiao;
 		}
@@ -294,12 +286,41 @@ class ControllerBmBMvt03 extends Controller
 		
 		$this->data['item'] = $this->model_bm_bmvt03->getItem($bmvt03id);
 		$where = " AND bmvt03id = '".$bmvt03id."'";
-		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);
+		$this->data['data_ct'] = $this->model_bm_bmvt03->getBMVT03ChiTietList($where);		
+		foreach($this->data['data_ct'] as $key => $ct)
+		{
+			//Lay cac dot giao hang cua bmvt03
+			$data_dotgiaohang = $this->data['data_dotgiaohang'];
+			$itemid = $ct['itemid'];
+			$itemtype = $ct['itemtype'];
+			$sumdagiao = $this->getSoLuongDaGiao($bmvt03id,$itemid,$itemtype);
+			$this->data['data_ct'][$key]['dagiao'] = $sumdagiao;
+			$this->data['data_ct'][$key]['conlai'] = $ct['pheduyet'] - $sumdagiao;
+		}
 		
 		$this->id='content';
 		$this->template='bm/bmvt03_dotgiaohang_form.tpl';
 		$this->render();
 	}
+	
+	private function getSoLuongDaGiao($bmvt03id,$itemid,$itemtype)
+	{
+		$where = " AND bmvt03id = '".$bmvt03id."'";
+		$data_dotgiaohang = $this->model_bm_bmvt03->getDotGiaHangList($where);
+		//List bmvt16id
+		$arr_bmvt16id = $this->string->matrixToArray($data_dotgiaohang,'bmvt16id');
+		//Lay so luong da giao
+		$where = " AND itemid='".$itemid."' AND itemtype='".$itemtype."' AND bmvt16id IN ('".implode("','",$arr_bmvt16id)."')";
+		$data_dagiao = $this->model_bm_bmvt16->getBMVT16ChiTietList($where);
+		
+		$sumdagiao = 0;
+		foreach($data_dagiao as $dagiao)
+		{
+			$sumdagiao += $dagiao['thucnhap'];
+		}
+		return $sumdagiao;
+	}
+	
 	public function viewDotGiaoHang()
 	{
 		$id = $this->request->get['id'];
