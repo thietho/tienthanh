@@ -35,7 +35,46 @@
             }
         ?>
                         
-                                                    
+                	<tr>
+                    	<td colspan="5"><strong>Vật tư</strong></td>
+                    </tr>
+        
+        <?php
+            foreach($data_vattu as $key => $item)
+            {
+        ?>
+                    <tr class="item" id="<?php echo $item['id']?>" itemcode="<?php echo $item['manguyenlieu']?>" itemname="<?php echo $item['tennguyenlieu']?>" itemtype="vattu" madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
+                    	
+                        <td><?php echo $key+1 ?></td>
+                        <td><?php echo $item['manguyenlieu']?></td>
+                        <td><?php echo $item['tennguyenlieu']?></td>
+                        <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
+                        <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
+                        
+                    </tr>
+        <?php
+            }
+        ?>
+        			<tr>
+                    	<td colspan="5"><strong>Linh kiện</strong></td>
+                    </tr>
+        
+        <?php
+            foreach($data_linhkien as $key => $item)
+            {
+        ?>
+                    <tr class="item" id="<?php echo $item['id']?>" itemcode="<?php echo $item['malinhkien']?>" itemname="<?php echo $item['tenlinhkien']?>" itemtype="linhkien" madonvi="<?php echo $item['madonvi']?>" tendonvi="<?php echo $this->document->getDonViTinh($item['madonvi'])?>">
+                    	
+                        <td><?php echo $key+1 ?></td>
+                        <td><?php echo $item['malinhkien']?></td>
+                        <td><?php echo $item['tenlinhkien']?></td>
+                        <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
+                        <td><img src="<?php echo $item['imagethumbnail']?>" /></td>
+                        
+                    </tr>
+        <?php
+            }
+        ?>                                   
                 </tbody>
                 </table>
 

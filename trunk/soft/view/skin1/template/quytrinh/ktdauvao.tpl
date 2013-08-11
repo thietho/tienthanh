@@ -137,7 +137,9 @@ function BMVT03()
 					function(data)
 					{
 						
-						
+						tontoithieu = data.linhkiens[0].tontoithieu;
+						$('#tontonthieu-'+pos).val(tontoithieu);
+						$('#tontonthieu_text-'+pos).html(formateNumber(tontoithieu));
 						$.getJSON('?route=quanlykho/donvitinh/getListDonVi&madonvi='+ data.linhkiens[0].madonvi,
 						function(data)
 						{
