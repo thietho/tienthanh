@@ -361,6 +361,14 @@ function BMVT03()
 			$("#popup").dialog("open");
 		});
 	}
+	this.delDotGiaoHang = function(dotgiaohangid,bmvt03id)
+	{
+		$.get("?route=bm/bmvt03/delDotGiaoHang&id="+dotgiaohangid,function()
+			{
+				ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id='+bmvt03id);
+			});
+	}
+	
 	this.viewBMTN13 = function(bmtn13id)
 	{
 		$("#popup").attr('title','Phiếu yêu cầu kiểm kết quả nghiệm thu');

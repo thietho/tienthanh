@@ -378,6 +378,15 @@ class ControllerBmBMvt03 extends Controller
 		$this->template='common/output.tpl';
 		$this->render();
 	}
+	public function delDotGiaoHang()
+	{
+		$id = $this->request->get['id'];
+		$this->model_bm_bmvt03->deleteDotGiaHang($id);
+		$this->data['output'] = "true";
+		$this->id='content';
+		$this->template='common/output.tpl';
+		$this->render();
+	}
 	
 	private function validateFormDotGiaoHang($data)
 	{
