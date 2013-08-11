@@ -58,7 +58,7 @@
             <td class="number"><input type="text" class="text number" name="soluong[<?php echo $ct['id']?>]"></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['dagiao'])?></td>
             <td class="number"><?php echo $this->string->numberFormate($ct['conlai'])?></td>
-            
+            <td></td>
         </tr>
         	<?php } ?>
         <?php } ?>
