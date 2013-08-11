@@ -20,6 +20,7 @@ class ControllerQuanlykhoItem extends Controller
 		$this->model_quanlykho_nhom->getTree("NL",$loainguyenlieu);
 		$arrnhom = $this->string->matrixToArray($loainguyenlieu,'manhom');
 		$where = " AND loai IN ('".implode("','",$arrnhom)."')";
+		$where .= " AND tontoithieu > 0";
 		$data_nguyenlieu = $this->model_quanlykho_nguyenlieu->getList($where);
 		
 		$this->data['data_nguyenlieu'] = array();
@@ -39,6 +40,7 @@ class ControllerQuanlykhoItem extends Controller
 		$this->model_quanlykho_nhom->getTree("dmvtccnl",$loainguyenlieu);
 		$arrnhom = $this->string->matrixToArray($loainguyenlieu,'manhom');
 		$where = " AND loai IN ('".implode("','",$arrnhom)."')";
+		$where .= " AND tontoithieu > 0";
 		$data_vattu = $this->model_quanlykho_nguyenlieu->getList($where);
 		
 		$this->data['data_vattu'] = array();
@@ -51,6 +53,22 @@ class ControllerQuanlykhoItem extends Controller
 			{
 				$vattu['imagethumbnail'] = HelperImage::resizePNG($vattu['imagepath'], 100, 0);
 				$this->data['data_vattu'][] = $vattu;
+			}
+		}
+		//Linh kien
+		$where = " AND tontoithieu > 0";
+		$data_linhkien = $this->model_quanlykho_linhkien->getList($where);
+		
+		$this->data['data_linhkien'] = array();
+		foreach($data_linhkien as $linhkien)
+		{
+			$data_nhapdv = $this->model_quanlykho_item->getTonKho($linhkien['id'],'linhkien',$linhkien['madonvi']);
+			$tonkho = $this->model_quanlykho_donvitinh->toDouble($data_nhapdv);
+			
+			if($tonkho < $linhkien['tontoithieu'])
+			{
+				$linhkien['imagethumbnail'] = HelperImage::resizePNG($linhkien['imagepath'], 100, 0);
+				$this->data['data_linhkien'][] = $linhkien;
 			}
 		}
 		

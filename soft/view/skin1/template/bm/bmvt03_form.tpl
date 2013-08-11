@@ -146,6 +146,26 @@ $('#btnSelectDuoiTonToiThieu').click(function(e) {
                     });
 					$( this ).dialog( "close" );
 				},
+				'Chọn tất cả': function()
+				{
+					$('.item').each(function(index, element) {
+                        bm.id = 0;
+						bm.itemtype = $(this).attr('itemtype');
+						bm.itemid = $(this).attr('id');
+						bm.itemcode = $(this).attr('itemcode');
+						bm.itemname = $(this).attr('itemname');
+						bm.madonvi = $(this).attr('madonvi');
+						bm.tendonvi = $(this).attr('tendonvi');
+						bm.tonhientai = 0;
+						bm.tontonthieu = 0;
+						bm.muatoithieu = 0;
+						bm.thoigiayeucau = "";
+						bm.ketquathuchien = "";
+						bm.mucdichsudung = "";
+						bm.createRow();
+                    });
+					$( this ).dialog( "close" );
+				}
 			}
 		});
 		
