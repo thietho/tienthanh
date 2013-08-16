@@ -27,12 +27,22 @@
             <td bgcolor="<?php echo $pheduyet_color[$item['tinhtrang']]?>" align="center"><?php echo $arr_pheduyet[$item['tinhtrang']]?></td>
             <td>
             	<input type="button" class="button" value="Xem" onclick="bm.view(<?php echo $item['id']?>,'')">
+                <?php if($this->user->checkPermission("bm/bmvt03/pheduyet")==true){ ?>
                 <input type="button" class="button" value="Phê duyệt" onclick="bm.pheduyet(<?php echo $item['id']?>)">
+                <?php } ?>
+                <?php if($this->user->checkPermission("bm/bmvt03/phanHoiThoiGianCungUng")==true){ ?>
                 <input type="button" class="button" value="Phản hồi thời gian cung ứng" onclick="bm.phanHoiThoiGianCungUng(<?php echo $item['id']?>)">
+                <?php } ?>
+                <?php if($this->user->checkPermission("bm/bmvt03/dotGiaoHang")==true){ ?>
                 <input type="button" class="button" value="Đợt giao hàng" onclick="ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id=<?php echo $item['id']?>')">
+                <?php } ?>
                 <?php if($item['tinhtrang'] =="") {?>
+                <?php if($this->user->checkPermission("bm/bmvt03/edit")==true){ ?>
                 <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmvt03/edit&id=<?php echo $item['id']?>');">
+                <?php } ?>
+                <?php if($this->user->checkPermission("bm/bmvt03/delete")==true){ ?>
                 <input type="button" class="button" value="Xóa" onclick="bm.del(<?php echo $item['id']?>)">
+                <?php } ?>
                 <?php } ?>
             </td>
         </tr>
