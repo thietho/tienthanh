@@ -306,7 +306,32 @@ function BMVT03()
 	}
 	this.dotGiaoHang = function(bmvt03id)
 	{
+		$('body').append('<div id="popupdotgiaohang" style="display:none"></div>');
+		$("#popupdotgiaohang").attr('title','Đợt giao hàng');
+			$( "#popupdotgiaohang" ).dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				width: 1000,
+				height: 500,
+				modal: true,
+				close: function(event, ui) {
+					$('#popupdotgiaohang').remove();
+					
+				},
+				buttons: {
+					'Tạo đợt giao hàng': function() {
+						
+						
+					},
+					
+				}
+			});
 		
+			
+		$("#popupdotgiaohang").load("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+bmvt03id,function(){
+			$("#popupdotgiaohang").dialog("open");
+		});
 	}
 	this.createDotGiaoHang = function(id)
 	{
