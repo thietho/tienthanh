@@ -34,7 +34,7 @@
                 <input type="button" class="button" value="Phản hồi thời gian cung ứng" onclick="bm.phanHoiThoiGianCungUng(<?php echo $item['id']?>)">
                 <?php } ?>
                 <?php if($this->user->checkPermission("bm/bmvt03/dotGiaoHang")==true){ ?>
-                <input type="button" class="button" value="Đợt giao hàng" onclick="ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id=<?php echo $item['id']?>')">
+                <input type="button" class="button" value="Đợt giao hàng" onclick="bm.dotGiaoHang(<?php echo $item['id']?>)">
                 <?php } ?>
                 <?php if($item['tinhtrang'] =="") {?>
                 <?php if($this->user->checkPermission("bm/bmvt03/edit")==true){ ?>
