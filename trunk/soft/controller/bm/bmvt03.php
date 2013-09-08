@@ -41,6 +41,24 @@ class ControllerBmBMvt03 extends Controller
 			$this->data['cbDonViTinh'] .= '<option value="'.$val['madonvi'].'">'.$val['tendonvitinh'].'</option>';
 		}
 	}
+	
+	public function index()
+	{
+		
+		
+		
+		$this->id='content';
+		$this->template="bm/bmvt03_main.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
+	}
+	
 	public function create()
 	{
 		$this->id='content';

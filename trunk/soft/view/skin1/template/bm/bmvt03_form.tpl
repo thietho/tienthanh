@@ -1,12 +1,8 @@
 <h2>Phiếu đề xuất mua vật tư, nguyên liệu</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_bmv03">
-  <p>
-    	<input type="button" class="button" id="btnSaveBMVT03" value="Lưu phiếu" />
-        <input type="button" class="button" id="btnSavePrintBMVT03" value="Lưu & in phiếu" />
-        
-        <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
-    </p>
+  
+    <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
     <table>
     	<thead>
         	<tr>

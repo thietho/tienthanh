@@ -1,4 +1,4 @@
-<h2>Phiếu đề xuất mua vật tư, nguyên liệu</h2>
+
 <form id="frm_bmtn13_list">
 <div>
     <p>
@@ -38,7 +38,7 @@
                 <?php } ?>
                 <?php if($item['tinhtrang'] =="") {?>
                 <?php if($this->user->checkPermission("bm/bmvt03/edit")==true){ ?>
-                <input type="button" class="button" value="Chỉnh sửa" onclick="ktdv.loadData('?route=bm/bmvt03/edit&id=<?php echo $item['id']?>');">
+                <input type="button" class="button" value="Chỉnh sửa" onclick="bm.edit('<?php echo $item['id']?>')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("bm/bmvt03/delete")==true){ ?>
                 <input type="button" class="button" value="Xóa" onclick="bm.del(<?php echo $item['id']?>)">
