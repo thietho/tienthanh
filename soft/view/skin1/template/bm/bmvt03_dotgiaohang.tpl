@@ -1,5 +1,5 @@
 <form id="frm_dotgiaohang">
-<p>&nbsp;</p>
+
 <input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
 <p>
 	<label>Số phiếu</label>

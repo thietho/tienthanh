@@ -181,8 +181,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							//executeFunctionByName("ktdv.loadData",'?route=bm/bmvt03/getList');
@@ -219,8 +219,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -265,8 +265,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -312,8 +312,8 @@ function BMVT03()
 				autoOpen: false,
 				show: "blind",
 				hide: "explode",
-				width: 1000,
-				height: 500,
+				width: $(document).width()-100,
+				height: 600,
 				modal: true,
 				close: function(event, ui) {
 					$('#popupdotgiaohang').remove();
@@ -321,7 +321,7 @@ function BMVT03()
 				},
 				buttons: {
 					'Tạo đợt giao hàng': function() {
-						
+						bm.formDotGiaoHang(bmvt03id)
 						
 					},
 					
@@ -331,6 +331,35 @@ function BMVT03()
 			
 		$("#popupdotgiaohang").load("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+bmvt03id,function(){
 			$("#popupdotgiaohang").dialog("open");
+		});
+	}
+	this.formDotGiaoHang = function(bmvt03id)
+	{
+		$('body').append('<div id="popupdotgiaohangform" style="display:none"></div>');
+		$("#popupdotgiaohangform").attr('title','Đợt giao hàng');
+			$( "#popupdotgiaohangform" ).dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				width: $(document).width()-100,
+				height: 600,
+				modal: true,
+				close: function(event, ui) {
+					$('#popupdotgiaohangform').remove();
+					
+				},
+				buttons: {
+					'Lưu đợt giao hàng': function() {
+						
+						
+					},
+					
+				}
+			});
+		
+			
+		$("#popupdotgiaohangform").load("?route=bm/bmvt03/createDotGiaoHang&bmvt03id=" + bmvt03id,function(){
+			$("#popupdotgiaohangform").dialog("open");
 		});
 	}
 	this.createDotGiaoHang = function(id)
@@ -362,8 +391,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -403,8 +432,8 @@ function BMVT03()
 				autoOpen: false,
 				show: "blind",
 				hide: "explode",
-				width: 1000,
-				height: 500,
+				width: $(document).width()-100,
+				height: 600,
 				modal: true,
 				close: function(event, ui) {
 					$('#popupvt03').remove();
@@ -480,8 +509,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
@@ -512,8 +541,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
@@ -543,8 +572,8 @@ function BMVT03()
 						autoOpen: false,
 						show: "blind",
 						hide: "explode",
-						width: 1000,
-						height: 500,
+						width: $(document).width()-100,
+						height: 600,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
