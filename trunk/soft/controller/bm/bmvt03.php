@@ -44,9 +44,6 @@ class ControllerBmBMvt03 extends Controller
 	
 	public function index()
 	{
-		
-		
-		
 		$this->id='content';
 		$this->template="bm/bmvt03_main.tpl";
 		$this->layout="layout/center";
