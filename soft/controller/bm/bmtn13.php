@@ -51,7 +51,7 @@ class ControllerBmBMtn13 extends Controller
 	//Dot giao hang
 	public function dotGiaoHang()
 	{
-		
+		$bmvt03id = $this->request->get['bmvt03id'];
 		$where = " AND bmvt03id = '".$bmvt03id."'";
 		$this->data['data_dotgiaohang'] = $this->model_bm_bmvt03->getDotGiaHangList($where);
 		foreach($this->data['data_dotgiaohang'] as $key => $ct)
