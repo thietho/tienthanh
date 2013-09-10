@@ -1,10 +1,7 @@
 <h2>Phiếu yêu cầu kiểm kết quả nghiệm thu</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_bmtn13">
-	<p>
-    	<input type="button" class="button" id="btnSaveBMTN13" value="Lưu phiếu" />
-        <input type="button" class="button" id="btnSavePrintBMTN13" value="Lưu & in phiếu" />
-    </p>
+	
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         <input type="hidden" id="dotgiaohangid" name="dotgiaohangid" value="<?php echo $dotgiaohangid?>"/>
@@ -68,109 +65,7 @@
 $('#nghiemthu').val("<?php echo $item['nghiemthu']?>");
 $('#tinhtrang').val("<?php echo $item['tinhtrang']?>");
 numberReady();
-$('#btnSaveBMTN13').click(function(e) {
-    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
-	
-	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
-		function(data){
-			
-			var obj = $.parseJSON(data);
-			
-			if(obj.error == "")
-			{
-				alert("Lưu phiếu thành công");
-				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+obj.bmvt03id);
-			}
-			else
-			{
-			
-				$('#error').html(obj.error).show('slow');
-				
-				
-			}
-			$.unblockUI();
-		}
-	);
-});
 
-$('#btnSavePrintBMTN13').click(function(e) {
-    $.blockUI({ message: "<h1>Please wait...</h1>" }); 
-	
-	$.post("?route=bm/bmtn13/save", $("#frm_bmtn13").serialize(),
-		function(data){
-			var obj = $.parseJSON(data);
-			if(obj.error == "")
-			{
-				alert("Lưu phiếu thành công");
-				ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&bmvt03id="+obj.bmvt03id);
-				bm.viewBMTN13(obj.id);
-							
-				$("#popup-content").load("?route=bm/bmtn13/view&id="+obj.id,function(){
-					$("#popup").dialog("open");
-				});
-				
-				
-			}
-			else
-			{
-			
-				$('#error').html(obj.error).show('slow');
-				
-				
-			}
-			$.unblockUI();
-		}
-	);
-});
-
-function BMTN13()
-{
-	this.index = 0;
-	this.id = 0;
-	this.itemtype = "";
-	this.itemid = "";
-	this.itemcode = "";
-	this.itemname = "";
-	this.madonvi = "";
-	this.tendonvi = "";
-	this.trongluong = 0;
-	this.soluong = 0;
-	this.chatluong = "";
-	this.lothang = "";
-	this.cbChatLuong = '<?php echo $cbChatLuong?>';
-	
-	this.createRow = function()
-	{
-		var row = '<tr id="row'+ this.index +'">';
-		//Ma so - Qui cach
-		row += '<td><input type="hidden" id="ctid-'+ this.index +'" name="ctid['+ this.index +']" value="'+ this.id +'"><input type="hidden" id="itemtype-'+ this.index +'" name="itemtype['+ this.index +']" value="'+ this.itemtype +'"><input type="hidden" id="itemid-'+ this.index +'" name="itemid['+ this.index +']" value="'+ this.itemid +'"><input type="hidden" id="itemcode-'+ this.index +'" name="itemcode['+ this.index +']" value="'+ this.itemcode +'"><input type="hidden" id="itemname-'+ this.index +'" name="itemname['+ this.index +']" value="'+ this.itemname +'">'+ this.itemname +'</td>';
-		//Don vi
-		row += '<td><select id="madonvi-'+ this.index +'" name="madonvi['+ this.index +']"><?php echo $cbDonViTinh?></select></td>';
-		//Trong luong
-		row += '<td><input type="text" name="trongluong['+this.index+']" value="'+ this.trongluong +'" class="text number"/></td>';
-		//So luong
-		row += '<td><input type="text" name="soluong['+this.index+']" value="'+ this.soluong +'" class="text number"/></td>';
-		//Chat luong
-		row += '<td><select id="chatluong-'+ this.index +'" name="chatluong['+this.index+']">'+ this.cbChatLuong +'</select></td>';
-		//Lot hang hoa
-		row += '<td><input type="text" name="lothang['+this.index+']" value="'+ this.lothang +'" class="text"/></td>';
-		//Control
-		//row += '<td><input type="button" class="button" value="Xóa" onclick="bmtn13.remove('+this.index+')"></td>';
-		row += '</tr>';
-		$('#listhanghoa').append(row);
-		$('#madonvi-'+ this.index).val(this.madonvi);
-		$('#chatluong-'+ this.index).val(this.chatluong);
-		this.index++;
-		numberReady();
-	}
-	
-	this.remove = function(pos)
-	{
-		$("#delid").val($("#delid").val()+","+ $('#ctid-'+pos).val());
-		$("#row"+pos).remove();
-	}
-}
-var bmtn13 = new BMTN13();
 </script>
 <?php if(count($data_ct)){ ?>
 	<?php foreach($data_ct as $ct){ ?>
