@@ -1,10 +1,7 @@
 <h2>Đợt giao hàng</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_dotgiaohangfrm">
-	<p>
-    	<input type="button" class="button" id="btnCreateDotGiaoHang" value="Tạo đợt giao hàng" />
-        
-    </p>
+	
 	<input type="hidden" name="bmvt03id" value="<?php echo $item['id']?>">
 	<p>
     	Lô hàng theo phiếu giao hàng số:
@@ -95,7 +92,5 @@ function intSelectNhaCungCap()
 		$("#popup").dialog( "close" );
     });
 }
-$('#btnCreateDotGiaoHang').click(function(e) {
-    bm.createDotGiaoHang("<?php echo $item['id']?>");
-});
+
 </script>

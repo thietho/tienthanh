@@ -17,6 +17,7 @@ class ControllerBmBMtn13 extends Controller
 		{
 			$this->data['cbChatLuong'] .= '<option value="'.$key.'">'.$val.'</option>';
 		}
+		
 		//echo $this->data['cbChatLuong'];
 		$this->load->model("quanlykho/donvitinh");
 		$this->load->model("bm/bmvt03");
@@ -29,6 +30,45 @@ class ControllerBmBMtn13 extends Controller
 		{
 			$this->data['cbDonViTinh'] .= '<option value="'.$val['madonvi'].'">'.$val['tendonvitinh'].'</option>';
 		}
+	}
+	public function index()
+	{
+		$where .= " AND tinhtrang = 'dapheduyet' Order by id desc";
+		$this->data['data_bmvt03']=$this->model_bm_bmvt03->getList($where);	
+		
+		$this->id='content';
+		$this->template="bm/bmtn03_main.tpl";
+		$this->layout="layout/center";
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
+	}
+	
+	//Dot giao hang
+	public function dotGiaoHang()
+	{
+		
+		$where = " AND bmvt03id = '".$bmvt03id."'";
+		$this->data['data_dotgiaohang'] = $this->model_bm_bmvt03->getDotGiaHangList($where);
+		foreach($this->data['data_dotgiaohang'] as $key => $ct)
+		{
+			$bmtn13 = $this->model_bm_bmtn13->getItem($ct['bmtn13id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmtn13']= $bmtn13['sophieu'];
+			
+			$bmvt17 = $this->model_bm_bmvt17->getItem($ct['bmvt17id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmvt17']= $bmvt17['sophieu'];
+			
+			$bmvt16 = $this->model_bm_bmvt17->getItem($ct['bmvt16id']);
+			$this->data['data_dotgiaohang'][$key]['sophieubmvt16']= $bmvt16['sophieu'];
+		}
+		
+		$this->id='content';
+		$this->template='bm/bmtn13_dotgiaohang.tpl';
+		$this->render();
 	}
 	public function create()
 	{

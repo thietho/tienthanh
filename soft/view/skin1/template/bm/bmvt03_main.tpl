@@ -336,7 +336,7 @@ function BMVT03()
 	this.formDotGiaoHang = function(bmvt03id)
 	{
 		$('body').append('<div id="popupdotgiaohangform" style="display:none"></div>');
-		$("#popupdotgiaohangform").attr('title','Đợt giao hàng');
+		$("#popupdotgiaohangform").attr('title','Tạo đợt giao hàng');
 			$( "#popupdotgiaohangform" ).dialog({
 				autoOpen: false,
 				show: "blind",
@@ -350,7 +350,7 @@ function BMVT03()
 				},
 				buttons: {
 					'Lưu đợt giao hàng': function() {
-						
+						bm.createDotGiaoHang(bmvt03id);
 						
 					},
 					
@@ -371,7 +371,10 @@ function BMVT03()
 				var obj = $.parseJSON(data);
 				if(obj.error == "")
 				{
-					ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id='+id);
+					alert("Tạo đợt giao hàng thành công");
+					$('#popupdotgiaohangform').dialog("close");
+					bm.dotGiaoHang(id)
+					
 				}
 				else
 				{
@@ -421,7 +424,7 @@ function BMVT03()
 	{
 		$.get("?route=bm/bmvt03/delDotGiaoHang&id="+dotgiaohangid,function()
 			{
-				ktdv.loadData('?route=bm/bmvt03/dotGiaoHang&bmvt03id='+bmvt03id);
+				bm.dotGiaoHang(bmvt03id);
 			});
 	}
 	this.edit = function(bmtn13id)
