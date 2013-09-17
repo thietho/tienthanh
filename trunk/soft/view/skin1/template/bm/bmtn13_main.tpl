@@ -6,10 +6,11 @@
         
         <div class="clearer">^&nbsp;</div>
         <h3>Các phiếu đề xuất mua vật tư, nguyên liệu(BM-VT-03) đã được phê duyệt</h3>
+        
         <table>
             <thead>
                 <tr>
-                    <th>Số phiếu</th>
+                    <th>Số phiếu(BM-VT-03)</th>
                     <th>Nhân viên lập</th>
                     <th>Ngày lập</th>
                     
@@ -157,6 +158,39 @@ function BMTN13()
 			$(eid).dialog("open");
 		});
 	}
+	this.edit = function(dotgiaohangid,bmtn13id)
+	{
+		$('body').append('<div id="popupbmtn13form" style="display:none"></div>');
+		var eid="#popupbmtn13form";
+		$(eid).attr('title','Phiếu yêu cầu kết quả khiểm nghiệm(BM-TN-13)');
+			$( eid ).dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				width: $(document).width()-100,
+				height: 600,
+				modal: true,
+				close: function(event, ui) {
+					$(eid).remove();
+					
+				},
+				buttons: {
+					'Lưu phiếu': function() {
+						bmtn13.save(false);
+						
+					},
+					'Lưu & in phiếu': function() {
+						bmtn13.save(true);
+						
+					},
+				}
+			});
+		
+			
+		$(eid).load("?route=bm/bmtn13/edit&dotgiaohangid="+dotgiaohangid+"&id="+bmtn13id,function(){
+			$(eid).dialog("open");
+		});
+	}
 	this.save = function(isprint)
 	{
 		$.blockUI({ message: "<h1>Please wait...</h1>" }); 
@@ -217,6 +251,8 @@ function BMTN13()
 			$("#popup").dialog("open");
 		});	
 	}
+	
+	
 	
 }
 var bmtn13 = new BMTN13();
