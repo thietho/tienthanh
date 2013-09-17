@@ -9,10 +9,10 @@
             
             
             <?php if($dotgiaohang['bmtn13id']){?>
-            BMTN13: <input type="button" class="button" value="<?php echo $dotgiaohang['sophieubmtn13']?>" onclick="bm.viewBMTN13(<?php echo $dotgiaohang['bmtn13id']?>)"/>
+            BMTN13: <input type="button" class="button" value="<?php echo $dotgiaohang['sophieubmtn13']?>" onclick="bmtn13.view(<?php echo $dotgiaohang['bmtn13id']?>)"/>
             	<?php if($dotgiaohang['bmvt16id']==0){ ?>
                 <?php if($this->user->checkPermission("bm/bmtn13/edit")==true){ ?>
-            <input type="button" class="button" onclick="ktdv.loadData('?route=bm/bmtn13/edit&id=<?php echo $dotgiaohang['bmtn13id']?>&dotgiaohangid=<?php echo $dotgiaohang['id']?>')" value="Sửa"/>
+            <input type="button" class="button" onclick="bmtn13.edit(<?php echo $dotgiaohang['id']?>,<?php echo $dotgiaohang['bmtn13id']?>)" value="Sửa"/>
             	<?php } ?>
             	<?php }?>
             <?php }else{ ?>

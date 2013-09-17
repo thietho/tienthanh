@@ -37,7 +37,7 @@ class ControllerBmBMtn13 extends Controller
 		$this->data['data_bmvt03']=$this->model_bm_bmvt03->getList($where);	
 		
 		$this->id='content';
-		$this->template="bm/bmtn03_main.tpl";
+		$this->template="bm/bmtn13_main.tpl";
 		$this->layout="layout/center";
 		if($this->request->get['opendialog']=='true')
 		{
