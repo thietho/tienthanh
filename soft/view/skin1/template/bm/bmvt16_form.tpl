@@ -1,10 +1,7 @@
 <h2>Phiếu nhập vật tư hàng hóa</h2>
 <div id="error" class="error hidden"></div>
 <form id="frm_bmvt16">
-	<p>
-    	<input type="button" class="button" id="btnSaveBMVT16" value="Lưu phiếu" />
-        <input type="button" class="button" id="btnSavePrintBMVT16" value="Lưu & in phiếu" />
-    </p>
+	
     <p>
     	<input type="hidden" id="id" name="id" value="<?php echo $item['id']?>"/>
         <input type="hidden" id="dotgiaohangid" name="dotgiaohangid" value="<?php echo $dotgiaohangid?>"/>
