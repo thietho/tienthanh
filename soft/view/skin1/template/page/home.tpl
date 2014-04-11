@@ -6,7 +6,17 @@
         <div class="clearer">&nbsp;</div>
         <?php foreach($item['module'] as $module ){ ?>
         <?php if(in_array($module['moduleid'],$allow_modules)){?>
-        <a href="?route=<?php echo $module['moduleid']?>"><div class="qlk_icon left"><?php echo $module['modulename']?></div></a>
+        <a href="?route=<?php echo $module['moduleid']?>">
+        	<div class="qlk_icon left">
+            	<table>
+                	<tr>
+                    	<td><?php echo $module['modulename']?></td>
+                    </tr>
+                </table>
+        		
+            </div>
+        </a>
+        
         <?php } ?>
         <?php } ?>
         <div class="clearer">&nbsp;</div>
