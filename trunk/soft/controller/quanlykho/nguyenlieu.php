@@ -348,10 +348,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 			$this->data['item']['imagethumbnail'] = HelperImage::resizePNG($this->data['item']['imagepath'], 200, 200);
 			
     	}
-		
+		//print_r($this->data['item']);
 		$this->id='content';
 		$this->template='quanlykho/nguyenlieu_form.tpl';
-		$this->layout="layout/center";
+		
 		
 		$this->render();
 	}

@@ -179,4 +179,61 @@ function moveto(url,eid)
 	$(eid).html(loading);
 	$(eid).load(url);	
 }
+function showNguyenLieuForm(id)
+{
+	var eid = "nguyenlieuform";
+	$('body').append('<div id="'+eid+'" style="display:none"></div>');
+	
+	$("#"+eid).attr('title','Nguyên liệu');
+		$("#"+eid).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: $(document).width()-100,
+			height: window.innerHeight,
+			modal: true,
+			close:function()
+				{
+					$("#"+eid).remove();
+				},
+			buttons: {
+				
+				'Lưu':function()
+				{
+					$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=quanlykho/nguyenlieu/save", $("#frm_nguyenlieu_form").serialize(),
+						function(data){
+							if(data == "true")
+							{
+								window.location = "?route=quanlykho/nguyenlieu#page="+control.getParam('page');
+								$("#"+eid).dialog( "close" );
+								window.location.reload();
+							}
+							else
+							{
+							
+								$('#error').html(data).show('slow');
+								
+								
+							}
+							$.unblockUI();
+							
+						}
+					);
+				},
+				'Đóng': function() 
+				{
+					
+					$("#"+eid).dialog( "close" );
+					
+				},
+			}
+		});
+	
+		
+		$("#"+eid).load("?route=quanlykho/nguyenlieu/update&id="+id+"&dialog=true",function(){
+			$("#"+eid).dialog("open");	
+		})
+}
 </script>
