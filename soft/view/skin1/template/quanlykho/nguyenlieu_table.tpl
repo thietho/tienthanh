@@ -68,7 +68,7 @@
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             <?php if($this->user->checkPermission("quanlykho/nguyenlieu/update")==true){ ?>
-                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>#page='+control.getParam('page')"/>
+                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="showNguyenLieuForm(<?php echo $item['id']?>)"/>
                             <?php } ?>
                             <!--<input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>-->
                             <!--<input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_capnhatgia']?>" onclick="window.location='<?php echo $item['link_capnhatgia']?>'"/>-->
