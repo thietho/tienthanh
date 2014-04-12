@@ -145,7 +145,7 @@
 				{
 					$btnAddMember = "";
 				}
-				$controlEdit = $this->model_common_control->getControlEdit("controlEdit","controlEdit","[Edit]","?route=core/usertype/edit&id=".$resutl['usertypeid']);
+				$controlEdit = $this->model_common_control->getControlEdit("controlEdit","controlEdit","[<?php echo $button_edit?>]","?route=core/usertype/edit&id=".$resutl['usertypeid']);
 				$controlDelete = $this->model_common_control->getControlDelete("controlDelete","controlDelete","[Delete]","?route=core/usertype&formtype=delete&id=".$resutl['usertypeid']);
 				
 				
@@ -184,7 +184,6 @@
 			$this->data['listPermission'] = $this->model_core_usertype->listPermission;
 			$this->model_core_sitemap->getTreeSitemap("",$this->data['sitemaps'],$this->user->getSiteId());
 			$this->data['modules'] = $this->model_core_sitemap->getModuleAddons();
-			$this->data['modulesquanlykho'] = $this->model_core_sitemap->getModuleQuanLyKho();
 			
 			$this->template = 'core/usertype_form.tpl';
 			$this->layout="layout/center";

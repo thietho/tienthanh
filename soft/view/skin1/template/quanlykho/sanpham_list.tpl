@@ -41,10 +41,10 @@
                 <input type="hidden" id="selectsanpham" name="selectsanpham" />
                 <?php }else{ ?>
                 <?php if($this->user->checkPermission("quanlykho/sanpham/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/sanpham/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/sanpham/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>
@@ -89,7 +89,7 @@ $(document).ready(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page');
+	var page = control.getParam('page',strurl);
 	if(page!="")
 		url+="&page="+page;
 	$('#listsanpham').html(loading);

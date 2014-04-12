@@ -1,6 +1,6 @@
 new AjaxUpload(jQuery('#btnAddVideo'), {
 	action: DIR_UPLOADATTACHMENT,
-	name: 'image2',
+	name: 'image2[]',
 	responseType: 'json',
 	onChange: function(file, ext){
 	},
@@ -16,20 +16,23 @@ new AjaxUpload(jQuery('#btnAddVideo'), {
 	},
 	onComplete: function(file, response){
 		//alert(response);
-		if(response.files.error == 'none')
+		for(i in response.files)
 		{
+			if(response.files[i].error == 'none')
+			{
 			
-			$('input#fileid').val(response.files.imageid);
-			$('input#filepath').val(response.files.imagepath);
-			$('#filename').html(response.files.imagepath);
-			
-			$('#errorupload').hide();
-			
-		}
-		else
-		{
-			$('#errorupload').html(response.files.error);
-			$('#errorupload').show();
+				$('input#fileid').val(response.files[i].imageid);
+				$('input#filepath').val(response.files[i].imagepath);
+				$('#filename').html(response.files[i].imagepath);
+				
+				$('#errorupload').hide();
+				
+			}
+			else
+			{
+				$('#errorupload').html(response.files.error);
+				$('#errorupload').show();
+			}
 		}
 		$('#pnVideo').show();
 		$('.loadingimage').hide();

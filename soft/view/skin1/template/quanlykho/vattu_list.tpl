@@ -40,10 +40,10 @@
                 <input class="button" value="Bảng báo giá" type="button" onclick="linkto('<?php echo $bangbaogia?>')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -87,7 +87,7 @@ $(document).ready(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page');
+	var page = control.getParam('page',strurl);
 	if(page!="")
 		url+="&page="+page;
 	$('#listnguyenlieu').html(loading);
@@ -203,9 +203,9 @@ function showVatTuForm(id)
 						function(data){
 							if(data == "true")
 							{
-								//window.location = "?route=quanlykho/nguyenlieu#page="+control.getParam('page');
+								//window.location = "?route=quanlykho/nguyenlieu#page="+control.getParam('page',strurl);
 								$("#"+eid).dialog( "close" );
-								window.location.reload();
+								searchForm();
 							}
 							else
 							{

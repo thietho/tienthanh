@@ -78,17 +78,15 @@
                
                	<p id="pnImage">
                     <label for="image">Hình</label><br />
-                    <a id="btnAddImage" class="button">Chọn hình</a><br />
-                    <img id="preview" src="<?php echo $item['imagethumbnail']?>" />
-                    <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
-                    <input type="hidden" id="imageid" name="imageid" value="<?php echo $item['imageid']?>" />
-                    <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $item['imagethumbnail']?>" />
+                    
+                    <input type="button" class="button" value="Chọn hình" onclick="browserFile('imageid','single')"/><br />
+                    <img id="imageid_preview" src="<?php echo $imagethumbnail?>" onclick="showFile($('#imageid_fileid').val())"/>
+                    <input type="hidden" id="imageid_filepath" name="imagepath" value="<?php echo $post['imagepath']?>" />
+                    <input type="hidden" id="imageid_fileid" name="imageid" value="<?php echo $post['imageid']?>" />
                 </p>
                 
                 
-                <div id="errorupload" class="error" style="display:none"></div>
                 
-                <div class="loadingimage" style="display:none"></div>
                
             </div>
             

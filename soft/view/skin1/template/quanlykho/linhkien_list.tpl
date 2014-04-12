@@ -28,10 +28,10 @@
             	
                 <?php }else{ ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/insertlist")==true){ ?>
-                <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm nhiều linh kiện" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/linhkien/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -56,7 +56,7 @@ $(document).ready(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page');
+	var page = control.getParam('page',strurl);
 	if(page!="")
 		url+="&page="+page;
 	$('#listlinhkien').html(loading);

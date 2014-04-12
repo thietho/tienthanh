@@ -86,9 +86,7 @@
                 </p>
                 
                 
-                <div id="errorupload" class="error" style="display:none"></div>
                 
-                <div class="loadingimage" style="display:none"></div>
                
             </div>
             
