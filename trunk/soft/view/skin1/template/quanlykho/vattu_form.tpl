@@ -4,11 +4,10 @@
     
     <div class="section-content padding1">
     
-    	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
+    	<form name="frm" id="frm_vattu_form" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<input type="button" value="Lưu" class="button" onClick="save()"/>
-     	        <input type="button" value="Bỏ qua" class="button" onclick="linkto('?route=quanlykho/vattu#page='+control.getParam('page'))"/>   
+            	 
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -99,34 +98,15 @@
     
 </div>
 <script language="javascript">
-function save()
-{
-	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
-	
-	$.post("?route=quanlykho/vattu/save", $("#frm").serialize(),
-		function(data){
-			if(data == "true")
-			{
-				window.location = "?route=quanlykho/vattu#page="+control.getParam('page');
-			}
-			else
-			{
-			
-				$('#error').html(data).show('slow');
-				$.unblockUI();
-				
-			}
-			
-		}
-	);
-}
 
-$("#manhom").val("<?php echo $item['manhom']?>");
-$("#loai").val("<?php echo $item['loai']?>");
-$("#makho").val("<?php echo $item['makho']?>");
-$("#madonvi").val("<?php echo $item['madonvi']?>");
+$(document).ready(function(e) {
+	$("#frm_vattu_form #manhom").val("<?php echo $item['manhom']?>");
+	$("#frm_vattu_form #loai").val("<?php echo $item['loai']?>");
+	$("#frm_vattu_form #makho").val("<?php echo $item['makho']?>");
+	$("#frm_vattu_form #madonvi").val("<?php echo $item['madonvi']?>");
+	numberReady();
+    
+});
 
-var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 </script>
-<script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
-<script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>
+

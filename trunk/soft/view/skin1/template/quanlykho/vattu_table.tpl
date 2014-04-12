@@ -60,7 +60,7 @@
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoithieu'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['tontoida'],0)?></td>
                         <td class="number"><?php echo $this->string->numberFormate($item['soluongmoilandathang'],0)?></td>
-                        <td><?php echo $item['madonvi']?></td>
+                        <td><?php echo $this->document->getDonViTinh($item['madonvi'])?></td>
                         
                         <td><?php echo $item['mucdichsudung']?></td>
                         <td><?php echo $item['ghichu']?></td>
@@ -68,7 +68,7 @@
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             <?php if($this->user->checkPermission("quanlykho/vattu/update")==true){ ?>
-                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>#page='+control.getParam('page')"/>
+                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="showVatTuForm(<?php echo $item['id']?>)"/>
                             <?php } ?>
                             <!--<input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>-->
                             <!--<input type="button" class="button" name="btnCapNhatGia" value="<?php echo $item['text_capnhatgia']?>" onclick="window.location='<?php echo $item['link_capnhatgia']?>'"/>-->
@@ -93,35 +93,7 @@ $('#inputchk').click(function(e) {
         this.checked = chk;
     });
 });
-function viewPrice(id)
-{
-	$("#popup").attr('title','Giá vật tư');
-		$( "#popup" ).dialog({
-			autoOpen: false,
-			show: "blind",
-			hide: "explode",
-			width: 900,
-			height: 600,
-			modal: true,
-			buttons: {
-				
-				
-				'Đóng': function() 
-				{
-					
-					$( this ).dialog( "close" );
-				},
-				
-			}
-		});
-	
-		
-		$("#popup-content").load("?route=quanlykho/vattu/xemgia&id="+id,function(){
-			$("#popup").dialog("open");	
-		});
-	
 
-}
 </script>
 <?php if($dialog){ ?>
 <script language="javascript">

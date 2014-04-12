@@ -176,4 +176,90 @@ function moveto(url,eid)
 	$(eid).html(loading);
 	$(eid).load(url);	
 }
+function showVatTuForm(id)
+{
+	var eid = "vattuform";
+	$('body').append('<div id="'+eid+'" style="display:none"></div>');
+	
+	$("#"+eid).attr('title','Vật tư');
+		$("#"+eid).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: $(document).width()-100,
+			height: window.innerHeight,
+			modal: true,
+			close:function()
+				{
+					$("#"+eid).remove();
+				},
+			buttons: {
+				
+				'Lưu':function()
+				{
+					$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=quanlykho/vattu/save", $("#frm_vattu_form").serialize(),
+						function(data){
+							if(data == "true")
+							{
+								//window.location = "?route=quanlykho/nguyenlieu#page="+control.getParam('page');
+								$("#"+eid).dialog( "close" );
+								window.location.reload();
+							}
+							else
+							{
+							
+								$('#error').html(data).show('slow');
+								
+								
+							}
+							$.unblockUI();
+							
+						}
+					);
+				},
+				'Đóng': function() 
+				{
+					
+					$("#"+eid).dialog( "close" );
+					
+				},
+			}
+		});
+	
+		
+		$("#"+eid).load("?route=quanlykho/vattu/update&id="+id+"&dialog=true",function(){
+			$("#"+eid).dialog("open");	
+		})
+}
+function viewPrice(id)
+{
+	$("#popup").attr('title','Giá vật tư');
+		$( "#popup" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: 900,
+			height: 600,
+			modal: true,
+			buttons: {
+				
+				
+				'Đóng': function() 
+				{
+					
+					$( this ).dialog( "close" );
+				},
+				
+			}
+		});
+	
+		
+		$("#popup-content").load("?route=quanlykho/vattu/xemgia&id="+id,function(){
+			$("#popup").dialog("open");	
+		});
+	
+
+}
 </script>
