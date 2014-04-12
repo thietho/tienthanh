@@ -338,7 +338,7 @@ class ControllerQuanlykhoVattu extends Controller
 		
 		$this->id='content';
 		$this->template='quanlykho/vattu_form.tpl';
-		$this->layout="layout/center";
+		
 		
 		$this->render();
 	}
