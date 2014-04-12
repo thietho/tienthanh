@@ -16,7 +16,7 @@ body
 }
 p
 {
-	margin:0;	
+	margin:3px 0;	
 }
 table
 {
@@ -28,6 +28,10 @@ table
 .number {
 	text-align: right;
 }
+.text-left {text-align: left;}
+.text-right {text-align: right;}
+.text-center {text-align: center;}
+.text-separator {padding: 0 5px;}
 .table-data td
 {
 	border-right:thin solid #000;
@@ -43,6 +47,10 @@ table
 {
 	border-top:thin solid #000;
 	border-left:thin solid #000;
+}
+label
+{
+	font-weight:bold;	
 }
 </style>
 

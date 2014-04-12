@@ -24,12 +24,13 @@
 	
 	<script type='text/javascript' language='javascript' src='<?php echo DIR_COMPONENT?>ckeditor/ckeditor.js'></script>
     <script src="<?php echo DIR_JS?>common.js" type="text/javascript"></script>
+    <script src="<?php echo DIR_JS?>media.js" type="text/javascript"></script>
     <script src="<?php echo DIR_JS?>control.js" type="text/javascript"></script>
-
+	<script language="javascript" src="<?php echo HTTP_SERVER.DIR_JS?>phieunhapxuat.js"></script>
     <script src="<?php echo DIR_JS?>menu-collapsed.js" type="text/javascript"></script>
-
-	<script src="<?php echo DIR_JS?>autocomplete.js" type="text/javascript"></script>
-	<title>HL Solution Content Management System</title>
+	<script src="<?php echo DIR_JS?>order.js" type="text/javascript"></script>
+	
+	<title>HL Solutions Content Management System</title>
 
 
 </head>
@@ -44,7 +45,7 @@
 
 <script language="javascript">
 var loading = '<center><img src="<?php echo DIR_IMAGE?>loading.gif"></center>';
-
+var HTTP_IMAGE = '<?php echo HTTP_IMAGE?>';
 </script>
 <body>
 <div id="header"><?php echo $header?></div>
@@ -57,9 +58,10 @@ var loading = '<center><img src="<?php echo DIR_IMAGE?>loading.gif"></center>';
 </div>
 
 <div id="footer"><?php echo $footer?></div>
-
+	<input type="hidden" id="handler" />
+	<input type="hidden" id="outputtype" />
 </div>
-<div id="autocomplete" style="display: none; position: absolute; background: #FFF;"></div>
+
 </body>
 	<div id="popup" style="display:none">
     	<div id="popup-selete">

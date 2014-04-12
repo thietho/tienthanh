@@ -5,53 +5,39 @@ class ModelCoreSitemap extends Model
 							'group' => 'None',
 							'homepage' => "Homepage",
 							'module/information' => 'Information Page',
+							'module/register' => 'Register Page',
 							'module/news'=>'News',
-							'module/banner'=>'Banner',
-							'module/video'=>'Video',
+							//'module/event' => 'Event',
+							//'module/banner'=>'Banner',
+							//'module/album'=>'Album',
+							//'module/video'=>'Video',
+							//'module/audio'=>'Audio',
 							'module/product'=>'Product',
-							'module/download'=>'Download',
+							//'module/download'=>'Download',
 							'module/contact'=>'Contact',
 							'module/link'=>'Web URL',
-							'addon/cart'=>'Shopping cart',
-							'group/domain'=>'Domain page',
+							//'module/traning'=>'Traning',
+							//'module/question'=>'Questions',
+							'module/location'=>'Location',
+							'module/forward'=>'Forward',
 							);
 	private $moduleaddon = array(
 								 /*"core/changeskin" => "Change skin",*/
+								 "core/category" => "Quản lý danh mục",
+								 "core/media" => "Quản lý thông tin",
+								 "addon/sitemap" => "Quản lý cấu trúc website",
+								 /*"core/comment" => "Đánh giá",*/
+								/* "addon/order" => "Order management <span id='orderwarring'></span>",
+								 "core/member" => "Member management",*/
+								 "core/message" =>"Message",
 								 "core/user" => "User management"
 								 );
-	private $modulequanlykho = array(
-								 "1-title" => "Quản lý phiếu",
-								 "quanlykho/phieuyeucau" => "Danh mục phiếu yêu cầu", 
-								 "quanlykho/phieukhieunai" => "Danh mục phiếu khiếu nại", 
-								 "quanlykho/phieuthuthap" => "Danh mục phiếu thu thập", 
-								 /*"quanlykho/phieuxuatnguyenlieu" => "Danh mục phiếu xuất nguyên liệu", 
-								 "quanlykho/phieunhapnguyenlieu" => "Danh mục phiếu nhập nguyên liệu", */
-								 "2-title" => "Nhập kho",
-								 "quanlykho/phieunhapvattuhanghoa" => "Phiếu nhập vật tư hàng hóa",
-								 "quanlykho/lenhsanxuat" => "Lệnh sản xuất", 
-								 "3-title" => "Báo cáo thông kê nguyên liệu",
-								 "quanlykho/baocaonguyenlieunhapxuat" => "Báo cáo nhập xuất nguyên liệu phát sinh", 
-								 "quanlykho/baocaonguyenlieutinhhinhtonkho" => "Báo cáo tình hình tồn kho nguyên", 
-								 "quanlykho/baocaonguyenlieuvuotmucton" => "Báo cáo nguyên liệu vượt quá mức tồn kho", 
-								 "4-title" => "Quản lý danh mục",
-								 "quanlykho/donvitinh" => "Đơn vị tính",
-								 "quanlykho/kho" => "Kho",
-								 "quanlykho/phongban" => "Phòng ban",
-								 "quanlykho/chiphi" => "Danh muc chi phí",
-								 "quanlykho/nhom" => "Danh muc phân loại",
-								 "quanlykho/khachhang" => "Danh mục khách hàng",
-								 "quanlykho/nhacungung" => "Danh mục nhà cung ứng",
-								 "quanlykho/nhanvien" => "Danh mục nhân viên",
-								 "quanlykho/nguyenlieu" => "Danh mục nguyên liệu",
-								 "quanlykho/taisan" => "Quản lý tài sản",
-								 "quanlykho/linhkien" => "Quản lý linh kiện",
-								 "quanlykho/quyetdinhgia" => "Quản lý quyết định giá",
-								 "quanlykho/sanpham" => "Quản lý sản phẩm",
-								 "4-title" => "Quản lý kế khoạch",
-								 "quanlykho/kehoachnam" => "Kế hoạch năm",
-								 "quanlykho/kehoach" => "Kế hoạch"
-								 
-								 );
+	public $moduleuser = array(
+							'group' => 'None',
+							'module/information' => 'Information Page',
+							'module/news'=>'News',
+							'module/product'=>'Product'
+							);
 	public function getModules()
 	{
 		return $this->module;
@@ -60,9 +46,9 @@ class ModelCoreSitemap extends Model
 	{
 		return $this->moduleaddon;
 	}
-	public function getModuleQuanLyKho()
+	public function getModuleName($moduleid)
 	{
-		return $this->modulequanlykho;
+		return $this->module[$moduleid];
 	}
 	public function getItem($sitemapid, $siteid, $where="")
 	{
@@ -73,12 +59,11 @@ class ModelCoreSitemap extends Model
 		return $query->row;
 	}
 	
-	public function getList($siteid, $where = "")
+	public function getList($siteid, $where = "",$order = " ORDER BY position, siteid, id")
 	{
 		$query = $this->db->query("Select `sitemap`.* 
 									from `sitemap`
-									where `sitemap`.status not like 'Delete' AND siteid = '".$siteid."' ".$where.
-									" ORDER BY position, siteid, id"
+									where `sitemap`.status not like 'Delete' AND siteid = '".$siteid."' ".$where.$order						
 									);
 		return $query->rows;
 	}
@@ -183,13 +168,16 @@ class ModelCoreSitemap extends Model
 	public function getBreadcrumb($id, $siteid, $end=0)
 	{
 		$data = $this->getPath($id, $siteid);
-		$strBreadcrumb = "<a href='index.php'>Home</a>";
-		for($i=count($data)-1;$i>$end;$i--)
+		$strBreadcrumb = "";
+		for($i=count($data)-1;$i>=$end;$i--)
 		{
-			$link = "".$data[$i]['sitemapname']."";
-			if($data[$i]['modulepath'] != "")
-				$link='<a target="_blank" href="'.$data[$i]['modulepath']."&sitemapid=".$data[$i]['sitemapid'].'" title="[Detail]">'.$data[$i]['sitemapname'].'</a>';
-			$strBreadcrumb .= " >> ".$link; 
+			
+			
+				$link='<a href="?route='.$data[$i]['moduleid']."&sitemapid=".$data[$i]['sitemapid'].'" title="[Detail]">'.$data[$i]['sitemapname'].'</a>';
+			if($i<count($data)-1)
+				$strBreadcrumb .= " >> ".$link; 
+			else
+				$strBreadcrumb .= $link;
 		}
 		return $strBreadcrumb;
 	}
@@ -224,6 +212,7 @@ class ModelCoreSitemap extends Model
 		$othername = $this->db->escape(@$data['othername']);
 		$position=(int)@$data['position'];
 		$moduleid=$this->db->escape(@$data['moduleid']);
+		$forward = $this->db->escape(@$data['forward']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath = $this->db->escape(@$data['imagepath']);
 		$status=$this->db->escape(@$data['status']);
@@ -235,6 +224,7 @@ class ModelCoreSitemap extends Model
 						"othername",
 						"position",
 						"moduleid",
+						"forward",
 						"imageid",
 						"imagepath",
 						"status"
@@ -247,6 +237,7 @@ class ModelCoreSitemap extends Model
 						$othername,
 						$position,
 						$moduleid,
+						$forward,
 						$imageid,
 						$imagepath,
 						$status
@@ -256,39 +247,45 @@ class ModelCoreSitemap extends Model
 	
 	public function updateSiteMap($data)
 	{
+		$id=$this->db->escape(@$data['id']);
 		$sitemapid=$this->db->escape(@$data['sitemapid']);
 		$siteid=$this->db->escape(@$data['siteid']);
 		$sitemapparent = $this->db->escape(@$data['sitemapparent']);
 		$sitemapname = $this->db->escape(@$data['sitemapname']);
 		$othername = $this->db->escape(@$data['othername']);
-		$position=(int)@$data['position'];
+		
 		$moduleid=$this->db->escape(@$data['moduleid']);
+		$forward = $this->db->escape(@$data['forward']);
 		$imageid=(int)@$data['imageid'];
 		$imagepath = $this->db->escape(@$data['imagepath']);
 		$status=$this->db->escape(@$data['status']);
 		$field=array(
 						"siteid",
+						'sitemapid',
 						"sitemapparent",
 						"sitemapname",
 						"othername",
-						"position",
+						
 						"moduleid",
+						"forward",
 						"imageid",
 						"imagepath",
 						"status"
 					);
 		$value=array(
 						$siteid,
+						$sitemapid,
 						$sitemapparent,
 						$sitemapname,
 						$othername,
-						$position,
+						
 						$moduleid,
+						$forward,
 						$imageid,
 						$imagepath,
 						$status
 					);
-		$where="sitemapid = '".$sitemapid."' AND siteid = '".$siteid."'";
+		$where=" id = '".$id."'";
 		$this->db->updateData('sitemap',$field,$value,$where);
 	}
 	
@@ -299,6 +296,18 @@ class ModelCoreSitemap extends Model
 					);
 		$value=array(
 						$position
+					);
+		$where="sitemapid = '".$sitmapid."' AND siteid = '".$siteid."'";
+		$this->db->updateData('sitemap',$field,$value,$where);
+	}
+	
+	public function updateCol($sitmapid,$col,$val, $siteid)
+	{
+		$field=array(
+						$col
+					);
+		$value=array(
+						$val
 					);
 		$where="sitemapid = '".$sitmapid."' AND siteid = '".$siteid."'";
 		$this->db->updateData('sitemap',$field,$value,$where);
@@ -349,6 +358,36 @@ class ModelCoreSitemap extends Model
 			foreach($rows as $row)
 			{
 				$this->getTreeSitemap($row['sitemapid'], $data, $siteid, $level, $path, $parentpath);
+			}
+	}
+	
+	function getTreeSitemapUser($id, &$data, $siteid, $level=-1, $path="", $parentpath="")
+	{
+		$arr=$this->getItem($id, $siteid);
+		
+		$rows = $this->getListByParent($id, $siteid);
+		
+		$arr['countchild'] = count(rows);
+		
+		if($arr['sitemapparent'] != "") $parentpath .= "-".$arr['sitemapparent'];
+		
+		if($id!="" && $arr['status'] != 'Hide')
+		{
+			$level += 1;
+			$path .= "-".$id;
+			
+			$arr['level'] = $level;
+			$arr['path'] = $path;
+			$arr['parentpath'] = $parentpath;
+			
+			array_push($data,$arr);
+		}
+		
+		
+		if(count($rows))
+			foreach($rows as $row)
+			{
+				$this->getTreeSitemapUser($row['sitemapid'], $data, $siteid, $level, $path, $parentpath);
 			}
 	}
 	

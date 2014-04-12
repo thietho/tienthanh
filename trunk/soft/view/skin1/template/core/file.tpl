@@ -1,188 +1,200 @@
-
-
-<style>
-.tb-tree {
-	
-}
-
-.tb-tree input {
-	margin-right: 3px;
-}
-
-.tb-tree label {
-	font-size: 0.9em
-}
-
-#result div img {
-	vertical-align: middle;
-	margin-bottom: 2px;
-}
-
-.tb-tree .td-selected {
-	
-}
-
-.td-selected #selected img {
-	vertical-align: top;
-	margin-bottom: 2px;
-}
-</style>
+<script src='<?php echo DIR_JS?>jquery.fileupload.js' type='text/javascript' language='javascript'> </script>
 
 
 <form id="ffile" name="ffile" method="post">
 
 <table width="100%" class="data-table">
 	<tr>
-		<td colspan="3"><input type="hidden" name="sitemap" id="sitemap"
-			value="" /> <strong>Keyword</strong> <input type="text"
-			name="keyword" id="keyword" class="text" />&nbsp;&nbsp; &nbsp;&nbsp;<input
-			type="button" id="btnfilter" name="btnfilter" value="Filter"
-			class="button" /></td>
-	</tr>
-	<tr>
-		<td colspan="3">
-		<p id="pnImage"><label for="image">Upload file</label><br />
-		<a id="btnAddImagePopup" class="button">Select file</a><br />
-		<!--<img id="preview" src="<?php echo $imagethumbnail?>" />
-                <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $imagepath?>" />
-                <input type="hidden" id="imageid" name="imageid" value="<?php echo $imageid?>" />
-                <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $imagethumbnail?>" />-->
-		<div id="errorupload" class="error" style="display: none"></div>
-		</p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="34%" class="tb-tree"><?php echo $sitemap?></td>
-		<td width="40%" id="result" style="vertical-align: top !important">
-		Loading...</td>
-		<td width="26%" style="vertical-align: top !important"
-			class="td-selected">
-		<div id="selected"></div>
-		<br />
-
-		<input type="button" class="button" name="btnSelect" value="OK"
-			onclick="saveSelect()" /></td>
-	</tr>
+        <td colspan="3">
+        	<input type="hidden" id="folderidcur" value="0" />
+     		<input type="hidden" name="sitemap" id="sitemap" value="" />
+      		<strong>File name</strong> <input type="text" name="keyword" id="keyword" class="text" />&nbsp;&nbsp;
+            
+            
+            			
+            
+            &nbsp;&nbsp;<input type="button" id="btnfilter" name="btnfilter" value="Filter" class="button"/>
+            
+            <div class="progress" id="progress'+t+'"><div class="bar" style="width: 0%;"></div></div>
+            <table>
+                <tbody id="listfile">
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+    	<td colspan="3">
+        	<p id="pnImage">
+                
+                
+                <input id="fileupload" class="button" type="file" name="files[]"  multiple value="Chon file" >
+                <input type="button" class="button" value="Tạo thư mục" onclick="showFolderForm('',$('#folderidcur').val())"/>
+                <input type="button" class="button" value="Sửa tên thư mục" onclick="showFolderForm($('#folderidcur').val(),'')"/>
+                <input type="button" class="button" value="Xóa thư mục" onclick="delFolder($('#folderidcur').val())"/>
+                <input type="button" class="button" value="Cây thư mục" onclick="$('#folderconten').show()"/>
+                <br />
+                <div id="errorupload" class="error" style="display:none"></div>
+               
+                <?php if($_GET['dialog'] == ''){?>
+                <input type="button" class="button" id="btnDelFile" value="Xóa file"/>
+                <input type="button" class="button" id="btnMoveFile" value="Chuyển thư mục" onclick="showFolderMoveForm()"/>
+                <?php } ?>
+                
+            </p>
+        </td>
+    </tr>
+    <tr valign="top">
+    	
+        <td style="vertical-align:top !important">
+        	
+        	<div id="folderconten" style="position:absolute;background:#fff;overflow:auto;display:none;width:300px">
+            	<span class="folderitem selectfolder" folderid="0">Root</span>
+                <input type="button" class="button right" value="X" onclick="$('#folderconten').hide()"/>
+            	<div id="showfolder"></div>
+            </div>
+        	<div id="result"></div>
+        	
+        </td>
+        
+    </tr>
 </table>
 </form>
 <script>
 	var imageindex = 0;
 	var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 	var DIR_UPLOADATTACHMENT = "<?php echo $DIR_UPLOADATTACHMENT?>";
+var cur = "";
+var posk =0
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+		/*add: function (e, data) {
+			//alert(data.files[0].name)
+			var t =posk++;
+			
+			var str = '<tr>';
+			str += '<td>'+data.files[0].name+'</td>';
+			str += '<td id="btn'+t+'"></td>';
+			str += '<td><div class="progress" id="progress'+t+'"><div class="bar" style="width: 0%;"></div></div></td>';
+			str += '</tr>'
+			$('#listfile').append(str);
+            data.context = $('<button class="btnUpload" id="up'+t+'" ref="'+t+'"/>').text('Upload')
+                .appendTo($('#btn'+t))
+                .click(function () {
+					cur = t;
+                    data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                    data.submit();
+                });
+        },*/
+        done: function (e, data) {
+            /*$.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });*/
+			/*var fileid = response.files[i].imageid;
+				var folderid = $('#folderidcur').val();
+			$.get("?route=core/file/updateFolder&fileid="+fileid+"&folderid="+folderid,
+				function(){
+					 showResult("?route=core/file/getList&folderid="+folderid);
+				});*/
+			showResult("?route=core/file/getList&folderid="+ $('#folderidcur').val());
+        },
+		progressall: function (e, data) {
+			//showProgress(cur,e, data)
+			var progress = parseInt(data.loaded / data.total * 100, 10);
+			$('.bar').html(progress+"%");
+			$('.progress .bar').css(
+				'width',
+				progress + '%'
+			);
+		}
+    });
+});
+function showProgress(id,e, data)
+{
+	var progress = parseInt(data.loaded / data.total * 100, 10);
+	$('#progress'+cur+' .bar').css(
+				'width',
+				progress + '%'
+	);
+}
 </script>
 <script language="javascript">
 //alert(parent.opener.document.InsertContent.title.value);
 $(document).ready(function() {
-  	$("#result").load("?route=core/file/getList");
 	
-	$(".checkbox").click(function(index){
-		//alert($(this).val());
-		//alert(this.checked);
-		
-		temp ="";
-		$(".checkbox").each(function(index){
-			
-			if(this.checked)
-			temp += $(this).val()+",";
-		})
-		$("#sitemap").val(temp);
-	});
+	loadFolder()
+  	showResult("?route=core/file/getList&folderid="+ $('#folderidcur').val());
+	
+	
+	$('#showfolder').css('overflow','auto');
+	//'$('#showfolder').css('height',$(window).height() - $('#showfolder').position().top+ 'px');
+	
+	
 });
-
+function loadFolder()
+{
+	
+	$('#showfolder').load("?route=core/file/getFolderTreeView",function(){
+		var CLASSES = ($.treeview.classes = {
+			animated: "fast",
+ 			collapsed: false,
+			persist: "cookie",
+ 			cookieId: "rememberme"
+		});
+		$("#group0").treeview(CLASSES);
+		intFolder()
+	});
+}
+function intFolder()
+{
+	$('.folderitem').click(function(e) {
+		$('.folderitem').removeClass("selectfolder");
+		$(this).addClass("selectfolder");
+		var folderid = $(this).attr('folderid');
+		selectFolder(folderid)
+	});
+}
+function selectFolder(folderid)
+{
+	$('.folderitem').removeClass("selectfolder");
+	$('#folderidcur').val(folderid);
+	$('#foldername' + folderid).addClass("selectfolder");
+	showResult("?route=core/file/getList&folderid="+ folderid);
+	
+	
+	
+}
+var arrfileid = new Array();
 $("#btnfilter").click(function(){
 	
 	url = "?route=core/file/getList&keyword="+escape($("#keyword").val())+"&location="+$("#location").val()+"&sitemap="+$("#sitemap").val();
-	$("#result").load(url);						   
+	showResult(url);						   
 })
+$('#btnDelFile').click(function(e) {
+    $('.selectfile').each(function(index, element) {
+        var fileid = this.id;
+		$.get("?route=core/file/delFile&fileid="+fileid,function(data){
+			showResult("?route=core/file/getList&folderid="+ $('#folderidcur').val());
+		});		
+    });
+});
 
-function moveto(url)
-{
-	$("#result").html("Loading...")
-	$("#result").load(url);	
-}
-function removeFile(fileid)
-{
-	$("#rowimage"+fileid).html("");	
-	//arr.splice(arr.indexOf(fileid),1,arr);
-}
-var arr = new Array();
-function selectFile(fileid)
-{
-	if(arr.indexOf(fileid)==-1)
-	{
-		arr.push(fileid);
-	
-		input = '<input type="hidden" class="rows" id="seletediamge'+fileid+'" name="seletediamge'+fileid+'" value="'+fileid+'" />';
-		remove = '<a class="button" onClick="removeFile('+ fileid +')">Remove</a>'
-		$("#selected").append("<div id='rowimage"+fileid+"'>"+$("#image"+fileid).html()+input+"</div>"+remove+"<br/>");
-	}
-}
 
-function saveSelect()
-{
-	//parent.opener.document.InsertContent.listselectfile.value ="";
-	$("#listselectfile").val('');
-	$(".rows").each(function(index){
-		//parent.opener.document.InsertContent.listselectfile.value+=$(this).val()+",";
-		$("#listselectfile").val($("#listselectfile").val()+$(this).val()+",")
-	})
-	//window.close();
-	$.unblockUI();
-	addImageToDescription();
-}
 
-function callbackUploadFile()
-{
-	new AjaxUpload(jQuery('#btnAddImagePopup'), {
-		action: DIR_UPLOADATTACHMENT,
-		name: 'image2[]',
-		responseType: 'json',
-		onChange: function(file, ext){
-		},
-		onSubmit: function(file, ext){
-			$('.loadingimage').show();
-			// Allow only images. You should add security check on the server-side.
-			/*if (ext && /^(jpg|png|jpeg|gif)$/i.test(ext)) {                            
-				$('#pnImage').hide();
-				$('.loadingimage').show();
-			} else {
-				alert('Your selection is not image');
-				return false;
-			}        */                    
-		},
-		onComplete: function(file, response){
-			
-			for(i in response.files)
-			{
-				if(response.files[i].error == 'none')
-				{
-			
-					$('#errorupload').hide();
-					
-					$("#result").load("?route=core/file/getList");
-					//$('input#attimageid'+imageindex).val(response.files.imageid);
-					//$('#attachment').append()
-					/*$('input#imagepath').val(response.files.imagepath);
-					$('input#imagethumbnail').val(response.files.imagethumbnail);
-					$('#preview').attr("src", response.files.imagethumbnail);
-					$('#errorupload').hide();*/
-				
-				
-				}
-				else
-				{
-					$('#errorupload').html(response.files.error);
-					$('#errorupload').show();
-				}
-			}
-				
-			$('#pnImage').show();
-			$('.loadingimage').hide();
-			
-		}
-	});	
 
-	
+
+function showResult(url)
+{
+	$('#result').html(loading);
+	$("#result").load(url,function(){
+		if("<?php echo $_GET['dialog']?>" =='true')
+			intSeleteFile("<?php echo $_GET['type']?>");
+			$('#fileupload').fileupload({
+				// Uncomment the following to send cross-domain cookies:
+				//xhrFields: {withCredentials: true},
+				url: '?route=common/uploadattachment&folderid='+ $('#folderidcur').val()
+			});
+	});
 }
-callbackUploadFile();
+//callbackUploadFile();
 </script>

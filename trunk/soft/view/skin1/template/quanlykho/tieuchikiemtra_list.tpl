@@ -30,7 +30,7 @@
                 
                 
                 <?php if($this->user->checkPermission("quanlykho/tieuchikiemtra/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page'))">
+                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/tieuchikiemtra/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
@@ -82,7 +82,7 @@ $('#frm_tieuchikiemtra select').change(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page');
+	var page = control.getParam('page',strurl);
 	if(page!="")
 		url+="&page="+page;
 	$('#listitem').html(loading);

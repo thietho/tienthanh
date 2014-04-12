@@ -1,11 +1,13 @@
                                 <table>
                                 	<thead>
                                     	<tr>
-                                        	<th>Tiêu đề</th>
-                                            <th>Giá thị trường</th>
-                                            <th>Giá bán</th>
-                                            <th>Khuyến mãi</th>
-                                            <th>Thứ tự</th>
+                                        	<th>Code</th>
+                                        	<th><?php echo $lbl_title ?></th>
+                                           	
+                                            
+                                            <th><?php echo $lbl_sale ?></th>
+                                            <th><?php echo $lbl_price ?></th>
+                                            <th><?php echo $lbl_order ?></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -15,20 +17,28 @@
     {
 ?>
                                         <tr>
-                                            
+                                            <td>
+                                                <?php echo $item['code']?>
+                                                
+                                            </td>
                                             <td>
                                                 <?php echo $item['title']?>
+                                                <?php if($item['tenkhuyenmai']){ ?>
+                                                (<?php echo $item['tenkhuyenmai']?>)
+                                                <?php } ?>
                                             </td>
-                                            <td class="number"><?php echo $this->string->numberFormate($item['thitruong'])?></td>
-                                            <td class="number"><?php echo $this->string->numberFormate($item['gia'])?></td>
-                                            <td class="number"><?php echo $this->string->numberFormate($item['khuyenmai'])?></td>
+                                            
+                                            
+                                            <td class="number"><?php echo $this->string->numberFormate($item['pricepromotion'])?></td>
+                                            <td class="number"><?php echo $this->string->numberFormate($item['price'])?></td>
                                             <td>
                                                 <input type="text" class="text number price" id="pos-<?php echo $item['mediaid']?>" name="pos[<?php echo $item['mediaid']?>]" value="<?php echo $item['position']?>" size="3" style="text-align:right"/>
                                             </td>
                                             
                                             <td>
                                                 
-                                                <a class="button" onclick="price.edit('<?php echo $item['mediaid']?>')">Edit</a>&nbsp;<a class="button" onclick="price.remove('<?php echo $item['mediaid']?>')">Remove</a>
+                                                <a class="button editprice" rel="<?php echo $item['mediaid']?>"><?php echo $button_edit ?></a>
+                                                <a class="button delprice" rel="<?php echo $item['mediaid']?>"><?php echo $button_delete ?></a>
                                             </td>
                                             
                                         </tr>
@@ -39,7 +49,10 @@
                                 	<tfoot>
                                     	<tr>
                                         	<td colspan="3">
-                                            	<center><input type="button" class="button" id="btnUpdatePrice" name="btnUpdatePos"  value="Update position" /></center>
+                                            	<center>
+                                                	<input type="button" class="button" id="btnUpdatePrice" name="btnUpdatePos"  value="<?php echo $button_updateposition ?>" />
+                                                    <input type="hidden" name="mainprice" value="<?php echo $child[0]['mainprice']?>" />
+                                                </center>
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -68,5 +81,13 @@ $("#btnUpdatePrice").click(function(){
 			}
 		});
 	})
+});
+$('.editprice').click(function(e) {
+	var mediaid = $(this).attr('rel');
+    price.showFormPrice(mediaid);
+});
+$('.delprice').click(function(e) {
+    var mediaid = $(this).attr('rel');
+    price.remove(mediaid);
 });
 </script>

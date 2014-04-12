@@ -1,44 +1,44 @@
 <?php
-class ModelCoreUsertype extends Model
-{
+class ModelCoreUsertype extends Model 
+{ 
 	public $listPermission = array(
 								 "access" => "Access",
 								 "add" => "Add",
 								 "edit" => "Edit",
 								 "delete" => "Delete",
-	);
+								 );
 	public function getUserTypes()
 	{
 		$query = $this->db->query("Select * from `usertype` where usertypename not like 'member' and usertypename not like 'author'");
 		return $query->rows;
 	}
-
+	
 	public function getMemberType()
 	{
 		$query = $this->db->query("Select * from `usertype` where usertypename='member'");
 		return $query->rows;
 	}
-
+	
 	public function getUserType($id)
 	{
 		$sql = "Select * from `usertype` where usertypeid='".$id."'";
 		$query = $this->db->query($sql);
 		return $query->row;
 	}
-
+	
 	public function getList($where="")
 	{
-		$sql = "Select * from `usertype` WHERE 1=1 ".$where;
+		$sql = "Select * from `usertype` WHERE 1=1 ".$where;	
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-
+	
 	public function getAllUsertype()
 	{
 		$query = $this->db->query("Select * from `usertype`");
 		return $query->rows;
 	}
-
+	
 	public function nextID()
 	{
 		return $this->db->getNextId("usertype","usertypeid");
@@ -48,29 +48,29 @@ class ModelCoreUsertype extends Model
 		$query = $this->db->query("Select * from `usertype` where usertypename = '".$name."'");
 		return $query->rows;
 	}
-
+	
 	public function getUserTypeChild($id)
 	{
 		$sql = "Select * From usertype where UserTypeParent='".$id."'";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
-
+	
 	function getTreeUserType($id,&$data)
 	{
 		$arr=$this->getUserType($id);
 		if($id!="")
-		array_push($data,$arr);
+			array_push($data,$arr);
 		$rows = $this->getUserTypeChild($id);
-
+		
 		if(count($rows))
-		foreach($rows as $row)
-		{
-			$this->getTreeUserType($row['usertypeid'],$data);
-		}
-
+			foreach($rows as $row)
+			{
+				$this->getTreeUserType($row['usertypeid'],$data);
+			}
+	
 	}
-
+	
 	function getDeep($id)
 	{
 		$deep=0;
@@ -82,7 +82,7 @@ class ModelCoreUsertype extends Model
 		}
 		return $deep;
 	}
-
+	
 	public function insertUsertype($data)
 	{
 		$usertypeid=(int)@$data['usertypeid'];
@@ -95,17 +95,17 @@ class ModelCoreUsertype extends Model
 						"usertypename",
 						"permission",
 						"UserTypeParent"
-						);
-						$value=array(
+					);
+		$value=array(
 						$usertypeid,
 						$usertypename,
 						$permission,
 						$UserTypeParent
-						);
-						$this->db->insertData("usertype",$field,$value);
-
+					);
+		$this->db->insertData("usertype",$field,$value);
+		
 	}
-
+	
 	public function updateUsertype($data)
 	{
 		$usertypeid=(int)@$data['usertypeid'];
@@ -118,18 +118,18 @@ class ModelCoreUsertype extends Model
 						"usertypename",
 						"permission",
 						"UserTypeParent"
-						);
-						$value=array(
+					);
+		$value=array(
 						$usertypeid,
 						$usertypename,
 						$permission,
 						$UserTypeParent
-						);
-						$where="usertypeid = ".$usertypeid;
-						$this->db->updateData('usertype',$field,$value,$where);
-
+					);
+		$where="usertypeid = ".$usertypeid;
+		$this->db->updateData('usertype',$field,$value,$where);
+		
 	}
-
+	
 	public function updatePermission($data)
 	{
 		$usertypeid=$this->db->escape(@$data['usertypeid']);
@@ -137,15 +137,15 @@ class ModelCoreUsertype extends Model
 
 		$field=array(
 						"permission"
-						);
-						$value=array(
+					);
+		$value=array(
 						$permission
-						);
-						$where="usertypeid = '".$usertypeid."'";
-						$this->db->updateData('usertype',$field,$value,$where);
-
+					);
+		$where="usertypeid = '".$usertypeid."'";
+		$this->db->updateData('usertype',$field,$value,$where);
+		
 	}
-
+	
 	public function deleteUsertype($data)
 	{
 		foreach($data as $usertypeid)
@@ -153,8 +153,8 @@ class ModelCoreUsertype extends Model
 			$usertypeid=(int)@$usertypeid;
 			$where="usertypeid = ".$usertypeid;
 			$this->db->deleteData('usertype',$where);
-		}
+		}	
 	}
-
+	
 }
 ?>

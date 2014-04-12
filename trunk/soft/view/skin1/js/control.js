@@ -20,9 +20,9 @@ function Control()
 		return arr[1];
 	}
 	
-	this.getParam = function(field)
+	this.getParam = function(field,url)
 	{
-		var strurl = this.getUrl();
+		var strurl = url;
 		arr = (""+strurl).split('&');
 		for(i in arr)
 		{
@@ -33,7 +33,6 @@ function Control()
 				return ar[1];
 			}
 		}
-		return "";
 	}
 	
 	this.fload = function(eid,url)
@@ -47,6 +46,7 @@ function Control()
 		  }
 		});*/
 		$(eid).load(url,function(){
+			
 			$(eid).hide().fadeIn("slow")					 
 		});
 		
