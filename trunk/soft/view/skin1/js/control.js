@@ -33,6 +33,7 @@ function Control()
 				return ar[1];
 			}
 		}
+		return "";
 	}
 	
 	this.fload = function(eid,url)
@@ -73,6 +74,6 @@ function Control()
 
 
 var control = new Control();
-var strurl = control.getUrl();
+//var strurl = control.getUrl();
 
 

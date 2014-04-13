@@ -89,7 +89,7 @@ $(document).ready(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page',strurl);
+	var page = control.getParam('page',control.getUrl());
 	if(page!="")
 		url+="&page="+page;
 	$('#listsanpham').html(loading);
@@ -141,5 +141,62 @@ function moveto(url,eid)
 {
 	$(eid).html(loading);
 	$(eid).load(url);	
+}
+function showSanPhamForm(id)
+{
+	var eid = "sanphamform";
+	$('body').append('<div id="'+eid+'" style="display:none"></div>');
+	
+	$("#"+eid).attr('title','Sản phẩm');
+		$("#"+eid).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: $(document).width()-100,
+			height: window.innerHeight,
+			modal: true,
+			close:function()
+				{
+					$("#"+eid).remove();
+				},
+			buttons: {
+				
+				'Lưu':function()
+				{
+					$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=quanlykho/sanpham/save", $("#frm_sanpham_form").serialize(),
+						function(data){
+							if(data == "true")
+							{
+								
+								$("#"+eid).dialog( "close" );
+								searchForm();
+							}
+							else
+							{
+							
+								$('#error').html(data).show('slow');
+								
+								
+							}
+							$.unblockUI();
+							
+						}
+					);
+				},
+				'Đóng': function() 
+				{
+					
+					$("#"+eid).dialog( "close" );
+					
+				},
+			}
+		});
+	
+		
+		$("#"+eid).load("?route=quanlykho/sanpham/update&id="+id+"&dialog=true",function(){
+			$("#"+eid).dialog("open");	
+		})
 }
 </script>

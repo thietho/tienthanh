@@ -177,7 +177,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		
 		$this->id='content';
 		$this->template='quanlykho/sanpham_form.tpl';
-		$this->layout="layout/center";
+		
 		
 		$this->render();
 	}
