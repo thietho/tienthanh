@@ -20,5 +20,6 @@ $_['entry_status']        = 'Tình trạng:';
 
 // Error
 $_['error_permission']    = 'Bạn không được phép thực hiện chức năng này!';
+$_['error_sitemapid']   = 'Mã danh mục không được rỗng';
 $_['error_sitemapname']   = 'Tên danh mục không được rỗng';
 ?>

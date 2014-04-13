@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'Audio management';
+$_['heading_title']     = 'Gallery management';
 
 // Text
 $_['text_success']      = 'Successfull!';
@@ -20,11 +20,11 @@ $_['tab_editcontent']   = 'Edit Information';
 $_['tab_map']           = 'Menu mapping';
 
 // Entry
-$_['entry_title']       = 'Title:';
-$_['entry_summary']     = 'Summary:';
-$_['entry_description'] = 'Description:';
-$_['entry_image']       = 'Image:';
-$_['entry_source']       = 'Source:';
+$_['entry_title']       = 'Title';
+$_['entry_summary']     = 'Summary';
+$_['entry_description'] = 'Description';
+$_['entry_image']       = 'Image';
+$_['entry_source']       = 'Source';
 $_['entry_selectphoto'] = 'Select photo';
 $_['entry_attachment']  = 'Select other photo';
 

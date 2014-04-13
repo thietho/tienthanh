@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'Audio management';
+$_['heading_title']     = 'Video management';
 
 // Text
 $_['text_success']      = 'Successfull!';

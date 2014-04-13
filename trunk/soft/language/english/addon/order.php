@@ -10,7 +10,7 @@ $_['column_customername']  = 'Customer';
 $_['column_address']       = 'Address';
 $_['column_phone']         = 'Phone';
 $_['column_orderdate']     = 'Order Date';
-
+$_['column_orderstatus']     = 'Status';
 $_['column_productname']     = 'Product Name';
 $_['column_productimage']     = 'Image';
 $_['column_productqty']     = 'Qty';
