@@ -62,7 +62,7 @@ function fromPhieuCanHang(bmtn13id,bmvt17id)
 			show: "blind",
 			hide: "explode",
 			width: 900,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				
@@ -116,7 +116,7 @@ function fromPhieuNhanVTHH(bmtn13id,bmvt16id)
 			show: "blind",
 			hide: "explode",
 			width: 900,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				

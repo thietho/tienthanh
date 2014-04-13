@@ -372,7 +372,7 @@ function selectFilm(eid,type)
 			show: "blind",
 			hide: "explode",
 			width: $(document).width()-100,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -401,7 +401,7 @@ function browserFile(eid,type)
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				
 			});
@@ -412,7 +412,7 @@ function browserFile(eid,type)
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				buttons:
 				{

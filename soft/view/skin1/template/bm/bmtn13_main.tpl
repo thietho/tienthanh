@@ -103,7 +103,7 @@ function BMTN13()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -135,7 +135,7 @@ function BMTN13()
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				close: function(event, ui) {
 					$(eid).remove();
@@ -168,7 +168,7 @@ function BMTN13()
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				close: function(event, ui) {
 					$(eid).remove();
@@ -228,7 +228,7 @@ function BMTN13()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");

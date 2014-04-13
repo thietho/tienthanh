@@ -204,7 +204,7 @@ function selcetNguyenLieu()
 			show: "blind",
 			hide: "explode",
 			width: 900,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			
 		});
@@ -253,7 +253,7 @@ function selcetSanPham()
 			show: "blind",
 			hide: "explode",
 			width: 900,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				

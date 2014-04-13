@@ -182,7 +182,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							//executeFunctionByName("ktdv.loadData",'?route=bm/bmvt03/getList');
@@ -220,7 +220,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -266,7 +266,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -313,7 +313,7 @@ function BMVT03()
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				close: function(event, ui) {
 					$('#popupdotgiaohang').remove();
@@ -342,7 +342,7 @@ function BMVT03()
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				close: function(event, ui) {
 					$('#popupdotgiaohangform').remove();
@@ -395,7 +395,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							
@@ -436,7 +436,7 @@ function BMVT03()
 				show: "blind",
 				hide: "explode",
 				width: $(document).width()-100,
-				height: 600,
+				height: window.innerHeight,
 				modal: true,
 				close: function(event, ui) {
 					$('#popupvt03').remove();
@@ -513,7 +513,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
@@ -545,7 +545,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");
@@ -576,7 +576,7 @@ function BMVT03()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 600,
+						height: window.innerHeight,
 						modal: true,
 						close: function(event, ui) {
 							//ktdv.loadData("?route=bm/bmvt03/dotGiaoHang&id=<?php echo $dotgiaohangid?>");

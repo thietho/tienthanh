@@ -150,7 +150,7 @@ function viewTonKho(id)
 					autoOpen: false,
 					show: "blind",
 					hide: "explode",
-					width: 800,
+					width: $(document).width()-100,
 					height: 500,
 					modal: true,
 					buttons: {
@@ -241,7 +241,7 @@ function viewPrice(id)
 			show: "blind",
 			hide: "explode",
 			width: 900,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				
