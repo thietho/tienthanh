@@ -133,7 +133,7 @@ function Order()
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
+			width: $(document).width()-100,
 			height: 500,
 			modal: true,
 			buttons: {
@@ -207,7 +207,7 @@ function Order()
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
+			width: $(document).width()-100,
 			height: 500,
 			modal: true,
 			buttons: {

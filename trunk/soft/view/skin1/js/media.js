@@ -8,8 +8,8 @@ function showFile(fileid)
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
-			height: 600,
+			width: $(document).width()-100,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -49,7 +49,7 @@ function showMediaForm(fileid)
 			show: "blind",
 			hide: "explode",
 			width: 500,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -237,8 +237,8 @@ function showFileInfor(fileid)
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
-			height: 600,
+			width: $(document).width()-100,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				'Các bài viết sử dụng':function()
@@ -382,7 +382,7 @@ function showMediaUse(fileid)
 			show: "blind",
 			hide: "explode",
 			width: 500,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -460,7 +460,7 @@ function addProduct(parent,sitemapid)
 		show: "blind",
 		hide: "explode",
 		width: $(document).width()-100,
-		height: 600,
+		height: window.innerHeight,
 		modal: true,
 		close:function()
 				{
@@ -495,7 +495,7 @@ function editProduct(mediaid)
 		show: "blind",
 		hide: "explode",
 		width: $(document).width()-100,
-		height: 600,
+		height: window.innerHeight,
 		modal: true,
 		close:function()
 				{
@@ -581,7 +581,7 @@ function showMemberForm(memberid,strFun)
 			hide: "explode",
 			//width: $(document).width()-100,
 			width: 600,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -650,7 +650,7 @@ function showNhaCungCapForm(nhacungcapid,strFun)
 			hide: "explode",
 			//width: $(document).width()-100,
 			width: 600,
-			height: 600,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{

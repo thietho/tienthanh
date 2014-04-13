@@ -84,8 +84,8 @@ function selcetLinhKien()
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
-			width: 800,
-			height: 600,
+			width: $(document).width()-100,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				
