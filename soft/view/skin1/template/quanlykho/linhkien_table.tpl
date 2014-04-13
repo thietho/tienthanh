@@ -52,7 +52,7 @@
                         <?php if($dialog!=true){ ?>
                         <td class="link-control">
                             <?php if($this->user->checkPermission("quanlykho/linhkien/update")==true){ ?>
-                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="window.location='<?php echo $item['link_edit']?>#page='+control.getParam('page',strurl)"/>
+                            <input type="button" class="button" name="btnEdit" value="<?php echo $item['text_edit']?>" onclick="showLinhKienForm(<?php echo $item['id']?>)"/>
                             <?php } ?>
                             <?php if($this->user->checkPermission("quanlykho/linhkien/dinhluong")==true){ ?>
                             <input type="button" class="button" name="btnDinhLuong" value="<?php echo $item['text_dinhluong']?>" onclick="window.location='<?php echo $item['link_dinhluong']?>'"/>
