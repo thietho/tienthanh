@@ -208,7 +208,7 @@ class ControllerQuanlykhoLinhkien extends Controller
 		
 		$this->id='content';
 		$this->template='quanlykho/linhkien_form.tpl';
-		$this->layout="layout/center";
+		
 		
 		$this->render();
 	}

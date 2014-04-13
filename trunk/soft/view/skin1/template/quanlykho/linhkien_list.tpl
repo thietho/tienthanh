@@ -140,4 +140,61 @@ function moveto(url,eid)
 	$(eid).html(loading);
 	$(eid).load(url);	
 }
+function showLinhKienForm(id)
+{
+	var eid = "linhkienform";
+	$('body').append('<div id="'+eid+'" style="display:none"></div>');
+	
+	$("#"+eid).attr('title','Linh kiện');
+		$("#"+eid).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode",
+			width: $(document).width()-100,
+			height: window.innerHeight,
+			modal: true,
+			close:function()
+				{
+					$("#"+eid).remove();
+				},
+			buttons: {
+				
+				'Lưu':function()
+				{
+					$.blockUI({ message: "<h1>Please wait...</h1>" }); 
+	
+					$.post("?route=quanlykho/linhkien/save", $("#frm_linhkien_form").serialize(),
+						function(data){
+							if(data == "true")
+							{
+								
+								$("#"+eid).dialog( "close" );
+								searchForm();
+							}
+							else
+							{
+							
+								$('#error').html(data).show('slow');
+								
+								
+							}
+							$.unblockUI();
+							
+						}
+					);
+				},
+				'Đóng': function() 
+				{
+					
+					$("#"+eid).dialog( "close" );
+					
+				},
+			}
+		});
+	
+		
+		$("#"+eid).load("?route=quanlykho/linhkien/update&id="+id+"&dialog=true",function(){
+			$("#"+eid).dialog("open");	
+		})
+}
 </script>
