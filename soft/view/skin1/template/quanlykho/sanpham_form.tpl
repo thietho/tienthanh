@@ -4,11 +4,10 @@
     
     <div class="section-content padding1">
     
-    	<form name="frm" id="frm" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
+    	<form id="frm_sanpham_form" action="<?php echo $action?>" method="post" enctype="multipart/form-data">
         
         	<div class="button right">
-            	<input type="button" value="Save" class="button" onClick="save()"/>
-     	        <input type="button" value="Cancel" class="button" onclick="linkto('?route=quanlykho/sanpham#page='+control.getParam('page',strurl))"/>   
+            	
      	        <input type="hidden" name="id" value="<?php echo $item['id']?>">
             </div>
             <div class="clearer">^&nbsp;</div>
@@ -143,32 +142,12 @@
     
 </div>
 <script language="javascript">
-function save()
-{
-	$.blockUI({ message: "<h1>Please wait...</h1>" }); 
-	
-	$.post("?route=quanlykho/sanpham/save", $("#frm").serialize(),
-		function(data){
-			if(data == "true")
-			{
-				window.location = "?route=quanlykho/sanpham#page="+control.getParam('page',strurl);
-			}
-			else
-			{
-			
-				$('#error').html(data).show('slow');
-				$.unblockUI();
-				
-			}
-			
-		}
-	);
-}
 
-$("#manhom").val("<?php echo $item['manhom']?>");
-$("#loai").val("<?php echo $item['loai']?>");
-$("#makho").val("<?php echo $item['makho']?>");
-$("#madonvi").val("<?php echo $item['madonvi']?>");
+
+$("#frm_sanpham_form #manhom").val("<?php echo $item['manhom']?>");
+$("#frm_sanpham_form #loai").val("<?php echo $item['loai']?>");
+$("#frm_sanpham_form #makho").val("<?php echo $item['makho']?>");
+$("#frm_sanpham_form #madonvi").val("<?php echo $item['madonvi']?>");
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 </script>
 <script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>

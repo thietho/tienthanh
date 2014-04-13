@@ -56,7 +56,7 @@ $(document).ready(function(e) {
 });
 function loadData(url)
 {
-	var page = control.getParam('page',strurl);
+	var page = control.getParam('page',control.getUrl());
 	if(page!="")
 		url+="&page="+page;
 	$('#listlinhkien').html(loading);
