@@ -128,8 +128,11 @@ class Pager
 		foreach($data_paginations as $val)
 			$playout.=$val;
 		$playout.=" </div>";
-		
-		$playout.='<div class="results">Page '.$page.'/'.$pager->numPages.'</div>';
+		$txt = '<select onChange="moveto(\''.$this->getURLQueryString('page', '').'\''.'+this.value'.',\''.$eid.'\')">';
+		for($i=1;$i<=$pager->numPages;$i++)
+			$txt .=		'<option value="'.$i.'" '.($page==$i ?'selected':'').'>'.$i.'</option>';
+		$txt .='</select>';
+		$playout.='<div class="results">Page '.$txt.'/'.$pager->numPages.'</div>';
 		
 		return $playout;
 	}
