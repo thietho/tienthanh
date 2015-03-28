@@ -59,7 +59,7 @@ class ControllerCorePostcontent extends Controller
 		$this->data['nhanhieu'] = array();
 		$this->model_core_category->getTree("nhanhieu",$this->data['nhanhieu']);
 		unset($this->data['nhanhieu'][0]);
-		
+		//print_r($this->data['nhanhieu']);
 		$this->data['statuspro'] = array();
 		$this->model_core_category->getTree("status",$this->data['statuspro']);
 		unset($this->data['statuspro'][0]);
@@ -277,11 +277,11 @@ class ControllerCorePostcontent extends Controller
 			$this->data['hasEmail'] = true;
 		}
 		
-		if($this->request->get['dialog']== 'true')
+		/*if($this->request->get['dialog']== 'true')
 		{
 			$this->data['hasSummary'] = false;
 			$this->data['hasDetail'] = false;
-		}
+		}*/
 	
 		
 		
@@ -299,14 +299,25 @@ class ControllerCorePostcontent extends Controller
 		$listfile = $this->model_core_media->getInformation($mediaid, "attachment");
 		$listfileid=array();
 		if($listfile)
-			$listfileid=split(",",$listfile);
+			@$listfileid=split(",",$listfile);
 		$this->data['attachment']=array();
 		foreach($listfileid as $key => $item)
 		{
-			$this->data['attachment'][$key] = $this->model_core_file->getFile($item);
-			$this->data['attachment'][$key]['imagethumbnail'] = HelperImage::resizePNG($this->data['attachment'][$key]['filepath'], 50, 50);
-			if(!$this->string->isImage($this->data['attachment'][$key]['extension']))
-				$this->data['attachment'][$key]['imagethumbnail'] = DIR_IMAGE."icon/dinhkem.png";
+			//$this->data['attachment'][$key] = $this->model_core_file->getFile($item);
+			$info = pathinfo($item);
+			//print_r($info);
+			$this->data['attachment'][$key]=$info;
+			$this->data['attachment'][$key]['imagethumbnail'] = HelperImage::resizePNG($item, 100, 100);
+			$this->data['attachment'][$key]['filepath'] = $item;
+			if(!$this->string->isImage($info['extension']))
+			{
+				$urlext = HTTP_IMAGE."icon/48px/".$info['extension'].".png";
+				if(!@fopen($urlext,"r"))
+					$urlext = HTTP_IMAGE."icon/48px/_blank.png";
+				
+				$this->data['attachment'][$key]['imagethumbnail'] = $urlext;
+			}
+				
 		}
 		$this->data['status'] = $this->data['post']['status'];
 		if($this->data['status'] == "")
@@ -384,7 +395,14 @@ class ControllerCorePostcontent extends Controller
 				}
 				$data['saleprice'] = json_encode($data['saleprice']);
 			}
-			
+			if(count($data['retail']))
+			{
+				foreach($data['retail'] as $key => $val)
+				{
+					$data['retail'][$key] = $this->string->toNumber($val);
+				}
+				$data['retail'] = json_encode($data['retail']);
+			}
 			
 			if($data['price'] == "")
 				$data['price'] = $this->data['post']['mainprice'];
@@ -410,11 +428,15 @@ class ControllerCorePostcontent extends Controller
 				}
 			}
 			
-			
+			$data['imagepath'] = str_replace(DIR_FILE,"",$data['imagepath']);
 			$this->model_core_media->save($data);
-			
-			
-			$listAttachment=$this->data['post']['attimageid'];
+			$this->model_core_media->updateInforChild($data['mediaid']);
+			if($data['mediaparent']!="")
+				$this->model_core_media->updateInforChild($data['mediaparent']);
+			//$listAttachment=$this->data['post']['attimageid'];
+			if(count($this->data['post']['attimageid']))
+				foreach($this->data['post']['attimageid'] as $path)
+					$listAttachment[]= str_replace(DIR_FILE,"",$path);
 			$this->model_core_media->saveAttachment($data['mediaid'],$listAttachment);
 			/*$listdelfile=$this->data['post']['delfile'];
 			if(count($listdelfile))
@@ -588,7 +610,7 @@ class ControllerCorePostcontent extends Controller
 		$para = $this->string->referSiteMapToArray($media['summary']);
 		foreach($para as $val)
 		{
-			$ar = split("=",$val);
+			@$ar = split("=",$val);
 			$media[$ar[0]] = $ar[1];	
 		}
 		

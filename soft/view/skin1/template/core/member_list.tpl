@@ -7,18 +7,15 @@
         <form action="" method="post" id="listmember" name="listmember">
         
         	<div class="button right">
-               	<?php if($dialog!=true){ ?>
+               	
                 <?php if($this->user->checkPermission("core/member/insert")==true){ ?>
                 <input type="button" class="button" value="Thêm" onclick="showMemberForm('','searchForm()')" />
                 <?php } ?>
                 <?php if($this->user->checkPermission("core/member/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteUser()"/>  
                 <?php } ?>
-                <?php } else { ?>
-                <?php if($this->user->checkPermission("core/member/insert")==true){ ?>
-                <input type="button" class="button" value="Thêm" onclick="showMemberForm('','searchForm()')" />
-                <?php } ?>
-                <?php } ?>
+                
+                
             </div>
             <div class="clearer">^&nbsp;</div>
             <div id="ben-search">
@@ -66,7 +63,9 @@ $(document).ready(function(e) {
 	
 });
 $('#listmember .text').keyup(function(e) {
-    searchForm();
+    if(e.keyCode == 13)
+		searchForm();
+	
 });
 $('#listmember select').change(function(e) {
     searchForm();
@@ -157,7 +156,7 @@ function viewCongNo(id)
 					show: "blind",
 					hide: "explode",
 					width: $(document).width()-100,
-					height: 500,
+					height: window.innerHeight,
 					modal: true,
 					buttons: {
 						'Đóng': function() {
@@ -172,9 +171,10 @@ function viewCongNo(id)
 					}
 				});
 			
-				
+	$("#popup").dialog("open");	
+	$("#popup-content").html(loading);			
 	$("#popup-content").load("?route=core/member/getCongNo&khachhangid="+id+"&dialog=true",function(){
-		$("#popup").dialog("open");	
+		
 	});
 }
 

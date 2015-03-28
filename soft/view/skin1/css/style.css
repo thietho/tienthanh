@@ -271,7 +271,7 @@ caption {
 
 table.data-table {
 	border: 1px solid #CCB;
-	margin-bottom: 2em;
+	
 	width: 100%;
 }
 
@@ -1228,7 +1228,7 @@ ul.autocomplete {
 	list-style-type: none;
 }
 .ui-autocomplete-loading {
-	background: white url(../image/ui-anim_basic_16x16.gif) right center no-repeat !important;
+	background: white url(../image/loading.gif) right center no-repeat !important;
 }
 .qlk_group
 {
@@ -1298,7 +1298,7 @@ ul.autocomplete {
 {
 	width:150px;	
 	height:150px;
-	background:url(../image/folder.png) no-repeat center center;
+	
 }
 .filename
 {
@@ -1427,11 +1427,11 @@ ul.autocomplete {
 }
 .folderitem
 {
-	padding:2px;	
+
 }
 .selectfolder
 {
-	background:#09F;
+	background:#F00;
 }
 .selectfile
 {
@@ -1446,4 +1446,12 @@ ul.autocomplete {
     height: 18px;
     background: green;
 	text-align:center;
+}
+.selected
+{
+	background-color:#F00 !important;
+}
+.links
+{
+	margin:5px;	
 }

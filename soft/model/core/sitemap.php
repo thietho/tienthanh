@@ -331,7 +331,7 @@ class ModelCoreSitemap extends Model
 	//Cac ham duyet cay sitemap//////////////////////////////////////////////////////////////
 	
 	
-	function getTreeSitemap($id, &$data, $siteid, $level=-1, $path="", $parentpath="")
+	function getTreeSitemap($id, &$data, $siteid=SITEID, $level=-1, $path="", $parentpath="")
 	{
 		$arr=$this->getItem($id, $siteid);
 		

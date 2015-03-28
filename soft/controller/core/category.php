@@ -4,24 +4,12 @@ class ControllerCoreCategory extends Controller
 	private $error = array();
    	function __construct() 
 	{
-		if(!$this->user->hasPermission($this->getRoute(), "access"))
+		$this->load->model("core/module");
+		$moduleid = $_GET['route'];
+		$this->document->title = $this->model_core_module->getBreadcrumbs($moduleid);
+		if($this->user->checkPermission($moduleid)==false)
 		{
-			$this->response->redirect("?route=common/permission");
-		}
-		$this->data['permissionAdd'] = true;
-		$this->data['permissionEdit'] = true;
-		$this->data['permissionDelete'] = true;
-		if(!$this->user->hasPermission($this->getRoute(), "add"))
-		{
-			$this->data['permissionAdd'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "edit"))
-		{
-			$this->data['permissionEdit'] = false;
-		}
-		if(!$this->user->hasPermission($this->getRoute(), "delete"))
-		{
-			$this->data['permissionDelete'] = false;
+			$this->response->redirect('?route=page/home');
 		}
 		
 	 	$this->load->model("core/user");

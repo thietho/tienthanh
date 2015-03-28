@@ -153,7 +153,7 @@ $('#title').change(function(e) {
                             <select id="brand" name="brand">
                                 <option value=""></option>
                                 <?php foreach($nhanhieu as $it){ ?>
-                                <option value="<?php echo $it['categoryid']?>" <?php echo ($post['brand']==$it['categoryid'])?"selected":"" ?>><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;&nbsp;",$it['level']) ?><?php echo $it['categoryname']?></option>                        
+                                <option value="<?php echo $it['categoryid']?>"><?php echo $this->string->getPrefix("&nbsp;&nbsp;&nbsp;&nbsp;",$it['level']) ?><?php echo $it['categoryname']?></option>                        
                                 <?php } ?>
                             </select>
                         </p>
@@ -180,14 +180,25 @@ $('#title').change(function(e) {
 									{
 										
 										$.getJSON("?route=quanlykho/donvitinh/getListDonVi&madonvi="+ this.value,function(data){
+											var str = "<table>";
+											str+= '<tr>';
+											str+= '<td></td>';
+											str+= '<td>Sỉ</td>';
+											str+= '<td>Lẻ</td>';
+											str+= '</tr>';
 											for(i in data)
 											{
-												var str = "";
-												str+='<input type="text" id="saleprice-'+data[i].madonvi+'" name="saleprice['+data[i].madonvi+']" class="text number">/'+data[i].tendonvitinh+'<br>'
-												$('#giaban').append(str);
-												numberReady();
+												str += '<tr>';
+												str+= '<td>'+data[i].tendonvitinh+'</td>';
+												str+= '<td><input type="text" id="saleprice-'+data[i].madonvi+'" name="saleprice['+data[i].madonvi+']" class="text number"></td>';
+												str+= '<td><input type="text" id="retail-'+data[i].madonvi+'" name="retail['+data[i].madonvi+']" class="text number"></td>';
+												
+												str+=  '</tr>';
+												
 											}
-											
+											str += "</table>";
+											$('#giaban').append(str);
+											numberReady();
 											<?php if($post["saleprice"]!=""){ ?>
 												
 											var saleprice = $.parseJSON('<?php echo $post["saleprice"]?>');
@@ -195,6 +206,17 @@ $('#title').change(function(e) {
 											{
 												//alert(saleprice[i])
 												$('#saleprice-'+i).val(saleprice[i]);
+											}
+											
+											<?php } ?>
+											
+											<?php if($post["retail"]!=""){ ?>
+												
+											var retail = $.parseJSON('<?php echo $post["retail"]?>');
+											for(i in retail)
+											{
+												//alert(saleprice[i])
+												$('#retail-'+i).val(retail[i]);
 											}
 											
 											<?php } ?>
@@ -239,18 +261,35 @@ $('#title').change(function(e) {
                             <input class="text number" type="text" id="pricepromotion" name="pricepromotion" value="<?php echo $post['pricepromotion']?>" />
                         </p>
                         <script language="javascript">
+						$('#price').keyup(function(e) {
+                            $('#discountpercent').keyup();
+                        });
 						$('#discountpercent').keyup(function(e) {
-                            var price = Number(stringtoNumber($('#price').val()));
-							var discountpercent = Number(stringtoNumber($('#discountpercent').val()));
-							var pricepromotion = price*( 1- discountpercent/100);
-							$('#pricepromotion').val(formateNumber(pricepromotion));
+							if(this.value == 0)
+							{
+								$('#pricepromotion').val('0');
+							}
+							else
+							{
+								var price = Number(stringtoNumber($('#price').val()));
+								var discountpercent = Number(stringtoNumber($('#discountpercent').val()));
+								var pricepromotion = price*( 1- discountpercent/100);
+								$('#pricepromotion').val(formateNumber(pricepromotion));
+							}
                         });
 						
 						$('#pricepromotion').keyup(function(e) {
-                            var price = Number(stringtoNumber($('#price').val()));
-							var pricepromotion = Number(stringtoNumber($('#pricepromotion').val()));
-							var discountpercent = (1- pricepromotion/price)*100;
-							$('#discountpercent').val(formateNumber(discountpercent));
+							if(this.value == 0)
+							{
+								$('#discountpercent').val('0');
+							}
+							else
+							{
+								var price = Number(stringtoNumber($('#price').val()));
+								var pricepromotion = Number(stringtoNumber($('#pricepromotion').val()));
+								var discountpercent = (1- pricepromotion/price)*100;
+								$('#discountpercent').val(formateNumber(discountpercent));
+							}
                         });
 						</script>
                         <?php } ?>
@@ -275,7 +314,7 @@ $('#title').change(function(e) {
                             <label for="image"><?php echo $entry_image?></label><br />
                             
                             <input type="button" class="button" value="<?php echo $entry_photo ?>" onclick="browserFile('imageid','single')"/><br />
-                            <img id="imageid_preview" src="<?php echo $imagethumbnail?>" onclick="showFile($('#imageid_fileid').val())"/>
+                            <img id="imageid_preview" src="<?php echo $imagethumbnail?>" onclick="showFile($('#imageid_filepath').val())"/>
                             <input type="hidden" id="imageid_filepath" name="imagepath" value="<?php echo $post['imagepath']?>" />
                             <input type="hidden" id="imageid_fileid" name="imageid" value="<?php echo $post['imageid']?>" />
                             
@@ -309,7 +348,8 @@ $('#title').change(function(e) {
 			if(count($item))
 			{
 ?>
-				arratt[<?php echo $key?>] = <?php echo $item['fileid']?>;
+				
+				$('#attachment').append(attachment.creatAttachmentRow("<?php echo $item['filepath']?>","<?php echo $item['basename']?>","<?php echo $item['imagethumbnail']?>"));
 				/*$.getJSON("?route=core/file/getFile&fileid=<?php echo $item['fileid']?>&width=50", 
 				function(file) 
 				{
@@ -323,20 +363,22 @@ $('#title').change(function(e) {
 		}
 ?>
 		//alert(arratt)
-		callAtt(0);
+		//callAtt(0);
  	});
 
 function callAtt(pos)
 {
 	if(arratt[pos]!= undefined)
 	{
-		$.getJSON("?route=core/file/getFile&fileid="+ arratt[pos] +"&width=50", 
+		$('#attachment').append(attachment.creatAttachmentRow(file.file.fileid,file.file.filename,file.file.imagepreview));
+		callAtt(pos+1);
+		/*$.getJSON("?route=core/file/getFile&fileid="+ arratt[pos] +"&width=50", 
 		function(file) 
 		{
 			
 			$('#attachment').append(attachment.creatAttachmentRow(file.file.fileid,file.file.filename,file.file.imagepreview));
 			callAtt(pos+1);
-		});
+		});*/
 	}
 }
 </script>
@@ -351,12 +393,14 @@ function callAtt(pos)
               		<?php if($hasSummary) {?>
                     <p>
                         <label><?php echo $entry_summary?></label><br>
-                        <textarea class="text" rows="3" cols="70" id="summary" name="summary"><?php echo $post['summary']?></textarea>
+                        <textarea class="text editor" rows="3" cols="70" id="summary" name="summary"><?php echo $post['summary']?></textarea>
+<?php if($_GET['dialog']==""){ ?>
 <script language="javascript">
 $(document).ready(function(e) {
     setCKEditorType('summary',2);
 });
 </script>
+<?php } ?>
                     </p>
                     <?php } ?>
                     <?php if($hasSEO) {?>
@@ -428,15 +472,17 @@ $(document).ready(function(e) {
                 
             	<div>
                 	<p>
-                        <textarea name="description" id="description" ><?php echo $post['description']?></textarea>
+                        <textarea name="description" id="description" class="editor"><?php echo $post['description']?></textarea>
                     </p>
                 </div>
             </div>
+            <?php if($_GET['dialog']==""){ ?>
             <script language="javascript">
 			$(document).ready(function(e) {
                 setCKEditorType('description',2);
             });
 			</script>
+            <?php } ?>
             <?php }?>
             <?php if($hasVideo) {?>
             <div id="fragment-video">
@@ -580,7 +626,7 @@ function removeSubInfor(mediaid)
 </script>
 <script language="javascript">
 $(document).ready(function() { 
-	setCKEditorType('sub_description',2);
+	//setCKEditorType('sub_description',2);
 	$("#subinforlist").load("?route=core/postcontent/loadSubInfor&mediaid="+$("#mediaid").val());
 })
 </script>
@@ -675,7 +721,7 @@ function save()
 			var obj = $.parseJSON(data);
 			if(obj.error=="")
 			{
-				window.location = "<?php echo $DIR_CANCEL.'&page='.$_GET['page']?>";
+				window.location = "<?php echo $DIR_CANCEL?>";
 			}
 			else
 			{
@@ -691,36 +737,8 @@ function save()
 
 
 $(document).ready(function() { 
-	
-	
-	$('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });
+	$('#container').tabs({ fxSlide: true, fxFade: true, fxSpeed: 'slow' });	
 	
 });
 </script>
-<?php if($hasFile) {?>
 
-<?php if($hasSubInfor) {?>
-<script src="<?php echo DIR_JS?>uploadsubimage.js" type="text/javascript"></script>
-<?php } ?>
-
-<?php }?>
-<?php if($hasVideo) {?>
-<script src="<?php echo DIR_JS?>uploadvideo.js" type="text/javascript"></script>
-<?php }?>
-<?php if($hasAudio) {?>
-<script src="<?php echo DIR_JS?>uploadaudio.js" type="text/javascript"></script>
-<?php }?>
-<script language="javascript">
-
-
-
-
-
-
-
-
-
-
-
-
-</script>

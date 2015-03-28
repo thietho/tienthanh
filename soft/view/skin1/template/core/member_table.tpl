@@ -10,10 +10,12 @@
                         <th>Địa chỉ</th>
                         <th>Email</th>
                         <th>Công nợ</th>
+                        <th>Giới thiệu bởi</th>
+                        <th>Hoa hồng</th>
                         <th>Trang thái</th>
-                        <?php if($dialog!=true){ ?>
+                        
                         <th width="10%">Control</th>                                  
-                        <?php } ?>
+                        
                     </tr>
                     
         
@@ -31,8 +33,10 @@
                         <td><?php echo $user['address']?></td>
                         <td><?php echo $user['email']?></td>
                         <td class="number"><a onclick="viewCongNo(<?php echo $user['id']?>)"><?php echo $this->string->numberFormate($user['congno'])?></a></td>
+                        <td><?php echo $this->document->getCustomer($user['assignid'])?></td>
+                        <td><?php echo $user['commissions']?>%</td>
                 		<td><?php echo $this->document->userstatus[$user['status']]?></td>
-                        <?php if($dialog!=true){ ?>
+                        
                         <td class="link-control">
                         	<?php if($this->user->checkPermission("core/member/update")==true){ ?>
                             <input type="button" class="button" value="<?php echo $user['text_edit']?>" onclick="showMemberForm(<?php echo $user['id']?>,'searchForm()')"/>
@@ -40,9 +44,9 @@
                             <?php if($this->user->checkPermission("core/member/active")==true){ ?>
                             <input type="button" class="button" value="<?php echo $user['text_active']?>" onclick="activeUser('<?php echo $user['id']?>')"/>
                             <?php } ?>
-                            
+                            <input type="button" class="button" value="Tính hoa hồng" onclick="window.location='?route=core/member/commission&id=<?php echo $user['id']?>';"/>
                         </td>
-                        <?php } ?>
+                        
                     </tr>
         <?php
             }

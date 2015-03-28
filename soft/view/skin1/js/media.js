@@ -1,40 +1,37 @@
-function showFile(fileid)
+function showFile(filepath)
 {
-	//if(!$(document).has("#fileinformation"))
-	$('body').append('<div id="fileinformation" style="display:none"></div>');
-	
-	$("#fileinformation").attr('title','Thông tin file');
-		$( "#fileinformation" ).dialog({
-			autoOpen: false,
-			show: "blind",
-			hide: "explode",
-			width: $(document).width()-100,
-			height: window.innerHeight,
-			modal: true,
-			close:function()
+	$('body').append('<div id="fileinfor" style="display:none"></div>');
+		var eid = "#fileinfor";
+		$(eid).attr('title','Thông tin file');
+			$(eid).dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				width: $(document).width()-100,
+				height: window.innerHeight,
+				close:function()
 				{
-					$('#fileinformation').remove();
+					$(eid).remove();
 				},
-			buttons: {
-				
-				
-				
-				'Tải về':function()
-				{
-					window.location = "download.php?url="+ encodeURI($('#filepath').val());
-				},
-				'Đóng': function() 
-				{
+				modal: true,
+				buttons: {
 					
-					$("#fileinformation").dialog( "close" );
-					
-				},
-			}
-		});
-	
+					'Tải về':function()
+					{
+						window.location = "download.php?url="+ encodeURI($('#filepath').val());
+					},
+					'Đóng': function() 
+					{
+						
+						$( eid ).dialog( "close" );
+					},
+				}
+			});
 		
-		$("#fileinformation").load("?route=core/file/detail&fileid="+fileid+"&dialog=true",function(){
-			$("#fileinformation").dialog("open");	
+			$(eid).dialog("open");
+			$(eid).html(loading);
+			$(eid).load("?route=core/file/detail&filepath="+encodeURI(filepath)+"&dialog=true",function(){
+				
 		});
 }
 
@@ -85,12 +82,13 @@ function showMediaForm(fileid)
 			}
 		});
 	
-		
+		$("#"+eid).dialog("open");
+		$("#"+eid).html(loading);
 		$("#"+eid).load("?route=core/media/fileToMedia&fileid="+fileid+"&dialog=true",function(){
-			$("#"+eid).dialog("open");	
+			
 		});
 }
-function showProductForm(mediaid,linkeditfull)
+function showProductForm(mediaid,mediaparentid,funcname)
 {
 	var eid = "mediaform";
 	$('body').append('<div id="'+eid+'" style="display:none"></div>');
@@ -108,30 +106,30 @@ function showProductForm(mediaid,linkeditfull)
 					$("#"+eid).remove();
 				},
 			buttons: {
-				'Chỉnh sửa đầy đủ':function()
+				'Sưa với editor':function()
 				{
-					$.post("?route=core/postcontent/savepost",$('#frmPost').serialize(),
-					function(data)
-					{
-						var obj = $.parseJSON(data);
-						if(obj.error=="")
-						{
-							window.location = linkeditfull;
-						}
-					});
-					
+					window.location = "?route=module/product/update&mediaid="+mediaid+"&mediaparent="+mediaparentid;
 				},
 				'Lưu':function()
 				{
+					$.blockUI({ message: "<h1>Please wait...</h1>" });
+					/*var oEditor = CKEDITOR.instances['description'] ;
+					var pageValue = oEditor.getData();
+					$('textarea#description').val(pageValue);
+					
+					var oEditor = CKEDITOR.instances['summary'] ;
+					var pageValue = oEditor.getData();
+					$('textarea#summary').val(pageValue);*/
 					$.post("?route=core/postcontent/savepost",$('#frmPost').serialize(),
 					function(data)
 					{
+						
 						var obj = $.parseJSON(data);
 						if(obj.error=="")
 						{
 							$("#"+eid).dialog("close");
 							//Cap nhap lay thong tin tren list
-							$("#"+obj.mediaid+" .mediaid").html(obj.mediaid);
+							/*$("#"+obj.mediaid+" .mediaid").html(obj.mediaid);
 							$("#"+obj.mediaid+" .code").html(obj.code);
 							$("#"+obj.mediaid+" .title").html(obj.title);
 							$("#"+obj.mediaid+" .color").html(obj.color);
@@ -148,14 +146,18 @@ function showProductForm(mediaid,linkeditfull)
 							$("#"+obj.mediaid+" .brand").html(obj.brandname);
 							$("#"+obj.mediaid+" .unit").html(obj.unitname);
 							$("#"+obj.mediaid+" .status").html(obj.statusname);
-							$("#"+obj.mediaid+" .imagepreview").attr("src",obj.imagepreview);
+							$("#"+obj.mediaid+" .imagepreview").attr("src",obj.imagepreview);*/
+							//pro.searchForm();
+							setTimeout(funcname,0);
 							
 						}
 						else
 						{
 							$('#error').html(data).show('slow');
 						}
+						$.unblockUI();
 					});
+					
 				},
 				'Đóng': function() 
 				{
@@ -166,9 +168,10 @@ function showProductForm(mediaid,linkeditfull)
 			}
 		});
 	
-		
-		$("#"+eid).load("?route=module/product/update&mediaid="+mediaid+"&dialog=true",function(){
-			$("#"+eid).dialog("open");	
+		$("#"+eid).dialog("open");
+		$("#"+eid).html(loading);
+		$("#"+eid).load("?route=module/product/update&mediaid="+mediaid+"&mediaparent="+mediaparentid+"=&dialog=true",function(){
+			
 		});
 }
 function showFolderForm(folderid,folderparent)
@@ -223,9 +226,10 @@ function showFolderForm(folderid,folderparent)
 			}
 		});
 	
-		
+		$(eid).dialog("open");
+		$(eid).html(loading);
 		$(eid).load("?route=core/file/showFolderForm&folderid="+folderid+"&folderparent="+folderparent+"&dialog=true",function(){
-			$(eid).dialog("open");	
+			
 		});
 }
 function showFileInfor(fileid)
@@ -261,9 +265,10 @@ function showFileInfor(fileid)
 			}
 		});
 	
-		
+		$(eid).dialog("open");
+		$(eid).html(loading);
 		$(eid).load("?route=core/file/detail&fileid="+fileid+"&dialog=true",function(){
-			$(eid).dialog("open");	
+			
 		});
 }
 function showFolderMoveForm()
@@ -311,9 +316,10 @@ function showFolderMoveForm()
 			}
 		});
 	
-		
+		$(eid).dialog("open");
+		$(eid).html(loading);
 		$(eid).load("?route=core/file/showFolderMoveForm&dialog=true",function(){
-			$(eid).dialog("open");	
+				
 		});
 }
 function setForward(sitemapid)
@@ -358,20 +364,13 @@ function setForward(sitemapid)
 			}
 		});
 	
-		
+		$(eid).dialog("open");
+		$(eid).html(loading);
 		$(eid).load("?route=core/sitemap/forwardForm&sitemapid="+sitemapid+"&dialog=true",function(){
-			$(eid).dialog("open");	
+			
 		});
 }
-function delFolder(folderid)
-{
-	$.get("?route=core/file/delFolder&folderid="+folderid,function(data){
-		if(data=="true")
-			loadFolder();
-		else
-			alert(data);
-	});
-}
+
 function showMediaUse(fileid)
 {
 	$('body').append('<div id="medialist" style="display:none"></div>');
@@ -399,9 +398,10 @@ function showMediaUse(fileid)
 			}
 		});
 	
-		
+		$("#medialist").dialog("open");
+		$("#medialist").html(loading);
 		$("#medialist").load("?route=core/media/mediaUse&fileid="+fileid+"&dialog=true",function(){
-			$("#medialist").dialog("open");	
+			
 		});
 }
 function addQuickProduct()
@@ -414,7 +414,7 @@ function addQuickProduct()
 		show: "blind",
 		hide: "explode",
 		width: 500,
-		height: 500,
+		height: window.innerHeight,
 		modal: true,
 		close:function()
 				{
@@ -445,9 +445,10 @@ function addQuickProduct()
 		}
 	});
 
-	
+	$("#frmAddSanPham").dialog("open");
+	$("#frmAddSanPham").html(loading);	
 	$("#frmAddSanPham").load("?route=addon/order/showProductForm",function(){
-		$("#frmAddSanPham").dialog("open");	
+		
 	});
 }
 function addProduct(parent,sitemapid)
@@ -480,9 +481,10 @@ function addProduct(parent,sitemapid)
 		}
 	});
 
-	
+	$("#frmProduct").dialog("open");
+	$("#frmProduct").html(loading);
 	$("#frmProduct").load("?route=module/product/insert&sitemapid="+sitemapid+"&mediaparent="+parent+"&dialog=true",function(){
-		$("#frmProduct").dialog("open");	
+		
 	});
 }
 function editProduct(mediaid)
@@ -516,9 +518,10 @@ function editProduct(mediaid)
 		}
 	});
 
-	
+	$("#frmProduct").dialog("open");
+	$("#frmProduct").html(loading);
 	$("#frmProduct").load("?route=module/product/update&mediaid="+mediaid+"&dialog=true",function(){
-		$("#frmProduct").dialog("open");	
+		
 	});
 }
 function saveMedia()
@@ -548,13 +551,13 @@ function saveMedia()
 function browseProduct()
 {
 	$('body').append('<div id="popupbrowseproduct" style="display:none"></div>');
-	$("#popup").attr('title','Chọn sản phẩm');
+	$("#popupbrowseproduct").attr('title','Chọn sản phẩm');
 		$("#popupbrowseproduct").dialog({
 			autoOpen: false,
 			show: "blind",
 			hide: "explode",
 			width: $(document).width()-100,
-			height: 500,
+			height: window.innerHeight,
 			modal: true,
 			close:function()
 				{
@@ -563,10 +566,9 @@ function browseProduct()
 			
 		});
 	
-		
-		$("#popupbrowseproduct").load("?route=addon/order/browseProduct",function(){
-			$("#popupbrowseproduct").dialog("open");
-			
+		$("#popupbrowseproduct").dialog("open");
+		$("#popupbrowseproduct").html(loading);
+		$("#popupbrowseproduct").load("?route=module/product&open=dialog",function(){
 
 		});
 }
@@ -635,8 +637,11 @@ function showMemberForm(memberid,strFun)
 		{
 			url = "?route=core/member/update&id="+memberid+"&dialog=true";
 		}
+		$(eid).dialog("open");
+		$(eid).html(loading);
 		$(eid).load(url,function(){
-			$(eid).dialog("open");	
+			
+			
 		});
 }
 function showNhaCungCapForm(nhacungcapid,strFun)
@@ -705,7 +710,9 @@ function showNhaCungCapForm(nhacungcapid,strFun)
 		{
 			url = "?route=quanlykho/nhacungcap/update&id="+nhacungcapid+"&dialog=true";
 		}
+		$(eid).dialog("open");
+		$(eid).html(loading);	
 		$(eid).load(url,function(){
-			$(eid).dialog("open");	
+			
 		});
 }

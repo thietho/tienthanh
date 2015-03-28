@@ -108,7 +108,7 @@ class ControllerCoreMessage extends Controller
 		$this->model_core_message->updateStatus($messageid,"read");
 		if($this->data['attachment'] !="")
 		{
-			$listfileid = split(",",$this->data['attachment']);
+			@$listfileid = split(",",$this->data['attachment']);
 			$this->data['attachmentfile']=array();
 			foreach($listfileid as $key => $item)
 			{

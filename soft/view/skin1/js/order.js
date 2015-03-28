@@ -50,9 +50,10 @@ function Order()
 			}
 		});
 	
-		
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);	
 		$("#popup-content").load("?route=addon/order/editDelivery&orderid="+orderid,function(){
-			$("#popup").dialog("open");	
+			
 		});
 	}
 	this.printBill = function(orderid)
@@ -134,7 +135,7 @@ function Order()
 			show: "blind",
 			hide: "explode",
 			width: $(document).width()-100,
-			height: 500,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				
@@ -159,9 +160,10 @@ function Order()
 			}
 		});
 	
-		
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);	
 		$("#popup-content").load("?route=addon/order/browseProduct",function(){
-			$("#popup").dialog("open");	
+			
 		});
 	}
 	this.index = 0;
@@ -208,7 +210,7 @@ function Order()
 			show: "blind",
 			hide: "explode",
 			width: $(document).width()-100,
-			height: 500,
+			height: window.innerHeight,
 			modal: true,
 			buttons: {
 				
@@ -222,9 +224,10 @@ function Order()
 			}
 		});
 	
-		
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);	
 		$("#popup-content").load("?route=addon/order/viewHistory&orderid="+orderid,function(){
-			$("#popup").dialog("open");	
+			
 		});
 	}
 }
