@@ -359,9 +359,10 @@ class ControllerQuanlykhoNguyenlieu extends Controller
 	public function save()
 	{
 		$data = $this->request->post;
+		
 		if($this->validateForm($data))
 		{
-			
+			$data['imagepath'] = str_replace(DIR_FILE,"",$data['imagepath']);
 			$item = $this->model_quanlykho_nguyenlieu->getItem($data['id']);
 			if(count($item)==0)
 			{

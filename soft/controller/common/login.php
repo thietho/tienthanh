@@ -46,7 +46,7 @@ class ControllerCommonLogin extends Controller
 		if($this->request->post['username']=="")
 			$this->error['error_warning'] = $this->language->get('error_warning');
 		else
-			if (!$this->user->login(@$this->request->post['username'], @$this->request->post['password'], @$this->request->post['siteid'])) {
+			if (!$this->login(@$this->request->post['username'], @$this->request->post['password'])) {
 				$this->error['error_warning'] = $this->language->get('error_warning');
 			}
 		
@@ -57,6 +57,27 @@ class ControllerCommonLogin extends Controller
 		}
 	}	
 	
+	public function login($username,$pwd)
+	{
+		$this->load->model("core/user");
+		$this->load->model("quanlykho/nhanvien");
+		$user = $this->model_core_user->getItemByUserName($username);
+		if(md5($pwd) == $user['password'])
+		{
+			//Login thanh cong
+			$nhanvien = $this->model_quanlykho_nhanvien->getItemByUsername($username);
+			$this->session->set('usertypeid',$user['usertypeid']);
+			$this->session->set('userid',$user['userid']);
+			$this->session->set('username',$user['username']);	
+			$this->session->set('siteid',SITEID);
+			//Thong tin nhan vien
+			$this->session->set('nhanvien',$nhanvien);
+			return true;
+			
+		}
+		else
+			return false;
+	}
 	public function checkLogin() {
 		if (!$this->user->isLogged()) {
 			$route = $this->getRoute();

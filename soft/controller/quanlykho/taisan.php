@@ -178,6 +178,7 @@ class ControllerQuanlykhoTaisan extends Controller
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/taisan");
+			$data['imagepath'] = str_replace(DIR_FILE,"",$data['imagepath']);
 			$data['ngaymua'] = $this->date->formatViewDate($data['ngaymua']);
 			if($data['id']=="")
 			{

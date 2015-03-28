@@ -34,6 +34,11 @@
 					<input type="text" name="EmailContact" value="<?php echo $item['EmailContact']?>" class="text" size=60 />
             	</p>
                 <p>
+                    <label>Tiêu đê phiếu</label><br />
+                    <textarea name="HeaderBill"><?php echo $item['HeaderBill']?></textarea>
+                        
+                </p>
+                <p>
                     <label>Keyword</label><br />
                     <textarea name="Keyword"><?php echo $item['Keyword']?></textarea>
                         

@@ -42,12 +42,13 @@
                 <?php if($this->user->checkPermission("quanlykho/vattu/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều vật tư" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
+                
+                <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
+                <input class="button" value="Thêm" type="button" onclick="showVatTuForm('')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/vattu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
-                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>

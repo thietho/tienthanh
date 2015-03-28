@@ -188,6 +188,7 @@ class ControllerQuanlykhoSanpham extends Controller
 		if($this->validateForm($data))
 		{
 			$this->load->model("quanlykho/sanpham");
+			$data['imagepath'] = str_replace(DIR_FILE,"",$data['imagepath']);
 			$item = $this->model_quanlykho_sanpham->getItem($data['id']);
 			if(count($item)==0)
 			{

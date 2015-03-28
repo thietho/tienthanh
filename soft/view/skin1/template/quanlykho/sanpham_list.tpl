@@ -43,12 +43,14 @@
                 <?php if($this->user->checkPermission("quanlykho/sanpham/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều sản phẩm" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
+                
+                
+                <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/sanpham/insert")==true){ ?>
-                <input class="button" value="Thêm" type="button" onclick="linkto('<?php echo $insert?>#page='+control.getParam('page',strurl))">
+                <input class="button" value="Thêm" type="button" onclick="showSanPhamForm('')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/sanpham/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Delete" onclick="deleteitem()"/>
-                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>
