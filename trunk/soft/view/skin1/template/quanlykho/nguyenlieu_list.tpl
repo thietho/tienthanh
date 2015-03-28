@@ -42,12 +42,13 @@
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/insertlist")==true){ ?>
                 <input class="button" value="Thêm nhiều nguyên liệu" type="button" onclick="linkto('<?php echo $insertlist?>#page='+control.getParam('page',strurl))">
                 <?php } ?>
+                
+                <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/insert")==true){ ?>
                 <input class="button" value="Thêm" type="button" onclick="showNguyenLieuForm('')">
                 <?php } ?>
                 <?php if($this->user->checkPermission("quanlykho/nguyenlieu/delete")==true){ ?>
             	<input class="button" type="button" name="delete_all" value="Xóa" onclick="deleteitem()"/>
-                <?php } ?>
                 <?php } ?>
             </div>
             <div class="clearer">^&nbsp;</div>

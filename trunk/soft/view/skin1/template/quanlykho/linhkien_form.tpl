@@ -21,7 +21,7 @@
                 <div id="fragment-thongtinnguyenlieu" class="tabs-container">
                     <p>
                         <label>Mã linh kiện</label><br />
-                        <input type="text" id="malinhkien" name="malinhkien" value="<?php echo $item['malinhkien']?>" class="text" size=60 <?php echo $readonly?>/>
+                        <input type="text" id="malinhkien" name="malinhkien" value="<?php echo $item['malinhkien']?>" class="text" size=60 />
                         
                     </p>
                     
@@ -102,11 +102,11 @@
                     </p>
 					<p id="pnImage">
                         <label for="image">Hình</label><br />
-                        <a id="btnAddImage" class="button">Chọn hình</a><br />
-                        <img id="preview" src="<?php echo $item['imagethumbnail']?>" />
-                        <input type="hidden" id="imagepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
-                        <input type="hidden" id="imageid" name="imageid" value="<?php echo $item['imageid']?>" />
-                        <input type="hidden" id="imagethumbnail" name="imagethumbnail" value="<?php echo $item['imagethumbnail']?>" />
+                    
+                        <input type="button" class="button" value="Chọn hình" onclick="browserFile('imageid','single')"/><br />
+                        <img id="imageid_preview" src="<?php echo $item['imagethumbnail']?>" onclick="showFile($('#imageid_fileid').val())"/>
+                        <input type="hidden" id="imageid_filepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
+                        <input type="hidden" id="imageid_fileid" name="imageid" value="<?php echo $item['imageid']?>" />
                     </p>
                     
                     
@@ -337,5 +337,3 @@ function removeRow(pos,dlid)
 var DIR_UPLOADPHOTO = "<?php echo $DIR_UPLOADPHOTO?>";
 
 </script>
-<script src='<?php echo DIR_JS?>ajaxupload.js' type='text/javascript' language='javascript'> </script>
-<script src="<?php echo DIR_JS?>uploadpreview.js" type="text/javascript"></script>

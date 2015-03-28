@@ -15,7 +15,7 @@
         	<div>
             	<p>
             		<label>Mã nguyên vật liệu</label><br />
-					<input type="text" id="manguyenlieu" name="manguyenlieu" value="<?php echo $item['manguyenlieu']?>" class="text" size=60 <?php echo $readonly?>/>
+					<input type="text" id="manguyenlieu" name="manguyenlieu" value="<?php echo $item['manguyenlieu']?>" class="text" size=60 />
                     
             	</p>
               	
@@ -80,9 +80,9 @@
                     <label for="image">Hình</label><br />
                     
                     <input type="button" class="button" value="Chọn hình" onclick="browserFile('imageid','single')"/><br />
-                    <img id="imageid_preview" src="<?php echo $imagethumbnail?>" onclick="showFile($('#imageid_fileid').val())"/>
-                    <input type="hidden" id="imageid_filepath" name="imagepath" value="<?php echo $post['imagepath']?>" />
-                    <input type="hidden" id="imageid_fileid" name="imageid" value="<?php echo $post['imageid']?>" />
+                    <img id="imageid_preview" src="<?php echo $item['imagethumbnail']?>" onclick="showFile($('#imageid_fileid').val())"/>
+                    <input type="hidden" id="imageid_filepath" name="imagepath" value="<?php echo $item['imagepath']?>" />
+                    <input type="hidden" id="imageid_fileid" name="imageid" value="<?php echo $item['imageid']?>" />
                 </p>
                 
                 
