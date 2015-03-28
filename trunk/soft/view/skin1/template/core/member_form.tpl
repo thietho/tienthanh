@@ -52,6 +52,16 @@
 					<input type="text" name="address" value="<?php echo $user['address']?>" class="text" size=60 />
             	</p>
                 <p>
+                	<label>Assign</label><br />
+					<input type="hidden" id="assignid" name="assignid" value="<?php echo $user['assignid']?>"/>
+                    <input type="text" id="assignname" name="assignname" value="<?php echo $this->document->getCustomer($user['assignid'])?>" class="text" size=60 />
+                    <input type="button" class="button" id="btnRemoveAssign" value="Remove Assign">
+                </p>
+                <p>
+            		<label>Commissions</label><br />
+					<input type="text" id="commissions" name="commissions" value="<?php echo $user['commissions']?>" class="text number"/>%
+            	</p>
+                <p>
             		<label>Avatar</label><br />
 					<p id="pnImage">
                         <label for="image"><?php echo $entry_image?></label><br />
@@ -74,3 +84,41 @@
     </div>
     
 </div>
+<script language="javascript">
+$('#btnRemoveAssign').click(function(e) {
+    $('#assignid').val('');
+	$('#assignname').val('');
+	$('#commissions').val(0);
+});
+$(document).ready(function(e) {
+	numberReady();
+	$(function() {
+		var cache = {};
+		
+		$("#assignname").autocomplete({
+			minLength: 2,
+			select: function( event, ui ) {
+				//console.log(ui.item.id);
+				//objdl.getProbyMediaId(ui.item.id);
+				//alert(ui.item.data.fullname);
+				$('#assignid').val(ui.item.id);
+				$('#assignname').val(ui.item.data.fullname);
+				
+			},
+			source: function( request, response ) {
+			var term = request.term;
+			if ( term in cache ) {
+				response( cache[ term ] );
+				return;
+			}
+			$.getJSON( "?route=core/member/getMember", request, function( data, status, xhr ) {
+				cache[ term ] = data;
+				response( data );
+				});
+			}
+		});
+		
+	});
+    
+});
+</script>

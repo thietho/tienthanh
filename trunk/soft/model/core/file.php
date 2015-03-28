@@ -196,6 +196,8 @@ class ModelCoreFile extends Model
 	public function deleteFile($id)
 	{
 		$file=$this->getFile($id);
+		@$arr = split("\.",$file['filename']);
+		
 		
 		if(file_exists(DIR_FILE.$file['filepath']))
 			unlink(DIR_FILE.$file['filepath']);
@@ -203,6 +205,9 @@ class ModelCoreFile extends Model
 		$fileid=(int)@$id;
 		$where="fileid = ".$fileid;
 		$this->db->deleteData('file',$where);
+		//Xoa catch
+		$this->cache->delete($arr[0]);
+		
 	}
 	
 	public function checkExtension($ext, $filetypeid="any")
@@ -214,7 +219,7 @@ class ModelCoreFile extends Model
 		$flag=false;		
 		$ext;
 		$result=$this->model_core_filetype->getFiletype($filetypeid);
-		$list=split(",", $result[0]['ListExtension']);
+		@$list=split(",", $result[0]['ListExtension']);
 		for($i=0;$i<count($list);$i++)
 		{
 			if(trim($list[$i])==$ext)
@@ -229,7 +234,7 @@ class ModelCoreFile extends Model
 	function uploaduserfile($filepath)
 	{
 		$file = $_FILES[$filepath];
-		$arfile = split('\.', $file['name'] );
+		@$arfile = split('\.', $file['name'] );
 		$extension = strtolower($arfile[1]);
 		
 		$path = DIR_FILE."user/".$this->user->getId()."/";
@@ -260,7 +265,7 @@ class ModelCoreFile extends Model
 	function saveFile($file,$filepath="",$filetypeid="image",$tagkeyword="")
 	{
 		
-		$arfile = split('\.', $file['name'] );
+		@$arfile = split('\.', $file['name'] );
 		$datafile = array();
 		//Filename
 		$filename = $this->string->chuyenvekodau($arfile[0]);
@@ -290,7 +295,7 @@ class ModelCoreFile extends Model
 				$uploadDir= $filepath;
 				
 				//Tao thu muc
-				$listdir=split("/",	$uploadDir);
+				@$listdir=split("/",	$uploadDir);
 				$path=DIR_FILE;
 				foreach($listdir as $dir)
 				{
@@ -360,7 +365,7 @@ class ModelCoreFile extends Model
 	
 	function saveAjaxFile($file,$data)
 	{
-		$arfile = split('\.', $file['name'] );
+		@$arfile = split('\.', $file['name'] );
 		$name=$arfile[0];
 	 	$ext = $arfile[count($arfile)-1];
 		$ext=strtolower($ext);
@@ -383,7 +388,7 @@ class ModelCoreFile extends Model
 			{
 				$uploadDir= $data['filepath'];
 				//Tao thu muc
-				$listdir=split("/",	$uploadDir);
+				@$listdir=split("/",	$uploadDir);
 				$path=DIR_FILE;
 				foreach($listdir as $dir)
 				{

@@ -221,8 +221,16 @@ class ControllerCoreMember extends Controller
 		$where = " AND loaiphieu = 'PBH' AND khachhangid = '".$id."'";
 		$this->data['data_phieubanhang'] = $this->model_quanlykho_phieunhapxuat->getList($where);
 		$tongno = 0;
-		foreach($this->data['data_phieubanhang'] as $item)
+		foreach($this->data['data_phieubanhang'] as $key => $item)
 		{
+			$where = " AND phieuid = '".$item['id']."'";
+			$data_ct = $this->model_quanlykho_phieunhapxuat->getPhieuNhapXuatMediaList($where);
+			$arr = array();
+			foreach($data_ct as $ct)
+			{
+				$arr[] = $ct['soluong']." ".$this->document->productName($ct['mediaid']);
+			}
+			$this->data['data_phieubanhang'][$key]['detail'] = implode("<br>",$arr);
 			$tongno += $item['congno'];	
 		}
 		//Lay tat ca phieu tra hang
@@ -232,6 +240,14 @@ class ControllerCoreMember extends Controller
 		$tongnotrahang = 0;
 		foreach($this->data['data_phieutrahang'] as $item)
 		{
+			$where = " AND phieuid = '".$item['id']."'";
+			$data_ct = $this->model_quanlykho_phieunhapxuat->getPhieuNhapXuatMediaList($where);
+			$arr = array();
+			foreach($data_ct as $ct)
+			{
+				$arr[] = $ct['soluong']." ".$this->document->productName($ct['mediaid']);
+			}
+			$this->data['data_phieutrahang'][$key]['detail'] = implode("<br>",$arr);
 			$tongnotrahang += $item['congno'];	
 		}
 		
@@ -340,6 +356,112 @@ class ControllerCoreMember extends Controller
 		} else {
 	  		return FALSE;
 		}
+	}
+	
+	public function commission()
+	{
+		$id = $this->request->get['id'];
+		$this->data['member'] = $this->model_core_user->getId($id);
+		
+		$this->id='content';
+		$this->template="core/member_commission.tpl";
+		$this->layout=$this->user->getLayout();
+		if($this->request->get['opendialog']=='true')
+		{
+			$this->layout="";
+			$this->data['dialog'] = true;
+			
+		}
+		$this->render();
+	}
+	public function thongke()
+	{
+		$this->load->model("quanlykho/phieunhapxuat");
+		$data = $this->request->post;
+		$tungay = $this->date->formatViewDate($data['tungay']);
+		$denngay = $this->date->formatViewDate($data['denngay']);
+		$memberid = $data['memberid'];
+		$arr = array($memberid);
+		$this->data['congno'] = $this->loadModule("core/member","getCongNo",$arr);
+		
+		$this->data['member'] = $this->model_core_user->getId($memberid);
+		//Load cac khach hang assignid boi memberid
+		$where = " AND assignid = '".$memberid."'";
+		$data_member = $this->model_core_user->getList($where);
+		$arr_member = $this->string->matrixToArray($data_member,'id');
+		//print_r($arr_member);
+		$where = " AND loaiphieu = 'PBH'";
+		//$where .= " AND khachhangid in ('". implode("','",$arr_member) ."')";
+		if($tungay != "")
+		{
+			$where .= " AND ngaylap >= '".$tungay."'";
+		}
+		if($denngay != "")
+		{
+			$where .= " AND ngaylap < '".$denngay." 24:00:00'";
+		}
+		
+		$this->data['data_banhang'] = array();
+		foreach($arr_member as $id)
+		{
+			$data_banhang = $this->model_quanlykho_phieunhapxuat->getList($where." AND khachhangid = ". $id ,0,0," Order by ngaylap");
+			$this->data['data_banhang'][$id] = $data_banhang;
+		}
+		
+		if(count($this->data['data_banhang']))
+		{
+			
+			$this->id='content';
+			$this->template="core/member_thongke.tpl";
+			
+			$this->render();
+		}
+		else
+		{
+			$this->data['output'] = "Không có dữ liệu phù hợp";
+			$this->id='content';
+			$this->template="common/output.tpl";
+			$this->render();
+		}
+	}
+	public function getMember()
+	{
+		$keyword = urldecode($this->request->get['term']);
+		$where = "AND usertypeid = 'member'";
+		@$arrkey = split(' ', $keyword);
+		if($keyword)
+		{
+			$arr = array();
+			foreach($arrkey as $key)
+			{
+				$arr[] = "fullname like '%".$key."%'";
+			}
+			$where .= " AND ((". implode(" AND ",$arr). "))";
+		}
+		$members = $this->model_core_user->getList($where);
+		$data = array();
+		foreach($members as $member)
+		{
+			$label = $member['fullname'];
+			if($member['phone'])
+				$label .= " - ".$member['phone'];
+			if($member['address'])
+				$label .= " - ".$member['address'];
+			$arr = array(
+						"id" => $member['id'],
+						"label" => $label,
+						"value" => $member['fullname'],
+						"data" => array(
+										"fullname" =>$member['fullname'],
+										"phone"=>$member['phone'],
+										"address"=>$member['address'])
+					);
+			$data[] = $arr;
+		}
+		$this->data['output'] = json_encode($data);
+		$this->id="member";
+		$this->template="common/output.tpl";
+		$this->render();
 	}
 }
 ?>

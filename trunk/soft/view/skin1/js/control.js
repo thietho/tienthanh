@@ -74,6 +74,6 @@ function Control()
 
 
 var control = new Control();
-//var strurl = control.getUrl();
+var strurl = control.getUrl();
 
 

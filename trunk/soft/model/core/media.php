@@ -26,6 +26,7 @@ class ModelCoreMedia extends ModelCoreFile
 							'author',
 							'source',
 							'saleprice',
+							'retail',
 							'price',
 							'noteprice',
 							'discountpercent',
@@ -547,6 +548,7 @@ class ModelCoreMedia extends ModelCoreFile
 			$where="mediaid = '".$data['mediaid']."'";
 			$this->db->updateData("media",$field,$value,$where);
 		}
+		
 		return $data['id'];
 	}
 	
@@ -598,7 +600,34 @@ class ModelCoreMedia extends ModelCoreFile
 			$this->db->insertData("media_information",$field,$value);	
 		}
 	}
-	
+	public function updateInforChild($mediaid)
+	{
+		$data_child = $this->getListByParent($mediaid);
+		$ref = '';
+		if(count($data_child))
+		{
+			$arrcol = array(
+							'barcode',
+							'ref',
+							'sizes',
+							'color',
+							'material'
+							);
+			$arr = array();			
+			foreach($arrcol as $col)	
+				$arr[$col] = $this->string->matrixToArray($data_child,$col);
+			//print_r($arr);
+			//$media = $this->getItem($mediaid);
+			
+			foreach($arr as $col => $val)
+			{
+				//$this->updateCol($mediaid,$col,$this->string->arrayToString($val));
+				$ref .= $this->string->arrayToString($val);
+			}
+			$this->updateCol($mediaid,"ref",$ref);
+		}
+		
+	}
 	public function delete($mediaid)
 	{
 		$status="delete";
@@ -686,9 +715,9 @@ class ModelCoreMedia extends ModelCoreFile
 				WHERE mediaid = '".$mediaid."' AND loaiphieu like '".$loaiphieu."%'
 				Group by madonvi
 				";
+		//$tb = $this->document->select($sql);
+		//return $tb;
 		$query = $this->db->query($sql);
-		$query->rows;
-		
 		return $query->rows;
 	}
 	

@@ -15,7 +15,7 @@
         	<div>
             	<p>
             		<label>Mã nguyên vật liệu</label><br />
-					<input type="text" id="manguyenlieu" name="manguyenlieu" value="<?php echo $item['manguyenlieu']?>" class="text" size=60 <?php echo $readonly?>/>
+					<input type="text" id="manguyenlieu" name="manguyenlieu" value="<?php echo $item['manguyenlieu']?>" class="text" size=60 />
                     
             	</p>
               	

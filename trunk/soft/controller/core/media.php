@@ -63,7 +63,7 @@ class ControllerCoreMedia extends Controller
 							OR description like '%".$keyword."%' 
 							)";	
 		}*/
-		$arrkey = split(' ', $keyword);
+		@$arrkey = split(' ', $keyword);
 		$where = "";
 		if($keyword !="")
 		{
@@ -220,7 +220,7 @@ class ControllerCoreMedia extends Controller
 			$refersitemap = $data['refersitemap'];
 			if($refersitemap!="")
 			{
-				$arrsitemapname = split(',',$refersitemap);
+				@$arrsitemapname = split(',',$refersitemap);
 				$arrsitemapid = array();
 				foreach($arrsitemapname as $sitemapname)
 				{
@@ -255,13 +255,13 @@ class ControllerCoreMedia extends Controller
 			$arrsaleprice = array();
 			if($saleprice!="")
 			{
-				$arr = split(',',$saleprice);
-				print_r($arr);
+				@$arr = split(',',$saleprice);
+				
 				foreach($arr as $val)
 				{
 					if($val!="")
 					{
-						$ar = split('-',$val);
+						@$ar = split('-',$val);
 						
 						$donvi = $ar[0];
 						$price = $ar[1];
@@ -406,12 +406,39 @@ class ControllerCoreMedia extends Controller
 		$this->template="common/output.tpl";
 		$this->render();	
 	}
-	
+	public function enterGroup()
+	{
+		$data = $this->request->post;
+		$mediaid =$data['mediaid'];
+		$col = $data['col'];
+		$val = $data['val'];
+		$this->model_core_media->updateCol($mediaid,$col,$val);
+		$this->model_core_media->updateInforChild($val);
+		$this->data['output'] = 'true';
+		$this->id="sitemap";
+		$this->template="common/output.tpl";
+		$this->render();	
+	}
+	public function outGroup()
+	{
+		$data = $this->request->post;
+		$mediaid =$data['mediaid'];
+		$media = $this->model_core_media->getItem($mediaid);
+		$col = $data['col'];
+		$val = $data['val'];
+		$this->model_core_media->updateCol($mediaid,$col,$val);
+		
+		$this->model_core_media->updateInforChild($media['mediaparent']);
+		$this->data['output'] = 'true';
+		$this->id="sitemap";
+		$this->template="common/output.tpl";
+		$this->render();	
+	}
 	//Cac ham xu ly tren form
 	public function getMedia()
 	{
-		$col = $this->request->get['col'];
-		$val = $this->request->get['val'];
+		$col = urldecode($this->request->get['col']);
+		$val = urldecode($this->request->get['val']);
 		$operator = $this->request->get['operator'];
 		if($operator == "")
 			$operator = "equal";
@@ -434,14 +461,93 @@ class ControllerCoreMedia extends Controller
 			
 		}
 			
-			
 		$datas = $this->model_core_media->getList($where);
 		foreach($datas as $key => $media)
 		{
 			$imagepreview = "<img width=100 src='".HelperImage::resizePNG($media['imagepath'], 180, 180)."' >";
 			$datas[$key]['imagepreview'] = $imagepreview;
+			$datas[$key]['productName'] = $this->document->productName($media);
 		}
 		$this->data['output'] = json_encode(array('medias' => $datas));
+		$this->id="media";
+		$this->template="common/output.tpl";
+		$this->render();
+	}
+	public function getProduct()
+	{
+		
+		$keyword = urldecode($this->request->get['term']);
+		@$arrkey = split(' ', $keyword);
+		$where = " AND mediatype = 'module/product' ";
+		if($keyword !="")
+		{
+			$arr = array();
+			$arrcode = array();
+			$arrbarcode = array();
+			$arrref = array();
+			$arrcolor = array();
+			$arrsizes = array();
+			$arrmaterial = array();
+			foreach($arrkey as $key)
+			{
+				$arr[] = "title like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrcode[] = "code like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrbarcode[] = "barcode like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrref[] = "ref like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrref[] = "ref like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrcolor[] = "color like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrsizes[] = "sizes like '%".$key."%'";
+			}
+			foreach($arrkey as $key)
+			{
+				$arrmaterial[] = "material like '%".$key."%'";
+			}
+			$where .= " AND ((". implode(" AND ",$arr). ") 
+									OR (". implode(" AND ",$arrcode). ") 
+									OR (". implode(" AND ",$arrbarcode). ") 
+									OR (". implode(" AND ",$arrref). ") 
+									OR (". implode(" AND ",$arrcolor). ") 
+									OR (". implode(" AND ",$arrsizes). ") 
+									OR (". implode(" AND ",$arrmaterial). ") 
+							)";
+			
+		}
+		
+		$medias = $this->model_core_media->getList($where);
+		$data = array();
+		foreach($medias as $media)
+		{
+			$child = $this->model_core_media->getListByParent($media['mediaid']);
+			if(count($child) == 0)
+			{
+				$arr = array(
+							"id" => $media['mediaid'],
+							"label" => "(".$media['brand'].") -".$media['ref']."-".$this->document->productName($media),
+							"value" => $this->document->productName($media),
+							
+						);
+				$data[] = $arr;
+			}
+		}
+		$this->data['output'] = json_encode($data);
 		$this->id="media";
 		$this->template="common/output.tpl";
 		$this->render();

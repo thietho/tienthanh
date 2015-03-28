@@ -2,10 +2,10 @@
 class ControllerModuleVideo extends Controller
 {
 	function index()
-	{
+	{	
 		$this->id='content';
-
-
+		
+		
 		if($this->request->get['mediaid'] != "" || $this->request->get['formtype']=='add')
 		{
 			$this->data['output'] = $this->loadModule('core/postcontent');
@@ -14,12 +14,12 @@ class ControllerModuleVideo extends Controller
 		{
 			$this->data['output'] = $this->loadModule('core/postlist');
 		}
-
+		
 		$this->template='common/output.tpl';
 		$this->layout='layout/center';
 		$this->render();
 	}
-
+	
 	public function insert()
 	{
 		$this->data['output'] = $this->loadModule('core/postcontent');
@@ -28,7 +28,7 @@ class ControllerModuleVideo extends Controller
 		$this->layout='layout/center';
 		$this->render();
 	}
-
+	
 	public function update()
 	{
 		$this->data['output'] = $this->loadModule('core/postcontent');

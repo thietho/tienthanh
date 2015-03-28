@@ -98,7 +98,7 @@ function Module()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 500,
+						height: window.innerHeight,
 						modal: true,
 						buttons: {
 							
@@ -114,9 +114,10 @@ function Module()
 						}
 					});
 				
-					
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);			
 		$("#popup-content").load('?route=core/module/update&moduleid='+moduleid,function(){
-			$("#popup").dialog("open");	
+			
 		});
 		
 		
@@ -130,7 +131,7 @@ function Module()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 500,
+						height: window.innerHeight,
 						modal: true,
 						buttons: {
 							
@@ -146,9 +147,10 @@ function Module()
 						}
 					});
 				
-					
+		$("#popup").dialog("open");
+		$("#popup-content").html(loading);			
 		$("#popup-content").load('?route=core/module/insert&parent='+parent,function(){
-			$("#popup").dialog("open");	
+			
 		});
 		
 	}
@@ -161,7 +163,7 @@ function Module()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 500,
+						height: window.innerHeight,
 						modal: true,
 						buttons: {
 							
@@ -177,9 +179,10 @@ function Module()
 						}
 					});
 				
-					
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);			
 		$("#popup-content").load('?route=core/module/move&id='+id,function(){
-			$("#popup").dialog("open");	
+			
 		});
 		
 		
@@ -193,7 +196,7 @@ function Module()
 						show: "blind",
 						hide: "explode",
 						width: $(document).width()-100,
-						height: 500,
+						height: window.innerHeight,
 						modal: true,
 						buttons: {
 							
@@ -209,9 +212,10 @@ function Module()
 						}
 					});
 				
-					
+		$("#popup").dialog("open");	
+		$("#popup-content").html(loading);				
 		$("#popup-content").load('?route=core/module/permission&id='+id,function(){
-			$("#popup").dialog("open");	
+			
 		});
 		
 		
